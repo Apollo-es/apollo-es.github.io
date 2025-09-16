@@ -33,7 +33,25 @@
 })();
 
 // --- Human verification gating ---
-window.__humanVerified = function(){ sessionStorage.setItem('human', '1'); unlockLinks(); };
+async function onHumanVerified(token) {
+  try {
+    const resp = await fetch("https://verificador-apollo.apollo-es-contact.workers.dev", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    });
+    const data = await resp.json();
+    if (data.success) {
+      sessionStorage.setItem("human","1");
+      unlockLinks();
+    } else {
+      alert("Verificación fallida. Inténtalo de nuevo.");
+    }
+  } catch (e) {
+    alert("Error al verificar: " + e.message);
+  }
+}
+
 function isHuman(){ return sessionStorage.getItem('human') === '1'; }
 function unlockLinks(){
   document.querySelectorAll('.direct-links .alt').forEach(a => a.classList.remove('hidden'));
@@ -41,6 +59,7 @@ function unlockLinks(){
   const modal = document.getElementById('verifyModal');
   if(modal) modal.setAttribute('aria-hidden', 'true');
 }
+
 
 (function(){
   if(isHuman()) unlockLinks();
