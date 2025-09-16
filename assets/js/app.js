@@ -33,30 +33,6 @@
 })();
 
 // --- Human verification gating ---
-async function onHumanVerified(token) {
-  console.log("Turnstile token:", token); // <- debe salir en la consola
-  try {
-    const resp = await fetch("https://verificador-apollo.apollo-es-contact.workers.dev", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token })
-    });
-    const data = await resp.json();
-    console.log("Respuesta Worker:", data);
-    if (data.success) {
-      sessionStorage.setItem("human","1");
-      unlockLinks();
-    } else {
-      alert("Verificación fallida. Inténtalo de nuevo.");
-    }
-  } catch (e) {
-    alert("Error al verificar: " + e.message);
-  }
-}
-// <-- muy importante para que el callback exista en window:
-window.onHumanVerified = onHumanVerified;
-
-
 function isHuman(){ return sessionStorage.getItem('human') === '1'; }
 function unlockLinks(){
   document.querySelectorAll('.direct-links .alt').forEach(a => a.classList.remove('hidden'));
@@ -65,35 +41,45 @@ function unlockLinks(){
   if(modal) modal.setAttribute('aria-hidden', 'true');
 }
 
+// Callback real de Turnstile
+async function onHumanVerified(token) {
+  try {
+    console.log('Turnstile token:', token);
+    const resp = await fetch('https://verificador-apollo.apollo-es-contact.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+    const data = await resp.json();
+    console.log('Respuesta Worker:', data);
+    if (data.success) {
+      sessionStorage.setItem('human','1');
+      unlockLinks();
+    } else {
+      alert('Verificación fallida. Inténtalo de nuevo.');
+    }
+  } catch (e) {
+    alert('Error al verificar: ' + e.message);
+  }
+}
+// ¡exponer el callback en window!
+window.onHumanVerified = onHumanVerified;
 
 (function(){
   if(isHuman()) unlockLinks();
   const modal = document.getElementById('verifyModal');
   const close = document.getElementById('verifyClose');
-  const confirm = document.getElementById('verifyConfirm');
-  const demo = document.getElementById('demoHuman');
 
   document.addEventListener('click', e => {
     const btn = e.target.closest('.btn.dl.gated');
     if(!btn) return;
     e.preventDefault();
     if(isHuman()) {
-      const url = btn.dataset.finalUrl;
-      window.open(url, '_blank', 'noopener');
+      window.open(btn.dataset.finalUrl, '_blank', 'noopener');
     } else {
       modal?.setAttribute('aria-hidden','false');
     }
   });
 
   close?.addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
-  modal?.addEventListener('click', (e)=>{ if(e.target === modal) modal.setAttribute('aria-hidden','true'); });
-
-  confirm?.addEventListener('click', ()=>{
-    if(demo && demo.checked){
-      sessionStorage.setItem('human','1');
-      unlockLinks();
-      return;
-    }
-    alert('Integra Cloudflare Turnstile o hCaptcha (ver comentario en el modal) y su callback desbloqueará los enlaces.');
-  });
 })();
