@@ -1,0 +1,26 @@
+title: "Apollo-es"
+description: "Descargas curadas de juegos, vídeos y apps (con permiso)."
+url: "https://apollo-es.github.io"
+baseurl: ""
+theme: null
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Navegación
+nav:
+  - name: "Inicio"
+    url: "/"
+  - name: "Juegos"
+    url: "/juegos"
+  - name: "Vídeos"
+    url: "/videos"
+  - name: "Apps"
+    url: "/apps"
+  - name: "Enviar recurso"
+    url: "/enviar"
+  - name: "Contacto"
+    url: "/contacto"
+  - name: "Legal"
+    url: "/legal"

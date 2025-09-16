@@ -1,0 +1,39 @@
+- id: ejemplo-juego
+  categoria: ["juegos"]
+  titulo: "TÍTULO DEL JUEGO"
+  descripcion: "Breve descripción del juego..."
+  tipo: "exe"
+  idioma: "es"
+  tamano: "—"
+  licencia: "con permiso"
+  mirrors:
+    - host: "Mega"
+      url: "https://mega.nz/..."
+    - host: "Mediafire"
+      url: "https://www.mediafire.com/file/..."
+    - host: "Google Drive"
+      url: "https://drive.google.com/..."
+
+- id: ejemplo-video
+  categoria: ["videos"]
+  titulo: "TÍTULO DEL VIDEO"
+  descripcion: "Breve descripción del video..."
+  tipo: "mp4"
+  idioma: "es"
+  tamano: "—"
+  licencia: "con permiso"
+  mirrors:
+    - host: "Mega"
+      url: "https://mega.nz/..."
+
+- id: ejemplo-app
+  categoria: ["apps"]
+  titulo: "NOMBRE DE LA APP"
+  descripcion: "Breve descripción de la app..."
+  tipo: "apk"
+  idioma: "es"
+  tamano: "—"
+  licencia: "con permiso"
+  mirrors:
+    - host: "Mediafire"
+      url: "https://www.mediafire.com/file/..."

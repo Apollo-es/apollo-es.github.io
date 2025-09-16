@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page.title }} · {{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+</head>
+<body>
+  <canvas id="bgfx" aria-hidden="true"></canvas>
+
+  <header class="nav">
+    <div class="brand">
+      <a href="/"><span class="logo">A</span> <span class="brand-text">{{ site.title }}</span></a>
+    </div>
+    <nav>
+      {% for item in site.nav %}
+        <a class="nav-link{% if page.url == item.url %} active{% endif %}" href="{{ item.url }}">{{ item.name }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <main class="container">
+    {{ content }}
+  </main>
+
+  <footer class="footer">
+    <p>© {{ site.time | date: "%Y" }} {{ site.title }} · Hecho con GitHub Pages</p>
+  </footer>
+
+  {% include verify-modal.html %}
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
