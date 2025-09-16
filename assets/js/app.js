@@ -3,7 +3,14 @@
   const c = document.getElementById('bgfx'); if(!c) return;
   const ctx = c.getContext('2d');
   let W,H,stars=[];
-  function resize(){ W= c.width = innerWidth; H= c.height = innerHeight; stars = Array.from({length: Math.min(220, Math.floor(W*H/12000))}, ()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*0.8+0.2,s:Math.random()*1.5+0.2})); }
+  function resize(){
+    W = c.width = innerWidth;
+    H = c.height = innerHeight;
+    stars = Array.from(
+      {length: Math.min(220, Math.floor(W*H/12000))},
+      ()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*0.8+0.2,s:Math.random()*1.5+0.2})
+    );
+  }
   addEventListener('resize', resize); resize();
   (function loop(){
     ctx.clearRect(0,0,W,H);
@@ -32,7 +39,7 @@
   });
 })();
 
-// --- Human verification gating ---
+// --- Human verification gating (solo cliente, sin Worker) ---
 function isHuman(){ return sessionStorage.getItem('human') === '1'; }
 function unlockLinks(){
   document.querySelectorAll('.direct-links .alt').forEach(a => a.classList.remove('hidden'));
@@ -41,28 +48,12 @@ function unlockLinks(){
   if(modal) modal.setAttribute('aria-hidden', 'true');
 }
 
-// Callback real de Turnstile
-async function onHumanVerified(token) {
-  try {
-    console.log('Turnstile token:', token);
-    const resp = await fetch('https://verificador-apollo.apollo-es-contact.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token })
-    });
-    const data = await resp.json();
-    console.log('Respuesta Worker:', data);
-    if (data.success) {
-      sessionStorage.setItem('human','1');
-      unlockLinks();
-    } else {
-      alert('Verificación fallida. Inténtalo de nuevo.');
-    }
-  } catch (e) {
-    alert('Error al verificar: ' + e.message);
-  }
+// Callback real de Turnstile (ejecutado al verificar con éxito)
+function onHumanVerified(/* token */) {
+  console.log('Turnstile verificado');
+  sessionStorage.setItem('human','1');
+  unlockLinks();
 }
-// ¡exponer el callback en window!
 window.onHumanVerified = onHumanVerified;
 
 (function(){
