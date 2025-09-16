@@ -34,6 +34,7 @@
 
 // --- Human verification gating ---
 async function onHumanVerified(token) {
+  console.log("Turnstile token:", token); // <- debe salir en la consola
   try {
     const resp = await fetch("https://verificador-apollo.apollo-es-contact.workers.dev", {
       method: "POST",
@@ -41,6 +42,7 @@ async function onHumanVerified(token) {
       body: JSON.stringify({ token })
     });
     const data = await resp.json();
+    console.log("Respuesta Worker:", data);
     if (data.success) {
       sessionStorage.setItem("human","1");
       unlockLinks();
@@ -51,6 +53,9 @@ async function onHumanVerified(token) {
     alert("Error al verificar: " + e.message);
   }
 }
+// <-- muy importante para que el callback exista en window:
+window.onHumanVerified = onHumanVerified;
+
 
 function isHuman(){ return sessionStorage.getItem('human') === '1'; }
 function unlockLinks(){
