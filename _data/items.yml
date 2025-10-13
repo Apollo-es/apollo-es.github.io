@@ -37,3 +37,32 @@
   mirrors:
     - host: "Mediafire"
       url: "https://www.mediafire.com/file/..."
+
+- id: pokemon-leyendas-za
+  categoria: ["juegos"]
+  titulo: "Pokémon Leyendas Z-A"
+  descripcion: "Regresa a Kalos en una historia centrada en Ciudad Luminalia donde se combina la exploración de mundo abierto con la tradición de los juegos principales."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "Por confirmar"
+  licencia: "pendiente"
+  portada: "/static/juegos/pokemon-leyendas-za.png"
+  descargas:
+    - titulo: "ROM base (NSP/XCI)"
+      mirrors:
+        - host: "Mega"
+          url: "https://mega.nz/file/pokemon-leyendas-za-rom"
+        - host: "MediaFire"
+          url: "https://www.mediafire.com/file/pokemon-leyendas-za-rom"
+    - titulo: "Actualización 1.0.1"
+      mirrors:
+        - host: "Google Drive"
+          url: "https://drive.google.com/file/d/pokemon-leyendas-za-update"
+        - host: "1fichier"
+          url: "https://1fichier.com/?pokemon-leyendas-za-update"
+    - titulo: "Contenido adicional (DLC)"
+      mirrors:
+        - host: "Mega"
+          url: "https://mega.nz/file/pokemon-leyendas-za-dlc"
+        - host: "MediaFire"
+          url: "https://www.mediafire.com/file/pokemon-leyendas-za-dlc"
