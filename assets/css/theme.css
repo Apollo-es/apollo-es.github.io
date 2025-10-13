@@ -25,7 +25,12 @@ a:hover{opacity:.9}
 .nav-toggle .ti{font-size:20px}
 .nav-toggle[aria-expanded="true"]{background:linear-gradient(135deg,#1a2032,#141b29);color:#fff;border-color:#2f3a58}
 .nav-link{padding:10px 12px;color:#c7d2e8;border-radius:12px}
-.nav-link.active,.nav-link:hover{background:linear-gradient(135deg,#1a2032,#141b29);color:#fff;border:1px solid #283147;box-shadow:0 6px 16px #0005}
+.nav-home{font-weight:600;background:rgba(18,24,42,.6);border:1px solid transparent;transition:border .2s ease,box-shadow .2s ease,background .2s ease}
+.nav-home:hover,.nav-home.active{background:linear-gradient(135deg,#1a2032,#141b29);border:1px solid #283147;box-shadow:0 6px 18px #0005;color:#fff}
+.nav-link.active:not(.nav-home),.nav-link:hover:not(.nav-home){background:linear-gradient(135deg,#1a2032,#141b29);color:#fff;border:1px solid #283147;box-shadow:0 6px 16px #0005}
+.nav-menu-card{display:flex;align-items:center;gap:12px}
+.nav-menu-title{display:none;margin:0;font:600 13px/1 Inter,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#8ea2cc}
+.nav-menu-links{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 
 .footer{border-top:1px solid #1c2233;margin-top:60px;padding:26px 16px;color:var(--muted);text-align:center;background:rgba(10,14,22,.45);backdrop-filter:var(--glass)}
 
