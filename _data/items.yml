@@ -6,6 +6,7 @@
   idioma: "es"
   tamano: "—"
   licencia: "con permiso"
+  oculto: true
   mirrors:
     - host: "Mega"
       url: "https://mega.nz/..."
@@ -22,6 +23,7 @@
   idioma: "es"
   tamano: "—"
   licencia: "con permiso"
+  oculto: true
   mirrors:
     - host: "Mega"
       url: "https://mega.nz/..."
@@ -34,6 +36,7 @@
   idioma: "es"
   tamano: "—"
   licencia: "con permiso"
+  oculto: true
   mirrors:
     - host: "Mediafire"
       url: "https://www.mediafire.com/file/..."

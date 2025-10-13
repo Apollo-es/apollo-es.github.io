@@ -1,3 +1,4 @@
+{% unless item.oculto %}
 <article class="card" data-cats="{{ item.categoria | join: ',' }}">
   <div class="card-glow"></div>
   <div class="card-body">
@@ -64,3 +65,4 @@
     {% endif %}
   </div>
 </article>
+{% endunless %}
