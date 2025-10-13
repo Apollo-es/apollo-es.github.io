@@ -1,3 +1,5 @@
+document.documentElement.classList.add('has-js');
+
 // --- Background FX: simple moving stars on canvas (no deps) ---
 (function stars(){
   const c = document.getElementById('bgfx'); if(!c) return;
@@ -73,4 +75,58 @@ window.onHumanVerified = onHumanVerified;
   });
 
   close?.addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
+})();
+
+// --- Responsive navigation toggle ---
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('site-menu');
+  if(!toggle || !menu) return;
+
+  const nav = toggle.closest('.nav');
+
+  const mq = window.matchMedia('(max-width: 768px)');
+
+  function updateAria(){
+    const open = menu.classList.contains('open');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(nav){
+      if(open && mq.matches){
+        nav.classList.add('menu-open');
+      } else {
+        nav.classList.remove('menu-open');
+      }
+    }
+  }
+
+  function applyResponsive(initial = false){
+    if(mq.matches){
+      if(!initial){
+        menu.classList.remove('open');
+      }
+      updateAria();
+    } else {
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      nav?.classList.remove('menu-open');
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('open');
+    updateAria();
+  });
+
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    if(mq.matches){
+      menu.classList.remove('open');
+      updateAria();
+    }
+  }));
+
+  mq.addEventListener('change', () => applyResponsive());
+
+  applyResponsive(true);
 })();

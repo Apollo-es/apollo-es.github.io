@@ -14,6 +14,8 @@ title: Inicio
 
 <div id="items" class="grid">
   {% for item in site.data.items %}
-    {% include card.html item=item %}
+    {% unless item.oculto %}
+      {% include card.html item=item %}
+    {% endunless %}
   {% endfor %}
 </div>
