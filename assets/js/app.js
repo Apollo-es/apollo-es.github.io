@@ -83,21 +83,12 @@ window.onHumanVerified = onHumanVerified;
   const menu = document.getElementById('site-menu');
   if(!toggle || !menu) return;
 
-  const nav = toggle.closest('.nav');
-
   const mq = window.matchMedia('(max-width: 768px)');
 
   function updateAria(){
     const open = menu.classList.contains('open');
     menu.setAttribute('aria-hidden', open ? 'false' : 'true');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if(nav){
-      if(open && mq.matches){
-        nav.classList.add('menu-open');
-      } else {
-        nav.classList.remove('menu-open');
-      }
-    }
   }
 
   function applyResponsive(initial = false){
@@ -110,7 +101,6 @@ window.onHumanVerified = onHumanVerified;
       menu.classList.add('open');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'false');
-      nav?.classList.remove('menu-open');
     }
   }
 
