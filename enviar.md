@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Enviar recurso
+permalink: /enviar/
 ---
 
 # Enviar recurso

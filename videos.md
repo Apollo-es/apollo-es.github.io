@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Vídeos
+permalink: /videos/
 ---
 
 <h1>Vídeos</h1>
@@ -8,7 +9,7 @@ title: Vídeos
 
 <div id="items" class="grid">
   {% for item in site.data.items %}
-    {% if item.categoria contains "videos" %}
+    {% if item.categoria contains "videos" and item.oculto != true %}
       {% include card.html item=item %}
     {% endif %}
   {% endfor %}
