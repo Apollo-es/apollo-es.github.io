@@ -44,24 +44,18 @@
 - id: pokemon-leyendas-za
   categoria: ["juegos"]
   titulo: "Pokémon Leyendas Z-A"
-  descripcion: "Regresa a Kalos con un proyecto que combina las mecánicas de mundo abierto de Leyendas Arceus con la narrativa clásica de los juegos principales. Acompaña a Hélio y compañía en una expansión de Ciudad Luminalia, con nuevas formas regionales, misiones de investigación y compatibilidad total con Nintendo Switch."
+  descripcion: "Regresa a Kalos en una historia centrada en Ciudad Luminalia donde se combina la exploración de mundo abierto con la tradición de los juegos principales."
   tipo: "Switch"
   idioma: "multi"
-  tamano: "Por confirmar"
+  tamano: "4.4Gb"
   licencia: "pendiente"
   portada: "/static/juegos/pokemon-leyendas-za.png"
-  hashtags:
-    - "#PokemonLeyendasZA"
-    - "#PokemonLegendsZA"
-    - "#NintendoSwitch"
-    - "#ROMHack"
-    - "#CiudadLuminalia"
   descargas:
     - titulo: "ROM base (NSP/XCI)"
       mirrors:
         - host: "Mega"
-          url: "https://exe.io/rommega"
-        - host: "Mediafire"
+          url: "https://exe.io/rommega" 
+        - host: "MediaFire"
           url: "https://exe.io/rommediaf"
         - host: "Google Drive"
           url: "https://exe.io/romdriv"
@@ -69,7 +63,7 @@
       mirrors:
         - host: "Mega"
           url: "https://exe.io/updmega"
-        - host: "Mediafire"
+        - host: "MediaFire"
           url: "https://exe.io/updmediaf"
         - host: "Google Drive"
           url: "https://exe.io/upddriv"
@@ -77,48 +71,7 @@
       mirrors:
         - host: "Mega"
           url: "https://exe.io/dlcmegaa"
-        - host: "Mediafire"
+        - host: "MediaFire"
           url: "https://exe.io/dlcmediaf"
         - host: "Google Drive"
           url: "https://exe.io/dlcdrive"
-
-- id: papers-please-pc
-  categoria: ["juegos"]
-  titulo: "Papers, Please"
-  descripcion: "Conviértete en un inspector de inmigración en la frontera de Arstotzka y decide quién entra al país. Gestiona documentos, moral y sobornos en este aclamado simulador de Lucas Pope que llega completo para PC."
-  tipo: "PC"
-  idioma: "multi"
-  tamano: "350 MB"
-  licencia: "incluida"
-  portada: "/static/juegos/papers-please-pc.png"
-  hashtags:
-    - "#PapersPlease"
-    - "#LucasPope"
-    - "#IndieGame"
-    - "#PCGames"
-    - "#SimuladorDeFrontera"
-  descargas:
-    - titulo: "ROM base / Instalador"
-      mirrors:
-        - host: "Mega"
-          url: "https://mega.nz/file/papers-please-base"
-        - host: "Mediafire"
-          url: "https://www.mediafire.com/file/papers-please-base"
-        - host: "Google Drive"
-          url: "https://drive.google.com/file/d/papers-please-base"
-    - titulo: "Actualización 1.2.76"
-      mirrors:
-        - host: "Mega"
-          url: "https://mega.nz/file/papers-please-update"
-        - host: "Mediafire"
-          url: "https://www.mediafire.com/file/papers-please-update"
-        - host: "Google Drive"
-          url: "https://drive.google.com/file/d/papers-please-update"
-    - titulo: "Contenido adicional (DLC)"
-      mirrors:
-        - host: "Mega"
-          url: "https://mega.nz/file/papers-please-dlc"
-        - host: "Mediafire"
-          url: "https://www.mediafire.com/file/papers-please-dlc"
-        - host: "Google Drive"
-          url: "https://drive.google.com/file/d/papers-please-dlc"
