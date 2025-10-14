@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Juegos
+permalink: /juegos/
 ---
 
 <h1>Juegos</h1>

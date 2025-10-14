@@ -67,7 +67,7 @@ a:hover{opacity:.9}
 .download-group{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:16px;background:rgba(12,18,32,.65);border:1px solid #222e45}
 .download-title{margin:0;font:600 15px/1.4 Inter,sans-serif;color:#e6f0ff;text-transform:uppercase;letter-spacing:.6px}
 .mirrors{display:flex;flex-wrap:wrap;gap:10px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 14px;border-radius:14px;border:1px solid #2a3452;background:#151b2b;color:#eaf2ff;cursor:pointer;transition:transform .08s ease, box-shadow .2s}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 14px;border-radius:14px;border:1px solid #2a3452;background:#151b2b;color:#eaf2ff;cursor:pointer;transition:transform .08s ease, box-shadow .2s;position:relative;z-index:2;pointer-events:auto}
 .btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px #0007}
 .btn.primary{background:linear-gradient(135deg,var(--primary),var(--accent));border:none}
 .btn.alt{background:#12182a;border:1px dashed #334166}
