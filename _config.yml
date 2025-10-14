@@ -20,8 +20,6 @@ nav:
     url: "/apps"
   - name: "Emuladores"
     url: "/emuladores"
-  - name: "Foros"
-    url: "/foros"
   - name: "Enviar recurso"
     url: "/enviar"
   - name: "Contacto"

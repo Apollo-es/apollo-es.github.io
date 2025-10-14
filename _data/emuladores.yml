@@ -14,9 +14,6 @@
           descripcion: "Alternativa estable, muy activa en desarrollo y con gran rendimiento en juegos recientes."
           sitio: "https://ryujinx.org/"
           descarga: "https://github.com/Ryujinx/Ryujinx/releases"
-          extras:
-            - texto: "Descarga para el AppData/Roaming y carpeta de Ryujinx"
-              url: "https://exe.io/ryujinx-roaming"
         - nombre: "Eden"
           icono: "🆕"
           descripcion: "Proyecto joven que busca combinar rendimiento y facilidad de uso con interfaz moderna."
