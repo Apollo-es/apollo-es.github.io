@@ -2,6 +2,12 @@
 layout: default
 title: Juegos
 permalink: /juegos/
+description: "Catálogo de videojuegos listos para descargar con ROM base, actualizaciones y DLC en Mega, MediaFire y Google Drive."
+keywords:
+  - "descargar juegos switch"
+  - "roms nintendo"
+  - "dlc mega"
+  - "actualizacion juegos"
 ---
 
 <h1>Juegos</h1>

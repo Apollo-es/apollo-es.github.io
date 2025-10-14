@@ -1,6 +1,12 @@
 ---
 layout: default
 title: Inicio
+description: "Encuentra descargas verificadas de juegos, vídeos, apps y emuladores listos para tu consola o PC."
+keywords:
+  - "descargar juegos"
+  - "roms nintendo switch"
+  - "mega mediafire drive"
+  - "emuladores recomendados"
 ---
 
 <div class="hero">

@@ -1,6 +1,8 @@
 - nombre: "Foro General"
+  slug: "general"
   icono: "🌐"
   descripcion: "Comparte dudas sobre el proyecto, pide ayuda con descargas o propone nuevas secciones para la comunidad."
+  resumen: "Un punto de encuentro para cualquier tema relacionado con Apollo."
   temas:
     - "dudas-apollo"
     - "sugerencias"
@@ -11,8 +13,10 @@
     - texto: "Abrir nueva pregunta"
       url: "https://github.com/apollo-es/apollo-es.github.io/discussions/new?category=general"
 - nombre: "Pokémon"
+  slug: "pokemon"
   icono: "🔵"
   descripcion: "Organiza intercambios, comparte guías y debate sobre los lanzamientos de la saga, incluido Pokémon Leyendas Z-A."
+  resumen: "Zona dedicada a todo lo relacionado con la franquicia Pokémon."
   temas:
     - "leyendas-za"
     - "intercambios"
@@ -23,8 +27,10 @@
     - texto: "Ver hilos destacados"
       url: "https://github.com/apollo-es/apollo-es.github.io/discussions/categories/pokemon"
 - nombre: "Emuladores"
+  slug: "emuladores"
   icono: "🕹️"
   descripcion: "Resuelve problemas de configuración, comparte perfiles y debate sobre el rendimiento en Yuzu, Ryujinx, Dolphin y más."
+  resumen: "Comparte configuraciones y ayuda a otros a optimizar sus emuladores favoritos."
   temas:
     - "configuraciones"
     - "rendimiento"

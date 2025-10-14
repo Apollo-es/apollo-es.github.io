@@ -2,6 +2,12 @@
 layout: default
 title: Legal
 permalink: /legal/
+description: "Política legal y de retirada de contenidos de Apollo-es."
+keywords:
+  - "legal apollo es"
+  - "aviso legal"
+  - "derechos autor"
+  - "contacto legal"
 ---
 
 # Aviso legal y privacidad

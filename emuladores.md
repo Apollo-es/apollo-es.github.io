@@ -2,6 +2,12 @@
 layout: default
 title: Emuladores
 permalink: /emuladores/
+description: "Creditos y descargas rápidas para los mejores emuladores de Nintendo, PlayStation y más."
+keywords:
+  - "emuladores nintendo"
+  - "descargar ryujinx"
+  - "emulador ps2"
+  - "yuzu suyu"
 ---
 
 <h1>Emuladores</h1>

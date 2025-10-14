@@ -2,6 +2,12 @@
 layout: default
 title: Vídeos
 permalink: /videos/
+description: "Clips, documentales y contenido audiovisual gamer con enlaces directos autorizados."
+keywords:
+  - "videos gaming"
+  - "descargar documentales"
+  - "mega mediafire"
+  - "clips retro"
 ---
 
 <h1>Vídeos</h1>

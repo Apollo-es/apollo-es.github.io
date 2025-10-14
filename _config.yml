@@ -2,11 +2,25 @@ title: "Apollo-es"
 description: "Descargas curadas de juegos, vídeos y apps (con permiso)."
 url: "https://apollo-es.github.io"
 baseurl: ""
-theme: null
+lang: es
+email: "apollo.es.contact@gmail.com"
+author: "Equipo Apollo-es"
+keywords:
+  - "descargas seguras"
+  - "roms nintendo switch"
+  - "emuladores"
+  - "videos retro"
+  - "apps gaming"
+logo: "/static/branding/site-preview.svg"
+favicon: "/static/branding/favicon.svg"
+social_image: "/static/branding/site-preview.svg"
 markdown: kramdown
+timezone: Europe/Madrid
+theme: null
 plugins:
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-seo-tag
 
 # Navegación
 nav:
@@ -17,12 +31,38 @@ nav:
   - name: "Vídeos"
     url: "/videos/"
   - name: "Apps"
-    url: "/apps"
+    url: "/apps/"
   - name: "Emuladores"
-    url: "/emuladores"
+    url: "/emuladores/"
+  - name: "Foros"
+    url: "/foros/"
   - name: "Enviar recurso"
     url: "/enviar/"
   - name: "Contacto"
     url: "/contacto/"
   - name: "Legal"
     url: "/legal/"
+
+organization:
+  name: "Apollo-es"
+  url: "https://apollo-es.github.io"
+  logo: "/static/branding/site-preview.svg"
+  same_as:
+    - "https://github.com/Apollo-es"
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      lang: es
+      image: "/static/branding/site-preview.svg"
+      keywords:
+        - "apollo-es"
+        - "descargas juegos"
+        - "mega mediafire"
+        - "nintendo switch rom"
+
+# Integraciones opcionales
+disqus_shortname: ""
+google_client_id: ""

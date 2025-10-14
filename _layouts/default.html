@@ -1,14 +1,86 @@
 <!doctype html>
-<html lang="es">
+<html lang="{{ page.lang | default: site.lang | default: 'es' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ page.title }} · {{ site.title }}</title>
-  <meta name="description" content="{{ site.description }}">
+  {% seo %}
+  {% assign meta_description = page.description | default: page.excerpt | default: site.description %}
+  {% if meta_description %}
+    <meta name="description" content="{{ meta_description | strip_html | strip_newlines | replace: '  ', ' ' | escape }}">
+  {% endif %}
+  {% assign keywords = page.keywords | default: site.keywords %}
+  {% if keywords %}
+    <meta name="keywords" content="{{ keywords | join: ', ' | escape }}">
+  {% endif %}
+  <meta name="author" content="{{ page.author | default: site.author | escape }}">
+  <meta name="theme-color" content="#0b1020">
+  {% if page.noindex or site.noindex %}
+    <meta name="robots" content="noindex,nofollow">
+  {% endif %}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <link rel="icon" type="image/svg+xml" href="{{ site.favicon | default: '/favicon.svg' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ site.favicon | default: '/favicon.svg' | relative_url }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+  {% if site.organization %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "{{ site.organization.name | default: site.title | escape }}",
+      "url": "{{ site.organization.url | default: site.url | escape }}",
+      {% if site.email %}"email": "{{ site.email | escape }}",
+      {% endif %}
+      {% if site.organization.logo or site.logo %}"logo": "{{ site.organization.logo | default: site.logo | absolute_url }}",
+      {% endif %}
+      {% if site.organization.same_as %}"sameAs": [{% for profile in site.organization.same_as %}"{{ profile | escape }}"{% unless forloop.last %}, {% endunless %}{% endfor %}],{% endif %}
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "{{ site.email | escape }}",
+        "availableLanguage": ["es"]
+      }]
+    }
+    </script>
+  {% endif %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site.title | escape }}",
+    "url": "{{ site.url | append: site.baseurl }}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ site.url | append: site.baseurl | append: '/' }}?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  {% if site.nav %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Secciones de navegación de {{ site.title | escape }}",
+      "itemListElement": [
+        {% for item in site.nav %}
+        {
+          "@type": "SiteNavigationElement",
+          "position": {{ forloop.index }},
+          "name": "{{ item.name | escape }}",
+          "url": "{{ item.url | absolute_url }}"
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+    </script>
+  {% endif %}
+  {% if site.google_client_id %}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  {% endif %}
 </head>
 <body>
   <canvas id="bgfx" aria-hidden="true"></canvas>
@@ -43,6 +115,7 @@
       </nav>
     </div>
   </header>
+  <div class="nav-overlay" aria-hidden="true"></div>
 
   <main class="container">
     {{ content }}
