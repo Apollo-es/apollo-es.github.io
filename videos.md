@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Vídeos
+permalink: /videos/
 ---
 
 <h1>Vídeos</h1>

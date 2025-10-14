@@ -41,47 +41,13 @@ document.documentElement.classList.add('has-js');
   });
 })();
 
-// --- Human verification gating (solo cliente, sin Worker) ---
-function isHuman(){ return sessionStorage.getItem('human') === '1'; }
-function unlockLinks(){
-  document.querySelectorAll('.direct-links .alt').forEach(a => a.classList.remove('hidden'));
-  document.querySelectorAll('.btn.dl').forEach(b => b.classList.add('hidden'));
-  const modal = document.getElementById('verifyModal');
-  if(modal) modal.setAttribute('aria-hidden', 'true');
-}
-
-// Callback real de Turnstile (ejecutado al verificar con éxito)
-function onHumanVerified(/* token */) {
-  console.log('Turnstile verificado');
-  sessionStorage.setItem('human','1');
-  unlockLinks();
-}
-window.onHumanVerified = onHumanVerified;
-
-(function(){
-  if(isHuman()) unlockLinks();
-  const modal = document.getElementById('verifyModal');
-  const close = document.getElementById('verifyClose');
-
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.btn.dl.gated');
-    if(!btn) return;
-    e.preventDefault();
-    if(isHuman()) {
-      window.open(btn.dataset.finalUrl, '_blank', 'noopener');
-    } else {
-      modal?.setAttribute('aria-hidden','false');
-    }
-  });
-
-  close?.addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
-})();
-
 // --- Responsive navigation toggle ---
 (function(){
   const toggle = document.querySelector('.nav-toggle');
   const menu = document.getElementById('site-menu');
   if(!toggle || !menu) return;
+
+  const nav = toggle.closest('.nav');
 
   const mq = window.matchMedia('(max-width: 768px)');
 
@@ -89,6 +55,13 @@ window.onHumanVerified = onHumanVerified;
     const open = menu.classList.contains('open');
     menu.setAttribute('aria-hidden', open ? 'false' : 'true');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(nav){
+      if(open && mq.matches){
+        nav.classList.add('menu-open');
+      } else {
+        nav.classList.remove('menu-open');
+      }
+    }
   }
 
   function applyResponsive(initial = false){
@@ -101,6 +74,7 @@ window.onHumanVerified = onHumanVerified;
       menu.classList.add('open');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'false');
+      nav?.classList.remove('menu-open');
     }
   }
 

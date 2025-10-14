@@ -1,0 +1,36 @@
+- nombre: "Foro General"
+  icono: "🌐"
+  descripcion: "Comparte dudas sobre el proyecto, pide ayuda con descargas o propone nuevas secciones para la comunidad."
+  temas:
+    - "dudas-apollo"
+    - "sugerencias"
+    - "errores-y-reportes"
+  enlaces:
+    - texto: "Ver temas recientes"
+      url: "https://github.com/apollo-es/apollo-es.github.io/discussions"
+    - texto: "Abrir nueva pregunta"
+      url: "https://github.com/apollo-es/apollo-es.github.io/discussions/new?category=general"
+- nombre: "Pokémon"
+  icono: "🔵"
+  descripcion: "Organiza intercambios, comparte guías y debate sobre los lanzamientos de la saga, incluido Pokémon Leyendas Z-A."
+  temas:
+    - "leyendas-za"
+    - "intercambios"
+    - "estrategias"
+  enlaces:
+    - texto: "Entrar al foro de Pokémon"
+      url: "https://github.com/apollo-es/apollo-es.github.io/discussions/new?category=pokemon"
+    - texto: "Ver hilos destacados"
+      url: "https://github.com/apollo-es/apollo-es.github.io/discussions/categories/pokemon"
+- nombre: "Emuladores"
+  icono: "🕹️"
+  descripcion: "Resuelve problemas de configuración, comparte perfiles y debate sobre el rendimiento en Yuzu, Ryujinx, Dolphin y más."
+  temas:
+    - "configuraciones"
+    - "rendimiento"
+    - "guias"
+  enlaces:
+    - texto: "Unirse al foro de Emuladores"
+      url: "https://github.com/apollo-es/apollo-es.github.io/discussions/new?category=emuladores"
+    - texto: "Ver tutoriales de la comunidad"
+      url: "https://github.com/apollo-es/apollo-es.github.io/discussions/categories/emuladores"

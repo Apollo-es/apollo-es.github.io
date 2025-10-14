@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Legal
+permalink: /legal/
 ---
 
 # Aviso legal y privacidad
