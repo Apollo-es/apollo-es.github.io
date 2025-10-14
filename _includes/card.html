@@ -1,11 +1,20 @@
 {% unless item.oculto %}
-<article class="card" data-cats="{{ item.categoria | join: ',' }}">
+<article class="card" data-cats="{{ item.categoria | join: ',' }}"{% if item.licencia %} data-licencia="{{ item.licencia | escape }}"{% endif %}>
   <div class="card-glow"></div>
   <div class="card-body">
     <h3 class="card-title">{{ item.titulo }}</h3>
 
-    {% if item.portada %}
-      <img class="card-cover" src="{{ item.portada | escape }}" alt="Portada de {{ item.titulo }}">
+    {% assign cover_path = item.portada %}
+    {% if cover_path == nil or cover_path == '' %}
+      {% assign cover_path = '/static/juegos/' | append: item.id | append: '.png' %}
+    {% endif %}
+
+    {% if cover_path %}
+      <img class="card-cover"
+           src="{{ cover_path | relative_url | escape }}"
+           alt="Portada de {{ item.titulo }}"
+           loading="lazy"
+           onerror="this.remove();">
     {% endif %}
 
     <p class="card-desc">{{ item.descripcion }}</p>
@@ -25,19 +34,14 @@
 
             <div class="mirrors">
               {% for m in descarga.mirrors %}
-                <button class="btn dl gated"
-                        data-final-url="{{ m.url | escape }}"
-                        data-host="{{ m.host | escape }}">
-                  <i class="ti ti-download"></i> Descargar en {{ m.host }}
-                </button>
-              {% endfor %}
-            </div>
-
-            <div class="direct-links">
-              {% for m in descarga.mirrors %}
-                <a class="btn alt hidden" href="{{ m.url | escape }}" target="_blank" rel="noopener">
-                  <i class="ti ti-external-link"></i> Directo: {{ m.host }}
-                </a>
+                {% if m.url %}
+                  <a class="btn dl"
+                     href="{{ m.url | strip }}"
+                     target="_blank"
+                     rel="nofollow noopener">
+                    <i class="ti ti-download"></i> Descargar en {{ m.host }}
+                  </a>
+                {% endif %}
               {% endfor %}
             </div>
           </section>
@@ -46,11 +50,14 @@
     {% elsif item.mirrors %}
       <div class="mirrors">
         {% for m in item.mirrors %}
-          <button class="btn dl gated"
-                  data-final-url="{{ m.url | escape }}"
-                  data-host="{{ m.host | escape }}">
-            <i class="ti ti-download"></i> Descargar en {{ m.host }}
-          </button>
+          {% if m.url %}
+            <a class="btn dl"
+               href="{{ m.url | strip }}"
+               target="_blank"
+               rel="nofollow noopener">
+              <i class="ti ti-download"></i> Descargar en {{ m.host }}
+            </a>
+          {% endif %}
         {% endfor %}
 
         <div class="direct-links">
@@ -61,6 +68,15 @@
           {% endfor %}
         </div>
       </div>
+    {% endif %}
+
+    {% if item.categoria contains 'juegos' %}
+      {% assign hashtags = item.hashtags %}
+      {% if hashtags and hashtags.size > 0 %}
+        <p class="seo-tags sr-only">{{ hashtags | join: ' ' }}</p>
+      {% else %}
+        <p class="seo-tags sr-only">#{{ item.titulo | slugify: 'latin' | replace: '-', '' }} #DescargarJuegos #MegaMediafireDrive</p>
+      {% endif %}
     {% endif %}
   </div>
 </article>

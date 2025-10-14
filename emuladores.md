@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Emuladores
+permalink: /emuladores/
 ---
 
 <h1>Emuladores</h1>
@@ -23,7 +24,15 @@ title: Emuladores
                 <p>{{ emu.descripcion }}</p>
                 <div class="emulator-links">
                   <a class="btn" href="{{ emu.sitio }}" target="_blank" rel="noopener">Sitio oficial</a>
-                  <a class="btn alt" href="{{ emu.descarga | default: emu.sitio }}" target="_blank" rel="noopener">Descarga</a>
+                  {% assign descarga_url = emu.descarga | default: emu.sitio %}
+                  {% if descarga_url %}
+                    <a class="btn alt" href="{{ descarga_url }}" target="_blank" rel="noopener">Descarga</a>
+                  {% endif %}
+                  {% if emu.extras %}
+                    {% for extra in emu.extras %}
+                      <a class="btn alt" href="{{ extra.url }}" target="_blank" rel="noopener">{{ extra.texto }}</a>
+                    {% endfor %}
+                  {% endif %}
                 </div>
               </div>
             {% endfor %}

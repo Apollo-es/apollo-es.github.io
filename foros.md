@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Foros
+permalink: /foros/
 ---
 
 <h1>Foros</h1>

@@ -17,15 +17,31 @@
     <div class="brand">
       <a href="/"><span class="logo">A</span> <span class="brand-text">{{ site.title }}</span></a>
     </div>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
-      <i class="ti ti-menu-2" aria-hidden="true"></i>
-      <span class="sr-only">Abrir menú</span>
-    </button>
-    <nav id="site-menu" class="nav-menu">
-      {% for item in site.nav %}
-        <a class="nav-link{% if page.url == item.url %} active{% endif %}" href="{{ item.url }}">{{ item.name }}</a>
-      {% endfor %}
-    </nav>
+
+    <div class="nav-right">
+      {% assign home_item = site.nav | first %}
+      {% if home_item %}
+        <a class="nav-link nav-home{% if page.url == home_item.url %} active{% endif %}"
+           href="{{ home_item.url }}">{{ home_item.name }}</a>
+      {% endif %}
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        <i class="ti ti-menu-2" aria-hidden="true"></i>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+
+      <nav id="site-menu" class="nav-menu" aria-hidden="true">
+        <div class="nav-menu-card">
+          <p class="nav-menu-title">Explora</p>
+          <div class="nav-menu-links">
+            {% for item in site.nav offset:1 %}
+              <a class="nav-link{% if page.url == item.url %} active{% endif %}"
+                 href="{{ item.url }}">{{ item.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </nav>
+    </div>
   </header>
 
   <main class="container">
