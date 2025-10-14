@@ -1,0 +1,160 @@
+{
+  "updated": "2024-05-01",
+  "source": {
+    "name": "LibreHardware Benchmark Index",
+    "url": "https://github.com/LibreHardware/benchmark-index",
+    "license": "MIT"
+  },
+  "tiers": [
+    {
+      "id": "entry",
+      "label": "Gama de entrada optimizada",
+      "score": 1150,
+      "min_ram": 8,
+      "cpus": ["Intel Core i3-10100F", "Intel Core i5-9400F", "AMD Ryzen 3 4100"],
+      "gpus": ["NVIDIA GeForce GTX 1650", "NVIDIA GeForce GTX 1050 Ti", "AMD Radeon RX 570"],
+      "notes": [
+        "Configura perfiles de energía en Modo Alto Rendimiento para evitar caídas bruscas de reloj.",
+        "Recomendado para portátiles gaming ligeros o sobremesas compactos."
+      ],
+      "targets": {
+        "general": {
+          "resolution": "900p",
+          "fps": "30-45 FPS",
+          "preset": "Calidad baja con escalado adaptativo",
+          "tips": [
+            "Activa VSync adaptativo para mitigar stuttering.",
+            "Enciende los compiladores PPTC / Shader Cache antes de jugar para reducir tirones."
+          ]
+        },
+        "switch": {
+          "resolution": "720p dock / 0.75x handheld",
+          "fps": "30 FPS estables",
+          "preset": "GPU asíncrona, FSR 1.0, 1x anisotrópico",
+          "tips": [
+            "Usa modo Docked solo en títulos ligeros (2D, indies).",
+            "Desactiva efectos volumétricos y controla la temperatura para evitar thermal throttling."
+          ]
+        },
+        "retro": {
+          "resolution": "3x para PSP / 2x para GameCube",
+          "fps": "60 FPS",
+          "preset": "Filtros ligeros, sin MSAA",
+          "tips": [
+            "En RetroArch habilita Run-Ahead solo con 1 frame para no saturar la CPU.",
+            "En Dolphin usa Ubershaders híbridos para minimizar stutter."
+          ]
+        },
+        "sony": {
+          "resolution": "720p",
+          "fps": "30 FPS",
+          "preset": "RPCS3 PPU LLVM + SPU Recompiler lento",
+          "tips": [
+            "Limita a 30 FPS y activa VSync para estabilidad en títulos exigentes.",
+            "fpPS4: prioriza juegos 2D o indies, desactiva SSAO."
+          ]
+        }
+      }
+    },
+    {
+      "id": "balanced",
+      "label": "Gama media equilibrada",
+      "score": 1650,
+      "min_ram": 16,
+      "cpus": ["AMD Ryzen 5 5600", "Intel Core i5-12400F", "AMD Ryzen 7 3700X"],
+      "gpus": ["NVIDIA GeForce RTX 3060", "NVIDIA GeForce RTX 2060 Super", "AMD Radeon RX 6700 XT"],
+      "notes": [
+        "Permite streaming y captura ligera mientras juegas.",
+        "Ideal para mantener 60 FPS en la mayoría de juegos de Switch y Wii U." 
+      ],
+      "targets": {
+        "general": {
+          "resolution": "1080p",
+          "fps": "60 FPS",
+          "preset": "Calidad media con filtros moderados",
+          "tips": [
+            "Forza la sincronización a 60 FPS en títulos retrocompatibles.",
+            "Activa VRR si tu monitor lo soporta para suavizar oscilaciones."
+          ]
+        },
+        "switch": {
+          "resolution": "1080p dock / 1.5x handheld",
+          "fps": "60 FPS en la mayoría de exclusivos",
+          "preset": "Async GPU, Filtro anisotrópico 4x, FSR 2.0 cuando esté disponible",
+          "tips": [
+            "Ryujinx: habilita PPTC y Cache de Shaders por juego.",
+            "Suyu/Yuzu: usa Fast GPU Time o Frame Pacing para evitar audio roto."
+          ]
+        },
+        "retro": {
+          "resolution": "4x para PSP y GameCube / 1080p para PS2",
+          "fps": "60 FPS",
+          "preset": "Puede usar MSAA 2x y texture replacement",
+          "tips": [
+            "Dolphin: activa dual core + Ubershaders asíncronos.",
+            "PCSX2: emplea renderizado 3x Native y widescreen patches."
+          ]
+        },
+        "sony": {
+          "resolution": "900p-1080p",
+          "fps": "30-45 FPS",
+          "preset": "RPCS3 con SPU LLVM + FSR upscaling",
+          "tips": [
+            "Configura el límite de potencia a 80-90% para controlar temperaturas.",
+            "fpPS4: mantén el modo de reescalado en Quality para evitar popping."
+          ]
+        }
+      }
+    },
+    {
+      "id": "enthusiast",
+      "label": "Gama entusiasta 1440p/4K",
+      "score": 2150,
+      "min_ram": 32,
+      "cpus": ["Intel Core i7-13700K", "AMD Ryzen 7 7800X3D", "Intel Core i9-12900K"],
+      "gpus": ["NVIDIA GeForce RTX 4080", "AMD Radeon RX 7900 XT", "NVIDIA GeForce RTX 4070 Ti"],
+      "notes": [
+        "Pensado para monitores de alta tasa de refresco (120/144 Hz).",
+        "Puedes usar capturas en 4K y mods de texturas UHD sin comprometer FPS."
+      ],
+      "targets": {
+        "general": {
+          "resolution": "1440p - 4K",
+          "fps": "60-120 FPS",
+          "preset": "Calidad alta con filtros completos",
+          "tips": [
+            "Aplica HDR en emuladores que lo soporten (Cemu, Dolphin dev builds).",
+            "Activa ReShade con moderación para no impactar la latencia."
+          ]
+        },
+        "switch": {
+          "resolution": "4K (2x dock)",
+          "fps": "60 FPS estables en first party",
+          "preset": "Escalado 2x, anisotrópico 16x, filtrado de texturas avanzado",
+          "tips": [
+            "Ryujinx: habilita el modo de gráficos precisos y el backend Vulkan.",
+            "Suyu/Yuzu: activa FSR 2.1 Quality y Anti-Aliasing SMAA."
+          ]
+        },
+        "retro": {
+          "resolution": "8x para PSP, 6x para GameCube, 4K nativo para PS2",
+          "fps": "120 FPS en títulos compatibles",
+          "preset": "Texturas HD, MSAA 4x/8x, efectos de postprocesado",
+          "tips": [
+            "Dolphin: combina Ubershaders completos con cache asíncrono.",
+            "RetroArch: puedes aplicar run-ahead 2+ frames sin afectar la latencia."
+          ]
+        },
+        "sony": {
+          "resolution": "1440p",
+          "fps": "50-60 FPS",
+          "preset": "RPCS3 con TSX habilitado y upscaling FSR 2.1",
+          "tips": [
+            "Activa Write Color Buffers y Strict Rendering Mode solo si el juego lo necesita.",
+            "fpPS4: usa modo Boost y reconstrucción TAA + FSR 2."
+          ]
+        }
+      }
+    }
+  ]
+}

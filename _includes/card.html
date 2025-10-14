@@ -1,5 +1,10 @@
 {% unless item.oculto %}
-<article class="card" data-cats="{{ item.categoria | join: ',' }}"{% if item.licencia %} data-licencia="{{ item.licencia | escape }}"{% endif %}>
+<article class="card"
+         data-cats="{{ item.categoria | join: ',' }}"
+         {% if item.licencia %}data-licencia="{{ item.licencia | escape }}"{% endif %}
+         {% if item.consola %}data-console="{{ item.consola | escape }}"{% endif %}
+         {% if item.desarrolladora %}data-developer="{{ item.desarrolladora | escape }}"{% endif %}
+         {% if item.genero %}data-genre="{{ item.genero | escape }}"{% endif %}>
   <div class="card-glow"></div>
   <div class="card-body">
     <h3 class="card-title">{{ item.titulo }}</h3>
@@ -30,6 +35,9 @@
       <span class="chip">{{ item.tipo | upcase }}</span>
       <span class="chip">{{ item.idioma | upcase }}</span>
       <span class="chip">{{ item.tamano }}</span>
+      {% if item.consola %}<span class="chip chip-soft">{{ item.consola }}</span>{% endif %}
+      {% if item.desarrolladora %}<span class="chip chip-soft">{{ item.desarrolladora }}</span>{% endif %}
+      {% if item.genero %}<span class="chip chip-soft">{{ item.genero }}</span>{% endif %}
     </div>
 
     {% if item.descargas %}
