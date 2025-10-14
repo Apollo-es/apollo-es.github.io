@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Apps
+permalink: /apps/
 ---
 
 <h1>Apps</h1>
@@ -8,7 +9,7 @@ title: Apps
 
 <div id="items" class="grid">
   {% for item in site.data.items %}
-    {% if item.categoria contains "apps" %}
+    {% if item.categoria contains "apps" and item.oculto != true %}
       {% include card.html item=item %}
     {% endif %}
   {% endfor %}
