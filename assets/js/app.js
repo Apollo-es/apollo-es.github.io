@@ -259,6 +259,39 @@ document.documentElement.classList.add('has-js');
       target.focus();
       target.click();
     }
+  }
+
+  function updateAuthState(){
+    if(authed){
+      container.classList.add('forum-authed');
+      authBox?.setAttribute('aria-hidden', 'true');
+      if(shortname && active){
+        loadThread(active);
+      }
+    } else {
+      container.classList.remove('forum-authed');
+      authBox?.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(btn.classList.contains('active')) return;
+      tabs.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+      active = btn.dataset.thread;
+      if(titleEl) titleEl.textContent = btn.dataset.name;
+      if(descEl) descEl.textContent = btn.dataset.summary;
+      if(authed){
+        loadThread(active);
+      }
+    });
   });
 
   updateAuthState();
