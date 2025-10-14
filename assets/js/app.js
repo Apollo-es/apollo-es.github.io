@@ -131,6 +131,7 @@ document.documentElement.classList.add('has-js');
   const descEl = container.querySelector('.forum-desc');
   const authBox = container.querySelector('#forum-auth');
   const threadBox = container.querySelector('#forum-thread');
+  const openers = Array.from(document.querySelectorAll('.forum-open'));
 
   if(!tabs.length){
     return;
@@ -139,6 +140,25 @@ document.documentElement.classList.add('has-js');
   let active = tabs[0].dataset.thread;
   let authed = !requiresAuth || sessionStorage.getItem('apolloForumAuth') === '1';
   let scriptInjected = false;
+
+  function focusArea(){
+    const nav = document.querySelector('.nav');
+    const offset = (nav?.offsetHeight || 0) + 16;
+    const top = container.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({top: Math.max(top, 0), behavior: 'smooth'});
+  }
+
+  function activateThread(identifier, focusTab){
+    if(!identifier) return;
+    const tab = tabs.find(btn => btn.dataset.thread === identifier);
+    if(!tab) return;
+    if(!tab.classList.contains('active')){
+      tab.click();
+    }
+    if(focusTab){
+      tab.focus();
+    }
+  }
 
   function canonical(identifier){
     const clean = identifier.replace(/[^a-z0-9\-]/gi,'');
@@ -208,6 +228,18 @@ document.documentElement.classList.add('has-js');
     });
   });
 
+  openers.forEach(btn => {
+    btn.addEventListener('click', evt => {
+      evt.preventDefault();
+      const thread = btn.dataset.openThread;
+      activateThread(thread, true);
+      focusArea();
+      if(authed){
+        loadThread(active);
+      }
+    });
+  });
+
   tablist?.addEventListener('keydown', evt => {
     if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(evt.key)) return;
     evt.preventDefault();
@@ -227,6 +259,39 @@ document.documentElement.classList.add('has-js');
       target.focus();
       target.click();
     }
+  }
+
+  function updateAuthState(){
+    if(authed){
+      container.classList.add('forum-authed');
+      authBox?.setAttribute('aria-hidden', 'true');
+      if(shortname && active){
+        loadThread(active);
+      }
+    } else {
+      container.classList.remove('forum-authed');
+      authBox?.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(btn.classList.contains('active')) return;
+      tabs.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+      active = btn.dataset.thread;
+      if(titleEl) titleEl.textContent = btn.dataset.name;
+      if(descEl) descEl.textContent = btn.dataset.summary;
+      if(authed){
+        loadThread(active);
+      }
+    });
   });
 
   updateAuthState();

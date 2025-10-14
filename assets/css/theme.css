@@ -99,6 +99,20 @@ a:hover{opacity:.9}
 .emulator-card p{margin:0;color:#c2cce5;font-size:14px;line-height:1.5}
 .emulator-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
 
+.guides-groups{display:flex;flex-direction:column;gap:32px;margin-top:36px}
+.guide-group{display:flex;flex-direction:column;gap:18px}
+.guide-header{display:flex;flex-direction:column;gap:8px}
+.guide-header h2{margin:0;font:600 24px/1.4 Orbitron,sans-serif;color:#edf4ff;letter-spacing:.6px;text-shadow:0 6px 18px #0006}
+.guide-header p{margin:0;color:#c6d3ef;max-width:720px}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.guide-card{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:rgba(12,18,32,.82);border:1px solid #1f2c49;box-shadow:0 20px 48px -28px rgba(0,0,0,.75)}
+.guide-media{position:relative;background:linear-gradient(145deg,rgba(124,92,255,.18),rgba(0,224,255,.15));min-height:180px;display:flex;align-items:center;justify-content:center}
+.guide-media img{width:100%;height:auto;display:block;object-fit:contain;padding:12px;max-height:320px}
+.guide-body{display:flex;flex-direction:column;gap:12px;padding:20px}
+.guide-body h3{margin:0;font:600 18px/1.4 Inter,sans-serif;color:#f1f5ff}
+.guide-body p{margin:0;color:#c5d2ef;font-size:14px;line-height:1.6}
+.guide-card .btn{align-self:flex-start}
+
 .card{position:relative;background:rgba(18,24,38,.85);border:1px solid #222a42;border-radius:20px;padding:18px;box-shadow:0 10px 28px #0007;overflow:hidden}
 .card-body{position:relative;z-index:1;display:flex;flex-direction:column;gap:0}
 .card-glow{position:absolute;inset:auto -20% -40% -20%;height:120px;background:radial-gradient(50% 60% at 50% 0%, rgba(124,92,255,.25), rgba(0,224,255,0));filter:blur(22px);pointer-events:none}
@@ -157,6 +171,8 @@ a:hover{opacity:.9}
   .forum-thread{min-height:220px}
   .emulator-system{padding:16px}
   .emulator-grid{grid-template-columns:1fr}
+  .guide-grid{grid-template-columns:1fr}
+  .guide-media{min-height:160px}
   .has-js .nav-menu.open{pointer-events:auto}
 }
 

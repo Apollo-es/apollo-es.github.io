@@ -34,6 +34,8 @@ nav:
     url: "/apps/"
   - name: "Emuladores"
     url: "/emuladores/"
+  - name: "Guías"
+    url: "/guias/"
   - name: "Foros"
     url: "/foros/"
   - name: "Enviar recurso"

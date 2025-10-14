@@ -33,7 +33,18 @@ keywords:
       {% if foro.enlaces %}
         <div class="forum-actions">
           {% for enlace in foro.enlaces %}
-            <a class="btn{% if forloop.first %} primary{% else %} alt{% endif %}" href="{{ enlace.url }}" target="_blank" rel="noopener">{{ enlace.texto }}</a>
+            {% if enlace.accion == 'participar' %}
+              <button type="button"
+                      class="btn{% if forloop.first %} primary{% else %} alt{% endif %} forum-open"
+                      data-open-thread="{{ foro.slug }}"
+                      data-open-name="{{ foro.nombre }}"
+                      data-open-summary="{{ foro.resumen | default: foro.descripcion }}">
+                {{ enlace.texto }}
+              </button>
+            {% elsif enlace.url %}
+              <a class="btn{% if forloop.first %} primary{% else %} alt{% endif %}"
+                 href="{{ enlace.url }}">{{ enlace.texto }}</a>
+            {% endif %}
           {% endfor %}
         </div>
       {% endif %}
@@ -41,10 +52,10 @@ keywords:
   {% endfor %}
 </div>
 
-<section class="forum-live"
+<section id="participa" class="forum-live"
          data-shortname="{{ site.disqus_shortname | strip | escape }}"
          data-base="{{ page.url }}"
-         data-requires-auth="true">
+         data-requires-auth="{% if site.google_client_id | strip != '' %}true{% else %}false{% endif %}">
   <aside class="forum-live-menu">
     <h2>Participa ahora</h2>
     <p>Selecciona un foro y deja tu duda o consejo. Elige General para cualquier tema o Pokémon si buscas ayuda con Leyendas Z-A y otras entregas.</p>
@@ -81,7 +92,7 @@ keywords:
     <div id="forum-auth" class="forum-auth">
       <h3>Inicia sesión con Google</h3>
       <p>Para evitar spam y mantener un ambiente saludable, pedimos que te autentiques antes de publicar. Tu correo no se mostrará públicamente.</p>
-      {% if site.google_client_id %}
+      {% if site.google_client_id | strip != '' %}
         <div id="g_id_onload"
              data-client_id="{{ site.google_client_id }}"
              data-callback="handleForumCredentialResponse"

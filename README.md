@@ -26,7 +26,14 @@ Portal comunitario con descargas verificadas de juegos, vídeos, apps y emulador
 
 - Ajusta los datos generales del sitio (título, descripción, enlaces de navegación) en `_config.yml`.
 - Las tarjetas de recursos se cargan desde `_data/items.yml`.
-- Las secciones dinámicas como emuladores y foros usan `_data/emuladores.yml` y `_data/foros.yml` respectivamente.
+- Puedes asignar portadas como rutas relativas, URLs completas o `data:` URIs en base64 si prefieres evitar subir archivos binarios al repositorio.
+- Las secciones dinámicas como emuladores, guías y foros usan `_data/emuladores.yml`, `_data/guias.yml` y `_data/foros.yml` respectivamente.
+- Añade tus credenciales en `_config.yml` (`disqus_shortname` y `google_client_id`) para activar los comentarios y el inicio de sesión con Google en la sección de Foros.
+
+## Problemas frecuentes
+
+- Si ves un error `Missing required parameter: client_id` al intentar autenticarte con Google, revisa que `google_client_id` esté definido en `_config.yml` (puedes obtenerlo en <https://console.cloud.google.com/apis/credentials>). Mientras esté vacío, el acceso se permitirá sin autenticación.
+- En entornos sin acceso a rubygems.org, `bundle install` puede fallar con `403 Forbidden`. Ejecuta el comando desde una red con acceso a internet o instala las dependencias manualmente.
 
 ## SEO y metadatos
 

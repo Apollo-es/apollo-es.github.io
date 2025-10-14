@@ -78,7 +78,7 @@
     }
     </script>
   {% endif %}
-  {% if site.google_client_id %}
+  {% if site.google_client_id | strip != '' %}
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   {% endif %}
 </head>

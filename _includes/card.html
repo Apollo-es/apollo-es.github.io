@@ -9,9 +9,17 @@
       {% assign cover_path = '/static/juegos/' | append: item.id | append: '.png' %}
     {% endif %}
 
-    {% if cover_path %}
+    {% assign cover_url = '' %}
+    {% assign cover_path = cover_path | append: '' | strip %}
+    {% if cover_path != '' %}
+      {% assign cover_prefix = cover_path | slice: 0,5 %}
+      {% if cover_path contains '://' or cover_prefix == 'data:' %}
+        {% assign cover_url = cover_path %}
+      {% else %}
+        {% assign cover_url = cover_path | relative_url %}
+      {% endif %}
       <img class="card-cover"
-           src="{{ cover_path | relative_url | escape }}"
+           src="{{ cover_url | escape }}"
            alt="Portada de {{ item.titulo }}"
            loading="lazy"
            onerror="this.remove();">
