@@ -18,6 +18,8 @@ nav:
     url: "/videos"
   - name: "Apps"
     url: "/apps"
+  - name: "Emuladores"
+    url: "/emuladores"
   - name: "Enviar recurso"
     url: "/enviar"
   - name: "Contacto"
