@@ -59,6 +59,14 @@
             </a>
           {% endif %}
         {% endfor %}
+
+        <div class="direct-links">
+          {% for m in item.mirrors %}
+            <a class="btn alt hidden" href="{{ m.url | escape }}" target="_blank" rel="noopener">
+              <i class="ti ti-external-link"></i> Directo: {{ m.host }}
+            </a>
+          {% endfor %}
+        </div>
       </div>
     {% endif %}
 
