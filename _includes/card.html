@@ -1,31 +1,83 @@
-<article class="card" data-cats="{{ item.categoria | join: ',' }}">
+{% unless item.oculto %}
+<article class="card" data-cats="{{ item.categoria | join: ',' }}"{% if item.licencia %} data-licencia="{{ item.licencia | escape }}"{% endif %}>
   <div class="card-glow"></div>
   <div class="card-body">
     <h3 class="card-title">{{ item.titulo }}</h3>
+
+    {% assign cover_path = item.portada %}
+    {% if cover_path == nil or cover_path == '' %}
+      {% assign cover_path = '/static/juegos/' | append: item.id | append: '.png' %}
+    {% endif %}
+
+    {% assign cover_url = '' %}
+    {% assign cover_path = cover_path | append: '' | strip %}
+    {% if cover_path != '' %}
+      {% assign cover_prefix = cover_path | slice: 0,5 %}
+      {% if cover_path contains '://' or cover_prefix == 'data:' %}
+        {% assign cover_url = cover_path %}
+      {% else %}
+        {% assign cover_url = cover_path | relative_url %}
+      {% endif %}
+      <img class="card-cover"
+           src="{{ cover_url | escape }}"
+           alt="Portada de {{ item.titulo }}"
+           loading="lazy"
+           onerror="this.remove();">
+    {% endif %}
+
     <p class="card-desc">{{ item.descripcion }}</p>
     <div class="meta">
       <span class="chip">{{ item.tipo | upcase }}</span>
       <span class="chip">{{ item.idioma | upcase }}</span>
       <span class="chip">{{ item.tamano }}</span>
-      {% if item.licencia %}<span class="chip">Licencia: {{ item.licencia }}</span>{% endif %}
     </div>
 
-    <div class="mirrors">
-      {% for m in item.mirrors %}
-        <button class="btn dl gated"
-                data-final-url="{{ m.url | escape }}"
-                data-host="{{ m.host | escape }}">
-          <i class="ti ti-download"></i> Descargar en {{ m.host }}
-        </button>
-      {% endfor %}
+    {% if item.descargas %}
+      <div class="downloads">
+        {% for descarga in item.descargas %}
+          <section class="download-group">
+            {% if descarga.titulo %}
+              <h4 class="download-title">{{ descarga.titulo }}</h4>
+            {% endif %}
 
-      <div class="direct-links">
-        {% for m in item.mirrors %}
-          <a class="btn alt hidden" href="{{ m.url | escape }}" target="_blank" rel="noopener">
-            <i class="ti ti-external-link"></i> Directo: {{ m.host }}
-          </a>
+            <div class="mirrors">
+              {% for m in descarga.mirrors %}
+                {% if m.url %}
+                  <a class="btn dl"
+                     href="{{ m.url | strip }}"
+                     target="_blank"
+                     rel="nofollow noopener">
+                    <i class="ti ti-download"></i> Descargar en {{ m.host }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </section>
         {% endfor %}
       </div>
-    </div>
+    {% elsif item.mirrors %}
+      <div class="mirrors">
+        {% for m in item.mirrors %}
+          {% if m.url %}
+            <a class="btn dl"
+               href="{{ m.url | strip }}"
+               target="_blank"
+               rel="nofollow noopener">
+              <i class="ti ti-download"></i> Descargar en {{ m.host }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if item.categoria contains 'juegos' %}
+      {% assign hashtags = item.hashtags %}
+      {% if hashtags and hashtags.size > 0 %}
+        <p class="seo-tags sr-only">{{ hashtags | join: ' ' }}</p>
+      {% else %}
+        <p class="seo-tags sr-only">#{{ item.titulo | slugify: 'latin' | replace: '-', '' }} #DescargarJuegos #MegaMediafireDrive</p>
+      {% endif %}
+    {% endif %}
   </div>
 </article>
+{% endunless %}

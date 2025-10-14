@@ -1,3 +1,5 @@
+document.documentElement.classList.add('has-js');
+
 // --- Background FX: simple moving stars on canvas (no deps) ---
 (function stars(){
   const c = document.getElementById('bgfx'); if(!c) return;
@@ -39,38 +41,236 @@
   });
 })();
 
-// --- Human verification gating (solo cliente, sin Worker) ---
-function isHuman(){ return sessionStorage.getItem('human') === '1'; }
-function unlockLinks(){
-  document.querySelectorAll('.direct-links .alt').forEach(a => a.classList.remove('hidden'));
-  document.querySelectorAll('.btn.dl').forEach(b => b.classList.add('hidden'));
-  const modal = document.getElementById('verifyModal');
-  if(modal) modal.setAttribute('aria-hidden', 'true');
-}
-
-// Callback real de Turnstile (ejecutado al verificar con éxito)
-function onHumanVerified(/* token */) {
-  console.log('Turnstile verificado');
-  sessionStorage.setItem('human','1');
-  unlockLinks();
-}
-window.onHumanVerified = onHumanVerified;
-
+// --- Responsive navigation toggle ---
 (function(){
-  if(isHuman()) unlockLinks();
-  const modal = document.getElementById('verifyModal');
-  const close = document.getElementById('verifyClose');
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('site-menu');
+  if(!toggle || !menu) return;
 
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('.btn.dl.gated');
-    if(!btn) return;
-    e.preventDefault();
-    if(isHuman()) {
-      window.open(btn.dataset.finalUrl, '_blank', 'noopener');
+  const nav = toggle.closest('.nav');
+  const overlay = document.querySelector('.nav-overlay');
+  const mq = window.matchMedia('(max-width: 768px)');
+
+  function setState(open){
+    if(open){
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      if(mq.matches){
+        nav?.classList.add('menu-open');
+        overlay?.classList.add('active');
+        overlay?.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+      }
     } else {
-      modal?.setAttribute('aria-hidden','false');
+      menu.classList.remove('open');
+      menu.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      nav?.classList.remove('menu-open');
+      overlay?.classList.remove('active');
+      overlay?.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+    }
+  }
+
+  function applyResponsive(){
+    if(mq.matches){
+      setState(false);
+    } else {
+      menu.classList.add('open');
+      menu.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      nav?.classList.remove('menu-open');
+      overlay?.classList.remove('active');
+      overlay?.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    if(mq.matches){
+      const isOpen = menu.classList.contains('open');
+      setState(!isOpen);
     }
   });
 
-  close?.addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
+  overlay?.addEventListener('click', () => {
+    if(mq.matches){
+      setState(false);
+    }
+  });
+
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+    if(mq.matches){
+      setState(false);
+    }
+  }));
+
+  document.addEventListener('keydown', evt => {
+    if(evt.key === 'Escape' && mq.matches && menu.classList.contains('open')){
+      setState(false);
+    }
+  });
+
+  mq.addEventListener('change', applyResponsive);
+
+  applyResponsive();
+})();
+
+// --- Foros interactivos ---
+(function(){
+  const container = document.querySelector('.forum-live');
+  if(!container) return;
+
+  const shortname = container.dataset.shortname;
+  const requiresAuth = container.dataset.requiresAuth === 'true';
+  const basePath = container.dataset.base || '/foros/';
+  const tabs = Array.from(container.querySelectorAll('.forum-tab'));
+  const tablist = container.querySelector('.forum-tablist');
+  const titleEl = container.querySelector('.forum-title');
+  const descEl = container.querySelector('.forum-desc');
+  const authBox = container.querySelector('#forum-auth');
+  const threadBox = container.querySelector('#forum-thread');
+  const openers = Array.from(document.querySelectorAll('.forum-open'));
+
+  if(!tabs.length){
+    return;
+  }
+
+  let active = tabs[0].dataset.thread;
+  let authed = !requiresAuth || sessionStorage.getItem('apolloForumAuth') === '1';
+  let scriptInjected = false;
+
+  function focusArea(){
+    const nav = document.querySelector('.nav');
+    const offset = (nav?.offsetHeight || 0) + 16;
+    const top = container.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({top: Math.max(top, 0), behavior: 'smooth'});
+  }
+
+  function activateThread(identifier, focusTab){
+    if(!identifier) return;
+    const tab = tabs.find(btn => btn.dataset.thread === identifier);
+    if(!tab) return;
+    if(!tab.classList.contains('active')){
+      tab.click();
+    }
+    if(focusTab){
+      tab.focus();
+    }
+  }
+
+  function canonical(identifier){
+    const clean = identifier.replace(/[^a-z0-9\-]/gi,'');
+    const base = basePath.endsWith('/') ? basePath : basePath + '/';
+    return `${window.location.origin}${base}#${clean}`;
+  }
+
+  function loadThread(identifier){
+    if(!shortname || !identifier || !threadBox) return;
+    const pageIdentifier = `foros-${identifier}`;
+    const pageUrl = canonical(identifier);
+
+    if(window.DISQUS){
+      window.DISQUS.reset({
+        reload: true,
+        config: function(){
+          this.page.identifier = pageIdentifier;
+          this.page.url = pageUrl;
+        }
+      });
+    } else {
+      window.disqus_config = function(){
+        this.page.identifier = pageIdentifier;
+        this.page.url = pageUrl;
+      };
+      if(!scriptInjected){
+        scriptInjected = true;
+        const d = document;
+        const script = d.createElement('script');
+        script.src = `https://${shortname}.disqus.com/embed.js`;
+        script.setAttribute('data-timestamp', Date.now().toString());
+        (d.head || d.body).appendChild(script);
+      }
+    }
+  }
+
+  function updateAuthState(){
+    if(authed){
+      container.classList.add('forum-authed');
+      authBox?.setAttribute('aria-hidden', 'true');
+      if(shortname && active){
+        loadThread(active);
+      }
+    } else {
+      container.classList.remove('forum-authed');
+      authBox?.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(btn.classList.contains('active')) return;
+      tabs.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+      active = btn.dataset.thread;
+      if(titleEl) titleEl.textContent = btn.dataset.name;
+      if(descEl) descEl.textContent = btn.dataset.summary;
+      if(authed){
+        loadThread(active);
+      }
+    });
+  });
+
+  openers.forEach(btn => {
+    btn.addEventListener('click', evt => {
+      evt.preventDefault();
+      const thread = btn.dataset.openThread;
+      activateThread(thread, true);
+      focusArea();
+      if(authed){
+        loadThread(active);
+      }
+    });
+  });
+
+  tablist?.addEventListener('keydown', evt => {
+    if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(evt.key)) return;
+    evt.preventDefault();
+    const currentIndex = tabs.findIndex(tab => tab.classList.contains('active'));
+    let targetIndex = currentIndex;
+    if(evt.key === 'ArrowRight' || evt.key === 'ArrowDown'){
+      targetIndex = (currentIndex + 1) % tabs.length;
+    } else if(evt.key === 'ArrowLeft' || evt.key === 'ArrowUp'){
+      targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else if(evt.key === 'Home'){
+      targetIndex = 0;
+    } else if(evt.key === 'End'){
+      targetIndex = tabs.length - 1;
+    }
+    const target = tabs[targetIndex];
+    if(target){
+      target.focus();
+      target.click();
+    }
+  });
+
+  updateAuthState();
+
+  window.handleForumCredentialResponse = function(response){
+    if(!response || !response.credential) return;
+    authed = true;
+    sessionStorage.setItem('apolloForumAuth', '1');
+    updateAuthState();
+  };
+
+  if(!requiresAuth && shortname && active){
+    loadThread(active);
+  }
 })();

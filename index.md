@@ -1,6 +1,12 @@
 ---
 layout: default
 title: Inicio
+description: "Encuentra descargas verificadas de juegos, vídeos, apps y emuladores listos para tu consola o PC."
+keywords:
+  - "descargar juegos"
+  - "roms nintendo switch"
+  - "mega mediafire drive"
+  - "emuladores recomendados"
 ---
 
 <div class="hero">
@@ -14,6 +20,8 @@ title: Inicio
 
 <div id="items" class="grid">
   {% for item in site.data.items %}
-    {% include card.html item=item %}
+    {% unless item.oculto %}
+      {% include card.html item=item %}
+    {% endunless %}
   {% endfor %}
 </div>
