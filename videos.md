@@ -1,6 +1,13 @@
 ---
 layout: default
 title: Vídeos
+permalink: /videos/
+description: "Clips, documentales y contenido audiovisual gamer con enlaces directos autorizados."
+keywords:
+  - "videos gaming"
+  - "descargar documentales"
+  - "mega mediafire"
+  - "clips retro"
 ---
 
 <h1>Vídeos</h1>
@@ -8,7 +15,7 @@ title: Vídeos
 
 <div id="items" class="grid">
   {% for item in site.data.items %}
-    {% if item.categoria contains "videos" %}
+    {% if item.categoria contains "videos" and item.oculto != true %}
       {% include card.html item=item %}
     {% endif %}
   {% endfor %}

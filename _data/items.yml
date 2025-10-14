@@ -6,6 +6,7 @@
   idioma: "es"
   tamano: "—"
   licencia: "con permiso"
+  oculto: true
   mirrors:
     - host: "Mega"
       url: "https://mega.nz/..."
@@ -22,6 +23,7 @@
   idioma: "es"
   tamano: "—"
   licencia: "con permiso"
+  oculto: true
   mirrors:
     - host: "Mega"
       url: "https://mega.nz/..."
@@ -34,6 +36,69 @@
   idioma: "es"
   tamano: "—"
   licencia: "con permiso"
+  oculto: true
   mirrors:
     - host: "Mediafire"
       url: "https://www.mediafire.com/file/..."
+
+- id: pokemon-leyendas-za
+  categoria: ["juegos"]
+  titulo: "Pokémon Leyendas Z-A"
+  descripcion: "Regresa a Kalos con un proyecto que combina las mecánicas de mundo abierto de Leyendas Arceus con la narrativa clásica de los juegos principales. Acompaña a Hélio y compañía en una expansión de Ciudad Luminalia, con nuevas formas regionales, misiones de investigación y compatibilidad total con Nintendo Switch."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "Por confirmar"
+  licencia: "pendiente"
+  portada: "/static/juegos/pokemon-leyendas-za.png"
+  hashtags:
+    - "#PokemonLeyendasZA"
+    - "#PokemonLegendsZA"
+    - "#NintendoSwitch"
+    - "#ROMHack"
+    - "#CiudadLuminalia"
+  descargas:
+    - titulo: "ROM base (NSP/XCI)"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/rommega"
+        - host: "Mediafire"
+          url: "https://exe.io/rommediaf"
+        - host: "Google Drive"
+          url: "https://exe.io/romdriv"
+    - titulo: "Actualización 1.0.1"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/updmega"
+        - host: "Mediafire"
+          url: "https://exe.io/updmediaf"
+        - host: "Google Drive"
+          url: "https://exe.io/upddriv"
+    - titulo: "Contenido adicional (DLC)"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/dlcmegaa"
+        - host: "Mediafire"
+          url: "https://exe.io/dlcmediaf"
+        - host: "Google Drive"
+          url: "https://exe.io/dlcdrive"
+
+- id: papers-please-pc
+  categoria: ["juegos"]
+  titulo: "Papers, Please"
+  descripcion: "Conviértete en un inspector de inmigración en la frontera de Arstotzka y decide quién entra al país. Gestiona documentos, moral y sobornos en este aclamado simulador de Lucas Pope que llega completo para PC."
+  tipo: "PC"
+  idioma: "multi"
+  tamano: "350 MB"
+  licencia: "incluida"
+  portada: "/static/juegos/papers-please-pc.png"
+  hashtags:
+    - "#PapersPlease"
+    - "#LucasPope"
+    - "#IndieGame"
+    - "#PCGames"
+    - "#SimuladorDeFrontera"
+  descargas:
+    - titulo: "Juego base"
+      mirrors:
+        - host: "Servidor principal"
+          url: "https://example.com/papers-please"
