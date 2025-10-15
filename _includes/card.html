@@ -6,11 +6,14 @@
          data-cats="{% if card_categories %}{{ card_categories | join: ',' | escape }}{% endif %}"
          data-title="{{ item.titulo | escape }}"
          data-desc="{{ item.descripcion | strip_html | strip_newlines | escape }}"
+         data-clicks="{{ item.interacciones | default: 0 }}"
+         data-searches="{{ item.busquedas | default: 0 }}"
          {% if card_tags %}data-tags="{{ card_tags | join: ' ' | escape }}"{% endif %}
          {% if item.licencia %}data-licencia="{{ item.licencia | escape }}"{% endif %}
          {% if item.consola %}data-console="{{ item.consola | escape }}"{% endif %}
          {% if item.desarrolladora %}data-developer="{{ item.desarrolladora | escape }}"{% endif %}
-         {% if item.genero %}data-genre="{{ item.genero | escape }}"{% endif %}>
+         {% if item.genero %}data-genre="{{ item.genero | escape }}"{% endif %}
+         {% if item.fecha_publicacion %}data-published="{{ item.fecha_publicacion }}"{% endif %}>
   <div class="card-glow"></div>
   <div class="card-body">
     <h3 class="card-title">{{ item.titulo }}</h3>

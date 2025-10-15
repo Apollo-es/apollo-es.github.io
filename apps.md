@@ -20,3 +20,4 @@ keywords:
     {% endif %}
   {% endfor %}
 </div>
+<p class="catalog-empty" data-empty hidden>No encontramos apps que coincidan con tu búsqueda. Ajusta los filtros o consulta de nuevo más tarde.</p>

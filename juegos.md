@@ -16,20 +16,25 @@ keywords:
 <section class="filters" id="game-filters" aria-label="Filtrar catálogo de juegos">
   <div class="filter-group">
     <label for="filter-console">Consola</label>
-    <select id="filter-console" data-placeholder="Todas">
-      <option value="">Todas</option>
-    </select>
+    <input id="filter-console" class="filter-combobox" type="search" list="filter-console-options" autocomplete="off" placeholder="Todas las consolas">
+    <datalist id="filter-console-options"></datalist>
   </div>
   <div class="filter-group">
     <label for="filter-developer">Desarrolladora</label>
-    <select id="filter-developer" data-placeholder="Todas">
-      <option value="">Todas</option>
-    </select>
+    <input id="filter-developer" class="filter-combobox" type="search" list="filter-developer-options" autocomplete="off" placeholder="Todos los estudios">
+    <datalist id="filter-developer-options"></datalist>
   </div>
   <div class="filter-group">
     <label for="filter-genre">Género</label>
-    <select id="filter-genre" data-placeholder="Todos">
-      <option value="">Todos</option>
+    <input id="filter-genre" class="filter-combobox" type="search" list="filter-genre-options" autocomplete="off" placeholder="Todos los géneros">
+    <datalist id="filter-genre-options"></datalist>
+  </div>
+  <div class="filter-group filter-group-small">
+    <label for="filter-sort">Ordenar por</label>
+    <select id="filter-sort">
+      <option value="relevance">Relevancia</option>
+      <option value="searches">Más buscados</option>
+      <option value="new">Novedades</option>
     </select>
   </div>
   <div class="filter-actions">
@@ -44,3 +49,4 @@ keywords:
     {% endif %}
   {% endfor %}
 </div>
+<p class="catalog-empty" data-empty hidden>No encontramos coincidencias para tu búsqueda. Ajusta los filtros o prueba con otro término.</p>

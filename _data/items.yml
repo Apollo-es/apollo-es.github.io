@@ -142,6 +142,35 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es ofrece información y enlaces a petición de la comunidad. Silent Hill es © 1999-2025 Konami Digital Entertainment. Todos los derechos de la franquicia pertenecen a Konami.
 
+- id: the-elder-scrolls-iv-oblivion-remastered
+  categoria: ["juegos"]
+  titulo: "The Elder Scrolls IV: Oblivion Remastered"
+  descripcion: "Redescubre Cyrodiil con mejoras gráficas, compatibilidad moderna y soporte para contenido adicional en esta remasterización fan-made de uno de los RPG más influyentes de Bethesda."
+  tipo: "PC"
+  idioma: "multi"
+  tamano: "Por confirmar"
+  licencia: "pendiente"
+  consola: "PC"
+  desarrolladora: "Bethesda Game Studios"
+  genero: "RPG / Mundo abierto"
+  portada: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5n5c.png"
+  hashtags:
+    - "#OblivionRemastered"
+    - "#TheElderScrolls"
+    - "#Bethesda"
+    - "#RPG"
+    - "#PCGaming"
+  descargas:
+    - titulo: "Juego base"
+      mirrors:
+        - host: "Descarga"
+          url: "https://exe.io/theelderscrollslink"
+  interacciones: 0
+  busquedas: 0
+  fecha_publicacion: 2025-09-17
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. The Elder Scrolls IV: Oblivion es © 2006-2025 Bethesda Softworks LLC. Todos los derechos pertenecen a sus respectivos autores.
+
 - id: sonic-racing-crossworlds
   categoria: ["juegos"]
   titulo: "Sonic Racing: CrossWorlds"
@@ -186,6 +215,9 @@
   desarrolladora: "Nintendo EAD"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy.svg"
+  interacciones: 16840
+  busquedas: 12350
+  fecha_publicacion: 2023-09-18
   hashtags:
     - "#SuperMarioGalaxy"
     - "#Nintendo"
@@ -214,6 +246,9 @@
   desarrolladora: "Nintendo"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy-2.svg"
+  interacciones: 14210
+  busquedas: 10125
+  fecha_publicacion: 2024-02-04
   hashtags:
     - "#SuperMarioGalaxy2"
     - "#Nintendo"
@@ -242,6 +277,9 @@
   desarrolladora: "Game Freak"
   genero: "RPG"
   portada: "/static/juegos/pokemon-amarillo.svg"
+  interacciones: 19870
+  busquedas: 18740
+  fecha_publicacion: 2024-03-22
   hashtags:
     - "#PokemonAmarillo"
     - "#GameBoy"
@@ -266,6 +304,9 @@
   desarrolladora: "Game Freak"
   genero: "RPG"
   portada: "/static/juegos/pokemon-azul.svg"
+  interacciones: 18310
+  busquedas: 17580
+  fecha_publicacion: 2024-03-18
   hashtags:
     - "#PokemonAzul"
     - "#GameBoy"
