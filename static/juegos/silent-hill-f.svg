@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="shf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1525" />
+      <stop offset="45%" stop-color="#3a2038" />
+      <stop offset="100%" stop-color="#702b2b" />
+    </linearGradient>
+    <radialGradient id="shf-glow" cx="55%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#ff6f91" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0f1525" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#shf-bg)" />
+  <circle cx="360" cy="150" r="210" fill="url(#shf-glow)" />
+  <text x="50%" y="42%" text-anchor="middle" font-family="'Orbitron', 'Segoe UI', sans-serif" font-size="52" fill="#fef4f7" letter-spacing="6">
+    SILENT HILL
+  </text>
+  <text x="50%" y="60%" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="72" fill="#ffb3c1" letter-spacing="8">
+    f
+  </text>
+  <text x="50%" y="82%" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" fill="#fdd9df" letter-spacing="4">
+    EL MIEDO FLORECE EN LA NIEBLA
+  </text>
+</svg>

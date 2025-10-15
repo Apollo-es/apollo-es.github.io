@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#160c14" />
+      <stop offset="55%" stop-color="#36161f" />
+      <stop offset="100%" stop-color="#5c1f24" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pp-bg)" />
+  <g fill="#ffcf5c" opacity="0.18">
+    <path d="M120 60h80l-40 70z" />
+    <path d="M460 90h90l-45 80z" />
+    <path d="M260 210h120l-60 110z" />
+  </g>
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="54" fill="#ffcf5c" letter-spacing="8">
+    PAPERS, PLEASE
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#ffdca3" letter-spacing="6">
+    GLORIA A ARSTOTZKA
+  </text>
+</svg>

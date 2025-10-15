@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="srx-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#051944" />
+      <stop offset="55%" stop-color="#0a3c7a" />
+      <stop offset="100%" stop-color="#1088d7" />
+    </linearGradient>
+    <radialGradient id="srx-glow" cx="55%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffe566" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#051944" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#srx-bg)" />
+  <circle cx="360" cy="150" r="210" fill="url(#srx-glow)" />
+  <text x="50%" y="46%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="48" fill="#fff1c2" letter-spacing="6">
+    SONIC RACING
+  </text>
+  <text x="50%" y="64%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="58" fill="#f1fcff" letter-spacing="8">
+    CROSSWORLDS
+  </text>
+  <text x="50%" y="82%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="18" fill="#fffbda" letter-spacing="4">
+    BOOST · EQUIPOS · TEMPORADAS
+  </text>
+</svg>

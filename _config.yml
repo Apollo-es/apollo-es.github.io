@@ -26,6 +26,8 @@ plugins:
 nav:
   - name: "Inicio"
     url: "/"
+  - name: "Noticias"
+    url: "/noticias/"
   - name: "Juegos"
     url: "/juegos/"
   - name: "Vídeos"

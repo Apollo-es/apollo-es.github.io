@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2672781546777359" crossorigin="anonymous"></script>
   {% if site.organization %}
     <script type="application/ld+json">
     {
@@ -125,6 +126,21 @@
     <p>© {{ site.time | date: "%Y" }} {{ site.title }} · Hecho con GitHub Pages</p>
     <a href="https://exe.io/ref/ApolloMG"><img src="https://exe.io/img/ref/r1.gif" title="CuT URLs - Earn money by shortening links with the highest CPMs Ever!" /></a>
   </footer>
+
+  <div id="report-panel" class="report-panel" hidden>
+    <div class="report-panel-header">
+      <div class="report-panel-title"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Reportes internos</div>
+      <span id="report-count" class="report-count">0</span>
+    </div>
+    <ol id="report-list" class="report-list">
+      <li class="report-empty">Sin reportes registrados.</li>
+    </ol>
+    <div class="report-actions">
+      <button type="button" id="report-clear" class="report-clear">
+        <i class="ti ti-trash" aria-hidden="true"></i> Limpiar
+      </button>
+    </div>
+  </div>
 
   <script src="/assets/js/app.js"></script>
 </body>
