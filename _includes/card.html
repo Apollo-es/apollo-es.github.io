@@ -51,12 +51,25 @@
             <div class="mirrors">
               {% for m in descarga.mirrors %}
                 {% if m.url %}
-                  <a class="btn dl"
-                     href="{{ m.url | strip }}"
-                     target="_blank"
-                     rel="nofollow noopener">
-                    <i class="ti ti-download"></i> Descargar en {{ m.host }}
-                  </a>
+                  <div class="mirror-entry">
+                    <a class="btn dl"
+                       href="{{ m.url | strip }}"
+                       target="_blank"
+                       rel="nofollow noopener">
+                      <i class="ti ti-download"></i> Descargar en {{ m.host }}
+                    </a>
+                    <button class="report-flag"
+                            type="button"
+                            data-item="{{ item.id }}"
+                            data-title="{{ item.titulo }}"
+                            data-group="{{ descarga.titulo | default: 'Descarga' }}"
+                            data-host="{{ m.host }}"
+                            data-url="{{ m.url | strip }}"
+                            title="Reportar enlace caído">
+                      <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+                      <span class="sr-only">Reportar enlace caído</span>
+                    </button>
+                  </div>
                 {% endif %}
               {% endfor %}
             </div>
@@ -67,12 +80,25 @@
       <div class="mirrors">
         {% for m in item.mirrors %}
           {% if m.url %}
-            <a class="btn dl"
-               href="{{ m.url | strip }}"
-               target="_blank"
-               rel="nofollow noopener">
-              <i class="ti ti-download"></i> Descargar en {{ m.host }}
-            </a>
+            <div class="mirror-entry">
+              <a class="btn dl"
+                 href="{{ m.url | strip }}"
+                 target="_blank"
+                 rel="nofollow noopener">
+                <i class="ti ti-download"></i> Descargar en {{ m.host }}
+              </a>
+              <button class="report-flag"
+                      type="button"
+                      data-item="{{ item.id }}"
+                      data-title="{{ item.titulo }}"
+                      data-group="Descarga"
+                      data-host="{{ m.host }}"
+                      data-url="{{ m.url | strip }}"
+                      title="Reportar enlace caído">
+                <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+                <span class="sr-only">Reportar enlace caído</span>
+              </button>
+            </div>
           {% endif %}
         {% endfor %}
 
@@ -84,6 +110,10 @@
           {% endfor %}
         </div>
       </div>
+    {% endif %}
+
+    {% if item.disclaimer %}
+      <p class="legal-disclaimer">{{ item.disclaimer }}</p>
     {% endif %}
 
     {% if item.categoria contains 'juegos' %}

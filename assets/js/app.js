@@ -35,125 +35,167 @@ document.documentElement.classList.add('has-js');
 
 // --- Catálogo de juegos: búsqueda + filtros ---
 (function(){
-  const list = document.querySelector('#items');
+  var list = document.getElementById('items');
   if(!list) return;
 
-  const cards = Array.from(list.querySelectorAll('.card'));
+  var cards = Array.prototype.slice.call(list.querySelectorAll('.card'));
   if(!cards.length) return;
 
-  const q = document.querySelector('#q');
-  const selects = {
+  var q = document.getElementById('q');
+  var selects = {
     console: document.getElementById('filter-console'),
     developer: document.getElementById('filter-developer'),
     genre: document.getElementById('filter-genre')
   };
-  const resetBtn = document.getElementById('filter-reset');
+  var resetBtn = document.getElementById('filter-reset');
 
-  const normalise = str => (str || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-  const splitTokens = str => (str || '').split(/[,/]/).map(t => t.trim()).filter(Boolean);
-
-  const filters = {term:'', console:'', developer:'', genre:''};
-  const valueSets = {console:new Set(), developer:new Set(), genre:new Set()};
-
-  cards.forEach(card => {
-    card.dataset.search = normalise(card.innerText);
-
-    const consoleName = card.dataset.console;
-    if(consoleName){
-      valueSets.console.add(consoleName.trim());
+  function normalise(str){
+    if(!str) return '';
+    var value = String(str).toLowerCase().trim();
+    if(typeof value.normalize === 'function'){
+      value = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
+    return value;
+  }
 
-    const developerName = card.dataset.developer;
-    if(developerName){
-      valueSets.developer.add(developerName.trim());
-    }
+  function toTokens(str){
+    if(!str) return [];
+    return String(str)
+      .split(/[,/|]/)
+      .map(function(token){ return token.trim(); })
+      .filter(Boolean);
+  }
 
-    const genreName = card.dataset.genre;
-    if(genreName){
-      const tokens = splitTokens(genreName);
-      card.dataset.genreTokens = tokens.map(normalise).join('|');
-      tokens.forEach(token => valueSets.genre.add(token));
-    } else {
-      card.dataset.genreTokens = '';
+  var dataset = cards.map(function(card){
+    var rawText = card.textContent || '';
+    var consoleLabel = card.getAttribute('data-console') || '';
+    var developerLabel = card.getAttribute('data-developer') || '';
+    var genreLabel = card.getAttribute('data-genre') || '';
+    var tokens = toTokens(genreLabel);
+
+    return {
+      card: card,
+      text: normalise(rawText),
+      consoleLabel: consoleLabel.trim(),
+      developerLabel: developerLabel.trim(),
+      genreLabels: tokens,
+      consoleValue: normalise(consoleLabel),
+      developerValue: normalise(developerLabel),
+      genreValues: tokens.map(normalise)
+    };
+  });
+
+  var valueSets = {
+    console: new Set(),
+    developer: new Set(),
+    genre: new Set()
+  };
+
+  dataset.forEach(function(entry){
+    if(entry.consoleLabel){
+      valueSets.console.add(entry.consoleLabel);
     }
+    if(entry.developerLabel){
+      valueSets.developer.add(entry.developerLabel);
+    }
+    entry.genreLabels.forEach(function(label){
+      valueSets.genre.add(label);
+    });
   });
 
   function populateSelect(select, values){
-    if(!select || !values.size) return;
-    const placeholder = select.querySelector('option[value=""]');
-    select.innerHTML = '';
-    if(placeholder){
-      select.appendChild(placeholder);
-    } else {
-      const opt = document.createElement('option');
-      opt.value = '';
-      opt.textContent = select.dataset.placeholder || 'Todos';
-      select.appendChild(opt);
-    }
+    if(!select) return;
+    var doc = select.ownerDocument;
+    var fragment = doc.createDocumentFragment();
+    var placeholderText = select.getAttribute('data-placeholder') || 'Todos';
+    var placeholder = doc.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = placeholderText;
+    fragment.appendChild(placeholder);
+
     Array.from(values)
-      .sort((a,b) => a.localeCompare(b, 'es', {sensitivity:'base'}))
-      .forEach(value => {
-        const opt = document.createElement('option');
+      .sort(function(a, b){ return a.localeCompare(b, 'es', {sensitivity: 'base'}); })
+      .forEach(function(value){
+        var opt = doc.createElement('option');
         opt.value = value;
         opt.textContent = value;
-        select.appendChild(opt);
+        fragment.appendChild(opt);
       });
+
+    select.innerHTML = '';
+    select.appendChild(fragment);
+    select.value = '';
   }
 
   populateSelect(selects.console, valueSets.console);
   populateSelect(selects.developer, valueSets.developer);
   populateSelect(selects.genre, valueSets.genre);
 
+  var state = {
+    term: '',
+    console: '',
+    developer: '',
+    genre: ''
+  };
+
   function applyFilters(){
-    cards.forEach(card => {
-      let visible = true;
+    dataset.forEach(function(entry){
+      var visible = true;
 
-      if(filters.term){
-        visible = (card.dataset.search || '').includes(filters.term);
+      if(state.term && entry.text.indexOf(state.term) === -1){
+        visible = false;
       }
 
-      if(visible && filters.console){
-        visible = normalise(card.dataset.console).includes(filters.console);
+      if(visible && state.console && entry.consoleValue !== state.console){
+        visible = false;
       }
 
-      if(visible && filters.developer){
-        visible = normalise(card.dataset.developer).includes(filters.developer);
+      if(visible && state.developer && entry.developerValue !== state.developer){
+        visible = false;
       }
 
-      if(visible && filters.genre){
-        const tokens = card.dataset.genreTokens ? card.dataset.genreTokens.split('|') : [];
-        visible = tokens.includes(filters.genre);
+      if(visible && state.genre && entry.genreValues.indexOf(state.genre) === -1){
+        visible = false;
       }
 
-      card.style.display = visible ? '' : 'none';
+      entry.card.style.display = visible ? '' : 'none';
     });
   }
 
-  q?.addEventListener('input', () => {
-    filters.term = normalise(q.value);
-    applyFilters();
-  });
+  if(q){
+    q.addEventListener('input', function(){
+      state.term = normalise(q.value);
+      applyFilters();
+    });
+  }
 
-  Object.entries(selects).forEach(([key, select]) => {
-    select?.addEventListener('change', () => {
-      filters[key] = normalise(select.value);
+  Object.keys(selects).forEach(function(key){
+    var select = selects[key];
+    if(!select) return;
+    select.addEventListener('change', function(){
+      state[key] = normalise(select.value);
       applyFilters();
     });
   });
 
-  resetBtn?.addEventListener('click', () => {
-    filters.term = filters.console = filters.developer = filters.genre = '';
-    if(q) q.value = '';
-    Object.values(selects).forEach(select => {
-      if(select) select.value = '';
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      state.term = state.console = state.developer = state.genre = '';
+      if(q) q.value = '';
+      Object.keys(selects).forEach(function(key){
+        if(selects[key]){
+          selects[key].value = '';
+        }
+      });
+      applyFilters();
+      if(q){
+        q.focus();
+      }
     });
-    applyFilters();
-    q?.focus();
-  });
+  }
 
   applyFilters();
 })();
-
 // --- Calculadora de hardware para emuladores ---
 (function(){
   const section = document.getElementById('hardware-advisor');
@@ -604,4 +646,226 @@ document.documentElement.classList.add('has-js');
   if(!requiresAuth && shortname && active){
     loadThread(active);
   }
+})();
+
+// --- Sistema interno de reportes de enlaces ---
+(function(){
+  const storageKey = 'apolloStaffMode';
+  const reportKey = 'apolloLinkReports';
+
+  const params = new URLSearchParams(window.location.search);
+  const staffParam = params.get('staff');
+
+  if(staffParam === '1'){
+    localStorage.setItem(storageKey, '1');
+  } else if(staffParam === '0'){
+    localStorage.removeItem(storageKey);
+  }
+
+  if(staffParam !== null){
+    params.delete('staff');
+    const newQuery = params.toString();
+    const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
+    if(typeof window.history?.replaceState === 'function'){
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  }
+
+  if(localStorage.getItem(storageKey) !== '1'){
+    return;
+  }
+
+  document.body.classList.add('is-staff');
+
+  const panel = document.getElementById('report-panel');
+  const list = document.getElementById('report-list');
+  const count = document.getElementById('report-count');
+  const clearBtn = document.getElementById('report-clear');
+  let toastTimer = null;
+  let toastEl = null;
+
+  function loadReports(){
+    try {
+      const raw = localStorage.getItem(reportKey);
+      if(!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch(err){
+      console.warn('No se pudieron leer los reportes almacenados', err);
+      return [];
+    }
+  }
+
+  function saveReports(reports){
+    try {
+      localStorage.setItem(reportKey, JSON.stringify(reports));
+    } catch(err){
+      console.error('No se pudieron guardar los reportes', err);
+    }
+  }
+
+  function formatTime(iso){
+    if(!iso) return 'Fecha desconocida';
+    const date = new Date(iso);
+    if(Number.isNaN(date.getTime())){
+      return 'Fecha desconocida';
+    }
+    return date.toLocaleString('es-ES', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  function ensurePanel(){
+    if(panel){
+      panel.hidden = false;
+    }
+  }
+
+  function showToast(message){
+    if(!message) return;
+    if(!toastEl){
+      toastEl = document.createElement('div');
+      toastEl.className = 'report-toast';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = message;
+    toastEl.classList.add('visible');
+    if(toastTimer){
+      clearTimeout(toastTimer);
+    }
+    toastTimer = setTimeout(() => {
+      toastEl?.classList.remove('visible');
+    }, 2600);
+  }
+
+  function renderReports(){
+    const reports = loadReports();
+    if(count){
+      count.textContent = reports.length.toString();
+    }
+    if(list){
+      list.innerHTML = '';
+      if(!reports.length){
+        const empty = document.createElement('li');
+        empty.className = 'report-empty';
+        empty.textContent = 'Sin reportes registrados.';
+        list.appendChild(empty);
+      } else {
+        reports.slice().reverse().forEach(report => {
+          const item = document.createElement('li');
+          item.className = 'report-item';
+
+          const title = document.createElement('strong');
+          title.textContent = report.title || report.item || 'Enlace sin título';
+          item.appendChild(title);
+
+          const meta = document.createElement('div');
+          meta.className = 'report-item-meta';
+          if(report.group){
+            const spanGroup = document.createElement('span');
+            spanGroup.textContent = `Paquete: ${report.group}`;
+            meta.appendChild(spanGroup);
+          }
+          if(report.host){
+            const spanHost = document.createElement('span');
+            spanHost.textContent = `Host: ${report.host}`;
+            meta.appendChild(spanHost);
+          }
+          const spanTime = document.createElement('span');
+          spanTime.textContent = formatTime(report.time);
+          meta.appendChild(spanTime);
+          item.appendChild(meta);
+
+          if(report.url){
+            const link = document.createElement('a');
+            link.href = report.url;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.className = 'report-item-url';
+            link.textContent = report.url;
+            item.appendChild(link);
+          }
+
+          list.appendChild(item);
+        });
+      }
+    }
+    ensurePanel();
+  }
+
+  function addReport(detail){
+    const reports = loadReports();
+    reports.push(detail);
+    saveReports(reports);
+    renderReports();
+    showToast(`Se reportó ${detail.host || 'el enlace'} de ${detail.title || detail.item || 'contenido'}.`);
+  }
+
+  document.addEventListener('click', evt => {
+    const button = evt.target.closest('.report-flag');
+    if(!button) return;
+    evt.preventDefault();
+
+    const detail = {
+      id: Date.now(),
+      item: button.dataset.item || '',
+      title: button.dataset.title || '',
+      group: button.dataset.group || '',
+      host: button.dataset.host || '',
+      url: button.dataset.url || '',
+      time: new Date().toISOString()
+    };
+
+    const confirmation = window.confirm(`¿Reportar enlace caído en ${detail.host || 'host desconocido'}?`);
+    if(!confirmation){
+      return;
+    }
+
+    addReport(detail);
+  });
+
+  clearBtn?.addEventListener('click', () => {
+    if(!window.confirm('¿Vaciar la bandeja de reportes?')){
+      return;
+    }
+    saveReports([]);
+    renderReports();
+    showToast('Se limpiaron los reportes registrados.');
+  });
+
+  renderReports();
+})();
+
+// --- Compartir noticias ---
+(function(){
+  if(typeof navigator === 'undefined' || typeof navigator.share !== 'function'){
+    return;
+  }
+
+  const blocks = document.querySelectorAll('[data-share]');
+  if(!blocks.length) return;
+
+  blocks.forEach(block => {
+    block.addEventListener('click', evt => {
+      const link = evt.target.closest('a.share');
+      if(!link) return;
+      evt.preventDefault();
+
+      const shareUrl = block.getAttribute('data-share-url') || link.href;
+      const shareTitle = block.getAttribute('data-share-title') || document.title;
+      const shareText = block.getAttribute('data-share-text') || link.textContent?.trim() || '';
+
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      }).catch(() => {
+        window.open(link.href, '_blank', 'noopener');
+      });
+    });
+  });
 })();
