@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pkrb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#300512" />
+      <stop offset="55%" stop-color="#7b1030" />
+      <stop offset="100%" stop-color="#d52f4a" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pkrb-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#ffd6e1" letter-spacing="6">
+    POKÉMON RUBÍ
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#ffc6d4" letter-spacing="5">
+    EQUIPO MAGMA EN HOENN
+  </text>
+</svg>

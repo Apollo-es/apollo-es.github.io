@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="plza-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1a2e" />
+      <stop offset="55%" stop-color="#123b47" />
+      <stop offset="100%" stop-color="#1a755e" />
+    </linearGradient>
+    <radialGradient id="plza-glow" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#6cf0ff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0b1a2e" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#plza-bg)" />
+  <circle cx="340" cy="130" r="210" fill="url(#plza-glow)" />
+  <text x="50%" y="46%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="48" fill="#bdf7ff" letter-spacing="6">
+    LEYENDAS POKÉMON
+  </text>
+  <text x="50%" y="64%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="76" fill="#f4fffd" letter-spacing="10">
+    Z · A
+  </text>
+  <text x="50%" y="82%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="18" fill="#c5fff4" letter-spacing="4">
+    KALOS REIMAGINADA · MEGA DIMENSIÓN
+  </text>
+</svg>

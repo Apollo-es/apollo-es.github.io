@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pko-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a1502" />
+      <stop offset="55%" stop-color="#6b3500" />
+      <stop offset="100%" stop-color="#ffb347" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pko-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#ffeccd" letter-spacing="6">
+    POKÉMON ORO
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#ffe0a3" letter-spacing="5">
+    LUZ DE JOHTO
+  </text>
+</svg>

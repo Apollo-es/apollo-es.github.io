@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pkrf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a0b02" />
+      <stop offset="55%" stop-color="#a33200" />
+      <stop offset="100%" stop-color="#ff7b2f" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pkrf-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="44" fill="#ffe7d6" letter-spacing="5">
+    POKÉMON ROJO FUEGO
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#ffd4b4" letter-spacing="5">
+    EL REMAKE DEFINITIVO
+  </text>
+</svg>

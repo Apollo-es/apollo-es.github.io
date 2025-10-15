@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pke-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#041f16" />
+      <stop offset="55%" stop-color="#0c5a3b" />
+      <stop offset="100%" stop-color="#1bcf79" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pke-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#d3ffe9" letter-spacing="6">
+    POKÉMON ESMERALDA
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#b8ffd9" letter-spacing="5">
+    FRENTE DE BATALLA
+  </text>
+</svg>

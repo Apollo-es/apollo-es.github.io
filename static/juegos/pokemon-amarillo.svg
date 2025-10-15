@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pka-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c2005" />
+      <stop offset="60%" stop-color="#836000" />
+      <stop offset="100%" stop-color="#f9d748" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pka-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#fff7cf" letter-spacing="6">
+    POKÉMON AMARILLO
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#fff4a8" letter-spacing="5">
+    PIKACHU TE ACOMPAÑA
+  </text>
+</svg>
