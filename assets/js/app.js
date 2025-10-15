@@ -66,21 +66,27 @@ document.documentElement.classList.add('has-js');
       .filter(Boolean);
   }
 
+  function collectText(card){
+    var data = card.dataset || {};
+    var parts = [data.title, data.desc, data.tags];
+    var titleEl = card.querySelector('.card-title');
+    var descEl = card.querySelector('.card-desc');
+    if(titleEl) parts.push(titleEl.textContent);
+    if(descEl) parts.push(descEl.textContent);
+    parts.push(card.textContent);
+    return parts.filter(Boolean).join(' ');
+  }
+
   var dataset = cards.map(function(card){
-    var keywords = [
-      card.getAttribute('data-title'),
-      card.getAttribute('data-desc'),
-      card.getAttribute('data-tags')
-    ].filter(Boolean).join(' ');
-    var rawText = keywords || card.textContent || '';
-    var consoleLabel = card.getAttribute('data-console') || '';
-    var developerLabel = card.getAttribute('data-developer') || '';
-    var genreLabel = card.getAttribute('data-genre') || '';
+    var data = card.dataset || {};
+    var consoleLabel = data.console || '';
+    var developerLabel = data.developer || '';
+    var genreLabel = data.genre || '';
     var tokens = toTokens(genreLabel);
 
     return {
       card: card,
-      text: normalise(rawText),
+      text: normalise(collectText(card)),
       consoleLabel: consoleLabel.trim(),
       developerLabel: developerLabel.trim(),
       genreLabels: tokens,
@@ -104,7 +110,7 @@ document.documentElement.classList.add('has-js');
       valueSets.developer.add(entry.developerLabel);
     }
     entry.genreLabels.forEach(function(label){
-      valueSets.genre.add(label);
+      if(label) valueSets.genre.add(label);
     });
   });
 

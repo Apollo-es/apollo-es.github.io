@@ -73,13 +73,29 @@ keywords:
       </div>
 
       <aside class="news-aside">
-        <div class="ad-slot" aria-label="Espacio publicitario" role="note">
-          <p>Espacio reservado para anuncios (300×250).</p>
-          <!-- Reemplaza este bloque con el código del bloque de anuncios correspondiente de AdSense. -->
+        <div class="ad-slot" aria-label="Anuncio 300×250" role="complementary">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2672781546777359"
+                  crossorigin="anonymous"></script>
+          <!-- bloque -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-2672781546777359"
+               data-ad-slot="6352596482"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
         </div>
-        <div class="ad-slot ad-slot-wide" aria-label="Espacio publicitario" role="note">
-          <p>Espacio reservado para anuncios (728×90).</p>
-          <!-- Inserta aquí el bloque de anuncios horizontal de tu proveedor. -->
+        <div class="ad-slot ad-slot-wide" aria-label="Anuncio 728×90" role="complementary">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2672781546777359"
+                  crossorigin="anonymous"></script>
+          <!-- bloque 2 -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:728px;height:90px"
+               data-ad-client="ca-pub-2672781546777359"
+               data-ad-slot="7118883249"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
         </div>
       </aside>
     </article>
