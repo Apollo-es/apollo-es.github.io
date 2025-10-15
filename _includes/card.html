@@ -112,6 +112,10 @@
       </div>
     {% endif %}
 
+    {% if item.disclaimer %}
+      <p class="legal-disclaimer">{{ item.disclaimer }}</p>
+    {% endif %}
+
     {% if item.categoria contains 'juegos' %}
       {% assign hashtags = item.hashtags %}
       {% if hashtags and hashtags.size > 0 %}

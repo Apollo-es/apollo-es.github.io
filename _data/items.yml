@@ -84,6 +84,8 @@
           url: "https://exe.io/dlcmediaf"
         - host: "Google Drive"
           url: "https://exe.io/dlcdrive"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es © 1995-2025 Nintendo / Creatures / Game Freak.
 
 - id: papers-please-pc
   categoria: ["juegos"]
@@ -108,6 +110,8 @@
       mirrors:
         - host: "Descarga"
           url: "https://example.com/papers-please"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio informativo y comunitario. Papers, Please es © 2013-2025 Lucas Pope / 3909 LLC. Todos los derechos pertenecen a sus respectivos autores.
 
 - id: silent-hill-f
   categoria: ["juegos"]
@@ -135,6 +139,39 @@
           url: "https://exe.io/shfdrivlink"
         - host: "Mirror Media"
           url: "https://exe.io/shfmediaflin"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es ofrece información y enlaces a petición de la comunidad. Silent Hill es © 1999-2025 Konami Digital Entertainment. Todos los derechos de la franquicia pertenecen a Konami.
+
+- id: sonic-racing-crossworlds
+  categoria: ["juegos"]
+  titulo: "Sonic Racing: CrossWorlds"
+  descripcion: "Forma equipo con Sonic, Tails y los corredores de todo Mobius en ligas de temporada, circuitos dinámicos y bosses cooperativos en línea en esta experiencia free-to-play optimizada para móviles."
+  tipo: "Mobile"
+  idioma: "multi"
+  tamano: "5.2 GB"
+  licencia: "incluida"
+  consola: "Android / iOS"
+  desarrolladora: "SEGA HARDlight"
+  genero: "Carreras / Acción"
+  hashtags:
+    - "#Sonic"
+    - "#SonicRacing"
+    - "#CrossWorlds"
+  descargas:
+    - titulo: "ROM completa"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/srromlink"
+    - titulo: "DLC contenido adicional"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/srdlclink"
+    - titulo: "Actualización más reciente"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/sruplink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Sonic the Hedgehog y derivados son © 1991-2025 SEGA. Todos los derechos pertenecen a SEGA y sus subsidiarias.
 
 - id: super-mario-galaxy
   categoria: ["juegos"]
@@ -161,6 +198,8 @@
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg1uplink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Super Mario Galaxy es © 2007-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus licenciantes.
 
 - id: super-mario-galaxy-2
   categoria: ["juegos"]
@@ -187,3 +226,281 @@
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg2uplink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Super Mario Galaxy 2 es © 2010-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus filiales.
+
+- id: pokemon-amarillo-gb
+  categoria: ["juegos"]
+  titulo: "Pokémon Amarillo"
+  descripcion: "Revive la aventura clásica junto a Pikachu con eventos inspirados en el anime y compatibilidad con el Cable Link para combates y cambios."
+  tipo: "GB"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonAmarillo"
+    - "#GameBoy"
+    - "#Pikachu"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmamalink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-azul-gb
+  categoria: ["juegos"]
+  titulo: "Pokémon Azul"
+  descripcion: "Completa la Pokédex original, desafía al Alto Mando de Kanto y conecta con amigos mediante intercambios y combates."
+  tipo: "GB"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonAzul"
+    - "#GameBoy"
+    - "#Kanto"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmazullink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-cristal-gbc
+  categoria: ["juegos"]
+  titulo: "Pokémon Cristal"
+  descripcion: "Explora Johto y Kanto con animaciones mejoradas, Torre Batalla y la posibilidad de elegir protagonista femenina."
+  tipo: "GBC"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy Color"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonCristal"
+    - "#GameBoyColor"
+    - "#Johto"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmcristallink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-esmeralda-gba
+  categoria: ["juegos"]
+  titulo: "Pokémon Esmeralda"
+  descripcion: "Domina la región de Hoenn con el Frente de Batalla, captura a Rayquaza y enfréntate al Equipo Magma/Aqua."
+  tipo: "GBA"
+  idioma: "es"
+  tamano: "8 MB"
+  licencia: "incluida"
+  consola: "Game Boy Advance"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonEsmeralda"
+    - "#Hoenn"
+    - "#GameBoyAdvance"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmesmelink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-oro-gb
+  categoria: ["juegos"]
+  titulo: "Pokémon Oro"
+  descripcion: "Viaja a Johto con ciclos día/noche, cria Pokémon y desbloquea Kanto tras la Liga."
+  tipo: "GB"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonOro"
+    - "#Johto"
+    - "#GameBoy"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnorolink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-plata-gb
+  categoria: ["juegos"]
+  titulo: "Pokémon Plata"
+  descripcion: "Completa la Pokédex de Johto, captura a Lugia y descubre eventos exclusivos nocturnos."
+  tipo: "GB"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonPlata"
+    - "#Johto"
+    - "#GameBoy"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnplatalink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-rojo-gb
+  categoria: ["juegos"]
+  titulo: "Pokémon Rojo"
+  descripcion: "Inicia la travesía original en Kanto, captura a los 151 Pokémon clásicos y enfrenta al Team Rocket."
+  tipo: "GB"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonRojo"
+    - "#Kanto"
+    - "#GameBoy"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnrojolink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-rojo-fuego-gba
+  categoria: ["juegos"]
+  titulo: "Pokémon Rojo Fuego"
+  descripcion: "Redescubre Kanto con gráficos renovados, cable inalámbrico y el archipiélago Sete en esta versión definitiva."
+  tipo: "GBA"
+  idioma: "es"
+  tamano: "8 MB"
+  licencia: "incluida"
+  consola: "Game Boy Advance"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonRojoFuego"
+    - "#Kanto"
+    - "#GBA"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnfireredlink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-rubi-gba
+  categoria: ["juegos"]
+  titulo: "Pokémon Rubí"
+  descripcion: "Salva Hoenn del Equipo Magma, captura a Groudon y participa en concursos Pokémon."
+  tipo: "GBA"
+  idioma: "es"
+  tamano: "8 MB"
+  licencia: "incluida"
+  consola: "Game Boy Advance"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonRubi"
+    - "#Hoenn"
+    - "#GBA"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnrubilink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-tcg-gb
+  categoria: ["juegos"]
+  titulo: "Pokémon Trading Card Game"
+  descripcion: "Colecciona cartas, vence a los clubes elementales y consigue cartas legendarias en la adaptación digital del TCG clásico."
+  tipo: "GBC"
+  idioma: "es"
+  tamano: "1 MB"
+  licencia: "incluida"
+  consola: "Game Boy Color"
+  desarrolladora: "Hudson Soft"
+  genero: "Estrategia"
+  hashtags:
+    - "#PokemonTCG"
+    - "#GameBoyColor"
+    - "#Cartas"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmntcglink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-verde-hoja-gba
+  categoria: ["juegos"]
+  titulo: "Pokémon Verde Hoja"
+  descripcion: "Vive Kanto con mejoras gráficas, soporte inalámbrico y acceso al Archipiélago Sete."
+  tipo: "GBA"
+  idioma: "es"
+  tamano: "8 MB"
+  licencia: "incluida"
+  consola: "Game Boy Advance"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonVerdeHoja"
+    - "#GBA"
+    - "#Kanto"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnverdehojalink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.
+
+- id: pokemon-zafiro-gba
+  categoria: ["juegos"]
+  titulo: "Pokémon Zafiro"
+  descripcion: "Sumérgete en Hoenn, derrota al Equipo Aqua y entrena con concursos y batallas multijugador."
+  tipo: "GBA"
+  idioma: "es"
+  tamano: "8 MB"
+  licencia: "incluida"
+  consola: "Game Boy Advance"
+  desarrolladora: "Game Freak"
+  genero: "RPG"
+  hashtags:
+    - "#PokemonZafiro"
+    - "#Hoenn"
+    - "#GBA"
+  descargas:
+    - titulo: "ROM (ES)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/pkmnzafilink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es Copyright © 1995-2025 Nintendo, Pokémon y GAME FREAK.

@@ -35,125 +35,167 @@ document.documentElement.classList.add('has-js');
 
 // --- Catálogo de juegos: búsqueda + filtros ---
 (function(){
-  const list = document.querySelector('#items');
+  var list = document.getElementById('items');
   if(!list) return;
 
-  const cards = Array.from(list.querySelectorAll('.card'));
+  var cards = Array.prototype.slice.call(list.querySelectorAll('.card'));
   if(!cards.length) return;
 
-  const q = document.querySelector('#q');
-  const selects = {
+  var q = document.getElementById('q');
+  var selects = {
     console: document.getElementById('filter-console'),
     developer: document.getElementById('filter-developer'),
     genre: document.getElementById('filter-genre')
   };
-  const resetBtn = document.getElementById('filter-reset');
+  var resetBtn = document.getElementById('filter-reset');
 
-  const normalise = str => (str || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-  const splitTokens = str => (str || '').split(/[,/]/).map(t => t.trim()).filter(Boolean);
-
-  const filters = {term:'', console:'', developer:'', genre:''};
-  const valueSets = {console:new Set(), developer:new Set(), genre:new Set()};
-
-  cards.forEach(card => {
-    card.dataset.search = normalise(card.innerText);
-
-    const consoleName = card.dataset.console;
-    if(consoleName){
-      valueSets.console.add(consoleName.trim());
+  function normalise(str){
+    if(!str) return '';
+    var value = String(str).toLowerCase().trim();
+    if(typeof value.normalize === 'function'){
+      value = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
+    return value;
+  }
 
-    const developerName = card.dataset.developer;
-    if(developerName){
-      valueSets.developer.add(developerName.trim());
-    }
+  function toTokens(str){
+    if(!str) return [];
+    return String(str)
+      .split(/[,/|]/)
+      .map(function(token){ return token.trim(); })
+      .filter(Boolean);
+  }
 
-    const genreName = card.dataset.genre;
-    if(genreName){
-      const tokens = splitTokens(genreName);
-      card.dataset.genreTokens = tokens.map(normalise).join('|');
-      tokens.forEach(token => valueSets.genre.add(token));
-    } else {
-      card.dataset.genreTokens = '';
+  var dataset = cards.map(function(card){
+    var rawText = card.textContent || '';
+    var consoleLabel = card.getAttribute('data-console') || '';
+    var developerLabel = card.getAttribute('data-developer') || '';
+    var genreLabel = card.getAttribute('data-genre') || '';
+    var tokens = toTokens(genreLabel);
+
+    return {
+      card: card,
+      text: normalise(rawText),
+      consoleLabel: consoleLabel.trim(),
+      developerLabel: developerLabel.trim(),
+      genreLabels: tokens,
+      consoleValue: normalise(consoleLabel),
+      developerValue: normalise(developerLabel),
+      genreValues: tokens.map(normalise)
+    };
+  });
+
+  var valueSets = {
+    console: new Set(),
+    developer: new Set(),
+    genre: new Set()
+  };
+
+  dataset.forEach(function(entry){
+    if(entry.consoleLabel){
+      valueSets.console.add(entry.consoleLabel);
     }
+    if(entry.developerLabel){
+      valueSets.developer.add(entry.developerLabel);
+    }
+    entry.genreLabels.forEach(function(label){
+      valueSets.genre.add(label);
+    });
   });
 
   function populateSelect(select, values){
-    if(!select || !values.size) return;
-    const placeholder = select.querySelector('option[value=""]');
-    select.innerHTML = '';
-    if(placeholder){
-      select.appendChild(placeholder);
-    } else {
-      const opt = document.createElement('option');
-      opt.value = '';
-      opt.textContent = select.dataset.placeholder || 'Todos';
-      select.appendChild(opt);
-    }
+    if(!select) return;
+    var doc = select.ownerDocument;
+    var fragment = doc.createDocumentFragment();
+    var placeholderText = select.getAttribute('data-placeholder') || 'Todos';
+    var placeholder = doc.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = placeholderText;
+    fragment.appendChild(placeholder);
+
     Array.from(values)
-      .sort((a,b) => a.localeCompare(b, 'es', {sensitivity:'base'}))
-      .forEach(value => {
-        const opt = document.createElement('option');
+      .sort(function(a, b){ return a.localeCompare(b, 'es', {sensitivity: 'base'}); })
+      .forEach(function(value){
+        var opt = doc.createElement('option');
         opt.value = value;
         opt.textContent = value;
-        select.appendChild(opt);
+        fragment.appendChild(opt);
       });
+
+    select.innerHTML = '';
+    select.appendChild(fragment);
+    select.value = '';
   }
 
   populateSelect(selects.console, valueSets.console);
   populateSelect(selects.developer, valueSets.developer);
   populateSelect(selects.genre, valueSets.genre);
 
+  var state = {
+    term: '',
+    console: '',
+    developer: '',
+    genre: ''
+  };
+
   function applyFilters(){
-    cards.forEach(card => {
-      let visible = true;
+    dataset.forEach(function(entry){
+      var visible = true;
 
-      if(filters.term){
-        visible = (card.dataset.search || '').includes(filters.term);
+      if(state.term && entry.text.indexOf(state.term) === -1){
+        visible = false;
       }
 
-      if(visible && filters.console){
-        visible = normalise(card.dataset.console).includes(filters.console);
+      if(visible && state.console && entry.consoleValue !== state.console){
+        visible = false;
       }
 
-      if(visible && filters.developer){
-        visible = normalise(card.dataset.developer).includes(filters.developer);
+      if(visible && state.developer && entry.developerValue !== state.developer){
+        visible = false;
       }
 
-      if(visible && filters.genre){
-        const tokens = card.dataset.genreTokens ? card.dataset.genreTokens.split('|') : [];
-        visible = tokens.includes(filters.genre);
+      if(visible && state.genre && entry.genreValues.indexOf(state.genre) === -1){
+        visible = false;
       }
 
-      card.style.display = visible ? '' : 'none';
+      entry.card.style.display = visible ? '' : 'none';
     });
   }
 
-  q?.addEventListener('input', () => {
-    filters.term = normalise(q.value);
-    applyFilters();
-  });
+  if(q){
+    q.addEventListener('input', function(){
+      state.term = normalise(q.value);
+      applyFilters();
+    });
+  }
 
-  Object.entries(selects).forEach(([key, select]) => {
-    select?.addEventListener('change', () => {
-      filters[key] = normalise(select.value);
+  Object.keys(selects).forEach(function(key){
+    var select = selects[key];
+    if(!select) return;
+    select.addEventListener('change', function(){
+      state[key] = normalise(select.value);
       applyFilters();
     });
   });
 
-  resetBtn?.addEventListener('click', () => {
-    filters.term = filters.console = filters.developer = filters.genre = '';
-    if(q) q.value = '';
-    Object.values(selects).forEach(select => {
-      if(select) select.value = '';
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      state.term = state.console = state.developer = state.genre = '';
+      if(q) q.value = '';
+      Object.keys(selects).forEach(function(key){
+        if(selects[key]){
+          selects[key].value = '';
+        }
+      });
+      applyFilters();
+      if(q){
+        q.focus();
+      }
     });
-    applyFilters();
-    q?.focus();
-  });
+  }
 
   applyFilters();
 })();
-
 // --- Calculadora de hardware para emuladores ---
 (function(){
   const section = document.getElementById('hardware-advisor');
@@ -796,4 +838,34 @@ document.documentElement.classList.add('has-js');
   });
 
   renderReports();
+})();
+
+// --- Compartir noticias ---
+(function(){
+  if(typeof navigator === 'undefined' || typeof navigator.share !== 'function'){
+    return;
+  }
+
+  const blocks = document.querySelectorAll('[data-share]');
+  if(!blocks.length) return;
+
+  blocks.forEach(block => {
+    block.addEventListener('click', evt => {
+      const link = evt.target.closest('a.share');
+      if(!link) return;
+      evt.preventDefault();
+
+      const shareUrl = block.getAttribute('data-share-url') || link.href;
+      const shareTitle = block.getAttribute('data-share-title') || document.title;
+      const shareText = block.getAttribute('data-share-text') || link.textContent?.trim() || '';
+
+      navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      }).catch(() => {
+        window.open(link.href, '_blank', 'noopener');
+      });
+    });
+  });
 })();
