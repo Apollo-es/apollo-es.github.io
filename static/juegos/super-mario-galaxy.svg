@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <radialGradient id="smg-bg" cx="30%" cy="35%" r="80%">
+      <stop offset="0%" stop-color="#1d2d5a" />
+      <stop offset="65%" stop-color="#090f1e" />
+      <stop offset="100%" stop-color="#04070d" />
+    </radialGradient>
+    <linearGradient id="smg-title" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4fe4ff" />
+      <stop offset="50%" stop-color="#8cfb95" />
+      <stop offset="100%" stop-color="#ffe066" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#smg-bg)" />
+  <g fill="#ffffff" opacity="0.6">
+    <circle cx="120" cy="80" r="2" />
+    <circle cx="220" cy="40" r="3" />
+    <circle cx="400" cy="70" r="2.5" />
+    <circle cx="560" cy="110" r="1.8" />
+    <circle cx="300" cy="260" r="2.2" />
+    <circle cx="460" cy="220" r="2.8" />
+    <circle cx="520" cy="320" r="1.6" />
+  </g>
+  <text x="50%" y="52%" text-anchor="middle" font-family="'Orbitron', 'Segoe UI', sans-serif" font-size="54" fill="url(#smg-title)" letter-spacing="4">
+    SUPER MARIO
+  </text>
+  <text x="50%" y="72%" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="64" fill="#f4faff" letter-spacing="6">
+    GALAXY
+  </text>
+  <text x="50%" y="88%" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" fill="#99c7ff" letter-spacing="3">
+    ¡GRAVEDAD ZERO, DIVERSIÓN TOTAL!
+  </text>
+</svg>

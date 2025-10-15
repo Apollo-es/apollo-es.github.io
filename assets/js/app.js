@@ -605,3 +605,195 @@ document.documentElement.classList.add('has-js');
     loadThread(active);
   }
 })();
+
+// --- Sistema interno de reportes de enlaces ---
+(function(){
+  const storageKey = 'apolloStaffMode';
+  const reportKey = 'apolloLinkReports';
+
+  const params = new URLSearchParams(window.location.search);
+  const staffParam = params.get('staff');
+
+  if(staffParam === '1'){
+    localStorage.setItem(storageKey, '1');
+  } else if(staffParam === '0'){
+    localStorage.removeItem(storageKey);
+  }
+
+  if(staffParam !== null){
+    params.delete('staff');
+    const newQuery = params.toString();
+    const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
+    if(typeof window.history?.replaceState === 'function'){
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  }
+
+  if(localStorage.getItem(storageKey) !== '1'){
+    return;
+  }
+
+  document.body.classList.add('is-staff');
+
+  const panel = document.getElementById('report-panel');
+  const list = document.getElementById('report-list');
+  const count = document.getElementById('report-count');
+  const clearBtn = document.getElementById('report-clear');
+  let toastTimer = null;
+  let toastEl = null;
+
+  function loadReports(){
+    try {
+      const raw = localStorage.getItem(reportKey);
+      if(!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch(err){
+      console.warn('No se pudieron leer los reportes almacenados', err);
+      return [];
+    }
+  }
+
+  function saveReports(reports){
+    try {
+      localStorage.setItem(reportKey, JSON.stringify(reports));
+    } catch(err){
+      console.error('No se pudieron guardar los reportes', err);
+    }
+  }
+
+  function formatTime(iso){
+    if(!iso) return 'Fecha desconocida';
+    const date = new Date(iso);
+    if(Number.isNaN(date.getTime())){
+      return 'Fecha desconocida';
+    }
+    return date.toLocaleString('es-ES', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  function ensurePanel(){
+    if(panel){
+      panel.hidden = false;
+    }
+  }
+
+  function showToast(message){
+    if(!message) return;
+    if(!toastEl){
+      toastEl = document.createElement('div');
+      toastEl.className = 'report-toast';
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = message;
+    toastEl.classList.add('visible');
+    if(toastTimer){
+      clearTimeout(toastTimer);
+    }
+    toastTimer = setTimeout(() => {
+      toastEl?.classList.remove('visible');
+    }, 2600);
+  }
+
+  function renderReports(){
+    const reports = loadReports();
+    if(count){
+      count.textContent = reports.length.toString();
+    }
+    if(list){
+      list.innerHTML = '';
+      if(!reports.length){
+        const empty = document.createElement('li');
+        empty.className = 'report-empty';
+        empty.textContent = 'Sin reportes registrados.';
+        list.appendChild(empty);
+      } else {
+        reports.slice().reverse().forEach(report => {
+          const item = document.createElement('li');
+          item.className = 'report-item';
+
+          const title = document.createElement('strong');
+          title.textContent = report.title || report.item || 'Enlace sin título';
+          item.appendChild(title);
+
+          const meta = document.createElement('div');
+          meta.className = 'report-item-meta';
+          if(report.group){
+            const spanGroup = document.createElement('span');
+            spanGroup.textContent = `Paquete: ${report.group}`;
+            meta.appendChild(spanGroup);
+          }
+          if(report.host){
+            const spanHost = document.createElement('span');
+            spanHost.textContent = `Host: ${report.host}`;
+            meta.appendChild(spanHost);
+          }
+          const spanTime = document.createElement('span');
+          spanTime.textContent = formatTime(report.time);
+          meta.appendChild(spanTime);
+          item.appendChild(meta);
+
+          if(report.url){
+            const link = document.createElement('a');
+            link.href = report.url;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.className = 'report-item-url';
+            link.textContent = report.url;
+            item.appendChild(link);
+          }
+
+          list.appendChild(item);
+        });
+      }
+    }
+    ensurePanel();
+  }
+
+  function addReport(detail){
+    const reports = loadReports();
+    reports.push(detail);
+    saveReports(reports);
+    renderReports();
+    showToast(`Se reportó ${detail.host || 'el enlace'} de ${detail.title || detail.item || 'contenido'}.`);
+  }
+
+  document.addEventListener('click', evt => {
+    const button = evt.target.closest('.report-flag');
+    if(!button) return;
+    evt.preventDefault();
+
+    const detail = {
+      id: Date.now(),
+      item: button.dataset.item || '',
+      title: button.dataset.title || '',
+      group: button.dataset.group || '',
+      host: button.dataset.host || '',
+      url: button.dataset.url || '',
+      time: new Date().toISOString()
+    };
+
+    const confirmation = window.confirm(`¿Reportar enlace caído en ${detail.host || 'host desconocido'}?`);
+    if(!confirmation){
+      return;
+    }
+
+    addReport(detail);
+  });
+
+  clearBtn?.addEventListener('click', () => {
+    if(!window.confirm('¿Vaciar la bandeja de reportes?')){
+      return;
+    }
+    saveReports([]);
+    renderReports();
+    showToast('Se limpiaron los reportes registrados.');
+  });
+
+  renderReports();
+})();
