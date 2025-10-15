@@ -52,7 +52,7 @@
   consola: "Nintendo Switch"
   desarrolladora: "Game Freak"
   genero: "Acción / RPG"
-  portada: "/static/juegos/pokemon-leyendas-za.png"
+  portada: "/static/juegos/pokemon-leyendas-za.svg"
   hashtags:
     - "#PokemonLeyendasZA"
     - "#PokemonLegendsZA"
@@ -98,7 +98,7 @@
   consola: "PC"
   desarrolladora: "3909 LLC"
   genero: "Simulación / Aventuras"
-  portada: "/static/juegos/papers-please.png"
+  portada: "/static/juegos/papers-please.svg"
   hashtags:
     - "#PapersPlease"
     - "#LucasPope"
@@ -153,6 +153,7 @@
   consola: "Android / iOS"
   desarrolladora: "SEGA HARDlight"
   genero: "Carreras / Acción"
+  portada: "/static/juegos/sonic-racing-crossworlds.svg"
   hashtags:
     - "#Sonic"
     - "#SonicRacing"
@@ -240,6 +241,7 @@
   consola: "Game Boy"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-amarillo.svg"
   hashtags:
     - "#PokemonAmarillo"
     - "#GameBoy"
@@ -263,6 +265,7 @@
   consola: "Game Boy"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-azul.svg"
   hashtags:
     - "#PokemonAzul"
     - "#GameBoy"
@@ -286,6 +289,7 @@
   consola: "Game Boy Color"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-cristal.svg"
   hashtags:
     - "#PokemonCristal"
     - "#GameBoyColor"
@@ -309,6 +313,7 @@
   consola: "Game Boy Advance"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-esmeralda.svg"
   hashtags:
     - "#PokemonEsmeralda"
     - "#Hoenn"
@@ -332,6 +337,7 @@
   consola: "Game Boy"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-oro.svg"
   hashtags:
     - "#PokemonOro"
     - "#Johto"
@@ -355,6 +361,7 @@
   consola: "Game Boy"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-plata.svg"
   hashtags:
     - "#PokemonPlata"
     - "#Johto"
@@ -378,6 +385,7 @@
   consola: "Game Boy"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-rojo.svg"
   hashtags:
     - "#PokemonRojo"
     - "#Kanto"
@@ -401,6 +409,7 @@
   consola: "Game Boy Advance"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-rojo-fuego.svg"
   hashtags:
     - "#PokemonRojoFuego"
     - "#Kanto"
@@ -424,6 +433,7 @@
   consola: "Game Boy Advance"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-rubi.svg"
   hashtags:
     - "#PokemonRubi"
     - "#Hoenn"
@@ -447,6 +457,7 @@
   consola: "Game Boy Color"
   desarrolladora: "Hudson Soft"
   genero: "Estrategia"
+  portada: "/static/juegos/pokemon-tcg.svg"
   hashtags:
     - "#PokemonTCG"
     - "#GameBoyColor"
@@ -470,6 +481,7 @@
   consola: "Game Boy Advance"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-verde-hoja.svg"
   hashtags:
     - "#PokemonVerdeHoja"
     - "#GBA"
@@ -493,6 +505,7 @@
   consola: "Game Boy Advance"
   desarrolladora: "Game Freak"
   genero: "RPG"
+  portada: "/static/juegos/pokemon-zafiro.svg"
   hashtags:
     - "#PokemonZafiro"
     - "#Hoenn"

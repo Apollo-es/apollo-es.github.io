@@ -67,7 +67,12 @@ document.documentElement.classList.add('has-js');
   }
 
   var dataset = cards.map(function(card){
-    var rawText = card.textContent || '';
+    var keywords = [
+      card.getAttribute('data-title'),
+      card.getAttribute('data-desc'),
+      card.getAttribute('data-tags')
+    ].filter(Boolean).join(' ');
+    var rawText = keywords || card.textContent || '';
     var consoleLabel = card.getAttribute('data-console') || '';
     var developerLabel = card.getAttribute('data-developer') || '';
     var genreLabel = card.getAttribute('data-genre') || '';

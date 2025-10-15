@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pkzf-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050d2a" />
+      <stop offset="55%" stop-color="#0c2d73" />
+      <stop offset="100%" stop-color="#2f8fff" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pkzf-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#d9efff" letter-spacing="6">
+    POKÉMON ZAFIRO
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#c0e3ff" letter-spacing="5">
+    DOMINA LOS OCÉANOS
+  </text>
+</svg>

@@ -1,6 +1,12 @@
 {% unless item.oculto %}
+{% assign card_categories = item.categoria | default: '' %}
+{% assign card_tags = item.hashtags | default: '' %}
 <article class="card"
-         data-cats="{{ item.categoria | join: ',' }}"
+         data-id="{{ item.id }}"
+         data-cats="{% if card_categories %}{{ card_categories | join: ',' | escape }}{% endif %}"
+         data-title="{{ item.titulo | escape }}"
+         data-desc="{{ item.descripcion | strip_html | strip_newlines | escape }}"
+         {% if card_tags %}data-tags="{{ card_tags | join: ' ' | escape }}"{% endif %}
          {% if item.licencia %}data-licencia="{{ item.licencia | escape }}"{% endif %}
          {% if item.consola %}data-console="{{ item.consola | escape }}"{% endif %}
          {% if item.desarrolladora %}data-developer="{{ item.desarrolladora | escape }}"{% endif %}

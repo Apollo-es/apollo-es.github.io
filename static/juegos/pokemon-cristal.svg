@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="pkc-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1030" />
+      <stop offset="55%" stop-color="#1e3b8c" />
+      <stop offset="100%" stop-color="#74d1ff" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#pkc-bg)" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#e7f6ff" letter-spacing="6">
+    POKÉMON CRISTAL
+  </text>
+  <text x="50%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#d2f0ff" letter-spacing="5">
+    AVENTURA EN JOHTO
+  </text>
+</svg>
