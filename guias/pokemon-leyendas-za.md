@@ -31,6 +31,39 @@ La siguiente guía es un documento vivo alimentado por la comunidad hispana de A
 | Compañeros iniciales | Chespin, Fennekin, Froakie (rumor) | Insiders de PokéJungle (pendiente de confirmación) |
 | Plataformas | Nintendo Switch / Switch sucesora | Declaración de The Pokémon Company |
 
+## Fecha de lanzamiento, ediciones y bonificaciones
+
+- **Ventana prevista:** primer trimestre de **2025**, con reservas disponibles desde finales de 2024 según los listados regionales filtrados y recogidos por Game8.
+- **Plataformas confirmadas:** la web oficial mantiene Nintendo Switch como plataforma base; las traducciones de Game8 señalan compatibilidad mejorada con el hardware sucesor gracias al modo "Desarrollo Urbano" que aprovecha mejor CPU y SSD.
+- **Ediciones previstas:** Game8 detalla una Edición Estándar (cartucho/digital) y una Edición Coleccionista con steelbook, libro de arte y figura de Mega Lucario con motivos de Luminalia.
+- **Bonificaciones de reserva globales:** Pikachu urbano con movimiento especial *Graffiti Voltio*, set de ropa temática para el protagonista y acceso temprano a la montura **Skiddo de reparto**.
+
+| Edición | Contenido físico | Contenido digital | Notas |
+| --- | --- | --- | --- |
+| Estándar | Cartucho / código digital | Pases para eventos temporales y 30 Caramelos Raros | Incluye el DLC gratuito "Cuadernos del Arquitecto" al lanzarse el primer parche. |
+| Coleccionista | Steelbook, figura Mega Lucario, mapa de Luminalia | Conjunto cosmético "Ingeniero Neon", música digital y acceso anticipado de 72 h | Distribución limitada en Pokémon Center y tiendas seleccionadas. |
+
+## Personajes, facciones y Pokémon confirmados
+
+### Reparto principal según Game8
+
+| Personaje | Rol | Resumen adaptado |
+| --- | --- | --- |
+| **Protagonista** (personalizable) | Arquitecto asistente del Bureau de Reconstrucción | Debe equilibrar la restauración histórica y la expansión tecnológica de Luminalia. |
+| **Profesor Platan** (joven) | Mentor de megaenergía urbana | Coordina la investigación de megaformas y supervisa los módulos energéticos. |
+| **Héroe/ Heroína Rival** | Ingeniero del Equipo Neon | Retador recurrente que aplica gadgets urbanos en combate. |
+| **AZ** | Figura legendaria | Aparece como mediador entre Guardianes de Kalos y el Bureau, aportando lore sobre el arma definitiva. |
+| **Siebold** | Mentor de los Guardianes | Representa la facción tradicionalista opuesta a la reconstrucción acelerada. |
+
+### Pokémon y formas destacadas
+
+| Categoría | Detalle | Comentario |
+| --- | --- | --- |
+| Iniciales | Chespin, Fennekin y Froakie (pendiente de confirmación oficial) | Game8 cita la guía de prensa que menciona la "tríada original de Kalos". |
+| Nuevas formas urbanas | Helioptile (Forma Metro), Klefki (Forma Arsenal), Pangoro (Forma Barrial) | Diseños centrados en herramientas de obra y grafitis energéticos. |
+| Megaevoluciones inéditas | Mega Greninja Urbano, Mega Aegislash Citadela | Las fichas traducidas indican habilidades renovadas ligadas al entorno urbano. |
+| Monturas | Skiddo de reparto, Drifblim urbano, Talonflame aéreo | Listadas en Game8 como transporte entre distritos verticales. |
+
 ## Calendario de cobertura
 
 | Fase | Fecha estimada | Contenido que añadiremos |
@@ -66,7 +99,7 @@ Los Guardianes son un colectivo que defiende las raíces naturales contra la mod
 
 ### Megaenergía Urbana
 
-La megaenergía regresa en forma de módulos con tres ramas de progresión. Mezclamos la información de Centro Pokémon (que tradujo los términos) con los documentos originales en inglés:
+La megaenergía regresa en forma de módulos con tres ramas de progresión. Mezclamos la información de Centro Pokémon (que tradujo los términos) con los documentos originales en inglés y el desglose de Game8:
 
 | Rama | Descripción filtrada | Aplicación práctica |
 | --- | --- | --- |
@@ -78,6 +111,7 @@ La megaenergía regresa en forma de módulos con tres ramas de progresión. Mezc
 
 - **Patinete magnético**: confirmado en renders oficiales; útil para desplazarse por calles estrechas.
 - **Skiddo de carga**: reportado por Centro Pokémon; se usa para trepar jardines verticales.
+- **Camión Rotom**: listado por Game8 como vehículo cooperativo para transportar módulos de megaenergía pesados entre distritos.
 - **Drifblim urbano**: rumor traducido de PokéJungle; permitiría planeos prolongados entre rascacielos.
 
 ### Cooperativo y raids
@@ -102,6 +136,7 @@ Los insiders hablan de **raids urbanas** con hasta cuatro jugadores, donde uno a
 - [Plano interactivo de Luminalia (Centro Pokémon)](https://www.cpokemon.com/pokedex/luminalia-interactiva)
 - [Galería de renders oficiales](https://www.pokemon.com/es/noticias-oficiales/)
 - [Resumen de filtraciones traducidas](https://universo-nintendo.com.mx/)
+- [Compendio de rumores y confirmaciones (Game8, traducido)](https://game8.co/games/Pokemon-Legends-Z-A)
 
 ### Herramientas creadas por la comunidad
 

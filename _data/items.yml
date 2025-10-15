@@ -153,7 +153,7 @@
   consola: "PC"
   desarrolladora: "Bethesda Game Studios"
   genero: "RPG / Mundo abierto"
-  portada: "https://images.igdb.com/igdb/image/upload/t_cover_big/co5n5c.png"
+  portada: "/static/juegos/the-elder-scrolls-iv-oblivion-remastered.svg"
   hashtags:
     - "#OblivionRemastered"
     - "#TheElderScrolls"

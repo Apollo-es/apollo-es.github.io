@@ -79,6 +79,47 @@
     }
     </script>
   {% endif %}
+  {% assign raw_segments = page.url | default: '' | split: '/' %}
+  {% assign clean_segments = '' %}
+  {% for segment in raw_segments %}
+    {% if segment != '' %}
+      {% if clean_segments != '' %}
+        {% assign clean_segments = clean_segments | append: '|' %}
+      {% endif %}
+      {% assign clean_segments = clean_segments | append: segment %}
+    {% endif %}
+  {% endfor %}
+  {% if clean_segments != '' %}
+    {% assign breadcrumb_segments = clean_segments | split: '|' %}
+    {% assign path = '' %}
+    {% assign position = 2 %}
+    {% capture breadcrumb_items %}
+      {"@type":"ListItem","position":1,"name":"Inicio","item":"{{ '/' | absolute_url }}"}
+      {% for segment in breadcrumb_segments %}
+        {% assign path = path | append: '/' | append: segment %}
+        {% assign segment_url = path | append: '/' %}
+        {% assign segment_name = segment | replace: '-', ' ' | capitalize %}
+        {% for nav_item in site.nav %}
+          {% if nav_item.url == segment_url %}
+            {% assign segment_name = nav_item.name %}
+          {% endif %}
+        {% endfor %}
+        {% if forloop.last %}
+          {% assign segment_name = page.title | default: segment_name %}
+          {% assign segment_url = page.url | absolute_url %}
+        {% else %}
+          {% assign segment_url = segment_url | absolute_url %}
+        {% endif %}
+        ,{"@type":"ListItem","position":{{ position }},"name":"{{ segment_name | strip | escape }}","item":"{{ segment_url }}"}
+        {% assign position = position | plus: 1 %}
+      {% endfor %}
+    {% endcapture %}
+    <script type="application/ld+json">{
+      "@context":"https://schema.org",
+      "@type":"BreadcrumbList",
+      "itemListElement":[{{ breadcrumb_items | strip }}]
+    }</script>
+  {% endif %}
   {% if site.google_client_id | strip != '' %}
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   {% endif %}

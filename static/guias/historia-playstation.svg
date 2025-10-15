@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Historia de PlayStation</title>
+  <desc id="desc">Ilustración geométrica con símbolos de botones y la silueta del mando DualSense.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0a0f2d"/>
+      <stop offset="1" stop-color="#123b7c"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#8dd3ff"/>
+      <stop offset="1" stop-color="#4b8fff"/>
+    </linearGradient>
+    <clipPath id="gridClip">
+      <rect x="40" y="40" width="520" height="720" rx="36" ry="36"/>
+    </clipPath>
+  </defs>
+  <rect width="600" height="800" fill="url(#bg)"/>
+  <g clip-path="url(#gridClip)" opacity="0.25">
+    <g fill="none" stroke="#8dd3ff" stroke-width="1">
+      <line x1="40" y1="160" x2="560" y2="160"/>
+      <line x1="40" y1="320" x2="560" y2="320"/>
+      <line x1="40" y1="480" x2="560" y2="480"/>
+      <line x1="40" y1="640" x2="560" y2="640"/>
+      <line x1="160" y1="40" x2="160" y2="760"/>
+      <line x1="320" y1="40" x2="320" y2="760"/>
+      <line x1="480" y1="40" x2="480" y2="760"/>
+    </g>
+  </g>
+  <g fill="#8dd3ff" opacity="0.35">
+    <circle cx="160" cy="220" r="36"/>
+    <rect x="244" y="184" width="72" height="72" rx="8"/>
+    <polygon points="420,184 480,220 420,256"/>
+    <polygon points="160,524 200,584 120,584"/>
+    <rect x="244" y="524" width="72" height="72" transform="rotate(45 280 560)"/>
+    <circle cx="440" cy="560" r="36"/>
+  </g>
+  <g transform="translate(120 360)">
+    <rect x="0" y="100" width="360" height="140" rx="70" ry="70" fill="rgba(0,0,0,0.25)"/>
+    <path d="M60 170c-18 0-32-14-32-32v-18c0-12 8-22 19-25l60-18c14-4 28-4 42 0l60 18c11 3 19 13 19 25v18c0 18-14 32-32 32z" fill="url(#accent)" opacity="0.75"/>
+    <circle cx="120" cy="120" r="16" fill="#0a0f2d"/>
+    <circle cx="240" cy="120" r="16" fill="#0a0f2d"/>
+    <rect x="148" y="150" width="64" height="14" rx="7" fill="#0a0f2d"/>
+  </g>
+  <text x="60" y="120" fill="#ffffff" font-family="'Inter', sans-serif" font-size="42" font-weight="700">Historia de</text>
+  <text x="60" y="172" fill="#8dd3ff" font-family="'Orbitron', sans-serif" font-size="54" font-weight="700">PlayStation</text>
+  <text x="60" y="720" fill="#d4ecff" font-family="'Inter', sans-serif" font-size="20" opacity="0.8">Cronología PS1 · PS2 · PSP · PS3 · PS4 · PS5</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="oblivion-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#20160f" />
+      <stop offset="50%" stop-color="#3c2818" />
+      <stop offset="100%" stop-color="#6b4a24" />
+    </linearGradient>
+    <radialGradient id="oblivion-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#f0d7a1" stop-opacity="0.95" />
+      <stop offset="60%" stop-color="#d6a65a" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#20160f" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="oblivion-sigil" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f6e6c5" />
+      <stop offset="50%" stop-color="#f4d28a" />
+      <stop offset="100%" stop-color="#c28a3f" />
+    </linearGradient>
+    <filter id="oblivion-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+  <rect width="640" height="360" fill="url(#oblivion-bg)" />
+  <circle cx="320" cy="150" r="200" fill="url(#oblivion-glow)" />
+  <g filter="url(#oblivion-shadow)" transform="translate(320 172)">
+    <path d="M-48 -110h96l-14 180-34 28-34-28z" fill="none" stroke="#2d1b0d" stroke-width="10" stroke-linejoin="round" />
+    <path d="M-48 -110h96l-14 180-34 28-34-28z" fill="url(#oblivion-sigil)" />
+    <path d="M0 -52c18 0 32 14 32 32 0 19-14 34-32 34s-32-15-32-34c0-18 14-32 32-32z" fill="#20160f" opacity="0.65" />
+    <path d="M0 -40c11 0 20 9 20 20 0 11-9 20-20 20s-20-9-20-20c0-11 9-20 20-20z" fill="#f7e3bb" opacity="0.85" />
+  </g>
+  <text x="50%" y="70%" text-anchor="middle" font-family="'Trajan Pro', 'Cinzel', serif" font-size="38" fill="#f9e7c8" letter-spacing="6">
+    THE ELDER SCROLLS IV
+  </text>
+  <text x="50%" y="82%" text-anchor="middle" font-family="'Cinzel', 'Trajan Pro', serif" font-size="56" fill="#f4d899" letter-spacing="10">
+    OBLIVION
+  </text>
+  <text x="50%" y="92%" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="20" fill="#f9e7c8" letter-spacing="4">
+    REMASTERED EDITION
+  </text>
+</svg>

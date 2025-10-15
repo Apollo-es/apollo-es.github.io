@@ -7,7 +7,13 @@ document.documentElement.classList.add('has-js');
     c = document.createElement('canvas');
     c.id = 'bgfx';
     c.setAttribute('aria-hidden', 'true');
-    document.body?.prepend?.(c);
+    if(document.body){
+      if(typeof document.body.prepend === 'function'){
+        document.body.prepend(c);
+      } else {
+        document.body.insertBefore(c, document.body.firstChild || null);
+      }
+    }
   }
   if(!c) return;
   const ctx = c.getContext('2d');
@@ -342,7 +348,7 @@ document.documentElement.classList.add('has-js');
   const gpuInput = section.querySelector('#hw-gpu');
   const ramInput = section.querySelector('#hw-ram');
   const targetSelect = section.querySelector('#hw-target');
-  const submitBtn = form?.querySelector('button[type="submit"]');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
   const cpuList = section.querySelector('#hw-cpu-list');
   const gpuList = section.querySelector('#hw-gpu-list');
 
@@ -397,7 +403,15 @@ document.documentElement.classList.add('has-js');
       return;
     }
 
-    const target = tier.targets?.[targetKey] || tier.targets?.general || null;
+    const targets = tier && tier.targets ? tier.targets : null;
+    let target = null;
+    if(targets && typeof targets === 'object'){
+      if(Object.prototype.hasOwnProperty.call(targets, targetKey)){
+        target = targets[targetKey];
+      } else if(Object.prototype.hasOwnProperty.call(targets, 'general')){
+        target = targets.general;
+      }
+    }
     const warnRam = typeof tier.min_ram === 'number' && ram && ram < tier.min_ram;
     const notes = Array.isArray(tier.notes) ? tier.notes : [];
 
@@ -409,7 +423,7 @@ document.documentElement.classList.add('has-js');
       </div>
     ` : '';
 
-    const tips = target?.tips && target.tips.length ? `
+    const tips = target && Array.isArray(target.tips) && target.tips.length ? `
       <div>
         <h4>Consejos rápidos</h4>
         <ul>${target.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>
@@ -432,7 +446,7 @@ document.documentElement.classList.add('has-js');
       </div>
     `;
 
-    const sourceLabel = source?.name ? `<span><i class="ti ti-database"></i>Fuente: ${source.name}</span>` : '';
+    const sourceLabel = source && source.name ? `<span><i class="ti ti-database"></i>Fuente: ${source.name}</span>` : '';
 
     result.hidden = false;
     result.innerHTML = `
@@ -453,7 +467,9 @@ document.documentElement.classList.add('has-js');
   }
 
   function evaluate(evt){
-    evt?.preventDefault();
+    if(evt && typeof evt.preventDefault === 'function'){
+      evt.preventDefault();
+    }
     if(!tiers.length){
       status.innerHTML = '<p class="hardware-warn">Aún no se han cargado los perfiles. Espera un momento e inténtalo de nuevo.</p>';
       return;
@@ -480,10 +496,10 @@ document.documentElement.classList.add('has-js');
       return resp.json();
     })
     .then(data => {
-      const list = Array.isArray(data) ? data : Array.isArray(data?.tiers) ? data.tiers : [];
+      const list = Array.isArray(data) ? data : (data && Array.isArray(data.tiers) ? data.tiers : []);
       if(!list.length) throw new Error('Dataset vacío');
       tiers = list;
-      source = data?.source || {};
+      source = data && typeof data.source === 'object' ? data.source : {};
 
       const cpuValues = new Set();
       const gpuValues = new Set();
@@ -531,18 +547,22 @@ document.documentElement.classList.add('has-js');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'true');
       if(mq.matches){
-        nav?.classList.add('menu-open');
-        overlay?.classList.add('active');
-        overlay?.setAttribute('aria-hidden', 'false');
+        if(nav) nav.classList.add('menu-open');
+        if(overlay){
+          overlay.classList.add('active');
+          overlay.setAttribute('aria-hidden', 'false');
+        }
         document.body.classList.add('no-scroll');
       }
     } else {
       menu.classList.remove('open');
       menu.setAttribute('aria-hidden', 'true');
       toggle.setAttribute('aria-expanded', 'false');
-      nav?.classList.remove('menu-open');
-      overlay?.classList.remove('active');
-      overlay?.setAttribute('aria-hidden', 'true');
+      if(nav) nav.classList.remove('menu-open');
+      if(overlay){
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
       document.body.classList.remove('no-scroll');
     }
   }
@@ -554,9 +574,11 @@ document.documentElement.classList.add('has-js');
       menu.classList.add('open');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'false');
-      nav?.classList.remove('menu-open');
-      overlay?.classList.remove('active');
-      overlay?.setAttribute('aria-hidden', 'true');
+      if(nav) nav.classList.remove('menu-open');
+      if(overlay){
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
       document.body.classList.remove('no-scroll');
     }
   }
@@ -568,11 +590,13 @@ document.documentElement.classList.add('has-js');
     }
   });
 
-  overlay?.addEventListener('click', () => {
-    if(mq.matches){
-      setState(false);
-    }
-  });
+  if(overlay){
+    overlay.addEventListener('click', () => {
+      if(mq.matches){
+        setState(false);
+      }
+    });
+  }
 
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
     if(mq.matches){
@@ -617,7 +641,7 @@ document.documentElement.classList.add('has-js');
 
   function focusArea(){
     const nav = document.querySelector('.nav');
-    const offset = (nav?.offsetHeight || 0) + 16;
+    const offset = (nav ? nav.offsetHeight : 0) + 16;
     const top = container.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({top: Math.max(top, 0), behavior: 'smooth'});
   }
@@ -672,13 +696,13 @@ document.documentElement.classList.add('has-js');
   function updateAuthState(){
     if(authed){
       container.classList.add('forum-authed');
-      authBox?.setAttribute('aria-hidden', 'true');
+      if(authBox) authBox.setAttribute('aria-hidden', 'true');
       if(shortname && active){
         loadThread(active);
       }
     } else {
       container.classList.remove('forum-authed');
-      authBox?.setAttribute('aria-hidden', 'false');
+      if(authBox) authBox.setAttribute('aria-hidden', 'false');
     }
   }
 
@@ -714,37 +738,39 @@ document.documentElement.classList.add('has-js');
     });
   });
 
-  tablist?.addEventListener('keydown', evt => {
-    if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(evt.key)) return;
-    evt.preventDefault();
-    const currentIndex = tabs.findIndex(tab => tab.classList.contains('active'));
-    let targetIndex = currentIndex;
-    if(evt.key === 'ArrowRight' || evt.key === 'ArrowDown'){
-      targetIndex = (currentIndex + 1) % tabs.length;
-    } else if(evt.key === 'ArrowLeft' || evt.key === 'ArrowUp'){
-      targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-    } else if(evt.key === 'Home'){
-      targetIndex = 0;
-    } else if(evt.key === 'End'){
-      targetIndex = tabs.length - 1;
-    }
-    const target = tabs[targetIndex];
-    if(target){
-      target.focus();
-      target.click();
-    }
+  if(tablist){
+    tablist.addEventListener('keydown', evt => {
+      if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(evt.key)) return;
+      evt.preventDefault();
+      const currentIndex = tabs.findIndex(tab => tab.classList.contains('active'));
+      let targetIndex = currentIndex;
+      if(evt.key === 'ArrowRight' || evt.key === 'ArrowDown'){
+        targetIndex = (currentIndex + 1) % tabs.length;
+      } else if(evt.key === 'ArrowLeft' || evt.key === 'ArrowUp'){
+        targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if(evt.key === 'Home'){
+        targetIndex = 0;
+      } else if(evt.key === 'End'){
+        targetIndex = tabs.length - 1;
+      }
+      const target = tabs[targetIndex];
+      if(target){
+        target.focus();
+        target.click();
+      }
+    });
   }
 
   function updateAuthState(){
     if(authed){
       container.classList.add('forum-authed');
-      authBox?.setAttribute('aria-hidden', 'true');
+      if(authBox) authBox.setAttribute('aria-hidden', 'true');
       if(shortname && active){
         loadThread(active);
       }
     } else {
       container.classList.remove('forum-authed');
-      authBox?.setAttribute('aria-hidden', 'false');
+      if(authBox) authBox.setAttribute('aria-hidden', 'false');
     }
   }
 
@@ -796,14 +822,14 @@ document.documentElement.classList.add('has-js');
     localStorage.removeItem(storageKey);
   }
 
-  if(staffParam !== null){
-    params.delete('staff');
-    const newQuery = params.toString();
-    const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
-    if(typeof window.history?.replaceState === 'function'){
-      window.history.replaceState({}, document.title, newUrl);
+    if(staffParam !== null){
+      params.delete('staff');
+      const newQuery = params.toString();
+      const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
+      if(window.history && typeof window.history.replaceState === 'function'){
+        window.history.replaceState({}, document.title, newUrl);
+      }
     }
-  }
 
   if(localStorage.getItem(storageKey) !== '1'){
     return;
@@ -872,7 +898,7 @@ document.documentElement.classList.add('has-js');
       clearTimeout(toastTimer);
     }
     toastTimer = setTimeout(() => {
-      toastEl?.classList.remove('visible');
+      if(toastEl) toastEl.classList.remove('visible');
     }, 2600);
   }
 
@@ -962,14 +988,16 @@ document.documentElement.classList.add('has-js');
     addReport(detail);
   });
 
-  clearBtn?.addEventListener('click', () => {
-    if(!window.confirm('¿Vaciar la bandeja de reportes?')){
-      return;
-    }
-    saveReports([]);
-    renderReports();
-    showToast('Se limpiaron los reportes registrados.');
-  });
+  if(clearBtn){
+    clearBtn.addEventListener('click', () => {
+      if(!window.confirm('¿Vaciar la bandeja de reportes?')){
+        return;
+      }
+      saveReports([]);
+      renderReports();
+      showToast('Se limpiaron los reportes registrados.');
+    });
+  }
 
   renderReports();
 })();
@@ -991,7 +1019,8 @@ document.documentElement.classList.add('has-js');
 
       const shareUrl = block.getAttribute('data-share-url') || link.href;
       const shareTitle = block.getAttribute('data-share-title') || document.title;
-      const shareText = block.getAttribute('data-share-text') || link.textContent?.trim() || '';
+      const linkText = link.textContent ? link.textContent.trim() : '';
+      const shareText = block.getAttribute('data-share-text') || linkText || '';
 
       navigator.share({
         title: shareTitle,

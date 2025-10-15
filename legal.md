@@ -13,7 +13,7 @@ keywords:
 # Declaración de Cumplimiento DMCA y AEVI
 
 Fecha de actualización: **17 de Septiembre de 2025**  
-Contacto legal: [angelroman@apollo-es.com](mailto:angelroman@apollo-es.com)
+Contacto legal: [apollo.es.contact@gmail.com](mailto:apollo.es.contact@gmail.com)
 
 ## 1. Introducción
 Apollo-es se compromete plenamente con el cumplimiento de la legislación internacional sobre propiedad intelectual, incluyendo la Digital Millennium Copyright Act (DMCA) de EE.UU. y normativas equivalentes en otras jurisdicciones.
@@ -58,7 +58,7 @@ Además, ofrecemos un mecanismo formal de notificación para titulares de derech
 ## 4. Procedimiento de Retirada de Contenido (DMCA)
 Si usted es titular de derechos de autor y considera que algún contenido en Apollo-es infringe su propiedad intelectual, puede enviarnos una notificación formal conforme al DMCA.
 
-- Correo de contacto legal: [angelroman@apollo-es.com](mailto:angelroman@apollo-es.com)
+- Correo de contacto legal: [apollo.es.contact@gmail.com](mailto:apollo.es.contact@gmail.com)
 
 Para ser válida, la notificación debe incluir:
 
@@ -89,7 +89,7 @@ Creemos que la emulación, la documentación y la preservación de videojuegos c
 # DMCA and AEVI Compliance Statement
 
 Last updated: **September 17, 2025**  
-Legal contact: [angelroman@apollo-es.com](mailto:angelroman@apollo-es.com)
+Legal contact: [apollo.es.contact@gmail.com](mailto:apollo.es.contact@gmail.com)
 
 ## 1. Introduction
 Apollo-es is fully committed to adhering to international copyright laws, including the Digital Millennium Copyright Act (DMCA) in the United States, and equivalent legislation worldwide.
@@ -134,7 +134,7 @@ A clear and effective takedown mechanism is available to copyright holders (see 
 ## 4. DMCA Procedure
 If you are a copyright owner and believe any content on Apollo-es infringes your rights, you may submit a formal DMCA Takedown Notice to:
 
-- Legal contact email: [angelroman@apollo-es.com](mailto:angelroman@apollo-es.com)
+- Legal contact email: [apollo.es.contact@gmail.com](mailto:apollo.es.contact@gmail.com)
 
 Your takedown notice must include:
 
