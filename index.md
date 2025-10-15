@@ -44,6 +44,9 @@ keywords:
           {% endfor %}
         </ul>
         {% endif %}
+        <div class="news-excerpt">
+          <p>{{ destacada.introduccion | truncatewords: 40 }}</p>
+        </div>
         {% assign share_url = site.url | append: '/noticias/#' | append: destacada.slug %}
         {% assign share_text = destacada.share_text | default: destacada.resumen | uri_escape %}
         {% assign share_hashtags = '' %}
@@ -69,7 +72,8 @@ keywords:
             <i class="ti ti-brand-whatsapp"></i> WhatsApp
           </a>
         </div>
-        <p class="news-meta">{{ destacada.vistas | default: 0 }} lecturas · {{ destacada.fecha | date: "%d/%m/%Y" }}</p>
+        <p class="news-meta">{{ destacada.fecha | date: "%d/%m/%Y" }}</p>
+        <a class="btn primary news-read-more" href="/noticias/#{{ destacada.slug }}"><i class="ti ti-book"></i> Leer más</a>
       </div>
 
       <aside class="news-aside">
@@ -107,7 +111,7 @@ keywords:
     <a class="news-secondary-card" href="/noticias/#{{ noticia.slug }}">
       <span class="news-secondary-tag">{{ noticia.tag }}</span>
       <span class="news-secondary-title">{{ noticia.titulo }}</span>
-      <span class="news-secondary-meta">{{ noticia.vistas | default: 0 }} lecturas · {{ noticia.fecha | date: "%d/%m/%Y" }}</span>
+      <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
     </a>
     {% endfor %}
   </div>
@@ -122,3 +126,4 @@ keywords:
     {% endunless %}
   {% endfor %}
 </div>
+<p class="catalog-empty" data-empty hidden>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>

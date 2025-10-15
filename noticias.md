@@ -33,6 +33,53 @@ keywords:
       {% if noticia.quote %}
       <p class="news-quote">«{{ noticia.quote.texto }}» — <a href="{{ noticia.quote.url }}" target="_blank" rel="noopener">{{ noticia.quote.autor }}</a></p>
       {% endif %}
+      {% if noticia.cuerpo %}
+      {% for bloque in noticia.cuerpo %}
+      {% if bloque.titulo %}<h3>{{ bloque.titulo }}</h3>{% endif %}
+      {% if bloque.imagen %}
+      <figure class="news-figure">
+        <img src="{{ bloque.imagen.src }}" alt="{{ bloque.imagen.alt }}">
+        {% if bloque.imagen.pie %}<figcaption>{{ bloque.imagen.pie }}</figcaption>{% endif %}
+      </figure>
+      {% endif %}
+      {% if bloque.parrafos %}
+        {% for parrafo in bloque.parrafos %}
+          {{ parrafo | markdownify }}
+        {% endfor %}
+      {% endif %}
+      {% if bloque.lista %}
+      <ul class="news-highlights">
+        {% for item in bloque.lista %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if bloque.tabla %}
+      <div class="news-table-wrapper">
+        <table class="news-table">
+          {% if bloque.tabla.encabezados %}
+          <thead>
+            <tr>
+              {% for head in bloque.tabla.encabezados %}
+              <th>{{ head }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          {% endif %}
+          <tbody>
+            {% for fila in bloque.tabla.filas %}
+            <tr>
+              {% for celda in fila %}
+              <td>{{ celda }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
       {% assign share_url = site.url | append: page.url | append: '#' | append: noticia.slug %}
       {% assign share_text = noticia.share_text | default: noticia.resumen | uri_escape %}
       {% assign share_hashtags = '' %}
@@ -58,6 +105,16 @@ keywords:
           <i class="ti ti-brand-whatsapp"></i> WhatsApp
         </a>
       </div>
+      {% if noticia.fuentes %}
+      <div class="news-sources">
+        <h4>Fuentes consultadas</h4>
+        <ul>
+          {% for fuente in noticia.fuentes %}
+          <li><a href="{{ fuente.url }}" target="_blank" rel="noopener">{{ fuente.nombre }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
       <div class="news-ads">
         <div class="ad-slot" aria-label="Anuncio 300×250" role="complementary">
           <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2672781546777359"

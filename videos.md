@@ -20,3 +20,4 @@ keywords:
     {% endif %}
   {% endfor %}
 </div>
+<p class="catalog-empty" data-empty hidden>No hay vídeos que coincidan con tu búsqueda ahora mismo. Intenta con otras palabras clave.</p>

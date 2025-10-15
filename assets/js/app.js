@@ -42,12 +42,14 @@ document.documentElement.classList.add('has-js');
   if(!cards.length) return;
 
   var q = document.getElementById('q');
-  var selects = {
+  var inputs = {
     console: document.getElementById('filter-console'),
     developer: document.getElementById('filter-developer'),
     genre: document.getElementById('filter-genre')
   };
+  var sortSelect = document.getElementById('filter-sort');
   var resetBtn = document.getElementById('filter-reset');
+  var emptyState = list.parentElement ? list.parentElement.querySelector('[data-empty]') : null;
 
   function normalise(str){
     if(!str) return '';
@@ -58,11 +60,30 @@ document.documentElement.classList.add('has-js');
     return value;
   }
 
-  function toTokens(str){
+  function parseNumber(value){
+    var num = Number(value);
+    return Number.isFinite(num) ? num : 0;
+  }
+
+  function parseDate(value){
+    if(!value) return 0;
+    var timestamp = Date.parse(value);
+    return isNaN(timestamp) ? 0 : timestamp;
+  }
+
+  function toListTokens(str){
     if(!str) return [];
     return String(str)
       .split(/[,/|]/)
       .map(function(token){ return token.trim(); })
+      .filter(Boolean);
+  }
+
+  function toWordTokens(str){
+    if(!str) return [];
+    return normalise(str)
+      .replace(/[^a-z0-9]+/g, ' ')
+      .split(/\s+/)
       .filter(Boolean);
   }
 
@@ -77,22 +98,33 @@ document.documentElement.classList.add('has-js');
     return parts.filter(Boolean).join(' ');
   }
 
-  var dataset = cards.map(function(card){
+  var dataset = cards.map(function(card, index){
     var data = card.dataset || {};
     var consoleLabel = data.console || '';
     var developerLabel = data.developer || '';
     var genreLabel = data.genre || '';
-    var tokens = toTokens(genreLabel);
+    var genres = toListTokens(genreLabel);
+    var fullText = collectText(card);
+    var textTokens = toWordTokens(fullText);
+    var titleTokens = toWordTokens(data.title || '');
 
     return {
       card: card,
-      text: normalise(collectText(card)),
+      text: normalise(fullText),
+      tokenSet: new Set(textTokens),
+      titleTokens: new Set(titleTokens),
       consoleLabel: consoleLabel.trim(),
       developerLabel: developerLabel.trim(),
-      genreLabels: tokens,
+      genreLabels: genres,
       consoleValue: normalise(consoleLabel),
       developerValue: normalise(developerLabel),
-      genreValues: tokens.map(normalise)
+      genreValues: genres.map(normalise),
+      interactionCount: parseNumber(data.clicks),
+      searchCount: parseNumber(data.searches),
+      publishedValue: parseDate(data.published),
+      matchScore: 0,
+      recencyScore: 0,
+      originalIndex: index
     };
   });
 
@@ -114,90 +146,181 @@ document.documentElement.classList.add('has-js');
     });
   });
 
-  function populateSelect(select, values){
-    if(!select) return;
-    var doc = select.ownerDocument;
-    var fragment = doc.createDocumentFragment();
-    var placeholderText = select.getAttribute('data-placeholder') || 'Todos';
-    var placeholder = doc.createElement('option');
-    placeholder.value = '';
-    placeholder.textContent = placeholderText;
-    fragment.appendChild(placeholder);
+  function populateDatalist(input, values){
+    if(!input) return;
+    var listId = input.getAttribute('list');
+    if(!listId) return;
+    var doc = input.ownerDocument;
+    var datalist = doc.getElementById(listId);
+    if(!datalist) return;
 
+    var fragment = doc.createDocumentFragment();
     Array.from(values)
       .sort(function(a, b){ return a.localeCompare(b, 'es', {sensitivity: 'base'}); })
       .forEach(function(value){
-        var opt = doc.createElement('option');
-        opt.value = value;
-        opt.textContent = value;
-        fragment.appendChild(opt);
+        var option = doc.createElement('option');
+        option.value = value;
+        fragment.appendChild(option);
       });
 
-    select.innerHTML = '';
-    select.appendChild(fragment);
-    select.value = '';
+    datalist.innerHTML = '';
+    datalist.appendChild(fragment);
   }
 
-  populateSelect(selects.console, valueSets.console);
-  populateSelect(selects.developer, valueSets.developer);
-  populateSelect(selects.genre, valueSets.genre);
+  populateDatalist(inputs.console, valueSets.console);
+  populateDatalist(inputs.developer, valueSets.developer);
+  populateDatalist(inputs.genre, valueSets.genre);
 
   var state = {
     term: '',
+    termTokens: [],
     console: '',
     developer: '',
-    genre: ''
+    genre: '',
+    sort: sortSelect ? (sortSelect.value || 'relevance') : 'relevance'
   };
 
+  function matchesTerm(entry){
+    if(!state.termTokens.length) return true;
+    return state.termTokens.every(function(token){
+      return entry.tokenSet.has(token) || entry.text.indexOf(token) !== -1;
+    });
+  }
+
+  function updateMatchScore(entry){
+    if(!state.termTokens.length){
+      entry.matchScore = 0;
+      return;
+    }
+    var score = 0;
+    state.termTokens.forEach(function(token){
+      if(entry.titleTokens.has(token)){
+        score += 30;
+      } else if(entry.tokenSet.has(token)){
+        score += 12;
+      } else if(entry.text.indexOf(token) !== -1){
+        score += 6;
+      }
+    });
+    entry.matchScore = score;
+  }
+
+  function updateRecency(entry){
+    entry.recencyScore = entry.publishedValue ? (entry.publishedValue / 86400000) : 0;
+  }
+
+  function computeRelevanceScore(entry){
+    return (entry.matchScore || 0) * 12 + (entry.interactionCount || 0) * 5 + (entry.searchCount || 0) * 3 + (entry.recencyScore || 0);
+  }
+
+  function computeSearchScore(entry){
+    return (entry.searchCount || 0) * 15 + (entry.interactionCount || 0) * 4 + (entry.recencyScore || 0);
+  }
+
+  function computeNewScore(entry){
+    return (entry.publishedValue || 0) + (entry.interactionCount || 0) * 10000 + (entry.searchCount || 0) * 5000;
+  }
+
+  function sortEntries(entries){
+    return entries.slice().sort(function(a, b){
+      var diff;
+      if(state.sort === 'searches'){
+        diff = computeSearchScore(b) - computeSearchScore(a);
+      } else if(state.sort === 'new'){
+        diff = computeNewScore(b) - computeNewScore(a);
+      } else {
+        diff = computeRelevanceScore(b) - computeRelevanceScore(a);
+      }
+      if(diff === 0){
+        return a.originalIndex - b.originalIndex;
+      }
+      return diff;
+    });
+  }
+
   function applyFilters(){
+    var visibleEntries = [];
+
     dataset.forEach(function(entry){
-      var visible = true;
+      var visible = matchesTerm(entry);
 
-      if(state.term && entry.text.indexOf(state.term) === -1){
-        visible = false;
+      if(visible && state.console){
+        visible = entry.consoleValue.indexOf(state.console) !== -1;
       }
 
-      if(visible && state.console && entry.consoleValue !== state.console){
-        visible = false;
+      if(visible && state.developer){
+        visible = entry.developerValue.indexOf(state.developer) !== -1;
       }
 
-      if(visible && state.developer && entry.developerValue !== state.developer){
-        visible = false;
-      }
-
-      if(visible && state.genre && entry.genreValues.indexOf(state.genre) === -1){
-        visible = false;
+      if(visible && state.genre){
+        visible = entry.genreValues.some(function(value){
+          return value.indexOf(state.genre) !== -1;
+        });
       }
 
       entry.card.style.display = visible ? '' : 'none';
+
+      if(visible){
+        updateMatchScore(entry);
+        updateRecency(entry);
+        visibleEntries.push(entry);
+      }
     });
+
+    var sortedEntries = sortEntries(visibleEntries);
+    sortedEntries.forEach(function(entry, index){
+      entry.card.style.order = index;
+      list.appendChild(entry.card);
+    });
+
+    if(emptyState){
+      emptyState.hidden = sortedEntries.length > 0;
+    }
   }
 
   if(q){
     q.addEventListener('input', function(){
       state.term = normalise(q.value);
+      state.termTokens = toWordTokens(q.value);
       applyFilters();
     });
   }
 
-  Object.keys(selects).forEach(function(key){
-    var select = selects[key];
-    if(!select) return;
-    select.addEventListener('change', function(){
-      state[key] = normalise(select.value);
+  Object.keys(inputs).forEach(function(key){
+    var input = inputs[key];
+    if(!input) return;
+    var handler = function(){
+      state[key] = normalise(input.value);
+      applyFilters();
+    };
+    input.addEventListener('input', handler);
+    input.addEventListener('change', handler);
+  });
+
+  if(sortSelect){
+    sortSelect.addEventListener('change', function(){
+      state.sort = sortSelect.value || 'relevance';
       applyFilters();
     });
-  });
+  }
 
   if(resetBtn){
     resetBtn.addEventListener('click', function(){
-      state.term = state.console = state.developer = state.genre = '';
+      state.term = '';
+      state.termTokens = [];
+      state.console = '';
+      state.developer = '';
+      state.genre = '';
       if(q) q.value = '';
-      Object.keys(selects).forEach(function(key){
-        if(selects[key]){
-          selects[key].value = '';
+      Object.keys(inputs).forEach(function(key){
+        if(inputs[key]){
+          inputs[key].value = '';
         }
       });
+      if(sortSelect){
+        sortSelect.value = 'relevance';
+        state.sort = 'relevance';
+      }
       applyFilters();
       if(q){
         q.focus();

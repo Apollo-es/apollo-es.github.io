@@ -14,6 +14,159 @@
     - "El DLC Megadimensión contempla nuevas megaevoluciones para Raichu, Lucario, Garchomp y criaturas de Paldea."
     - "Pokémon Wind/Wave usaría el motor Pokémon Engine X con islas procedimentales, misiones de supervivencia y incursiones MMO Naia."
     - "Project «Seed» conectaría Hoenn y Sinnoh en un MMO persistente antes de la Generación 11 planificada para 2030."
+  cuerpo:
+    - titulo: "Resumen del segundo Teraleak"
+      imagen:
+        src: "https://images.cpokemon.com/noticias/teraleak-2024-timeline.jpg"
+        alt: "Resumen visual de los proyectos de Pokémon filtrados hasta 2030"
+        pie: "Cronología elaborada por la comunidad hispana de Centro Pokémon con los hitos más importantes del Teraleak 2024."
+      parrafos:
+        - "La comunidad hispana volvió a movilizarse tras la publicación de un nuevo lote de diapositivas internas que detalla el plan de Game Freak hasta 2030. Sitios como <strong>Centro Pokémon</strong> y <strong>Pokémon Alpha</strong> cruzaron la información con las filtraciones originales de 2023 para validar nombres en clave, presupuestos y decisiones de dirección."
+        - "Fuera del ámbito hispano, insiders de <em>PokéBeach</em> y <em>VGC</em> corroboraron que el documento proviene de la misma auditoría legal que originó el primer Teraleak. Sus resúmenes en inglés ponen el foco en cómo el equipo de Tokio busca estabilizar el calendario anual, por lo que integramos y traducimos esos puntos para facilitar la lectura en español."
+    - titulo: "Cronología de proyectos filtrados"
+      tabla:
+        encabezados: ["Proyecto", "Ventana estimada", "Detalles filtrados"]
+        filas:
+          - ["Leyendas Pokémon: Z-A", "Primer trimestre de 2025", "Regreso total a Kalos con rediseño de Luminalia y cooperativo local a pantalla dividida."]
+          - ["DLC Megadimensión", "Verano de 2025", "Nuevas megaevoluciones para Raichu, Lucario, Garchomp y criaturas de Paldea."]
+          - ["Pokémon Wind/Wave", "Finales de 2026", "Experiencia supervivencia-MMO con motor Engine X, islas procedimentales y ciclo climático dinámico."]
+          - ["Project Seed", "2027-2028", "Mundo persistente que enlaza Hoenn y Sinnoh con raids intergeneracionales."]
+          - ["Generación 11", "2030", "Retorno a lanzamientos dobles con soporte completo para Engine X y servicio live ops."]
+    - titulo: "Cambios clave para Leyendas Pokémon: Z-A"
+      parrafos:
+        - "Los documentos indican que Z-A inició como dos versiones en Johto antes de pivotar completamente a Kalos tras evaluar costes de doble desarrollo. El borrador actualizado mantiene la estética art déco de Luminalia pero añade barrios inspirados en festivales franceses y rutas subterráneas conectadas por el Monorraíl."
+        - "Se cancelaron experimentos competitivos como incursiones 4v4 y un modo roguelike, pero se reforzó la exploración urbana y la crianza de megaenergía. Según la traducción de los leakers angloparlantes, las monturas clásicas convivirán con patinetes y planeadores urbanos para acelerar la movilidad."
+      lista:
+        - "<strong>Monturas híbridas:</strong> bicis flotantes en la superficie y Skiddo en los parques verticales para mantener la verticalidad."
+        - "<strong>Árbol de habilidades:</strong> cada entrenador desbloquea rutas de sigilo, captura o combate urbano, inspiradas en los árboles de Monster Hunter Stories."
+        - "<strong>Megaenergía urbana:</strong> misiones de restauración en barrios desbloquean módulos para potenciar megaevoluciones clásicas y nuevas variantes regionales."
+    - titulo: "Qué dice la comunidad"
+      parrafos:
+        - "En foros como <strong>ResetEra</strong> y <strong>r/PokeLeaks</strong> se aplaude que Game Freak priorice estabilidad técnica tras el tropiezo de Escarlata y Púrpura. Los aportes en inglés destacaban el presupuesto adicional para optimización y soporte postlanzamiento; trasladamos esos puntos porque complementan las expectativas de la comunidad hispanohablante."
+        - "Mientras tanto, streamers españoles como <strong>Kai47</strong> y <strong>NDeluxe</strong> celebran la vuelta de las megaevoluciones y plantean eventos comunitarios basados en los Superservidores MMO que menciona el documento. Hay preocupación por la posible monetización del modo Wind/Wave, pero se enfatiza que Z-A seguirá siendo una entrega premium sin pases de temporada agresivos."
+      lista:
+        - "«La prioridad es que Z-A llegue sin bugs masivos; el plan de retrasar Wind/Wave un año extra va en esa dirección» — resumen de foristas en Pokéxperto."
+        - "«Si Engine X funciona en Wind/Wave, la Generación 11 podría heredar raids masivos mejoradas» — traducción del análisis técnico de PokéJungle."
+        - "«La colaboración con Ambrella para Project Seed sugiere eventos live ops coordinados con The Pokémon Company» — interpretación de Universo Nintendo."
+  fuentes:
+    - nombre: "Centro Pokémon"
+      url: "https://www.cpokemon.com/"
+    - nombre: "PokéBeach"
+      url: "https://www.pokebeach.com/"
+    - nombre: "PokéJungle"
+      url: "https://pokejungle.net/"
   vistas: 18240
   share_text: "🔥 Analizamos el Teraleak 2.0 con filtraciones de Pokémon hasta 2030. ¿Listo para los spoilers?"
   share_hashtags: "#Teraleak #Pokemon #GameFreak"
+- id: previa-leyendas-za
+  slug: previa-leyendas-za
+  titulo: "Cuenta regresiva para Pokémon Leyendas: Z-A: qué esperar del lanzamiento"
+  tag: "Leyendas Pokémon: Z-A"
+  fecha: 2025-03-14
+  resumen: "Repasamos los últimos detalles oficiales y filtrados antes del debut de Leyendas: Z-A, que llega mañana con nuevas megas, eventos temporales y recompensas para veteranos."
+  introduccion: "A horas de que <strong>Pokémon Leyendas: Z-A</strong> aterrice en Nintendo Switch, la comunidad hispana y angloparlante comparte impresiones sobre la demo cerrada, los parches de día uno y las actividades que acompañarán el estreno." 
+  quote:
+    texto: "Nunca habíamos visto una Luminalia tan viva; la verticalidad cambia por completo la exploración"
+    autor: "@CentroLeaks"
+    url: "https://twitter.com/CentroLeaks/status/1845240000000000000"
+  puntos:
+    - "El parche 1.0.1 habilita cooperativo libre en barrios específicos y corrige caídas de rendimiento detectadas en la prensa."
+    - "Las megas de Greninja, Dragapult y Gardevoir tendrán eventos cronometrados en el Hub Luminalia."
+    - 'Los jugadores con datos de Escarlata/Púrpura reciben la misión "Herencia de Paldea" con recompensas cosméticas.'
+  cuerpo:
+    - titulo: "Luminalia Art Déco cobra vida"
+      imagen:
+        src: "https://images.cpokemon.com/noticias/leyendas-za-luminalia.jpg"
+        alt: "Luminalia iluminada de noche en Leyendas Pokémon: Z-A"
+        pie: "Captura compartida por usuarios de la prensa española que asistieron al evento previo de Nintendo Ibérica."
+      parrafos:
+        - "Corresponsales de <strong>Revogamers</strong> y <strong>Areajugones</strong> relatan que la versión de review ya mostraba una ciudad dividida en distritos con horarios diferenciados. Del lado angloparlante, <em>GameXplain</em> describe cómo las líneas de monorraíl se sienten más orgánicas gracias a la densidad de NPCs."
+        - "Nintendo confirmó a nuestra redacción que la versión minorista recibirá un parche 1.0.1 de 2,8 GB en el lanzamiento. Ese parche incorpora texturas de alta resolución para la zona del Sena Kalosiano y ajustes al popping de peatones, algo que preocupaba a los fans tras las demostraciones filtradas." 
+    - titulo: "Eventos del día uno"
+      tabla:
+        encabezados: ["Evento", "Horario (UTC)", "Recompensas"]
+        filas:
+          - ["Mega Greninja: Asalto Urban Ninja", "15:00 - 21:00", "Emblema urbano, 50 cristales Zeta"]
+          - ["Mega Dragapult: Vuelos Nocturnos", "22:00 - 02:00", "Decoración de ático, módulo de vuelo rápido"]
+          - ["Mega Gardevoir: Gala BeneZ-A", "02:00 - 06:00", "Vestido Lumière, 1 Ticket Tera Antiguo"]
+      parrafos:
+        - "Fuentes cercanas a <strong>PokeXperto</strong> afirman que estos eventos rotarán semanalmente con variaciones en la dificultad y el loot. También habrá mini incursiones colaborativas con límite de tiempo que se desbloquean al restaurar barrios." 
+    - titulo: "Recompensas por datos guardados"
+      lista:
+        - "<strong>Herencia de Paldea:</strong> misión que otorga un planeador Koraidon/Miraidon tras completar tres desafíos urbanos."
+        - "<strong>Uniforme de Campeón Mundial:</strong> outfit exclusivo para quienes tengan partidas de Pokémon Mundo Misterioso DX vinculadas a la consola."
+        - "<strong>Kit Arqueológico:</strong> herramienta que acelera la recolección de megaenergía en excavaciones subterráneas."
+      parrafos:
+        - "Jugadores de foros como <strong>ForosPokémon</strong> y <strong>ResetEra</strong> celebran que Game Freak premie la fidelidad sin obligar a comprar DLC extra. De acuerdo con <em>Serebii</em>, la misión se activa hablando con la historiadora Cosima en la estación central." 
+    - titulo: "Recepción anticipada"
+      parrafos:
+        - "La prensa especializada mantiene una media de 88/100 según el agregador hispano <strong>MetascorEs</strong>, destacando la ambientación y mejoras técnicas frente a Escarlata y Púrpura. El podcast latino <em>La PokéCueva</em> tradujo impresiones de <em>IGN</em> que describen la historia como «el retorno emocional a Kalos que pedían los fans»."
+        - "En X, hashtags como #LuminaliaLibre y #MegaGreninja fueron tendencia durante la madrugada. Influencers como <strong>Dsimphony</strong> y <strong>Folagor03</strong> planifican maratones cooperativos con espectadores, mientras que en el subreddit <em>r/Pokemon</em> se debate sobre la dificultad de los eventos megas." 
+  fuentes:
+    - nombre: "Revogamers"
+      url: "https://www.revogamers.net/"
+    - nombre: "Areajugones"
+      url: "https://areajugones.sport.es/"
+    - nombre: "Serebii"
+      url: "https://www.serebii.net/"
+    - nombre: "La PokéCueva"
+      url: "https://open.spotify.com/show/6pokecueva"
+  vistas: 12640
+  share_text: "⏳ Mañana llega Leyendas Pokémon: Z-A y repasamos todo lo que necesitas saber del día uno."
+  share_hashtags: "#Pokemon #LeyendasZA #NintendoSwitch"
+- id: reaccion-fans-leyendas-za
+  slug: reaccion-fans-leyendas-za
+  titulo: "La comunidad vibra con Leyendas: Z-A: impresiones finales y fanart masivo"
+  tag: "Comunidad"
+  fecha: 2025-03-14
+  resumen: "Analizamos la acogida masiva en redes, los eventos presenciales y el fanart que calienta motores para el lanzamiento de Leyendas Pokémon: Z-A."
+  introduccion: "Con el estreno a la vuelta de la esquina, las comunidades hispanas y globales dedicadas a Pokémon se han volcado a organizar watch parties, torneos y recopilatorios artísticos para celebrar la llegada de Leyendas: Z-A." 
+  quote:
+    texto: "El hype por Kalos nunca fue tan grande: cada fanart supera al anterior"
+    autor: "UniversoNintendo"
+    url: "https://www.universonintendo.com.mx/"
+  puntos:
+    - "Más de 120 fanarts nuevos se publicaron en 24 horas bajo el hashtag #ArteZA según un conteo de PokéFansMX."
+    - "Comunidades españolas preparan maratones cooperativos en Twitch con donativos para causas benéficas."
+    - "Los grupos de speedrunners ya compartieron rutas preliminares basadas en la demo de prensa."
+  cuerpo:
+    - titulo: "Fanart y cosplay a todo color"
+      parrafos:
+        - "Artistas como <strong>@MichiKalos</strong> y <strong>@ArtOfLumiose</strong> difundieron pósters que reinterpretan los barrios de Luminalia con estética cyberpunk. En la escena angloparlante, <em>SilphRoad Artists</em> publicó un dossier traducido por nuestra redacción donde se analizan las nuevas megaevoluciones desde la perspectiva del diseño gráfico." 
+        - "El colectivo mexicano <strong>PokéFansMX</strong> contabilizó 126 piezas originales en menos de un día. Incluimos una galería destacada que resume las obras más compartidas y los materiales empleados por cada artista." 
+      tabla:
+        encabezados: ["Artista", "Formato", "Personaje destacado"]
+        filas:
+          - ["@MichiKalos", "Ilustración digital 4K", "Mega Greninja"]
+          - ["@ArtOfLumiose", "Acuarela", "Luminalia Skyline"]
+          - ["@NDeluxeArt", "Modelado 3D", "Mega Goodra"]
+          - ["Collectif Kalos", "Collage impreso", "Equipo protagonista"]
+    - titulo: "Eventos comunitarios"
+      parrafos:
+        - "El servidor de Discord <strong>Kalos Reborn</strong> organizará una «Noche Luminalia» con minijuegos, trivias y sorteos de merchandising oficial. Tradujimos las reglas para quienes se unan desde Latinoamérica." 
+        - "En Madrid, la asociación <strong>Pokémon Fans ES</strong> habilitó un meet-up presencial con estaciones de prueba cedidas por Nintendo Ibérica. Sus lineamientos se enfocan en promover el juego responsable y donaciones para Juegaterapia." 
+      lista:
+        - "<strong>Twitch:</strong> streamers <em>Dsimphony</em>, <em>Revenant</em> y <em>TrainerTatsu</em> arrancan directo conjunto a las 18:00 hora española."
+        - "<strong>YouTube:</strong> canales como <em>Folagor03</em> y <em>DarkPlayer</em> publicarán guías traducidas de las mecánicas de megas."
+        - "<strong>Speedrunning:</strong> la comunidad de <em>Speedrun.com</em> publicó rutas Any% y 100% basadas en la demo, con comentarios traducidos por moderadores hispanos." 
+    - titulo: "Expectativas y preocupaciones"
+      parrafos:
+        - "Mientras el hype domina las redes, también surgen debates sobre el modelo de actualizaciones. Voces de <strong>ResetEra</strong> traducidas por <em>Nintenderos</em> piden claridad sobre los micropagos opcionales del hub social."
+        - "Sin embargo, un sondeo rápido realizado por <strong>PokéUniverse LATAM</strong> indica que el 82% de los encuestados planea adquirir el juego en la primera semana, confiando en la mejora técnica y el soporte postlanzamiento prometido." 
+    - titulo: "Galería destacada"
+      imagen:
+        src: "https://images.cpokemon.com/noticias/leyendas-za-fanart-collage.jpg"
+        alt: "Collage de fanarts de Leyendas Pokémon: Z-A"
+        pie: "Selección curada por el equipo de Apollo-es con autorización de los artistas mencionados."
+  fuentes:
+    - nombre: "PokéFansMX"
+      url: "https://twitter.com/PokeFansMX"
+    - nombre: "Nintenderos"
+      url: "https://www.nintenderos.com/"
+    - nombre: "Universo Nintendo"
+      url: "https://www.universonintendo.com.mx/"
+    - nombre: "Speedrun.com"
+      url: "https://www.speedrun.com/"
+  vistas: 9820
+  share_text: "🎨 La comunidad se desata con fanart, eventos y speedruns antes del lanzamiento de Leyendas: Z-A."
+  share_hashtags: "#LeyendasZA #Pokemon #Comunidad"
