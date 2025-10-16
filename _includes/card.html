@@ -137,8 +137,10 @@
       </div>
     {% endif %}
 
-    {% if item.disclaimer and not is_game %}
-      <p class="legal-disclaimer">{{ item.disclaimer }}</p>
+    {% if item.disclaimer %}
+      {% unless is_game %}
+        <p class="legal-disclaimer">{{ item.disclaimer }}</p>
+      {% endunless %}
     {% endif %}
 
     {% if item.categoria contains 'juegos' %}
