@@ -30,8 +30,6 @@ nav:
     url: "/noticias/"
   - name: "Juegos"
     url: "/juegos/"
-  - name: "Apps"
-    url: "/apps/"
   - name: "Emuladores"
     url: "/emuladores/"
   - name: "Guías"

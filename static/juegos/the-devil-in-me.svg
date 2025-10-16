@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustración de The Dark Pictures Anthology: The Devil in Me</title>
+  <desc id="desc">Figura con silueta humana frente a un hotel victoriano iluminado con tonos rojos y morados.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#1a0820"/>
+      <stop offset="1" stop-color="#480018"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f5c07d"/>
+      <stop offset="1" stop-color="#ff3b69"/>
+    </linearGradient>
+    <clipPath id="frame">
+      <rect x="30" y="30" width="360" height="500" rx="36" ry="36"/>
+    </clipPath>
+  </defs>
+  <rect width="420" height="560" fill="#0d0512"/>
+  <g clip-path="url(#frame)">
+    <rect x="30" y="30" width="360" height="500" fill="url(#bg)"/>
+    <circle cx="210" cy="180" r="120" fill="#270313" opacity="0.7"/>
+    <path d="M110 310h200v160H110z" fill="#12060d" opacity="0.75"/>
+    <g fill="#1f0a11">
+      <rect x="120" y="250" width="180" height="18" rx="6"/>
+      <rect x="120" y="278" width="180" height="18" rx="6"/>
+      <rect x="120" y="306" width="180" height="18" rx="6"/>
+    </g>
+    <g fill="#2b1019">
+      <rect x="138" y="330" width="24" height="120" rx="6"/>
+      <rect x="180" y="330" width="24" height="120" rx="6"/>
+      <rect x="222" y="330" width="24" height="120" rx="6"/>
+      <rect x="264" y="330" width="24" height="120" rx="6"/>
+    </g>
+    <g fill="#ff5c7a">
+      <rect x="150" y="348" width="12" height="20" rx="4"/>
+      <rect x="192" y="348" width="12" height="20" rx="4"/>
+      <rect x="234" y="348" width="12" height="20" rx="4"/>
+      <rect x="276" y="348" width="12" height="20" rx="4"/>
+    </g>
+    <circle cx="210" cy="200" r="90" fill="url(#glow)" opacity="0.25"/>
+    <path d="M210 200c36 0 66 30 66 66s-16 70-66 130c-50-60-66-94-66-130s30-66 66-66z" fill="none" stroke="#f7ccb5" stroke-width="6" stroke-linecap="round"/>
+    <path d="M210 254c-8 0-14-6-14-14 0-10 8-18 18-18s18 8 18 18c0 8-6 14-14 14h-8z" fill="#2a0c18"/>
+    <path d="M206 260h8c32 0 58 26 58 58v38c0 10-8 18-18 18H166c-10 0-18-8-18-18v-38c0-32 26-58 58-58z" fill="#1a0610"/>
+    <path d="M174 368h72v40c0 20-16 36-36 36s-36-16-36-36v-40z" fill="#0d0308" opacity="0.9"/>
+    <circle cx="210" cy="428" r="34" fill="#12040b"/>
+    <circle cx="210" cy="428" r="12" fill="#f0c8ad" opacity="0.65"/>
+  </g>
+  <rect x="30" y="30" width="360" height="500" rx="36" ry="36" fill="none" stroke="#ff9f7c" stroke-opacity="0.65" stroke-width="4"/>
+  <rect x="24" y="24" width="372" height="512" rx="44" ry="44" fill="none" stroke="#f2d2bf" stroke-opacity="0.35" stroke-width="2"/>
+</svg>

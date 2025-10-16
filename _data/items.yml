@@ -174,34 +174,120 @@
 - id: sonic-racing-crossworlds
   categoria: ["juegos"]
   titulo: "Sonic Racing: CrossWorlds"
-  descripcion: "Forma equipo con Sonic, Tails y los corredores de todo Mobius en ligas de temporada, circuitos dinámicos y bosses cooperativos en línea en esta experiencia free-to-play optimizada para móviles."
-  tipo: "Mobile"
+  descripcion: "Forma equipo con Sonic, Tails y Blaze en copas cooperativas con pantalla dividida, tablas online y soporte completo para Nintendo Switch."
+  tipo: "Switch"
   idioma: "multi"
-  tamano: "5.2 GB"
+  tamano: "10.8 GB"
   licencia: "incluida"
-  consola: "Android / iOS"
+  consola: "Nintendo Switch"
   desarrolladora: "SEGA HARDlight"
   genero: "Carreras / Acción"
   portada: "/static/juegos/sonic-racing-crossworlds.svg"
+  interacciones: 6240
+  busquedas: 8120
+  fecha_publicacion: 2025-10-16
   hashtags:
     - "#Sonic"
     - "#SonicRacing"
     - "#CrossWorlds"
+    - "#NintendoSwitch"
   descargas:
-    - titulo: "ROM completa"
+    - titulo: "Juego base (NSP/XCI)"
       mirrors:
-        - host: "Descarga directa"
-          url: "https://exe.io/srromlink"
-    - titulo: "DLC contenido adicional"
+        - host: "Mega"
+          url: "https://exe.io/sr-switch-mega"
+        - host: "Mediafire"
+          url: "https://exe.io/sr-switch-media"
+        - host: "Google Drive"
+          url: "https://exe.io/sr-switch-drive"
+    - titulo: "Actualización 1.1.0"
       mirrors:
-        - host: "Descarga directa"
-          url: "https://exe.io/srdlclink"
-    - titulo: "Actualización más reciente"
+        - host: "Mega"
+          url: "https://exe.io/sr-switch-update"
+        - host: "Mediafire"
+          url: "https://exe.io/sr-switch-update-mf"
+    - titulo: "DLC Pase de Temporada"
       mirrors:
-        - host: "Descarga directa"
-          url: "https://exe.io/sruplink"
+        - host: "Mega"
+          url: "https://exe.io/sr-switch-dlc"
+        - host: "Mediafire"
+          url: "https://exe.io/sr-switch-dlc-mf"
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Sonic the Hedgehog y derivados son © 1991-2025 SEGA. Todos los derechos pertenecen a SEGA y sus subsidiarias.
+
+- id: the-devil-in-me
+  categoria: ["juegos"]
+  titulo: "The Dark Pictures Anthology: The Devil in Me"
+  descripcion: "Dirige a un equipo de documentalistas atrapado en un hotel-mansión lleno de trampas mortales inspiradas en H. H. Holmes. Cada decisión altera el destino de tus personajes."
+  tipo: "PC"
+  idioma: "multi"
+  tamano: "45 GB"
+  licencia: "incluida"
+  consola: "PC"
+  desarrolladora: "Supermassive Games"
+  genero: "Terror narrativo"
+  portada: "/static/juegos/the-devil-in-me.svg"
+  interacciones: 4120
+  busquedas: 6890
+  fecha_publicacion: 2025-10-16
+  hashtags:
+    - "#TheDevilInMe"
+    - "#DarkPictures"
+    - "#SupermassiveGames"
+  descargas:
+    - titulo: "Juego base (Steam release)"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/devilinme-mega"
+        - host: "Mediafire"
+          url: "https://exe.io/devilinme-media"
+        - host: "Google Drive"
+          url: "https://exe.io/devilinme-drive"
+    - titulo: "Paquete de voces latino"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/devilinme-voz"
+        - host: "Mediafire"
+          url: "https://exe.io/devilinme-voz-mf"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. The Dark Pictures Anthology y sus personajes son © 2019-2025 Supermassive Games / Bandai Namco Entertainment.
+
+- id: until-dawn
+  categoria: ["juegos"]
+  titulo: "Until Dawn"
+  descripcion: "Vive una noche de terror cinematográfico en Blackwood Mountain. Tus decisiones determinan quién sobrevive al asesino y las amenazas sobrenaturales."
+  tipo: "PS4"
+  idioma: "multi"
+  tamano: "37 GB"
+  licencia: "incluida"
+  consola: "PlayStation 4"
+  desarrolladora: "Supermassive Games"
+  genero: "Terror narrativo"
+  portada: "/static/juegos/until-dawn.svg"
+  interacciones: 5320
+  busquedas: 9410
+  fecha_publicacion: 2025-10-16
+  hashtags:
+    - "#UntilDawn"
+    - "#SupermassiveGames"
+    - "#SurvivalHorror"
+  descargas:
+    - titulo: "Juego base (PKG)"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/untildawn-mega"
+        - host: "Mediafire"
+          url: "https://exe.io/untildawn-media"
+        - host: "Google Drive"
+          url: "https://exe.io/untildawn-drive"
+    - titulo: "Actualización 1.03"
+      mirrors:
+        - host: "Mega"
+          url: "https://exe.io/untildawn-update"
+        - host: "Mediafire"
+          url: "https://exe.io/untildawn-update-mf"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. Until Dawn es © 2015-2025 Sony Interactive Entertainment Europe. Todos los derechos pertenecen a sus respectivos titulares.
 
 - id: super-mario-galaxy
   categoria: ["juegos"]
@@ -243,7 +329,7 @@
   tamano: "3.9 GB"
   licencia: "incluida"
   consola: "Nintendo Wii"
-  desarrolladora: "Nintendo"
+  desarrolladora: "Nintendo EAD"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy-2.svg"
   interacciones: 14210

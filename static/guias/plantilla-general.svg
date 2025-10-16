@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustración plantilla guía general</title>
+  <desc id="desc">Iconos de documentos y listas sobre fondo degradado púrpura y naranja.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#31144d"/>
+      <stop offset="1" stop-color="#f2675a"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff5f0"/>
+      <stop offset="1" stop-color="#ffd7c6"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" rx="28" ry="28" fill="url(#bg)"/>
+  <rect x="82" y="48" width="88" height="112" rx="16" fill="url(#paper)"/>
+  <rect x="154" y="56" width="84" height="96" rx="14" fill="#fbe0ff" opacity="0.85"/>
+  <g fill="#f2675a">
+    <rect x="96" y="70" width="44" height="8" rx="4"/>
+    <rect x="96" y="90" width="56" height="8" rx="4"/>
+    <rect x="96" y="110" width="40" height="8" rx="4"/>
+  </g>
+  <g fill="#9a48f7" opacity="0.75">
+    <rect x="170" y="76" width="44" height="8" rx="4"/>
+    <rect x="170" y="96" width="54" height="8" rx="4"/>
+    <rect x="170" y="116" width="40" height="8" rx="4"/>
+  </g>
+  <circle cx="124" cy="144" r="12" fill="#f2675a"/>
+  <path d="M118 144l4 4 8-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="208" y="136" width="32" height="12" rx="6" fill="#9a48f7"/>
+  <g opacity="0.3" stroke="#fff" stroke-width="6" stroke-linecap="round">
+    <path d="M40 52h44"/>
+    <path d="M238 42h42"/>
+    <path d="M56 164h40"/>
+  </g>
+</svg>

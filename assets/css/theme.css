@@ -51,6 +51,25 @@ a:hover{opacity:.9}
 .news-tag{align-self:flex-start;margin:0;padding:6px 12px;border-radius:999px;background:rgba(124,92,255,.18);border:1px solid rgba(124,92,255,.45);color:#cfd3ff;font:600 12px/1 Inter,sans-serif;letter-spacing:.8px;text-transform:uppercase}
 .news-card h2,.news-card h3{margin:0;font:700 24px/1.3 Orbitron,sans-serif;color:#f5f8ff}
 .news-card p{margin:0;color:#c8d4f1}
+.news-entry{display:flex;flex-direction:column;gap:24px;padding:32px;border-radius:28px;background:rgba(12,18,32,.86);border:1px solid #1f2b44;box-shadow:0 28px 64px -40px rgba(0,0,0,.8)}
+.news-entry-header{display:flex;flex-direction:column;gap:10px}
+.news-entry-header .news-tag{align-self:flex-start;font-size:12px;text-transform:uppercase;letter-spacing:.4px;background:rgba(94,108,255,.18);border:1px solid rgba(129,149,255,.32);padding:6px 12px;border-radius:999px;color:#d3dcff}
+.news-entry-header h1{margin:0;font:700 28px/1.2 Orbitron,sans-serif;color:#f6f8ff;text-shadow:0 24px 60px -40px rgba(0,0,0,.8)}
+.news-entry-header .news-meta{margin:0;color:#8fa7d8;font-size:13px}
+.news-entry-header .news-summary{margin:0;color:#cbd6f6;font-size:16px;line-height:1.6}
+.news-entry-content{display:flex;flex-direction:column;gap:24px}
+.news-entry-lead{display:flex;flex-direction:column;gap:16px;color:#d6e1ff;font-size:16px;line-height:1.7}
+.news-entry-quote{margin:0;padding:18px 22px;border-left:4px solid #7f9cff;background:rgba(120,142,255,.16);border-radius:0 18px 18px 0;color:#e4ebff;font-style:italic}
+.news-entry-quote cite{display:block;margin-top:8px;font-style:normal;font-size:13px;color:#9fb6ff}
+.news-entry-block{display:flex;flex-direction:column;gap:14px;padding:18px 0;border-top:1px solid rgba(43,58,94,.45)}
+.news-entry-block:first-child{border-top:none;padding-top:0}
+.news-entry-block h2{margin:0;font:600 22px/1.3 Orbitron,sans-serif;color:#f0f4ff}
+.news-entry-share{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:22px;background:rgba(18,26,46,.78);border:1px solid #223054}
+.news-entry-share h2{margin:0;font:600 18px/1.4 Orbitron,sans-serif;color:#f4f7ff}
+.news-entry-footer{display:flex;justify-content:flex-end}
+.news-entry-footer .btn{min-width:200px;justify-content:center}
+.news-figure img{width:100%;border-radius:20px;box-shadow:0 28px 60px -36px rgba(0,0,0,.74)}
+.news-figure figcaption{margin-top:10px;color:#9fb3df;font-size:13px;text-align:center}
 .news-excerpt{padding:16px 18px;border-radius:16px;background:rgba(12,18,32,.72);border:1px solid rgba(124,92,255,.22)}
 .news-excerpt p{margin:0;color:#d6e1ff;line-height:1.7}
 .news-read-more{align-self:flex-start;margin-top:4px}
@@ -142,6 +161,7 @@ a:hover{opacity:.9}
 .forum-post-body{margin:0;color:#cbd5f1;line-height:1.6}
 .forum-post-actions{display:flex;flex-wrap:wrap;gap:10px}
 .forum-post-actions .btn{padding:10px 12px;font-size:13px}
+.forum-post-note{margin:0;padding:10px 12px;border-radius:12px;background:rgba(16,26,46,.72);color:#9fb6e6;font-size:13px}
 .forum-topic-form{display:flex;flex-direction:column;gap:14px;margin-top:6px;padding:18px;border-radius:18px;background:rgba(10,15,26,.9);border:1px solid #23304b}
 .forum-topic-form.is-editing{box-shadow:0 0 0 2px rgba(124,92,255,.4)}
 .form-row{display:flex;flex-direction:column;gap:6px}
