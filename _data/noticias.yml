@@ -2,7 +2,7 @@
   slug: teraleak-2024
   titulo: "Un año del Teraleak: planes filtrados de Pokémon hasta 2030"
   tag: "Teraleak 2.0"
-  fecha: 2024-06-04
+  fecha: 2025-10-16
   resumen: "Revisamos las nuevas filtraciones del Teraleak que repasan los proyectos de Game Freak, desde Leyendas Pokémon: Z-A hasta la planeada Generación 11."
   introduccion: "Nuevos documentos internos del llamado «Teraleak» apuntan a cómo evolucionaron los proyectos de Pokémon tras la filtración masiva de 2023, incluyendo cambios de región, mecánicas descartadas y planes para un MMO multirregión."
   quote:
@@ -56,13 +56,13 @@
     - nombre: "PokéJungle"
       url: "https://pokejungle.net/"
   vistas: 18240
-  share_text: "🔥 Analizamos el Teraleak 2.0 con filtraciones de Pokémon hasta 2030. ¿Listo para los spoilers?"
+  share_text: "🔥 Analizamos el Teraleak 2.0 con filtraciones de Pokémon hasta 2030. Lee el reportaje completo en Apollo-es:"
   share_hashtags: "#Teraleak #Pokemon #GameFreak"
 - id: previa-leyendas-za
   slug: previa-leyendas-za
   titulo: "Cuenta regresiva para Pokémon Leyendas: Z-A: qué esperar del lanzamiento"
   tag: "Leyendas Pokémon: Z-A"
-  fecha: 2025-03-14
+  fecha: 2025-10-16
   resumen: "Repasamos los últimos detalles oficiales y filtrados antes del debut de Leyendas: Z-A, que llega mañana con nuevas megas, eventos temporales y recompensas para veteranos."
   introduccion: "A horas de que <strong>Pokémon Leyendas: Z-A</strong> aterrice en Nintendo Switch, la comunidad hispana y angloparlante comparte impresiones sobre la demo cerrada, los parches de día uno y las actividades que acompañarán el estreno." 
   quote:
@@ -112,13 +112,13 @@
     - nombre: "La PokéCueva"
       url: "https://open.spotify.com/show/6pokecueva"
   vistas: 12640
-  share_text: "⏳ Mañana llega Leyendas Pokémon: Z-A y repasamos todo lo que necesitas saber del día uno."
+  share_text: "⏳ Leyendas Pokémon: Z-A se acerca y resumimos todo lo que necesitas saber antes del lanzamiento:"
   share_hashtags: "#Pokemon #LeyendasZA #NintendoSwitch"
 - id: reaccion-fans-leyendas-za
   slug: reaccion-fans-leyendas-za
   titulo: "La comunidad vibra con Leyendas: Z-A: impresiones finales y fanart masivo"
   tag: "Comunidad"
-  fecha: 2025-03-14
+  fecha: 2025-10-16
   resumen: "Analizamos la acogida masiva en redes, los eventos presenciales y el fanart que calienta motores para el lanzamiento de Leyendas Pokémon: Z-A."
   introduccion: "Con el estreno a la vuelta de la esquina, las comunidades hispanas y globales dedicadas a Pokémon se han volcado a organizar watch parties, torneos y recopilatorios artísticos para celebrar la llegada de Leyendas: Z-A." 
   quote:
@@ -168,5 +168,5 @@
     - nombre: "Speedrun.com"
       url: "https://www.speedrun.com/"
   vistas: 9820
-  share_text: "🎨 La comunidad se desata con fanart, eventos y speedruns antes del lanzamiento de Leyendas: Z-A."
+  share_text: "🎨 La comunidad se desata con fanart, eventos y speedruns antes del lanzamiento de Leyendas: Z-A:"
   share_hashtags: "#LeyendasZA #Pokemon #Comunidad"

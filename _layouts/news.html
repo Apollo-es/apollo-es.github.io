@@ -1,0 +1,134 @@
+---
+layout: default
+---
+{% assign news = site.data.noticias | where: 'slug', page.news_id | first %}
+{% if news == nil %}
+  <article class="news-entry">
+    <h1>{{ page.title | default: "Noticia no encontrada" }}</h1>
+    <p>No pudimos cargar la noticia solicitada. Vuelve al listado principal para explorar otras publicaciones.</p>
+    <p><a class="btn primary" href="{{ '/noticias/' | relative_url }}"><i class="ti ti-news"></i> Ver todas las noticias</a></p>
+  </article>
+{% else %}
+  <article class="news-entry" id="{{ news.slug }}">
+    <header class="news-entry-header">
+      <p class="news-tag">{{ news.tag }}</p>
+      <h1>{{ news.titulo }}</h1>
+      <p class="news-meta">{{ news.vistas | default: 0 }} lecturas · {{ news.fecha | date: "%d/%m/%Y" }}</p>
+      <p class="news-summary">{{ news.resumen }}</p>
+    </header>
+
+    <div class="news-entry-content">
+      <section class="news-entry-lead">
+        {{ news.introduccion | markdownify }}
+        {% if news.quote %}
+        <blockquote class="news-entry-quote">
+          <p>«{{ news.quote.texto }}»</p>
+          <cite><a href="{{ news.quote.url }}" target="_blank" rel="noopener">{{ news.quote.autor }}</a></cite>
+        </blockquote>
+        {% endif %}
+        {% if news.puntos %}
+        <ul class="news-highlights">
+          {% for punto in news.puntos %}
+          <li>{{ punto }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+
+      {% if news.cuerpo %}
+        {% for bloque in news.cuerpo %}
+        <section class="news-entry-block">
+          {% if bloque.titulo %}<h2>{{ bloque.titulo }}</h2>{% endif %}
+          {% if bloque.imagen %}
+          <figure class="news-figure">
+            <img src="{{ bloque.imagen.src }}" alt="{{ bloque.imagen.alt }}">
+            {% if bloque.imagen.pie %}<figcaption>{{ bloque.imagen.pie }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+          {% if bloque.parrafos %}
+            {% for parrafo in bloque.parrafos %}
+              {{ parrafo | markdownify }}
+            {% endfor %}
+          {% endif %}
+          {% if bloque.lista %}
+          <ul class="news-highlights">
+            {% for item in bloque.lista %}
+            <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if bloque.tabla %}
+          <div class="news-table-wrapper">
+            <table class="news-table">
+              {% if bloque.tabla.encabezados %}
+              <thead>
+                <tr>
+                  {% for head in bloque.tabla.encabezados %}
+                  <th>{{ head }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              {% endif %}
+              <tbody>
+                {% for fila in bloque.tabla.filas %}
+                <tr>
+                  {% for celda in fila %}
+                  <td>{{ celda }}</td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% endif %}
+        </section>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% assign share_url = site.url | append: page.url %}
+    {% assign share_message = news.share_text | default: news.resumen %}
+    {% assign share_text_encoded = share_message | append: ' ' | append: share_url | uri_escape %}
+    {% assign share_hashtags = '' %}
+    {% if news.share_hashtags %}
+      {% capture hashtag_tokens %}
+        {% assign tokens = news.share_hashtags | split: ' ' %}
+        {% for token in tokens %}
+          {% assign clean = token | strip | remove: '#' %}
+          {% if clean != '' %}{% unless forloop.first %},{% endunless %}{{ clean }}{% endif %}
+        {% endfor %}
+      {% endcapture %}
+      {% assign share_hashtags = hashtag_tokens | strip | replace: ' ', '' %}
+    {% endif %}
+
+    <aside class="news-entry-share">
+      <h2>Comparte esta noticia</h2>
+      <div class="news-share" data-share data-share-url="{{ share_url }}" data-share-title="{{ news.titulo }}" data-share-text="{{ share_message | append: ' ' | append: share_url }}">
+        <a class="btn share" href="https://twitter.com/intent/tweet?url={{ share_url | uri_escape }}&text={{ share_text_encoded }}{% if share_hashtags != '' %}&hashtags={{ share_hashtags | uri_escape }}{% endif %}" target="_blank" rel="noopener" data-platform="x">
+          <i class="ti ti-brand-twitter"></i> Compartir en X
+        </a>
+        <a class="btn share" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | uri_escape }}&quote={{ share_text_encoded }}" target="_blank" rel="noopener" data-platform="facebook">
+          <i class="ti ti-brand-facebook"></i> Compartir en Facebook
+        </a>
+        <a class="btn share" href="https://wa.me/?text={{ share_text_encoded }}" target="_blank" rel="noopener" data-platform="whatsapp">
+          <i class="ti ti-brand-whatsapp"></i> Compartir en WhatsApp
+        </a>
+      </div>
+    </aside>
+
+    {% if news.fuentes %}
+    <section class="news-sources">
+      <h2>Fuentes consultadas</h2>
+      <ul>
+        {% for fuente in news.fuentes %}
+        <li><a href="{{ fuente.url }}" target="_blank" rel="noopener">{{ fuente.nombre }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    <footer class="news-entry-footer">
+      <a class="btn alt" href="{{ '/noticias/' | relative_url }}"><i class="ti ti-arrow-left"></i> Volver a noticias</a>
+    </footer>
+  </article>
+{% endif %}

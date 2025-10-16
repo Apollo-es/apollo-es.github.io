@@ -621,7 +621,31 @@ document.documentElement.classList.add('has-js');
   if(!board) return;
 
   const storageKey = 'apolloCommunityPosts';
+  const sessionKey = 'apolloForumSessionId';
   const topics = Array.from(board.querySelectorAll('.forum-topic'));
+
+  function createSessionId(){
+    if(typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'){
+      return crypto.randomUUID();
+    }
+    return 'sess-' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+  }
+
+  function ensureSessionId(){
+    try {
+      let id = localStorage.getItem(sessionKey);
+      if(!id){
+        id = createSessionId();
+        localStorage.setItem(sessionKey, id);
+      }
+      return id;
+    } catch(err){
+      console.warn('No se pudo asegurar el id de sesión del foro', err);
+      return createSessionId();
+    }
+  }
+
+  const sessionId = ensureSessionId();
 
   function readStore(){
     try {
@@ -696,7 +720,15 @@ document.documentElement.classList.add('has-js');
       return timeB - timeA;
     });
 
+    let needsSync = false;
+
     sorted.forEach(post => {
+      if(!post.sessionId){
+        post.sessionId = sessionId;
+        needsSync = true;
+      }
+      const ownsPost = post.sessionId === sessionId;
+
       const article = document.createElement('article');
       article.className = 'forum-post';
       article.dataset.postId = post.id;
@@ -745,28 +777,41 @@ document.documentElement.classList.add('has-js');
       body.textContent = post.message;
       article.appendChild(body);
 
-      const actions = document.createElement('div');
-      actions.className = 'forum-post-actions';
+      if(ownsPost){
+        const actions = document.createElement('div');
+        actions.className = 'forum-post-actions';
 
-      const editBtn = document.createElement('button');
-      editBtn.type = 'button';
-      editBtn.className = 'btn alt';
-      editBtn.textContent = 'Editar';
-      editBtn.setAttribute('data-topic-action', 'edit');
-      editBtn.setAttribute('data-post-id', post.id);
-      actions.appendChild(editBtn);
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'btn alt';
+        editBtn.textContent = 'Editar';
+        editBtn.setAttribute('data-topic-action', 'edit');
+        editBtn.setAttribute('data-post-id', post.id);
+        actions.appendChild(editBtn);
 
-      const deleteBtn = document.createElement('button');
-      deleteBtn.type = 'button';
-      deleteBtn.className = 'btn danger';
-      deleteBtn.textContent = 'Eliminar';
-      deleteBtn.setAttribute('data-topic-action', 'delete');
-      deleteBtn.setAttribute('data-post-id', post.id);
-      actions.appendChild(deleteBtn);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'btn danger';
+        deleteBtn.textContent = 'Eliminar';
+        deleteBtn.setAttribute('data-topic-action', 'delete');
+        deleteBtn.setAttribute('data-post-id', post.id);
+        actions.appendChild(deleteBtn);
 
-      article.appendChild(actions);
+        article.appendChild(actions);
+      } else {
+        const note = document.createElement('p');
+        note.className = 'forum-post-note';
+        note.textContent = 'Solo el autor puede editar o eliminar este mensaje.';
+        article.appendChild(note);
+      }
+
       feed.appendChild(article);
     });
+
+    if(needsSync){
+      data[key] = posts;
+      setTimeout(() => writeStore(data), 0);
+    }
   }
 
   function renderAll(){
@@ -812,6 +857,13 @@ document.documentElement.classList.add('has-js');
     if(editingId){
       const entry = posts.find(post => post.id === editingId);
       if(entry){
+        if(entry.sessionId && entry.sessionId !== sessionId){
+          showStatus(form, 'Solo puedes actualizar mensajes creados desde esta sesión.', true);
+          form.classList.remove('is-editing');
+          delete form.dataset.editingId;
+          return;
+        }
+        entry.sessionId = entry.sessionId || sessionId;
         entry.alias = alias;
         entry.contact = contact;
         entry.message = message;
@@ -823,7 +875,8 @@ document.documentElement.classList.add('has-js');
         alias,
         contact,
         message,
-        createdAt: now
+        createdAt: now,
+        sessionId
       });
     }
 
@@ -862,6 +915,19 @@ document.documentElement.classList.add('has-js');
     const posts = getPosts(store, key);
     const id = actionBtn.dataset.postId;
     const entry = posts.find(post => post.id === id);
+
+    if(entry && !entry.sessionId){
+      entry.sessionId = sessionId;
+      store[key] = posts;
+      writeStore(store);
+    }
+
+    const ownsPost = entry && entry.sessionId === sessionId;
+
+    if(!ownsPost){
+      window.alert('Solo puedes gestionar los mensajes creados desde esta sesión.');
+      return;
+    }
 
     if(action === 'edit'){
       if(!entry || !form) return;

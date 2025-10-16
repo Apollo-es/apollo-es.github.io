@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustración plantilla guías de emuladores</title>
+  <desc id="desc">Mandos y chips representados en estilo futurista azul turquesa.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#042832"/>
+      <stop offset="1" stop-color="#0c5f6a"/>
+    </linearGradient>
+    <linearGradient id="pad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#2cf5d7"/>
+      <stop offset="1" stop-color="#29a3ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" rx="28" ry="28" fill="url(#bg)"/>
+  <g opacity="0.2" stroke="#89f6ff" stroke-width="6" stroke-linecap="round">
+    <path d="M36 60h68"/>
+    <path d="M216 52h68"/>
+    <path d="M70 30l12 12"/>
+    <path d="M250 164l12 12"/>
+  </g>
+  <rect x="86" y="76" width="148" height="72" rx="24" fill="#052c36" stroke="#31d8ff" stroke-width="4"/>
+  <g fill="url(#pad)">
+    <circle cx="118" cy="112" r="18"/>
+    <circle cx="202" cy="112" r="18"/>
+    <rect x="150" y="98" width="20" height="28" rx="8"/>
+  </g>
+  <circle cx="118" cy="112" r="8" fill="#032027"/>
+  <circle cx="202" cy="112" r="8" fill="#032027"/>
+  <g fill="#0cf2ff" opacity="0.55">
+    <rect x="60" y="140" width="40" height="12" rx="6"/>
+    <rect x="220" y="140" width="40" height="12" rx="6"/>
+    <rect x="140" y="44" width="40" height="10" rx="5"/>
+  </g>
+  <path d="M160 60l18 18-18 18-18-18z" fill="#35fdf0" opacity="0.6"/>
+</svg>
