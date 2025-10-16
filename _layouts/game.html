@@ -1,0 +1,120 @@
+---
+layout: default
+---
+{% assign game = site.data.items | where: 'id', page.game_id | first %}
+{% if game %}
+<article class="game-detail" data-game-id="{{ game.id }}">
+  <header class="game-hero">
+    {% assign cover_path = game.portada %}
+    {% if cover_path == nil or cover_path == '' %}
+      {% assign cover_path = '/static/juegos/' | append: game.id | append: '.png' %}
+    {% endif %}
+    {% assign cover_url = '' %}
+    {% assign cover_path = cover_path | append: '' | strip %}
+    {% if cover_path != '' %}
+      {% assign cover_prefix = cover_path | slice: 0,5 %}
+      {% if cover_path contains '://' or cover_prefix == 'data:' %}
+        {% assign cover_url = cover_path %}
+      {% else %}
+        {% assign cover_url = cover_path | relative_url %}
+      {% endif %}
+    {% endif %}
+
+    {% if cover_url != '' %}
+      <figure class="game-cover">
+        <img src="{{ cover_url }}" alt="Portada de {{ game.titulo }}" loading="lazy">
+      </figure>
+    {% endif %}
+
+    <div class="game-summary">
+      <p class="game-label">Ficha del juego</p>
+      <h1>{{ game.titulo }}</h1>
+      <p class="game-description">{{ game.descripcion }}</p>
+      <div class="game-chips">
+        <span class="chip">{{ game.tipo | upcase }}</span>
+        <span class="chip">{{ game.idioma | upcase }}</span>
+        <span class="chip">{{ game.tamano }}</span>
+        {% if game.consola %}<span class="chip chip-soft">{{ game.consola }}</span>{% endif %}
+        {% if game.desarrolladora %}<span class="chip chip-soft">{{ game.desarrolladora }}</span>{% endif %}
+        {% if game.genero %}<span class="chip chip-soft">{{ game.genero }}</span>{% endif %}
+      </div>
+      <div class="game-actions">
+        <button class="btn alt report-count-btn"
+                type="button"
+                data-report-counter="{{ game.id }}">
+          <i class="ti ti-flag"></i> Reportes recibidos (<span data-report-total>0</span>)
+        </button>
+        <a class="btn" href="{{ '/juegos/' | relative_url }}">
+          <i class="ti ti-arrow-left"></i> Volver al catálogo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  {% if game.descargas %}
+  <section class="game-downloads" aria-labelledby="descargas">
+    <div class="section-header">
+      <h2 id="descargas">Descargas verificadas</h2>
+      <p>Utiliza los botones de reporte si algún enlace dejó de funcionar. El contador se actualiza en cuanto registres tu aviso.</p>
+    </div>
+    <div class="downloads">
+      {% for descarga in game.descargas %}
+      <section class="download-group">
+        {% if descarga.titulo %}
+        <h3 class="download-title">{{ descarga.titulo }}</h3>
+        {% endif %}
+        <div class="mirrors">
+          {% for m in descarga.mirrors %}
+            {% if m.url %}
+            <div class="mirror-entry">
+              <a class="btn dl"
+                 href="{{ m.url | strip }}"
+                 target="_blank"
+                 rel="nofollow noopener">
+                <i class="ti ti-download"></i> Descargar en {{ m.host }}
+              </a>
+              <button class="report-flag"
+                      type="button"
+                      data-item="{{ game.id }}"
+                      data-title="{{ game.titulo }}"
+                      data-group="{{ descarga.titulo | default: 'Descarga' }}"
+                      data-host="{{ m.host }}"
+                      data-url="{{ m.url | strip }}"
+                      title="Reportar enlace caído">
+                <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+                <span class="sr-only">Reportar enlace caído</span>
+              </button>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if game.hashtags %}
+  <section class="game-tags">
+    <h2>Etiquetas populares</h2>
+    <ul>
+      {% for tag in game.hashtags %}
+      <li>{{ tag }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if game.disclaimer %}
+  <section class="game-legal">
+    <h2>Aviso legal</h2>
+    <p>{{ game.disclaimer }}</p>
+  </section>
+  {% endif %}
+</article>
+{% else %}
+<article class="game-missing">
+  <h1>Juego no encontrado</h1>
+  <p>No pudimos cargar la ficha solicitada. Vuelve al <a href="{{ '/juegos/' | relative_url }}">catálogo de juegos</a> para elegir otro título.</p>
+</article>
+{% endif %}

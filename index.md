@@ -75,33 +75,6 @@ keywords:
         <p class="news-meta">{{ destacada.fecha | date: "%d/%m/%Y" }}</p>
         <a class="btn primary news-read-more" href="/noticias/#{{ destacada.slug }}"><i class="ti ti-book"></i> Leer más</a>
       </div>
-
-      <aside class="news-aside">
-        <div class="ad-slot" aria-label="Anuncio 300×250" role="complementary">
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2672781546777359"
-                  crossorigin="anonymous"></script>
-          <!-- bloque -->
-          <ins class="adsbygoogle"
-               style="display:inline-block;width:300px;height:250px"
-               data-ad-client="ca-pub-2672781546777359"
-               data-ad-slot="6352596482"></ins>
-          <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>
-        <div class="ad-slot ad-slot-wide" aria-label="Anuncio 728×90" role="complementary">
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2672781546777359"
-                  crossorigin="anonymous"></script>
-          <!-- bloque 2 -->
-          <ins class="adsbygoogle"
-               style="display:inline-block;width:728px;height:90px"
-               data-ad-client="ca-pub-2672781546777359"
-               data-ad-slot="7118883249"></ins>
-          <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          </script>
-        </div>
-      </aside>
     </article>
   </div>
 
@@ -119,11 +92,20 @@ keywords:
 </section>
 {% endif %}
 
-<div id="items" class="grid">
-  {% for item in site.data.items %}
-    {% unless item.oculto %}
-      {% include card.html item=item %}
-    {% endunless %}
-  {% endfor %}
-</div>
-<p class="catalog-empty" data-empty hidden>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
+<section class="home-featured">
+  <header class="home-featured-header">
+    <h2>Más buscados por la comunidad</h2>
+    <p>Las fichas de descarga con más interés de la semana. Accede a cada una para ver enlaces actualizados y avisos.</p>
+  </header>
+
+  {% assign destacados = "pokemon-leyendas-za,super-mario-galaxy,super-mario-galaxy-2,sonic-racing-crossworlds" | split: "," %}
+  <div id="items" class="grid">
+    {% for id in destacados %}
+      {% assign juego = site.data.items | where: "id", id | first %}
+      {% if juego and juego.oculto != true %}
+        {% include card.html item=juego %}
+      {% endif %}
+    {% endfor %}
+  </div>
+  <p class="catalog-empty" data-empty hidden>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
+</section>

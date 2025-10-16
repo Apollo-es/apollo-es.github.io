@@ -615,203 +615,421 @@ document.documentElement.classList.add('has-js');
   applyResponsive();
 })();
 
-// --- Foros interactivos ---
+// --- Foros comunitarios (almacenados en el navegador) ---
 (function(){
-  const container = document.querySelector('.forum-live');
-  if(!container) return;
+  const board = document.getElementById('foro-tablero');
+  if(!board) return;
 
-  const shortname = container.dataset.shortname;
-  const requiresAuth = container.dataset.requiresAuth === 'true';
-  const basePath = container.dataset.base || '/foros/';
-  const tabs = Array.from(container.querySelectorAll('.forum-tab'));
-  const tablist = container.querySelector('.forum-tablist');
-  const titleEl = container.querySelector('.forum-title');
-  const descEl = container.querySelector('.forum-desc');
-  const authBox = container.querySelector('#forum-auth');
-  const threadBox = container.querySelector('#forum-thread');
-  const openers = Array.from(document.querySelectorAll('.forum-open'));
+  const storageKey = 'apolloCommunityPosts';
+  const topics = Array.from(board.querySelectorAll('.forum-topic'));
 
-  if(!tabs.length){
-    return;
-  }
-
-  let active = tabs[0].dataset.thread;
-  let authed = !requiresAuth || sessionStorage.getItem('apolloForumAuth') === '1';
-  let scriptInjected = false;
-
-  function focusArea(){
-    const nav = document.querySelector('.nav');
-    const offset = (nav ? nav.offsetHeight : 0) + 16;
-    const top = container.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({top: Math.max(top, 0), behavior: 'smooth'});
-  }
-
-  function activateThread(identifier, focusTab){
-    if(!identifier) return;
-    const tab = tabs.find(btn => btn.dataset.thread === identifier);
-    if(!tab) return;
-    if(!tab.classList.contains('active')){
-      tab.click();
-    }
-    if(focusTab){
-      tab.focus();
+  function readStore(){
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if(!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch(err){
+      console.warn('No se pudieron leer los mensajes del foro', err);
+      return {};
     }
   }
 
-  function canonical(identifier){
-    const clean = identifier.replace(/[^a-z0-9\-]/gi,'');
-    const base = basePath.endsWith('/') ? basePath : basePath + '/';
-    return `${window.location.origin}${base}#${clean}`;
-  }
-
-  function loadThread(identifier){
-    if(!shortname || !identifier || !threadBox) return;
-    const pageIdentifier = `foros-${identifier}`;
-    const pageUrl = canonical(identifier);
-
-    if(window.DISQUS){
-      window.DISQUS.reset({
-        reload: true,
-        config: function(){
-          this.page.identifier = pageIdentifier;
-          this.page.url = pageUrl;
-        }
-      });
-    } else {
-      window.disqus_config = function(){
-        this.page.identifier = pageIdentifier;
-        this.page.url = pageUrl;
-      };
-      if(!scriptInjected){
-        scriptInjected = true;
-        const d = document;
-        const script = d.createElement('script');
-        script.src = `https://${shortname}.disqus.com/embed.js`;
-        script.setAttribute('data-timestamp', Date.now().toString());
-        (d.head || d.body).appendChild(script);
-      }
+  function writeStore(data){
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      document.dispatchEvent(new CustomEvent('apollo:forum-updated', {detail: {data}}));
+    } catch(err){
+      console.error('No se pudieron guardar los mensajes del foro', err);
     }
   }
 
-  function updateAuthState(){
-    if(authed){
-      container.classList.add('forum-authed');
-      if(authBox) authBox.setAttribute('aria-hidden', 'true');
-      if(shortname && active){
-        loadThread(active);
-      }
-    } else {
-      container.classList.remove('forum-authed');
-      if(authBox) authBox.setAttribute('aria-hidden', 'false');
-    }
+  function getPosts(store, key){
+    const posts = store[key];
+    return Array.isArray(posts) ? posts : [];
   }
 
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if(btn.classList.contains('active')) return;
-      tabs.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-        b.setAttribute('tabindex', '-1');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      btn.setAttribute('tabindex', '0');
-      active = btn.dataset.thread;
-      if(titleEl) titleEl.textContent = btn.dataset.name;
-      if(descEl) descEl.textContent = btn.dataset.summary;
-      if(authed){
-        loadThread(active);
-      }
+  function ensureStatus(form){
+    let status = form.querySelector('.form-status');
+    if(!status){
+      status = document.createElement('p');
+      status.className = 'form-status';
+      status.setAttribute('aria-live', 'polite');
+      form.appendChild(status);
+    }
+    return status;
+  }
+
+  function showStatus(form, message, isError){
+    const status = ensureStatus(form);
+    status.textContent = message || '';
+    status.classList.toggle('error', !!isError);
+  }
+
+  function formatDate(value){
+    const date = new Date(value);
+    if(Number.isNaN(date.getTime())){
+      return new Date();
+    }
+    return date;
+  }
+
+  function renderTopic(topic, store){
+    const key = topic.dataset.topicKey;
+    const feed = topic.querySelector('[data-topic-feed]');
+    if(!key || !feed) return;
+    const data = store || readStore();
+    const posts = getPosts(data, key);
+    feed.innerHTML = '';
+
+    if(!posts.length){
+      const empty = document.createElement('p');
+      empty.className = 'forum-empty';
+      empty.textContent = 'Todavía no hay mensajes aquí. Sé el primero en escribir.';
+      feed.appendChild(empty);
+      return;
+    }
+
+    const sorted = posts.slice().sort((a, b) => {
+      const timeA = new Date(a.createdAt || 0).getTime();
+      const timeB = new Date(b.createdAt || 0).getTime();
+      return timeB - timeA;
     });
+
+    sorted.forEach(post => {
+      const article = document.createElement('article');
+      article.className = 'forum-post';
+      article.dataset.postId = post.id;
+
+      const header = document.createElement('div');
+      header.className = 'forum-post-header';
+
+      const alias = document.createElement('p');
+      alias.className = 'forum-post-alias';
+      alias.textContent = post.alias || 'Anónimo';
+      header.appendChild(alias);
+
+      const meta = document.createElement('div');
+      meta.className = 'forum-post-meta';
+
+      if(post.contact){
+        const contact = document.createElement('span');
+        contact.textContent = post.contact;
+        meta.appendChild(contact);
+      }
+
+      const createdDate = formatDate(post.createdAt || Date.now());
+      const time = document.createElement('time');
+      time.dateTime = createdDate.toISOString();
+      time.textContent = createdDate.toLocaleString('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      meta.appendChild(time);
+
+      if(post.updatedAt){
+        const updatedDate = formatDate(post.updatedAt);
+        const updated = document.createElement('span');
+        updated.textContent = `Editado ${updatedDate.toLocaleTimeString('es-ES', {hour: '2-digit', minute: '2-digit'})}`;
+        meta.appendChild(updated);
+      }
+
+      header.appendChild(meta);
+      article.appendChild(header);
+
+      const body = document.createElement('p');
+      body.className = 'forum-post-body';
+      body.textContent = post.message;
+      article.appendChild(body);
+
+      const actions = document.createElement('div');
+      actions.className = 'forum-post-actions';
+
+      const editBtn = document.createElement('button');
+      editBtn.type = 'button';
+      editBtn.className = 'btn alt';
+      editBtn.textContent = 'Editar';
+      editBtn.setAttribute('data-topic-action', 'edit');
+      editBtn.setAttribute('data-post-id', post.id);
+      actions.appendChild(editBtn);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.className = 'btn danger';
+      deleteBtn.textContent = 'Eliminar';
+      deleteBtn.setAttribute('data-topic-action', 'delete');
+      deleteBtn.setAttribute('data-post-id', post.id);
+      actions.appendChild(deleteBtn);
+
+      article.appendChild(actions);
+      feed.appendChild(article);
+    });
+  }
+
+  function renderAll(){
+    const store = readStore();
+    topics.forEach(topic => renderTopic(topic, store));
+  }
+
+  renderAll();
+
+  board.addEventListener('submit', evt => {
+    const form = evt.target.closest('[data-topic-form]');
+    if(!form) return;
+    evt.preventDefault();
+
+    const topic = form.closest('.forum-topic');
+    const key = topic ? topic.dataset.topicKey : '';
+    if(!key){
+      showStatus(form, 'No se pudo identificar el hilo.', true);
+      return;
+    }
+
+    const alias = (form.alias.value || '').trim();
+    const contact = (form.contacto.value || '').trim();
+    const message = (form.mensaje.value || '').trim();
+
+    if(alias.length < 2){
+      showStatus(form, 'Indica un alias de al menos 2 caracteres.', true);
+      form.alias.focus();
+      return;
+    }
+
+    if(message.length < 4){
+      showStatus(form, 'El mensaje debe tener al menos 4 caracteres.', true);
+      form.mensaje.focus();
+      return;
+    }
+
+    const store = readStore();
+    const posts = getPosts(store, key);
+    const now = new Date().toISOString();
+    const editingId = form.dataset.editingId;
+
+    if(editingId){
+      const entry = posts.find(post => post.id === editingId);
+      if(entry){
+        entry.alias = alias;
+        entry.contact = contact;
+        entry.message = message;
+        entry.updatedAt = now;
+      }
+    } else {
+      posts.push({
+        id: Date.now().toString(),
+        alias,
+        contact,
+        message,
+        createdAt: now
+      });
+    }
+
+    store[key] = posts;
+    writeStore(store);
+
+    form.reset();
+    form.classList.remove('is-editing');
+    delete form.dataset.editingId;
+    showStatus(form, editingId ? 'Mensaje actualizado.' : 'Mensaje publicado.');
+    renderTopic(topic, store);
   });
 
-  openers.forEach(btn => {
-    btn.addEventListener('click', evt => {
-      evt.preventDefault();
-      const thread = btn.dataset.openThread;
-      activateThread(thread, true);
-      focusArea();
-      if(authed){
-        loadThread(active);
+  board.addEventListener('click', evt => {
+    const clearBtn = evt.target.closest('[data-topic-clear]');
+    if(clearBtn){
+      const form = clearBtn.closest('[data-topic-form]');
+      if(form){
+        form.reset();
+        form.classList.remove('is-editing');
+        delete form.dataset.editingId;
+        showStatus(form, 'Formulario limpio.');
       }
-    });
-  });
-
-  if(tablist){
-    tablist.addEventListener('keydown', evt => {
-      if(!['ArrowRight','ArrowLeft','ArrowDown','ArrowUp','Home','End'].includes(evt.key)) return;
-      evt.preventDefault();
-      const currentIndex = tabs.findIndex(tab => tab.classList.contains('active'));
-      let targetIndex = currentIndex;
-      if(evt.key === 'ArrowRight' || evt.key === 'ArrowDown'){
-        targetIndex = (currentIndex + 1) % tabs.length;
-      } else if(evt.key === 'ArrowLeft' || evt.key === 'ArrowUp'){
-        targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-      } else if(evt.key === 'Home'){
-        targetIndex = 0;
-      } else if(evt.key === 'End'){
-        targetIndex = tabs.length - 1;
-      }
-      const target = tabs[targetIndex];
-      if(target){
-        target.focus();
-        target.click();
-      }
-    });
-  }
-
-  function updateAuthState(){
-    if(authed){
-      container.classList.add('forum-authed');
-      if(authBox) authBox.setAttribute('aria-hidden', 'true');
-      if(shortname && active){
-        loadThread(active);
-      }
-    } else {
-      container.classList.remove('forum-authed');
-      if(authBox) authBox.setAttribute('aria-hidden', 'false');
+      return;
     }
-  }
 
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if(btn.classList.contains('active')) return;
-      tabs.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-        b.setAttribute('tabindex', '-1');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      btn.setAttribute('tabindex', '0');
-      active = btn.dataset.thread;
-      if(titleEl) titleEl.textContent = btn.dataset.name;
-      if(descEl) descEl.textContent = btn.dataset.summary;
-      if(authed){
-        loadThread(active);
+    const actionBtn = evt.target.closest('[data-topic-action]');
+    if(!actionBtn) return;
+
+    const action = actionBtn.dataset.topicAction;
+    const topic = actionBtn.closest('.forum-topic');
+    if(!topic) return;
+    const key = topic.dataset.topicKey;
+    const form = topic.querySelector('[data-topic-form]');
+    const store = readStore();
+    const posts = getPosts(store, key);
+    const id = actionBtn.dataset.postId;
+    const entry = posts.find(post => post.id === id);
+
+    if(action === 'edit'){
+      if(!entry || !form) return;
+      form.alias.value = entry.alias || '';
+      form.contacto.value = entry.contact || '';
+      form.mensaje.value = entry.message || '';
+      form.dataset.editingId = entry.id;
+      form.classList.add('is-editing');
+      showStatus(form, 'Editando mensaje. Actualiza y pulsa "Publicar mensaje".');
+      form.alias.focus();
+    } else if(action === 'delete'){
+      if(!entry) return;
+      const confirmation = window.confirm('¿Eliminar este mensaje?');
+      if(!confirmation){
+        return;
       }
-    });
+      const filtered = posts.filter(post => post.id !== id);
+      store[key] = filtered;
+      writeStore(store);
+      if(form && form.dataset.editingId === id){
+        form.reset();
+        form.classList.remove('is-editing');
+        delete form.dataset.editingId;
+        showStatus(form, 'Mensaje eliminado.');
+      }
+      renderTopic(topic, store);
+    }
   });
 
-  updateAuthState();
+  document.addEventListener('apollo:forum-updated', () => {
+    renderAll();
+  });
 
-  window.handleForumCredentialResponse = function(response){
-    if(!response || !response.credential) return;
-    authed = true;
-    sessionStorage.setItem('apolloForumAuth', '1');
-    updateAuthState();
-  };
-
-  if(!requiresAuth && shortname && active){
-    loadThread(active);
-  }
+  window.addEventListener('storage', evt => {
+    if(evt.key === storageKey){
+      renderAll();
+    }
+  });
 })();
 
-// --- Sistema interno de reportes de enlaces ---
+const REPORT_STORAGE_KEY = 'apolloLinkReports';
+
+function readReports(){
+  try {
+    const raw = localStorage.getItem(REPORT_STORAGE_KEY);
+    if(!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch(err){
+    console.warn('No se pudieron leer los reportes almacenados', err);
+    return [];
+  }
+}
+
+function writeReports(reports){
+  try {
+    localStorage.setItem(REPORT_STORAGE_KEY, JSON.stringify(reports));
+  } catch(err){
+    console.error('No se pudieron guardar los reportes', err);
+  }
+  document.dispatchEvent(new CustomEvent('apollo:reports-updated', {detail: {reports}}));
+}
+
+function appendReport(detail){
+  const reports = readReports();
+  reports.push(detail);
+  writeReports(reports);
+  return reports;
+}
+
+function countReportsByItem(reports){
+  const map = new Map();
+  reports.forEach(report => {
+    const key = report.item || 'desconocido';
+    map.set(key, (map.get(key) || 0) + 1);
+  });
+  return map;
+}
+
+let reportToastEl = null;
+let reportToastTimer = null;
+function showReportToast(message){
+  if(!message) return;
+  if(!reportToastEl){
+    reportToastEl = document.createElement('div');
+    reportToastEl.className = 'report-toast';
+    document.body.appendChild(reportToastEl);
+  }
+  reportToastEl.textContent = message;
+  reportToastEl.classList.add('visible');
+  if(reportToastTimer){
+    clearTimeout(reportToastTimer);
+  }
+  reportToastTimer = setTimeout(() => {
+    if(reportToastEl){
+      reportToastEl.classList.remove('visible');
+    }
+  }, 2600);
+}
+
+// --- Reportes: contadores públicos y botones ---
+(function(){
+  function updateCounters(){
+    const counters = document.querySelectorAll('[data-report-counter]');
+    if(!counters.length) return;
+    const reports = readReports();
+    const grouped = countReportsByItem(reports);
+    counters.forEach(counter => {
+      const id = counter.getAttribute('data-report-counter');
+      const total = grouped.get(id) || 0;
+      const totalEl = counter.querySelector('[data-report-total]');
+      if(totalEl){
+        totalEl.textContent = total.toString();
+      }
+      counter.setAttribute('aria-label', `Reportes registrados: ${total}`);
+    });
+  }
+
+  document.addEventListener('apollo:reports-updated', updateCounters);
+  window.addEventListener('storage', evt => {
+    if(evt.key === REPORT_STORAGE_KEY){
+      updateCounters();
+    }
+  });
+  updateCounters();
+
+  document.addEventListener('click', evt => {
+    const btn = evt.target.closest('[data-report-counter]');
+    if(!btn) return;
+    const totalEl = btn.querySelector('[data-report-total]');
+    const total = totalEl ? Number(totalEl.textContent) || 0 : 0;
+    const message = total === 1
+      ? 'Hay 1 reporte registrado en este juego desde este navegador.'
+      : `Hay ${total} reportes registrados en este juego desde este navegador.`;
+    showReportToast(message);
+  });
+})();
+
+// --- Reportes: envío desde botones de enlace ---
+(function(){
+  document.addEventListener('click', evt => {
+    const button = evt.target.closest('.report-flag');
+    if(!button) return;
+    evt.preventDefault();
+
+    const detail = {
+      id: Date.now(),
+      item: button.dataset.item || '',
+      title: button.dataset.title || '',
+      group: button.dataset.group || '',
+      host: button.dataset.host || '',
+      url: button.dataset.url || '',
+      time: new Date().toISOString()
+    };
+
+    const confirmation = window.confirm(`¿Reportar enlace caído en ${detail.host || 'el host seleccionado'}?`);
+    if(!confirmation){
+      return;
+    }
+
+    appendReport(detail);
+    showReportToast(`Gracias, registramos el reporte para ${detail.host || 'el enlace'}.`);
+  });
+})();
+
+// --- Panel interno de reportes para staff ---
 (function(){
   const storageKey = 'apolloStaffMode';
-  const reportKey = 'apolloLinkReports';
 
   const params = new URLSearchParams(window.location.search);
   const staffParam = params.get('staff');
@@ -822,14 +1040,14 @@ document.documentElement.classList.add('has-js');
     localStorage.removeItem(storageKey);
   }
 
-    if(staffParam !== null){
-      params.delete('staff');
-      const newQuery = params.toString();
-      const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
-      if(window.history && typeof window.history.replaceState === 'function'){
-        window.history.replaceState({}, document.title, newUrl);
-      }
+  if(staffParam !== null){
+    params.delete('staff');
+    const newQuery = params.toString();
+    const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
+    if(window.history && typeof window.history.replaceState === 'function'){
+      window.history.replaceState({}, document.title, newUrl);
     }
+  }
 
   if(localStorage.getItem(storageKey) !== '1'){
     return;
@@ -841,28 +1059,6 @@ document.documentElement.classList.add('has-js');
   const list = document.getElementById('report-list');
   const count = document.getElementById('report-count');
   const clearBtn = document.getElementById('report-clear');
-  let toastTimer = null;
-  let toastEl = null;
-
-  function loadReports(){
-    try {
-      const raw = localStorage.getItem(reportKey);
-      if(!raw) return [];
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch(err){
-      console.warn('No se pudieron leer los reportes almacenados', err);
-      return [];
-    }
-  }
-
-  function saveReports(reports){
-    try {
-      localStorage.setItem(reportKey, JSON.stringify(reports));
-    } catch(err){
-      console.error('No se pudieron guardar los reportes', err);
-    }
-  }
 
   function formatTime(iso){
     if(!iso) return 'Fecha desconocida';
@@ -879,31 +1075,8 @@ document.documentElement.classList.add('has-js');
     });
   }
 
-  function ensurePanel(){
-    if(panel){
-      panel.hidden = false;
-    }
-  }
-
-  function showToast(message){
-    if(!message) return;
-    if(!toastEl){
-      toastEl = document.createElement('div');
-      toastEl.className = 'report-toast';
-      document.body.appendChild(toastEl);
-    }
-    toastEl.textContent = message;
-    toastEl.classList.add('visible');
-    if(toastTimer){
-      clearTimeout(toastTimer);
-    }
-    toastTimer = setTimeout(() => {
-      if(toastEl) toastEl.classList.remove('visible');
-    }, 2600);
-  }
-
   function renderReports(){
-    const reports = loadReports();
+    const reports = readReports();
     if(count){
       count.textContent = reports.length.toString();
     }
@@ -954,38 +1127,16 @@ document.documentElement.classList.add('has-js');
         });
       }
     }
-    ensurePanel();
-  }
-
-  function addReport(detail){
-    const reports = loadReports();
-    reports.push(detail);
-    saveReports(reports);
-    renderReports();
-    showToast(`Se reportó ${detail.host || 'el enlace'} de ${detail.title || detail.item || 'contenido'}.`);
-  }
-
-  document.addEventListener('click', evt => {
-    const button = evt.target.closest('.report-flag');
-    if(!button) return;
-    evt.preventDefault();
-
-    const detail = {
-      id: Date.now(),
-      item: button.dataset.item || '',
-      title: button.dataset.title || '',
-      group: button.dataset.group || '',
-      host: button.dataset.host || '',
-      url: button.dataset.url || '',
-      time: new Date().toISOString()
-    };
-
-    const confirmation = window.confirm(`¿Reportar enlace caído en ${detail.host || 'host desconocido'}?`);
-    if(!confirmation){
-      return;
+    if(panel){
+      panel.hidden = false;
     }
+  }
 
-    addReport(detail);
+  document.addEventListener('apollo:reports-updated', renderReports);
+  window.addEventListener('storage', evt => {
+    if(evt.key === REPORT_STORAGE_KEY){
+      renderReports();
+    }
   });
 
   if(clearBtn){
@@ -993,14 +1144,15 @@ document.documentElement.classList.add('has-js');
       if(!window.confirm('¿Vaciar la bandeja de reportes?')){
         return;
       }
-      saveReports([]);
+      writeReports([]);
       renderReports();
-      showToast('Se limpiaron los reportes registrados.');
+      showReportToast('Se limpiaron los reportes registrados.');
     });
   }
 
   renderReports();
 })();
+
 
 // --- Compartir noticias ---
 (function(){
