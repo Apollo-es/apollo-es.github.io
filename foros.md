@@ -2,10 +2,10 @@
 layout: default
 title: Foros
 permalink: /foros/
-description: "Participa en los foros de Apollo-es para resolver dudas de Pokémon, emuladores y más."
+description: "Participa en los foros de Apollo-es para resolver dudas de Pokémon Leyendas Z-A y enviar peticiones."
 keywords:
   - "foros pokemon"
-  - "foro emuladores"
+  - "foro leyendas za"
   - "comunidad gaming"
   - "apollo es preguntas"
 ---
@@ -13,7 +13,7 @@ keywords:
 {% assign foros = site.data.foros %}
 
 <h1>Foros</h1>
-<p class="lead">Únete a la conversación y construyamos juntos la comunidad de Apollo. Aquí puedes resolver dudas, compartir hallazgos y ayudar a otros jugadores y entusiastas de los emuladores.</p>
+<p class="lead">Únete a la conversación, deja tus dudas con un alias y ayuda a otros jugadores. Cada hilo guarda las últimas intervenciones en tu navegador para que puedas retomarlas cuando quieras.</p>
 
 <div class="forums-grid">
   {% for foro in foros %}
@@ -26,97 +26,77 @@ keywords:
       {% if foro.temas %}
         <ul class="forum-tags">
           {% for tema in foro.temas %}
-            <li>#{{ tema }}</li>
+            <li><a href="#tema-{{ tema.slug }}">#{{ tema.slug }}</a></li>
           {% endfor %}
         </ul>
       {% endif %}
-      {% if foro.enlaces %}
-        <div class="forum-actions">
-          {% for enlace in foro.enlaces %}
-            {% if enlace.accion == 'participar' %}
-              <button type="button"
-                      class="btn{% if forloop.first %} primary{% else %} alt{% endif %} forum-open"
-                      data-open-thread="{{ foro.slug }}"
-                      data-open-name="{{ foro.nombre }}"
-                      data-open-summary="{{ foro.resumen | default: foro.descripcion }}">
-                {{ enlace.texto }}
-              </button>
-            {% elsif enlace.url %}
-              <a class="btn{% if forloop.first %} primary{% else %} alt{% endif %}"
-                 href="{{ enlace.url }}">{{ enlace.texto }}</a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
+      <div class="forum-actions">
+        {% if foro.temas and foro.temas.size > 0 %}
+          {% assign first_topic = foro.temas | first %}
+          <a class="btn primary" href="#tema-{{ first_topic.slug }}">Participar</a>
+        {% endif %}
+        <a class="btn alt" href="#foro-{{ foro.slug }}-hilos">Ver hilos</a>
+      </div>
     </section>
   {% endfor %}
 </div>
 
-<section id="participa" class="forum-live"
-         data-shortname="{{ site.disqus_shortname | strip | escape }}"
-         data-base="{{ page.url }}"
-         data-requires-auth="{% if site.google_client_id | strip != '' %}true{% else %}false{% endif %}">
-  <aside class="forum-live-menu">
-    <h2>Participa ahora</h2>
-    <p>Selecciona un foro y deja tu duda o consejo. Elige General para cualquier tema o Pokémon si buscas ayuda con Leyendas Z-A y otras entregas.</p>
-    <ul class="forum-tablist" role="tablist" aria-label="Foros disponibles">
-      {% for foro in foros %}
-        <li>
-          <button class="forum-tab{% if forloop.first %} active{% endif %}"
-                  role="tab"
-                  aria-controls="forum-thread"
-                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                  tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
-                  data-thread="{{ foro.slug }}"
-                  data-name="{{ foro.nombre }}"
-                  data-summary="{{ foro.resumen | default: foro.descripcion }}">
-            <span class="forum-tab-icon">{{ foro.icono }}</span>
-            <span class="forum-tab-text">
-              <strong>{{ foro.nombre }}</strong>
-              <small>{{ foro.resumen | default: foro.descripcion }}</small>
-            </span>
-          </button>
-        </li>
-      {% endfor %}
-    </ul>
-  </aside>
+<section class="forum-board-intro">
+  <h2>Hilos activos</h2>
+  <p>Comparte tu mensaje indicando un alias o apodo y, si lo ves necesario, un medio de contacto. Puedes editar o borrar tus comentarios desde este mismo navegador.</p>
+</section>
 
-  <div class="forum-live-content">
-    <header class="forum-live-heading">
-      {% assign foro_activo = foros | first %}
-      <p class="forum-live-label">Hilo seleccionado</p>
-      <h2 class="forum-title">{{ foro_activo.nombre }}</h2>
-      <p class="forum-desc">{{ foro_activo.resumen | default: foro_activo.descripcion }}</p>
+<div class="forum-board" id="foro-tablero">
+  {% for foro in foros %}
+  <article class="forum-section" id="foro-{{ foro.slug }}-hilos">
+    <header class="forum-section-header">
+      <h2>{{ foro.nombre }}</h2>
+      <p>{{ foro.resumen | default: foro.descripcion }}</p>
     </header>
 
-    <div id="forum-auth" class="forum-auth">
-      <h3>Inicia sesión con Google</h3>
-      <p>Para evitar spam y mantener un ambiente saludable, pedimos que te autentiques antes de publicar. Tu correo no se mostrará públicamente.</p>
-      {% if site.google_client_id | strip != '' %}
-        <div id="g_id_onload"
-             data-client_id="{{ site.google_client_id }}"
-             data-callback="handleForumCredentialResponse"
-             data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin"
-             data-type="standard"
-             data-shape="pill"
-             data-theme="filled_blue"
-             data-text="signin_with"
-             data-size="large">
-        </div>
-        <p class="forum-auth-note">Se recordará tu acceso en este navegador para que no tengas que verificarte cada vez. Si quieres usar otra cuenta, borra los datos de este sitio en tu navegador.</p>
-      {% else %}
-        <p class="forum-auth-warning">Añade tu <code>google_client_id</code> en <code>_config.yml</code> para habilitar el acceso mediante Google.</p>
-      {% endif %}
-    </div>
+    {% if foro.temas %}
+    <div class="forum-topics">
+      {% for tema in foro.temas %}
+      {% assign topic_key = foro.slug | append: '::' | append: tema.slug %}
+      <section class="forum-topic" id="tema-{{ tema.slug }}" data-topic-key="{{ topic_key }}">
+        <header class="forum-topic-header">
+          <h3>{{ tema.nombre }}</h3>
+          <p>{{ tema.descripcion }}</p>
+          {% if tema.indicaciones %}
+          <ul class="forum-guidelines">
+            {% for tip in tema.indicaciones %}
+            <li>{{ tip }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </header>
 
-    <div id="forum-thread" class="forum-thread">
-      {% if site.disqus_shortname == '' %}
-        <p class="forum-thread-warning">Configura <code>disqus_shortname</code> en <code>_config.yml</code> para activar los comentarios.</p>
-      {% else %}
-        <noscript>Activa JavaScript para ver los comentarios proporcionados por Disqus.</noscript>
-      {% endif %}
+        <div class="forum-topic-feed" data-topic-feed>
+          <p class="forum-empty">Todavía no hay mensajes aquí. Sé el primero en escribir.</p>
+        </div>
+
+        <form class="forum-topic-form" data-topic-form novalidate>
+          <div class="form-row">
+            <label for="alias-{{ topic_key | slugify }}">Nombre o alias</label>
+            <input id="alias-{{ topic_key | slugify }}" name="alias" type="text" maxlength="40" required placeholder="Ej. LunaTrainer">
+          </div>
+          <div class="form-row">
+            <label for="contacto-{{ topic_key | slugify }}">Contacto (opcional)</label>
+            <input id="contacto-{{ topic_key | slugify }}" name="contacto" type="text" maxlength="80" placeholder="Correo o red social">
+          </div>
+          <div class="form-row">
+            <label for="mensaje-{{ topic_key | slugify }}">Mensaje</label>
+            <textarea id="mensaje-{{ topic_key | slugify }}" name="mensaje" rows="4" maxlength="720" required placeholder="Cuéntanos en qué necesitas ayuda"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Publicar mensaje</button>
+            <button type="button" class="btn alt" data-topic-clear>Limpiar</button>
+          </div>
+        </form>
+      </section>
+      {% endfor %}
     </div>
-  </div>
-</section>
+    {% endif %}
+  </article>
+  {% endfor %}
+</div>
