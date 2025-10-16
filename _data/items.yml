@@ -235,20 +235,10 @@
     - "#DarkPictures"
     - "#SupermassiveGames"
   descargas:
-    - titulo: "Juego base (Steam release)"
+    - titulo: "Juego base"
       mirrors:
         - host: "Mega"
-          url: "https://exe.io/devilinme-mega"
-        - host: "Mediafire"
-          url: "https://exe.io/devilinme-media"
-        - host: "Google Drive"
-          url: "https://exe.io/devilinme-drive"
-    - titulo: "Paquete de voces latino"
-      mirrors:
-        - host: "Mega"
-          url: "https://exe.io/devilinme-voz"
-        - host: "Mediafire"
-          url: "https://exe.io/devilinme-voz-mf"
+          url: "https://exe.io/Devilmiolink"
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. The Dark Pictures Anthology y sus personajes son © 2019-2025 Supermassive Games / Bandai Namco Entertainment.
 
@@ -256,11 +246,11 @@
   categoria: ["juegos"]
   titulo: "Until Dawn"
   descripcion: "Vive una noche de terror cinematográfico en Blackwood Mountain. Tus decisiones determinan quién sobrevive al asesino y las amenazas sobrenaturales."
-  tipo: "PS4"
+  tipo: "PC"
   idioma: "multi"
   tamano: "37 GB"
   licencia: "incluida"
-  consola: "PlayStation 4"
+  consola: "PC"
   desarrolladora: "Supermassive Games"
   genero: "Terror narrativo"
   portada: "/static/juegos/until-dawn.svg"
@@ -272,20 +262,10 @@
     - "#SupermassiveGames"
     - "#SurvivalHorror"
   descargas:
-    - titulo: "Juego base (PKG)"
+    - titulo: "Juego base"
       mirrors:
-        - host: "Mega"
-          url: "https://exe.io/untildawn-mega"
-        - host: "Mediafire"
-          url: "https://exe.io/untildawn-media"
-        - host: "Google Drive"
-          url: "https://exe.io/untildawn-drive"
-    - titulo: "Actualización 1.03"
-      mirrors:
-        - host: "Mega"
-          url: "https://exe.io/untildawn-update"
-        - host: "Mediafire"
-          url: "https://exe.io/untildawn-update-mf"
+        - host: "MegaUP"
+          url: "https://exe.io/UDlink"
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. Until Dawn es © 2015-2025 Sony Interactive Entertainment Europe. Todos los derechos pertenecen a sus respectivos titulares.
 
@@ -298,7 +278,7 @@
   tamano: "3.6 GB"
   licencia: "incluida"
   consola: "Nintendo Wii"
-  desarrolladora: "Nintendo EAD"
+  desarrolladora: "Nintendo"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy.svg"
   interacciones: 16840
@@ -329,7 +309,7 @@
   tamano: "3.9 GB"
   licencia: "incluida"
   consola: "Nintendo Wii"
-  desarrolladora: "Nintendo EAD"
+  desarrolladora: "Nintendo"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy-2.svg"
   interacciones: 14210
@@ -340,7 +320,7 @@
     - "#Nintendo"
     - "#Plataformas"
   descargas:
-    - titulo: "Juego base (WBFS)"
+    - titulo: "Juego base"
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg2romlink"
