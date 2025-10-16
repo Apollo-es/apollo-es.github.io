@@ -1,5 +1,9 @@
 {% unless item.oculto %}
 {% assign card_categories = item.categoria | default: '' %}
+{% assign is_game = false %}
+{% if item.categoria and item.categoria contains 'juegos' %}
+  {% assign is_game = true %}
+{% endif %}
 {% assign card_tags = item.hashtags | default: '' %}
 <article class="card"
          data-id="{{ item.id }}"
@@ -49,7 +53,19 @@
       {% if item.genero %}<span class="chip chip-soft">{{ item.genero }}</span>{% endif %}
     </div>
 
-    {% if item.descargas %}
+    {% if is_game %}
+      {% assign detail_url = '/juegos/' | append: item.id | append: '/' | relative_url %}
+      <div class="card-actions">
+        <a class="btn primary" href="{{ detail_url }}">
+          <i class="ti ti-device-gamepad-2"></i> Ver ficha completa
+        </a>
+        <button class="btn alt report-count-btn"
+                type="button"
+                data-report-counter="{{ item.id }}">
+          <i class="ti ti-flag"></i> Reportes (<span data-report-total>0</span>)
+        </button>
+      </div>
+    {% elsif item.descargas %}
       <div class="downloads">
         {% for descarga in item.descargas %}
           <section class="download-group">
@@ -121,7 +137,7 @@
       </div>
     {% endif %}
 
-    {% if item.disclaimer %}
+    {% if item.disclaimer and not is_game %}
       <p class="legal-disclaimer">{{ item.disclaimer }}</p>
     {% endif %}
 
