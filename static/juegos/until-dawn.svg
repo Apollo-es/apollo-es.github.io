@@ -1,37 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
   <defs>
-    <linearGradient id="ud-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#041423" />
-      <stop offset="55%" stop-color="#0a2a41" />
-      <stop offset="100%" stop-color="#010b12" />
+    <linearGradient id="until-dawn-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#05101f" />
+      <stop offset="55%" stop-color="#1b304a" />
+      <stop offset="100%" stop-color="#3f6589" />
     </linearGradient>
-    <linearGradient id="ud-title" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#dff9ff" />
-      <stop offset="50%" stop-color="#9be9ff" />
-      <stop offset="100%" stop-color="#7dd0ff" />
+    <linearGradient id="until-dawn-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8dd6ff" stop-opacity="0.0" />
+      <stop offset="50%" stop-color="#8dd6ff" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#8dd6ff" stop-opacity="0.0" />
     </linearGradient>
-    <radialGradient id="ud-glow" cx="30%" cy="20%" r="65%">
-      <stop offset="0%" stop-color="#7de8ff" stop-opacity="0.6" />
-      <stop offset="100%" stop-color="#7de8ff" stop-opacity="0" />
-    </radialGradient>
   </defs>
-  <rect width="640" height="360" fill="url(#ud-bg)" />
-  <rect x="36" y="42" width="568" height="276" rx="42" fill="#031320" opacity="0.4" />
-  <rect x="48" y="54" width="544" height="252" rx="36" fill="none" stroke="#7de8ff" stroke-opacity="0.35" stroke-width="3" />
-  <circle cx="220" cy="120" r="150" fill="url(#ud-glow)" />
-  <g fill="#a4e5ff" opacity="0.2">
-    <circle cx="120" cy="240" r="12" />
-    <circle cx="520" cy="90" r="10" />
-    <circle cx="480" cy="250" r="14" />
-    <circle cx="360" cy="200" r="18" />
-  </g>
-  <text x="50%" y="46%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="46" fill="#e6f8ff" letter-spacing="8">
+  <rect width="640" height="360" fill="url(#until-dawn-bg)" />
+  <rect width="460" height="220" x="90" y="70" fill="url(#until-dawn-glow)" opacity="0.8" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="50" fill="#ecf8ff" letter-spacing="8">
     UNTIL DAWN
   </text>
-  <text x="50%" y="64%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="26" fill="url(#ud-title)" letter-spacing="6">
-    ¡CADA DECISIÓN MARCA LA DIFERENCIA!
-  </text>
-  <text x="50%" y="80%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="18" fill="#c0ecff" letter-spacing="4">
-    SUPERVIVE A LA NOCHE EN BLACKWOOD MOUNTAIN
+  <text x="50%" y="67%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#d2e8ff" letter-spacing="5">
+    SOBREVIVE A LA NOCHE EN BLACKWOOD
   </text>
 </svg>

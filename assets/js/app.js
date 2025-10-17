@@ -536,6 +536,64 @@ document.documentElement.classList.add('has-js');
   targetSelect.addEventListener('change', evaluate);
 })();
 
+// --- Theme toggle (light / dark) ---
+(function(){
+  var toggle = document.querySelector('[data-theme-toggle]');
+  if(!toggle) return;
+
+  var root = document.documentElement;
+  var metaTheme = document.querySelector('meta[name="theme-color"]');
+  var STORAGE_KEY = 'apollo-theme';
+
+  function setMetaColor(theme){
+    if(!metaTheme) return;
+    metaTheme.setAttribute('content', theme === 'light' ? '#f5f7ff' : '#0b1020');
+  }
+
+  function setIcon(theme){
+    var icon = toggle.querySelector('i');
+    if(!icon) return;
+    icon.className = 'ti ' + (theme === 'light' ? 'ti-sun' : 'ti-moon-stars');
+    toggle.setAttribute('data-theme-icon', theme === 'light' ? 'sun' : 'moon');
+  }
+
+  function applyTheme(theme, persist){
+    var next = theme === 'light' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    toggle.setAttribute('aria-pressed', next === 'light' ? 'true' : 'false');
+    setIcon(next);
+    setMetaColor(next);
+    if(persist){
+      try{
+        localStorage.setItem(STORAGE_KEY, next);
+      }catch(err){/* ignore storage errors */}
+    }
+  }
+
+  function resolveInitialTheme(){
+    try{
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if(saved === 'light' || saved === 'dark'){
+        return saved;
+      }
+    }catch(err){/* storage unavailable */}
+    if(window.matchMedia){
+      var prefersLight = window.matchMedia('(prefers-color-scheme: light)');
+      if(typeof prefersLight.matches === 'boolean'){
+        return prefersLight.matches ? 'light' : 'dark';
+      }
+    }
+    return 'dark';
+  }
+
+  applyTheme(resolveInitialTheme(), false);
+
+  toggle.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    applyTheme(current === 'light' ? 'dark' : 'light', true);
+  });
+})();
+
 // --- Responsive navigation toggle ---
 (function(){
   const toggle = document.querySelector('.nav-toggle');

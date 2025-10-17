@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ page.lang | default: site.lang | default: 'es' }}">
+<html lang="{{ page.lang | default: site.lang | default: 'es' }}" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -163,6 +163,11 @@
     <p>© {{ site.time | date: "%Y" }} {{ site.title }} · Hecho con GitHub Pages</p>
     <a href="https://exe.io/ref/ApolloMG"><img src="https://exe.io/img/ref/r1.gif" title="CuT URLs - Earn money by shortening links with the highest CPMs Ever!" /></a>
   </footer>
+
+  <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Cambiar entre tema claro y oscuro">
+    <i class="ti ti-moon-stars" aria-hidden="true"></i>
+    <span class="sr-only">Alternar tema</span>
+  </button>
 
   <div id="report-panel" class="report-panel" hidden>
     <div class="report-panel-header">

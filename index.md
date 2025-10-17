@@ -108,14 +108,14 @@ keywords:
     {% assign juegos = site.data.items | where_exp: "item", "item.categoria contains 'juegos'" %}
     {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
     {% assign populares = visibles | sort: 'busquedas' | reverse %}
-    {% assign destacados = populares | slice: 0, 4 %}
+    {% assign total_populares = populares | size %}
     <div class="grid home-featured-grid" data-catalog-grid>
-      {% for juego in destacados %}
-        {% if juego %}
+      {% if total_populares > 0 %}
+        {% for juego in populares limit:4 %}
           {% include card.html item=juego %}
-        {% endif %}
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
     </div>
-    <p class="catalog-empty" data-catalog-empty hidden>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
+    <p class="catalog-empty" data-catalog-empty {% if total_populares > 0 %}hidden{% endif %}>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
   </section>
 </div>
