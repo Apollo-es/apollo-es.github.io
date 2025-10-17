@@ -9,14 +9,15 @@ keywords:
   - "emuladores recomendados"
 ---
 
-<div class="hero">
-  <h1>Bienvenido a <strong>Apollo-es</strong></h1>
-  <p>Descargas curadas de <strong>Juegos</strong> y <strong>Vídeos</strong> — alojadas en Mega, Mediafire, Drive y más. Todo con permiso.</p>
-  <div class="search">
-    <input id="q" type="search" placeholder="Buscar juegos, vídeos, apps...">
-    <a class="btn primary" href="/enviar"><i class="ti ti-upload"></i> Enviar recurso</a>
+<div class="home-catalog" data-catalog-root>
+  <div class="hero">
+    <h1>Bienvenido a <strong>Apollo-es</strong></h1>
+    <p>Descargas curadas de <strong>Juegos</strong> y <strong>Vídeos</strong> — alojadas en Mega, Mediafire, Drive y más. Todo con permiso.</p>
+    <div class="search">
+      <input id="q" type="search" placeholder="Buscar juegos, vídeos, apps...">
+      <a class="btn primary" href="/enviar"><i class="ti ti-upload"></i> Enviar recurso</a>
+    </div>
   </div>
-</div>
 
 {% assign noticias = site.data.noticias | sort: 'vistas' | reverse %}
 {% assign destacada = noticias | first %}
@@ -98,22 +99,23 @@ keywords:
 </section>
 {% endif %}
 
-<section class="home-featured">
-  <header class="home-featured-header">
-    <h2>Más buscados por la comunidad</h2>
-    <p>Las fichas de descarga con más interés de la semana. Accede a cada una para ver enlaces actualizados y avisos.</p>
-  </header>
+  <section class="home-featured">
+    <header class="home-featured-header">
+      <h2>Más buscados por la comunidad</h2>
+      <p>Las fichas de descarga con más interés de la semana. Accede a cada una para ver enlaces actualizados y avisos.</p>
+    </header>
 
-  {% assign juegos = site.data.items | where_exp: "item", "item.categoria contains 'juegos'" %}
-  {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
-  {% assign populares = visibles | sort: 'busquedas' | reverse %}
-  {% assign destacados = populares | slice: 0, 4 %}
-  <div class="grid home-featured-grid">
-    {% for juego in destacados %}
-      {% if juego %}
-        {% include card.html item=juego %}
-      {% endif %}
-    {% endfor %}
-  </div>
-  <p class="catalog-empty" data-empty hidden>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
-</section>
+    {% assign juegos = site.data.items | where_exp: "item", "item.categoria contains 'juegos'" %}
+    {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
+    {% assign populares = visibles | sort: 'busquedas' | reverse %}
+    {% assign destacados = populares | slice: 0, 4 %}
+    <div class="grid home-featured-grid" data-catalog-grid>
+      {% for juego in destacados %}
+        {% if juego %}
+          {% include card.html item=juego %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <p class="catalog-empty" data-catalog-empty hidden>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
+  </section>
+</div>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <radialGradient id="ykw-bg" cx="50%" cy="45%" r="85%">
+      <stop offset="0%" stop-color="#1e0f3b" />
+      <stop offset="55%" stop-color="#0c163b" />
+      <stop offset="100%" stop-color="#050913" />
+    </radialGradient>
+    <linearGradient id="ykw-ring" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffb347" />
+      <stop offset="50%" stop-color="#ff6f91" />
+      <stop offset="100%" stop-color="#8fd3ff" />
+    </linearGradient>
+    <linearGradient id="ykw-title" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff8d2" />
+      <stop offset="100%" stop-color="#ffd25f" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#ykw-bg)" />
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="320" cy="180" r="134" stroke="url(#ykw-ring)" stroke-width="12" opacity="0.75" />
+    <circle cx="320" cy="180" r="104" stroke="url(#ykw-ring)" stroke-width="6" opacity="0.35" />
+  </g>
+  <g fill="#ffffff" opacity="0.18">
+    <path d="M120 80l22 12-8 22-22-12z" />
+    <path d="M520 72l18 28-26 18-18-28z" />
+    <path d="M140 286l16 24-24 16-16-24z" />
+    <path d="M504 274l24 14-12 28-24-14z" />
+  </g>
+  <text x="50%" y="50%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="66" fill="url(#ykw-title)" letter-spacing="6">
+    YO-KAI WATCH
+  </text>
+  <text x="50%" y="69%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="24" fill="#ffe7f6" letter-spacing="5">
+    ¡REÚNE ESPÍRITUS Y SALVA FLORIDABLANCA!
+  </text>
+  <text x="50%" y="83%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="18" fill="#9ad7ff" letter-spacing="3">
+    NINTENDO 3DS • ROLE PLAYING GAME
+  </text>
+</svg>
