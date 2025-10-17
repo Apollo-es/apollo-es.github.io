@@ -1,52 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 560" role="img" aria-labelledby="title desc">
-  <title id="title">Ilustración de Until Dawn</title>
-  <desc id="desc">Cabaña nevada y calavera helada representada con tonos azules y blancos.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
   <defs>
-    <linearGradient id="night" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#02152b"/>
-      <stop offset="1" stop-color="#073954"/>
+    <linearGradient id="until-dawn-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#05101f" />
+      <stop offset="55%" stop-color="#1b304a" />
+      <stop offset="100%" stop-color="#3f6589" />
     </linearGradient>
-    <linearGradient id="skull" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#a4d9ff"/>
-      <stop offset="1" stop-color="#e8f7ff"/>
+    <linearGradient id="until-dawn-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8dd6ff" stop-opacity="0.0" />
+      <stop offset="50%" stop-color="#8dd6ff" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#8dd6ff" stop-opacity="0.0" />
     </linearGradient>
-    <clipPath id="mask">
-      <rect x="30" y="30" width="360" height="500" rx="40" ry="40"/>
-    </clipPath>
   </defs>
-  <rect width="420" height="560" fill="#010911"/>
-  <g clip-path="url(#mask)">
-    <rect x="30" y="30" width="360" height="500" fill="url(#night)"/>
-    <g fill="#0c2b44" opacity="0.5">
-      <circle cx="120" cy="160" r="80"/>
-      <circle cx="320" cy="140" r="60"/>
-      <circle cx="260" cy="220" r="90"/>
-    </g>
-    <path d="M70 420l60-80 80 30 80-30 60 80v120H70z" fill="#02192d" opacity="0.85"/>
-    <path d="M120 340l44-48 46 16 46-16 44 48v60H120z" fill="#062b3f"/>
-    <path d="M150 352h120v90c0 22-18 40-40 40h-40c-22 0-40-18-40-40v-90z" fill="#01131f"/>
-    <path d="M210 120c64 0 116 52 116 116v18c0 50-20 98-56 132l-36 34a38 38 0 0 1-52 0l-36-34c-36-34-56-82-56-132v-18c0-64 52-116 116-116z" fill="url(#skull)" opacity="0.92"/>
-    <g fill="#05334b">
-      <ellipse cx="168" cy="216" rx="28" ry="24"/>
-      <ellipse cx="252" cy="216" rx="28" ry="24"/>
-    </g>
-    <g fill="#02172a">
-      <ellipse cx="168" cy="216" rx="16" ry="14"/>
-      <ellipse cx="252" cy="216" rx="16" ry="14"/>
-    </g>
-    <path d="M174 278h72c8 0 14 6 14 14v8c0 22-18 40-40 40s-40-18-40-40v-8c0-8 6-14 14-14z" fill="#05334b"/>
-    <path d="M110 284h200v20c0 8-6 14-14 14H124c-8 0-14-6-14-14v-20z" fill="#0c2b44" opacity="0.45"/>
-    <path d="M210 360l30 44-30 36-30-36z" fill="#0d425f"/>
-    <path d="M98 420h224v22c0 18-14 32-32 32H130c-18 0-32-14-32-32v-22z" fill="#031e2f"/>
-    <g fill="#85d6ff" opacity="0.9">
-      <circle cx="80" cy="120" r="6"/>
-      <circle cx="140" cy="80" r="4"/>
-      <circle cx="360" cy="110" r="5"/>
-      <circle cx="300" cy="70" r="7"/>
-      <circle cx="250" cy="40" r="5"/>
-      <circle cx="200" cy="90" r="4"/>
-    </g>
-  </g>
-  <rect x="30" y="30" width="360" height="500" rx="40" ry="40" fill="none" stroke="#9ee8ff" stroke-opacity="0.5" stroke-width="3"/>
-  <rect x="22" y="22" width="376" height="516" rx="46" ry="46" fill="none" stroke="#d0f2ff" stroke-opacity="0.3" stroke-width="2"/>
+  <rect width="640" height="360" fill="url(#until-dawn-bg)" />
+  <rect width="460" height="220" x="90" y="70" fill="url(#until-dawn-glow)" opacity="0.8" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="50" fill="#ecf8ff" letter-spacing="8">
+    UNTIL DAWN
+  </text>
+  <text x="50%" y="67%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#d2e8ff" letter-spacing="5">
+    SOBREVIVE A LA NOCHE EN BLACKWOOD
+  </text>
 </svg>
