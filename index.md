@@ -62,8 +62,11 @@ keywords:
           {% endcapture %}
           {% assign share_hashtags = hashtag_tokens | strip | replace: ' ', '' %}
         {% endif %}
-        <div class="news-share" data-share data-share-url="{{ share_url }}" data-share-title="{{ destacada.titulo }}" data-share-text="{{ share_message | append: ' ' | append: share_url }}">
+        <div class="news-share" data-share data-share-url="{{ share_url }}" data-share-title="{{ destacada.titulo }}" data-share-text="{{ share_message | append: '\n' | append: share_url }}">
           <span>Compartir:</span>
+          <button class="btn share share-native" type="button" data-share-native>
+            <i class="ti ti-share-3"></i> Compartir ahora
+          </button>
           <a class="btn share" href="https://twitter.com/intent/tweet?url={{ share_url | uri_escape }}&text={{ share_text_encoded }}{% if share_hashtags != '' %}&hashtags={{ share_hashtags | uri_escape }}{% endif %}" target="_blank" rel="noopener" data-platform="x">
             <i class="ti ti-brand-twitter"></i> X
           </a>
@@ -105,7 +108,7 @@ keywords:
   {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
   {% assign populares = visibles | sort: 'busquedas' | reverse %}
   {% assign destacados = populares | slice: 0, 4 %}
-  <div id="items" class="grid">
+  <div class="grid home-featured-grid">
     {% for juego in destacados %}
       {% if juego %}
         {% include card.html item=juego %}

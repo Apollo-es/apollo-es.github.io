@@ -48,8 +48,11 @@ keywords:
       <div class="news-actions">
         <a class="btn primary" href="{{ news_path | relative_url }}"><i class="ti ti-book"></i> Leer la noticia</a>
       </div>
-      <div class="news-share" data-share data-share-url="{{ share_url }}" data-share-title="{{ noticia.titulo }}" data-share-text="{{ share_message | append: ' ' | append: share_url }}">
+      <div class="news-share" data-share data-share-url="{{ share_url }}" data-share-title="{{ noticia.titulo }}" data-share-text="{{ share_message | append: '\n' | append: share_url }}">
         <span>Compartir:</span>
+        <button class="btn share share-native" type="button" data-share-native>
+          <i class="ti ti-share-3"></i> Compartir ahora
+        </button>
         <a class="btn share" href="https://twitter.com/intent/tweet?url={{ share_url | uri_escape }}&text={{ share_text_encoded }}{% if share_hashtags != '' %}&hashtags={{ share_hashtags | uri_escape }}{% endif %}" target="_blank" rel="noopener" data-platform="x">
           <i class="ti ti-brand-twitter"></i> X
         </a>

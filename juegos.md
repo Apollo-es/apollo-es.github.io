@@ -11,6 +11,7 @@ keywords:
 ---
 
 <h1>Juegos</h1>
+<div data-catalog-root>
 <div class="search"><input id="q" type="search" placeholder="Buscar juegos..."></div>
 
 <section class="filters" id="game-filters" aria-label="Filtrar catálogo de juegos">
@@ -42,11 +43,12 @@ keywords:
   </div>
 </section>
 
-<div id="items" class="grid">
+<div class="grid" data-catalog-grid>
   {% for item in site.data.items %}
     {% if item.categoria contains "juegos" and item.oculto != true %}
       {% include card.html item=item %}
     {% endif %}
   {% endfor %}
 </div>
-<p class="catalog-empty" data-empty hidden>No encontramos coincidencias para tu búsqueda. Ajusta los filtros o prueba con otro término.</p>
+<p class="catalog-empty" data-catalog-empty hidden>No encontramos coincidencias para tu búsqueda. Ajusta los filtros o prueba con otro término.</p>
+</div>
