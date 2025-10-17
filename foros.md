@@ -46,7 +46,7 @@ keywords:
   <p>Comparte tu mensaje indicando un alias o apodo y, si lo ves necesario, un medio de contacto. Puedes editar o borrar tus comentarios desde este mismo navegador.</p>
 </section>
 
-<div class="forum-board" id="foro-tablero">
+<div class="forum-board" id="foro-tablero" data-forum-source="{{ '/static/data/forum-feed.json' | relative_url }}">
   {% for foro in foros %}
   <article class="forum-section" id="foro-{{ foro.slug }}-hilos">
     <header class="forum-section-header">

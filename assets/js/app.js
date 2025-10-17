@@ -41,300 +41,305 @@ document.documentElement.classList.add('has-js');
 
 // --- Catálogo de juegos: búsqueda + filtros ---
 (function(){
-  var list = document.getElementById('items');
-  if(!list) return;
+  var roots = document.querySelectorAll('[data-catalog-root]');
+  if(!roots.length) return;
 
-  var cards = Array.prototype.slice.call(list.querySelectorAll('.card'));
-  if(!cards.length) return;
+  roots.forEach(function(root){
+    var list = root.querySelector('[data-catalog-grid]');
+    if(!list) return;
 
-  var q = document.getElementById('q');
-  var inputs = {
-    console: document.getElementById('filter-console'),
-    developer: document.getElementById('filter-developer'),
-    genre: document.getElementById('filter-genre')
-  };
-  var sortSelect = document.getElementById('filter-sort');
-  var resetBtn = document.getElementById('filter-reset');
-  var emptyState = list.parentElement ? list.parentElement.querySelector('[data-empty]') : null;
+    var cards = Array.prototype.slice.call(list.querySelectorAll('.card'));
+    if(!cards.length) return;
 
-  function normalise(str){
-    if(!str) return '';
-    var value = String(str).toLowerCase().trim();
-    if(typeof value.normalize === 'function'){
-      value = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    }
-    return value;
-  }
-
-  function parseNumber(value){
-    var num = Number(value);
-    return Number.isFinite(num) ? num : 0;
-  }
-
-  function parseDate(value){
-    if(!value) return 0;
-    var timestamp = Date.parse(value);
-    return isNaN(timestamp) ? 0 : timestamp;
-  }
-
-  function toListTokens(str){
-    if(!str) return [];
-    return String(str)
-      .split(/[,/|]/)
-      .map(function(token){ return token.trim(); })
-      .filter(Boolean);
-  }
-
-  function toWordTokens(str){
-    if(!str) return [];
-    return normalise(str)
-      .replace(/[^a-z0-9]+/g, ' ')
-      .split(/\s+/)
-      .filter(Boolean);
-  }
-
-  function collectText(card){
-    var data = card.dataset || {};
-    var parts = [data.title, data.desc, data.tags];
-    var titleEl = card.querySelector('.card-title');
-    var descEl = card.querySelector('.card-desc');
-    if(titleEl) parts.push(titleEl.textContent);
-    if(descEl) parts.push(descEl.textContent);
-    parts.push(card.textContent);
-    return parts.filter(Boolean).join(' ');
-  }
-
-  var dataset = cards.map(function(card, index){
-    var data = card.dataset || {};
-    var consoleLabel = data.console || '';
-    var developerLabel = data.developer || '';
-    var genreLabel = data.genre || '';
-    var genres = toListTokens(genreLabel);
-    var fullText = collectText(card);
-    var textTokens = toWordTokens(fullText);
-    var titleTokens = toWordTokens(data.title || '');
-
-    return {
-      card: card,
-      text: normalise(fullText),
-      tokenSet: new Set(textTokens),
-      titleTokens: new Set(titleTokens),
-      consoleLabel: consoleLabel.trim(),
-      developerLabel: developerLabel.trim(),
-      genreLabels: genres,
-      consoleValue: normalise(consoleLabel),
-      developerValue: normalise(developerLabel),
-      genreValues: genres.map(normalise),
-      interactionCount: parseNumber(data.clicks),
-      searchCount: parseNumber(data.searches),
-      publishedValue: parseDate(data.published),
-      matchScore: 0,
-      recencyScore: 0,
-      originalIndex: index
+    var q = root.querySelector('#q');
+    var inputs = {
+      console: root.querySelector('#filter-console'),
+      developer: root.querySelector('#filter-developer'),
+      genre: root.querySelector('#filter-genre')
     };
-  });
+    var sortSelect = root.querySelector('#filter-sort');
+    var resetBtn = root.querySelector('#filter-reset');
+    var emptyState = root.querySelector('[data-catalog-empty]');
 
-  var valueSets = {
-    console: new Set(),
-    developer: new Set(),
-    genre: new Set()
-  };
-
-  dataset.forEach(function(entry){
-    if(entry.consoleLabel){
-      valueSets.console.add(entry.consoleLabel);
-    }
-    if(entry.developerLabel){
-      valueSets.developer.add(entry.developerLabel);
-    }
-    entry.genreLabels.forEach(function(label){
-      if(label) valueSets.genre.add(label);
-    });
-  });
-
-  function populateDatalist(input, values){
-    if(!input) return;
-    var listId = input.getAttribute('list');
-    if(!listId) return;
-    var doc = input.ownerDocument;
-    var datalist = doc.getElementById(listId);
-    if(!datalist) return;
-
-    var fragment = doc.createDocumentFragment();
-    Array.from(values)
-      .sort(function(a, b){ return a.localeCompare(b, 'es', {sensitivity: 'base'}); })
-      .forEach(function(value){
-        var option = doc.createElement('option');
-        option.value = value;
-        fragment.appendChild(option);
-      });
-
-    datalist.innerHTML = '';
-    datalist.appendChild(fragment);
-  }
-
-  populateDatalist(inputs.console, valueSets.console);
-  populateDatalist(inputs.developer, valueSets.developer);
-  populateDatalist(inputs.genre, valueSets.genre);
-
-  var state = {
-    term: '',
-    termTokens: [],
-    console: '',
-    developer: '',
-    genre: '',
-    sort: sortSelect ? (sortSelect.value || 'relevance') : 'relevance'
-  };
-
-  function matchesTerm(entry){
-    if(!state.termTokens.length) return true;
-    return state.termTokens.every(function(token){
-      return entry.tokenSet.has(token) || entry.text.indexOf(token) !== -1;
-    });
-  }
-
-  function updateMatchScore(entry){
-    if(!state.termTokens.length){
-      entry.matchScore = 0;
-      return;
-    }
-    var score = 0;
-    state.termTokens.forEach(function(token){
-      if(entry.titleTokens.has(token)){
-        score += 30;
-      } else if(entry.tokenSet.has(token)){
-        score += 12;
-      } else if(entry.text.indexOf(token) !== -1){
-        score += 6;
+    function normalise(str){
+      if(!str) return '';
+      var value = String(str).toLowerCase().trim();
+      if(typeof value.normalize === 'function'){
+        value = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       }
+      return value;
+    }
+
+    function parseNumber(value){
+      var num = Number(value);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function parseDate(value){
+      if(!value) return 0;
+      var timestamp = Date.parse(value);
+      return isNaN(timestamp) ? 0 : timestamp;
+    }
+
+    function toListTokens(str){
+      if(!str) return [];
+      return String(str)
+        .split(/[,/|]/)
+        .map(function(token){ return token.trim(); })
+        .filter(Boolean);
+    }
+
+    function toWordTokens(str){
+      if(!str) return [];
+      return normalise(str)
+        .replace(/[^a-z0-9]+/g, ' ')
+        .split(/\s+/)
+        .filter(Boolean);
+    }
+
+    function collectText(card){
+      var data = card.dataset || {};
+      var parts = [data.title, data.desc, data.tags];
+      var titleEl = card.querySelector('.card-title');
+      var descEl = card.querySelector('.card-desc');
+      if(titleEl) parts.push(titleEl.textContent);
+      if(descEl) parts.push(descEl.textContent);
+      parts.push(card.textContent);
+      return parts.filter(Boolean).join(' ');
+    }
+
+    var dataset = cards.map(function(card, index){
+      var data = card.dataset || {};
+      var consoleLabel = data.console || '';
+      var developerLabel = data.developer || '';
+      var genreLabel = data.genre || '';
+      var genres = toListTokens(genreLabel);
+      var fullText = collectText(card);
+      var textTokens = toWordTokens(fullText);
+      var titleTokens = toWordTokens(data.title || '');
+
+      return {
+        card: card,
+        text: normalise(fullText),
+        tokenSet: new Set(textTokens),
+        titleTokens: new Set(titleTokens),
+        consoleLabel: consoleLabel.trim(),
+        developerLabel: developerLabel.trim(),
+        genreLabels: genres,
+        consoleValue: normalise(consoleLabel),
+        developerValue: normalise(developerLabel),
+        genreValues: genres.map(normalise),
+        interactionCount: parseNumber(data.clicks),
+        searchCount: parseNumber(data.searches),
+        publishedValue: parseDate(data.published),
+        matchScore: 0,
+        recencyScore: 0,
+        originalIndex: index
+      };
     });
-    entry.matchScore = score;
-  }
 
-  function updateRecency(entry){
-    entry.recencyScore = entry.publishedValue ? (entry.publishedValue / 86400000) : 0;
-  }
-
-  function computeRelevanceScore(entry){
-    return (entry.matchScore || 0) * 12 + (entry.interactionCount || 0) * 5 + (entry.searchCount || 0) * 3 + (entry.recencyScore || 0);
-  }
-
-  function computeSearchScore(entry){
-    return (entry.searchCount || 0) * 15 + (entry.interactionCount || 0) * 4 + (entry.recencyScore || 0);
-  }
-
-  function computeNewScore(entry){
-    return (entry.publishedValue || 0) + (entry.interactionCount || 0) * 10000 + (entry.searchCount || 0) * 5000;
-  }
-
-  function sortEntries(entries){
-    return entries.slice().sort(function(a, b){
-      var diff;
-      if(state.sort === 'searches'){
-        diff = computeSearchScore(b) - computeSearchScore(a);
-      } else if(state.sort === 'new'){
-        diff = computeNewScore(b) - computeNewScore(a);
-      } else {
-        diff = computeRelevanceScore(b) - computeRelevanceScore(a);
-      }
-      if(diff === 0){
-        return a.originalIndex - b.originalIndex;
-      }
-      return diff;
-    });
-  }
-
-  function applyFilters(){
-    var visibleEntries = [];
+    var valueSets = {
+      console: new Set(),
+      developer: new Set(),
+      genre: new Set()
+    };
 
     dataset.forEach(function(entry){
-      var visible = matchesTerm(entry);
-
-      if(visible && state.console){
-        visible = entry.consoleValue.indexOf(state.console) !== -1;
+      if(entry.consoleLabel){
+        valueSets.console.add(entry.consoleLabel);
       }
-
-      if(visible && state.developer){
-        visible = entry.developerValue.indexOf(state.developer) !== -1;
+      if(entry.developerLabel){
+        valueSets.developer.add(entry.developerLabel);
       }
+      entry.genreLabels.forEach(function(label){
+        if(label) valueSets.genre.add(label);
+      });
+    });
 
-      if(visible && state.genre){
-        visible = entry.genreValues.some(function(value){
-          return value.indexOf(state.genre) !== -1;
+    function populateDatalist(input, values){
+      if(!input) return;
+      var listId = input.getAttribute('list');
+      if(!listId) return;
+      var doc = input.ownerDocument;
+      var datalist = doc.getElementById(listId);
+      if(!datalist) return;
+
+      var fragment = doc.createDocumentFragment();
+      Array.from(values)
+        .sort(function(a, b){ return a.localeCompare(b, 'es', {sensitivity: 'base'}); })
+        .forEach(function(value){
+          var option = doc.createElement('option');
+          option.value = value;
+          fragment.appendChild(option);
         });
-      }
 
-      entry.card.style.display = visible ? '' : 'none';
-
-      if(visible){
-        updateMatchScore(entry);
-        updateRecency(entry);
-        visibleEntries.push(entry);
-      }
-    });
-
-    var sortedEntries = sortEntries(visibleEntries);
-    sortedEntries.forEach(function(entry, index){
-      entry.card.style.order = index;
-      list.appendChild(entry.card);
-    });
-
-    if(emptyState){
-      emptyState.hidden = sortedEntries.length > 0;
+      datalist.innerHTML = '';
+      datalist.appendChild(fragment);
     }
-  }
 
-  if(q){
-    q.addEventListener('input', function(){
-      state.term = normalise(q.value);
-      state.termTokens = toWordTokens(q.value);
-      applyFilters();
-    });
-  }
+    populateDatalist(inputs.console, valueSets.console);
+    populateDatalist(inputs.developer, valueSets.developer);
+    populateDatalist(inputs.genre, valueSets.genre);
 
-  Object.keys(inputs).forEach(function(key){
-    var input = inputs[key];
-    if(!input) return;
-    var handler = function(){
-      state[key] = normalise(input.value);
-      applyFilters();
+    var state = {
+      term: '',
+      termTokens: [],
+      console: '',
+      developer: '',
+      genre: '',
+      sort: sortSelect ? (sortSelect.value || 'relevance') : 'relevance'
     };
-    input.addEventListener('input', handler);
-    input.addEventListener('change', handler);
-  });
 
-  if(sortSelect){
-    sortSelect.addEventListener('change', function(){
-      state.sort = sortSelect.value || 'relevance';
-      applyFilters();
-    });
-  }
+    function matchesTerm(entry){
+      if(!state.termTokens.length) return true;
+      return state.termTokens.every(function(token){
+        return entry.tokenSet.has(token) || entry.text.indexOf(token) !== -1;
+      });
+    }
 
-  if(resetBtn){
-    resetBtn.addEventListener('click', function(){
-      state.term = '';
-      state.termTokens = [];
-      state.console = '';
-      state.developer = '';
-      state.genre = '';
-      if(q) q.value = '';
-      Object.keys(inputs).forEach(function(key){
-        if(inputs[key]){
-          inputs[key].value = '';
+    function updateMatchScore(entry){
+      if(!state.termTokens.length){
+        entry.matchScore = 0;
+        return;
+      }
+      var score = 0;
+      state.termTokens.forEach(function(token){
+        if(entry.titleTokens.has(token)){
+          score += 30;
+        } else if(entry.tokenSet.has(token)){
+          score += 12;
+        } else if(entry.text.indexOf(token) !== -1){
+          score += 6;
         }
       });
-      if(sortSelect){
-        sortSelect.value = 'relevance';
-        state.sort = 'relevance';
-      }
-      applyFilters();
-      if(q){
-        q.focus();
-      }
-    });
-  }
+      entry.matchScore = score;
+    }
 
-  applyFilters();
+    function updateRecency(entry){
+      entry.recencyScore = entry.publishedValue ? (entry.publishedValue / 86400000) : 0;
+    }
+
+    function computeRelevanceScore(entry){
+      return (entry.matchScore || 0) * 12 + (entry.interactionCount || 0) * 5 + (entry.searchCount || 0) * 3 + (entry.recencyScore || 0);
+    }
+
+    function computeSearchScore(entry){
+      return (entry.searchCount || 0) * 15 + (entry.interactionCount || 0) * 4 + (entry.recencyScore || 0);
+    }
+
+    function computeNewScore(entry){
+      return (entry.publishedValue || 0) + (entry.interactionCount || 0) * 10000 + (entry.searchCount || 0) * 5000;
+    }
+
+    function sortEntries(entries){
+      return entries.slice().sort(function(a, b){
+        var diff;
+        if(state.sort === 'searches'){
+          diff = computeSearchScore(b) - computeSearchScore(a);
+        } else if(state.sort === 'new'){
+          diff = computeNewScore(b) - computeNewScore(a);
+        } else {
+          diff = computeRelevanceScore(b) - computeRelevanceScore(a);
+        }
+        if(diff === 0){
+          return a.originalIndex - b.originalIndex;
+        }
+        return diff;
+      });
+    }
+
+    function applyFilters(){
+      var visibleEntries = [];
+
+      dataset.forEach(function(entry){
+        var visible = matchesTerm(entry);
+
+        if(visible && state.console){
+          visible = entry.consoleValue.indexOf(state.console) !== -1;
+        }
+
+        if(visible && state.developer){
+          visible = entry.developerValue.indexOf(state.developer) !== -1;
+        }
+
+        if(visible && state.genre){
+          visible = entry.genreValues.some(function(value){
+            return value.indexOf(state.genre) !== -1;
+          });
+        }
+
+        entry.card.style.display = visible ? '' : 'none';
+
+        if(visible){
+          updateMatchScore(entry);
+          updateRecency(entry);
+          visibleEntries.push(entry);
+        }
+      });
+
+      var sortedEntries = sortEntries(visibleEntries);
+      sortedEntries.forEach(function(entry, index){
+        entry.card.style.order = index;
+        list.appendChild(entry.card);
+      });
+
+      if(emptyState){
+        emptyState.hidden = sortedEntries.length > 0;
+      }
+    }
+
+    if(q){
+      q.addEventListener('input', function(){
+        state.term = normalise(q.value);
+        state.termTokens = toWordTokens(q.value);
+        applyFilters();
+      });
+    }
+
+    Object.keys(inputs).forEach(function(key){
+      var input = inputs[key];
+      if(!input) return;
+      var handler = function(){
+        state[key] = normalise(input.value);
+        applyFilters();
+      };
+      input.addEventListener('input', handler);
+      input.addEventListener('change', handler);
+    });
+
+    if(sortSelect){
+      sortSelect.addEventListener('change', function(){
+        state.sort = sortSelect.value || 'relevance';
+        applyFilters();
+      });
+    }
+
+    if(resetBtn){
+      resetBtn.addEventListener('click', function(){
+        state.term = '';
+        state.termTokens = [];
+        state.console = '';
+        state.developer = '';
+        state.genre = '';
+        if(q) q.value = '';
+        Object.keys(inputs).forEach(function(key){
+          if(inputs[key]){
+            inputs[key].value = '';
+          }
+        });
+        if(sortSelect){
+          sortSelect.value = 'relevance';
+          state.sort = 'relevance';
+        }
+        applyFilters();
+        if(q){
+          q.focus();
+        }
+      });
+    }
+
+    applyFilters();
+  });
 })();
 // --- Calculadora de hardware para emuladores ---
 (function(){
@@ -623,6 +628,9 @@ document.documentElement.classList.add('has-js');
   const storageKey = 'apolloCommunityPosts';
   const sessionKey = 'apolloForumSessionId';
   const topics = Array.from(board.querySelectorAll('.forum-topic'));
+  const remoteSource = board.dataset.forumSource || '';
+  let remoteData = null;
+  let initialised = false;
 
   function createSessionId(){
     if(typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'){
@@ -673,6 +681,114 @@ document.documentElement.classList.add('has-js');
     return Array.isArray(posts) ? posts : [];
   }
 
+  function normaliseRemotePost(raw){
+    if(!raw || typeof raw !== 'object') return null;
+    const post = {
+      id: raw.id ? String(raw.id) : '',
+      alias: raw.alias ? String(raw.alias) : '',
+      contact: raw.contact ? String(raw.contact) : '',
+      message: raw.message ? String(raw.message) : '',
+      createdAt: raw.createdAt || null,
+      updatedAt: raw.updatedAt || null,
+      sessionId: raw.sessionId ? String(raw.sessionId) : 'remote'
+    };
+
+    if(!post.message){
+      return null;
+    }
+
+    if(!post.createdAt){
+      post.createdAt = new Date().toISOString();
+    }
+
+    if(!post.id){
+      post.id = `remote-${Math.random().toString(36).slice(2)}${Date.now().toString(36)}`;
+    }
+
+    if(!post.sessionId){
+      post.sessionId = 'remote';
+    }
+
+    return post;
+  }
+
+  function mergeRemoteData(store){
+    if(!remoteData || typeof remoteData !== 'object'){
+      return store;
+    }
+
+    const next = { ...store };
+    let changed = false;
+
+    Object.keys(remoteData).forEach(key => {
+      const remotePosts = Array.isArray(remoteData[key]) ? remoteData[key] : [];
+      if(!remotePosts.length) return;
+
+      const currentSource = getPosts(store, key);
+      const current = currentSource.map(post => ({ ...post }));
+      const byId = new Map(current.map(post => [post.id, post]));
+      let keyChanged = false;
+
+      remotePosts.forEach(raw => {
+        const remotePost = normaliseRemotePost(raw);
+        if(!remotePost) return;
+
+        const existing = byId.get(remotePost.id);
+        if(existing){
+          let updated = false;
+          if(!existing.alias && remotePost.alias){
+            existing.alias = remotePost.alias;
+            updated = true;
+          }
+          if(!existing.contact && remotePost.contact){
+            existing.contact = remotePost.contact;
+            updated = true;
+          }
+          if(!existing.message && remotePost.message){
+            existing.message = remotePost.message;
+            updated = true;
+          }
+          if(!existing.createdAt && remotePost.createdAt){
+            existing.createdAt = remotePost.createdAt;
+            updated = true;
+          }
+          if(!existing.updatedAt && remotePost.updatedAt){
+            existing.updatedAt = remotePost.updatedAt;
+            updated = true;
+          }
+          if(!existing.sessionId){
+            existing.sessionId = remotePost.sessionId;
+            updated = true;
+          }
+          if(updated){
+            keyChanged = true;
+          }
+        } else {
+          current.push(remotePost);
+          byId.set(remotePost.id, remotePost);
+          keyChanged = true;
+        }
+      });
+
+      if(keyChanged){
+        next[key] = current;
+        changed = true;
+      }
+    });
+
+    return changed ? next : store;
+  }
+
+  function readWithRemote(){
+    const local = readStore();
+    const merged = mergeRemoteData(local);
+    if(merged !== local){
+      writeStore(merged);
+      return merged;
+    }
+    return local;
+  }
+
   function ensureStatus(form){
     let status = form.querySelector('.form-status');
     if(!status){
@@ -702,7 +818,7 @@ document.documentElement.classList.add('has-js');
     const key = topic.dataset.topicKey;
     const feed = topic.querySelector('[data-topic-feed]');
     if(!key || !feed) return;
-    const data = store || readStore();
+    const data = store || readWithRemote();
     const posts = getPosts(data, key);
     feed.innerHTML = '';
 
@@ -814,12 +930,33 @@ document.documentElement.classList.add('has-js');
     }
   }
 
-  function renderAll(){
-    const store = readStore();
-    topics.forEach(topic => renderTopic(topic, store));
+  function renderAll(store){
+    const data = store || readWithRemote();
+    topics.forEach(topic => renderTopic(topic, data));
   }
 
-  renderAll();
+  function initialiseBoard(){
+    const store = readWithRemote();
+    renderAll(store);
+    initialised = true;
+  }
+
+  initialiseBoard();
+
+  if(remoteSource){
+    fetch(remoteSource, {cache: 'no-store'})
+      .then(response => response.ok ? response.json() : null)
+      .then(data => {
+        if(data && typeof data === 'object'){
+          remoteData = data;
+          const merged = readWithRemote();
+          renderAll(merged);
+        }
+      })
+      .catch(err => {
+        console.warn('No se pudo cargar el feed remoto del foro', err);
+      });
+  }
 
   board.addEventListener('submit', evt => {
     const form = evt.target.closest('[data-topic-form]');
@@ -849,7 +986,7 @@ document.documentElement.classList.add('has-js');
       return;
     }
 
-    const store = readStore();
+    let store = readWithRemote();
     const posts = getPosts(store, key);
     const now = new Date().toISOString();
     const editingId = form.dataset.editingId;
@@ -911,7 +1048,7 @@ document.documentElement.classList.add('has-js');
     if(!topic) return;
     const key = topic.dataset.topicKey;
     const form = topic.querySelector('[data-topic-form]');
-    const store = readStore();
+    let store = readWithRemote();
     const posts = getPosts(store, key);
     const id = actionBtn.dataset.postId;
     const entry = posts.find(post => post.id === id);
@@ -958,11 +1095,13 @@ document.documentElement.classList.add('has-js');
   });
 
   document.addEventListener('apollo:forum-updated', () => {
+    if(!initialised) return;
     renderAll();
   });
 
   window.addEventListener('storage', evt => {
     if(evt.key === storageKey){
+      if(!initialised) return;
       renderAll();
     }
   });
@@ -1222,31 +1361,40 @@ function showReportToast(message){
 
 // --- Compartir noticias ---
 (function(){
-  if(typeof navigator === 'undefined' || typeof navigator.share !== 'function'){
-    return;
-  }
-
   const blocks = document.querySelectorAll('[data-share]');
   if(!blocks.length) return;
 
   blocks.forEach(block => {
-    block.addEventListener('click', evt => {
-      const link = evt.target.closest('a.share');
-      if(!link) return;
+    const nativeBtn = block.querySelector('[data-share-native]');
+    if(!nativeBtn) return;
+
+    if(typeof navigator === 'undefined' || typeof navigator.share !== 'function'){
+      nativeBtn.hidden = true;
+      nativeBtn.setAttribute('aria-hidden', 'true');
+      return;
+    }
+
+    nativeBtn.addEventListener('click', evt => {
       evt.preventDefault();
 
-      const shareUrl = block.getAttribute('data-share-url') || link.href;
+      const shareUrl = block.getAttribute('data-share-url') || window.location.href;
       const shareTitle = block.getAttribute('data-share-title') || document.title;
-      const linkText = link.textContent ? link.textContent.trim() : '';
-      const shareText = block.getAttribute('data-share-text') || linkText || '';
+      const shareText = block.getAttribute('data-share-text') || '';
 
       navigator.share({
         title: shareTitle,
         text: shareText,
         url: shareUrl
-      }).catch(() => {
-        window.open(link.href, '_blank', 'noopener');
+      }).catch(err => {
+        if(err && err.name === 'AbortError'){
+          return;
+        }
+        const fallbackLink = block.querySelector('a.share');
+        if(fallbackLink && fallbackLink.href){
+          window.open(fallbackLink.href, '_blank', 'noopener');
+        }
       });
     });
   });
 })();
+

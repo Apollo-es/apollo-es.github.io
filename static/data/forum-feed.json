@@ -1,0 +1,52 @@
+{
+  "pokemon::pokemon-leyendas-za": [
+    {
+      "id": "remote-plza-01",
+      "alias": "KalosTrainer",
+      "contact": "@kalostrainer",
+      "message": "Acabo de terminar la misión de los laboratorios y las recompensas de megaenergía funcionan perfecto en Ryujinx 1.1.85. Si alguien necesita los mods de 60 FPS, avise y los subo.",
+      "createdAt": "2025-10-14T21:10:00Z",
+      "sessionId": "remote"
+    },
+    {
+      "id": "remote-plza-02",
+      "alias": "LumiSupport",
+      "message": "Para quienes tengan el error de pantalla negra al salir de Luminalia, desactiven el escalado FSR y reinicien el shader cache. Así se corrigió en nuestra Switch OLED.",
+      "createdAt": "2025-10-15T10:32:00Z",
+      "sessionId": "remote"
+    }
+  ],
+  "pokemon::pokemon-general": [
+    {
+      "id": "remote-poke-01",
+      "alias": "RadioLum",
+      "message": "Organizamos intercambios de Vivillon forma Jardín este fin de semana. Horario: sábado 22:00 UTC en el servidor de Discord Kalos Reborn.",
+      "createdAt": "2025-10-13T18:05:00Z",
+      "sessionId": "remote"
+    },
+    {
+      "id": "remote-poke-02",
+      "alias": "CentroDex",
+      "contact": "centrodex@proton.me",
+      "message": "Busco gente para traducir las notas del Teraleak 2024 al francés. Pagamos con códigos de expansión de Leyendas Z-A.",
+      "createdAt": "2025-10-12T15:45:00Z",
+      "sessionId": "remote"
+    }
+  ],
+  "general::peticiones": [
+    {
+      "id": "remote-ask-01",
+      "alias": "ApolloMod",
+      "message": "Si detectan enlaces caídos, usen el botón de reportes en cada ficha y dejen el host afectado. Lo revisamos a diario.",
+      "createdAt": "2025-10-11T09:00:00Z",
+      "sessionId": "remote"
+    },
+    {
+      "id": "remote-ask-02",
+      "alias": "RetroHunter",
+      "message": "¿Podrían añadir la ficha de Castlevania: Symphony of the Night en versión PSP? Tengo los dumps verificados para aportar.",
+      "createdAt": "2025-10-16T07:20:00Z",
+      "sessionId": "remote"
+    }
+  ]
+}

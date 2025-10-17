@@ -80,6 +80,7 @@ a:hover{opacity:.9}
 .news-share span{font:600 13px/1 Inter,sans-serif;color:#9fb3df;text-transform:uppercase;letter-spacing:1px;margin-right:4px}
 .news-share .btn.share{padding:10px 12px;font-size:13px;background:rgba(18,26,44,.85);border:1px solid #283455}
 .news-share .btn.share .ti{font-size:16px}
+.news-share .share-native{display:inline-flex;align-items:center;gap:6px}
 .news-aside{display:flex;flex-direction:column;gap:16px}
 .news-meta{margin:0;color:#9fb3df;font:600 12px/1.4 Inter,sans-serif;text-transform:uppercase;letter-spacing:.8px}
 .news-secondary{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
@@ -249,7 +250,7 @@ a:hover{opacity:.9}
 .card-body{position:relative;z-index:1;display:flex;flex-direction:column;gap:0}
 .card-glow{position:absolute;inset:auto -20% -40% -20%;height:120px;background:radial-gradient(50% 60% at 50% 0%, rgba(124,92,255,.25), rgba(0,224,255,0));filter:blur(22px);pointer-events:none}
 .card-title{margin:0 0 8px}
-.card-cover{width:100%;border-radius:16px;margin:0 0 14px;display:block;height:auto;max-height:none;box-shadow:0 10px 22px #0006;background:#0f1422}
+.card-cover{width:100%;border-radius:16px;margin:0 0 14px;display:block;aspect-ratio:16/9;height:auto;object-fit:cover;box-shadow:0 10px 22px #0006;background:#0f1422}
 .card-desc{color:#cbd5e1}
 .card-actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
 .card-actions .btn{flex:1 1 180px;justify-content:center}
