@@ -269,6 +269,34 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. Until Dawn es © 2015-2025 Sony Interactive Entertainment Europe. Todos los derechos pertenecen a sus respectivos titulares.
 
+- id: yokai-watch-3ds
+  categoria: ["juegos"]
+  titulo: "Yo-kai Watch"
+  descripcion: "Descubre y hazte amigo de traviesos Yo-kai mientras exploras Floridablanca en esta aventura de rol cargada de misiones, combates estratégicos y secretos para Nintendo 3DS."
+  tipo: "3DS"
+  idioma: "multi"
+  tamano: "1.7 GB"
+  licencia: "incluida"
+  consola: "Nintendo 3DS"
+  desarrolladora: "Level-5"
+  genero: "RPG / Aventura"
+  portada: "/static/juegos/yokai-watch.svg"
+  interacciones: 4680
+  busquedas: 8125
+  fecha_publicacion: 2013-07-11
+  hashtags:
+    - "#YoKaiWatch"
+    - "#Nintendo3DS"
+    - "#Level5"
+    - "#RPG"
+  descargas:
+    - titulo: "Descarga"
+      mirrors:
+        - host: "Enlace"
+          url: "https://exe.io/ykwlink"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Yo-kai Watch es © 2013-2025 LEVEL-5 Inc. Todos los derechos pertenecen a LEVEL-5 y Nintendo.
+
 - id: super-mario-galaxy
   categoria: ["juegos"]
   titulo: "Super Mario Galaxy"
