@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="acnh-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b6f50" />
+      <stop offset="55%" stop-color="#2f9a74" />
+      <stop offset="100%" stop-color="#b2e0a8" />
+    </linearGradient>
+    <radialGradient id="acnh-sun" cx="15%" cy="20%" r="65%">
+      <stop offset="0%" stop-color="#fff7d6" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#1b6f50" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="acnh-wave" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7fc8ff" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#1a6ea4" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#acnh-bg)" />
+  <circle cx="120" cy="90" r="180" fill="url(#acnh-sun)" />
+  <path d="M0 250 C120 220 220 280 340 250 C460 220 520 300 640 260 L640 360 L0 360 Z" fill="url(#acnh-wave)" opacity="0.55" />
+  <path d="M0 270 C140 240 240 310 360 280 C470 250 520 320 640 290 L640 360 L0 360 Z" fill="#0f4f6b" opacity="0.25" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Fredoka One','Segoe UI',sans-serif" font-size="54" fill="#fffcef" letter-spacing="4">
+    ANIMAL CROSSING
+  </text>
+  <text x="50%" y="67%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="56" fill="#ffffff" letter-spacing="8">
+    NEW HORIZONS
+  </text>
+  <text x="50%" y="82%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#f9ffee" letter-spacing="4">
+    ISLA · DISEÑO · AMIGOS
+  </text>
+</svg>

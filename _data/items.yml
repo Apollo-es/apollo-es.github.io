@@ -215,6 +215,97 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Sonic the Hedgehog y derivados son © 1991-2025 SEGA. Todos los derechos pertenecen a SEGA y sus subsidiarias.
 
+- id: mario-kart-8-deluxe
+  categoria: ["juegos"]
+  titulo: "Mario Kart 8 Deluxe"
+  descripcion: "Compite en más de 48 circuitos llenos de atajos, objetos clásicos y carreras online para hasta 12 jugadores. La edición definitiva de Mario Kart llega lista para Nintendo Switch."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "6.9 GB"
+  licencia: "incluida"
+  consola: "Nintendo Switch"
+  desarrolladora: "Nintendo EPD"
+  genero: "Carreras / Arcade"
+  portada: "/static/juegos/mario-kart-8-deluxe.svg"
+  hashtags:
+    - "#MarioKart8Deluxe"
+    - "#MarioKart"
+    - "#NintendoSwitch"
+    - "#Multijugador"
+  descargas:
+    - titulo: "Juego base (NSP/XCI)"
+      mirrors:
+        - host: "Descarga"
+          url: "https://link-center.net/1409918/XL8SqptxZBX6"
+    - titulo: "Actualización 2.6.1"
+      mirrors:
+        - host: "Descarga"
+          url: "https://cuty.io/mkupdate"
+    - titulo: "Booster Course Pass (DLC)"
+      mirrors:
+        - host: "Descarga"
+          url: "https://direct-link.net/1409918/7Ia3lEtdh8Yj"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Mario Kart 8 Deluxe es © 2014-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus licenciantes.
+
+- id: animal-crossing-new-horizons
+  categoria: ["juegos"]
+  titulo: "Animal Crossing: New Horizons"
+  descripcion: "Construye tu propia isla paradisíaca, invita a tus vecinos favoritos y personaliza cada rincón con el toque relajante de la entrega más completa de la serie."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "10.4 GB"
+  licencia: "incluida"
+  consola: "Nintendo Switch"
+  desarrolladora: "Nintendo EPD"
+  genero: "Simulación / Comunidad"
+  portada: "/static/juegos/animal-crossing-new-horizons.svg"
+  hashtags:
+    - "#AnimalCrossing"
+    - "#NewHorizons"
+    - "#NintendoSwitch"
+    - "#IslaParaiso"
+  descargas:
+    - titulo: "Juego base (NSP/XCI)"
+      mirrors:
+        - host: "Descarga"
+          url: "https://cuty.io/acgame"
+    - titulo: "Actualización 2.0.6"
+      mirrors:
+        - host: "Descarga"
+          url: "https://cuty.io/acupdate"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Animal Crossing y sus personajes son © 2001-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus filiales.
+
+- id: switch-keys-firmware-1901
+  categoria: ["emuladores"]
+  titulo: "Nintendo Switch Keys & Firmware 19.0.1"
+  descripcion: "Descarga segura de las prod.keys, title.keys y firmware 19.0.1 necesarios para emuladores de Nintendo Switch como Ryujinx, Suyu o Yuzu."
+  tipo: "Recursos"
+  idioma: "multi"
+  tamano: "Varía"
+  licencia: "incluida"
+  consola: "Nintendo Switch"
+  desarrolladora: "Nintendo"
+  genero: "Firmware / Keys"
+  portada: "/static/emuladores/switch-keys-firmware.svg"
+  hashtags:
+    - "#NintendoSwitch"
+    - "#Keys"
+    - "#Firmware"
+    - "#Emulacion"
+  descargas:
+    - titulo: "Keys 19.0.1"
+      mirrors:
+        - host: "Descarga"
+          url: "https://megaup.net/shared/kbavzmhrt9n3wngq58rxft4b78y07sk1bdvxcfklnj6w629klx854mvdl02zlrnes3gufdawqc1aabhim_3dxd7knd5b87-_jsnym9n66d9aja__8lj2sosn9vyzeqmy"
+    - titulo: "Firmware 19.0.1"
+      mirrors:
+        - host: "Descarga"
+          url: "https://link-center.net/1409918/Gjy3IlUqbGhc"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es ofrece enlaces con fines informativos para la escena de emulación. Las claves de cifrado y firmware pertenecen a Nintendo y solo deben usarse con copias legales respaldadas por el usuario.
+
 - id: the-devil-in-me
   categoria: ["juegos"]
   titulo: "The Dark Pictures Anthology: The Devil in Me"
@@ -300,12 +391,12 @@
 - id: super-mario-galaxy
   categoria: ["juegos"]
   titulo: "Super Mario Galaxy"
-  descripcion: "Acompaña a Mario en una aventura cósmica que redefine la gravedad. Recorre galaxias imaginativas, recoge estrellas y salva a la Princesa Peach en uno de los plataformas 3D más aclamados de Nintendo."
-  tipo: "Wii"
+  descripcion: "Acompaña a Mario en una aventura cósmica que redefine la gravedad. Esta edición para Nintendo Switch conserva la magia del original con soporte HD y controles Joy-Con optimizados."
+  tipo: "Switch"
   idioma: "multi"
   tamano: "3.6 GB"
   licencia: "incluida"
-  consola: "Nintendo Wii"
+  consola: "Nintendo Switch"
   desarrolladora: "Nintendo"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy.svg"
@@ -317,11 +408,11 @@
     - "#Nintendo"
     - "#Plataformas"
   descargas:
-    - titulo: "Juego base (WBFS)"
+    - titulo: "Juego base (NSP/XCI)"
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg1romlink"
-    - titulo: "Update v1.2.0"
+    - titulo: "Actualización 1.2.0"
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg1uplink"
@@ -331,12 +422,12 @@
 - id: super-mario-galaxy-2
   categoria: ["juegos"]
   titulo: "Super Mario Galaxy 2"
-  descripcion: "Descubre nuevas galaxias con Yoshi, potenciadores inéditos y desafíos extra. La secuela perfecciona cada mecánica del original para ofrecer una experiencia de plataformas pulida y desafiante."
-  tipo: "Wii"
+  descripcion: "Descubre nuevas galaxias con Yoshi, potenciadores inéditos y desafíos extra. Revive la secuela en Nintendo Switch con mejoras visuales y compatibilidad total con los Joy-Con."
+  tipo: "Switch"
   idioma: "multi"
   tamano: "3.9 GB"
   licencia: "incluida"
-  consola: "Nintendo Wii"
+  consola: "Nintendo Switch"
   desarrolladora: "Nintendo"
   genero: "Plataformas 3D"
   portada: "/static/juegos/super-mario-galaxy-2.svg"
@@ -348,11 +439,11 @@
     - "#Nintendo"
     - "#Plataformas"
   descargas:
-    - titulo: "Juego base"
+    - titulo: "Juego base (NSP/XCI)"
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg2romlink"
-    - titulo: "Update v1.2.0"
+    - titulo: "Actualización 1.2.0"
       mirrors:
         - host: "Descarga directa"
           url: "https://exe.io/smg2uplink"
