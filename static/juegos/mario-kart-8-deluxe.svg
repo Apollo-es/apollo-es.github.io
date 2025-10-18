@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="mk8-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1a3a" />
+      <stop offset="55%" stop-color="#1b4fa0" />
+      <stop offset="100%" stop-color="#f3274b" />
+    </linearGradient>
+    <radialGradient id="mk8-glow" cx="68%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#fffbff" stop-opacity="0.72" />
+      <stop offset="100%" stop-color="#0c1a3a" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#mk8-bg)" />
+  <circle cx="430" cy="150" r="220" fill="url(#mk8-glow)" />
+  <text x="50%" y="46%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="52" fill="#ffffff" letter-spacing="6">
+    MARIO KART
+  </text>
+  <text x="50%" y="65%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="60" fill="#ffe6f5" letter-spacing="10">
+    8 DELUXE
+  </text>
+  <text x="50%" y="82%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#f4f9ff" letter-spacing="5">
+    CARRERAS · ONLINE · CIRCUITOS RETRO
+  </text>
+</svg>

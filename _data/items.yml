@@ -215,6 +215,31 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Sonic the Hedgehog y derivados son © 1991-2025 SEGA. Todos los derechos pertenecen a SEGA y sus subsidiarias.
 
+- id: mario-kart-8-deluxe
+  categoria: ["juegos"]
+  titulo: "Mario Kart 8 Deluxe"
+  descripcion: "Compite en más de 48 circuitos llenos de atajos, objetos clásicos y carreras online para hasta 12 jugadores. La edición definitiva de Mario Kart llega lista para Nintendo Switch."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "6.9 GB"
+  licencia: "incluida"
+  consola: "Nintendo Switch"
+  desarrolladora: "Nintendo EPD"
+  genero: "Carreras / Arcade"
+  portada: "/static/juegos/mario-kart-8-deluxe.svg"
+  hashtags:
+    - "#MarioKart8Deluxe"
+    - "#MarioKart"
+    - "#NintendoSwitch"
+    - "#Multijugador"
+  descargas:
+    - titulo: "Juego base (NSP/XCI)"
+      mirrors:
+        - host: "Descarga"
+          url: "https://exe.io/mk8-switch"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Mario Kart 8 Deluxe es © 2014-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus licenciantes.
+
 - id: the-devil-in-me
   categoria: ["juegos"]
   titulo: "The Dark Pictures Anthology: The Devil in Me"
