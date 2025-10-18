@@ -236,17 +236,46 @@
     - titulo: "Juego base (NSP/XCI)"
       mirrors:
         - host: "Descarga"
-          url: "https://exe.io/mk8-switch"
+          url: "https://link-center.net/1409918/XL8SqptxZBX6"
     - titulo: "Actualización 2.6.1"
       mirrors:
         - host: "Descarga"
-          url: "https://exe.io/mk8-update"
+          url: "https://megaup.net/shared/0wckasgpxaytpbesfibvczszfo4b76bx0i4xav-7x-_u0e3sjppewcdyiusa66_v_1_fsyg99iezlx95i9ors4gaezcds_a4pgfmk7vub7xem_l5vm27vxraa236i3aa"
     - titulo: "Booster Course Pass (DLC)"
       mirrors:
         - host: "Descarga"
-          url: "https://exe.io/mk8-dlc"
+          url: "https://direct-link.net/1409918/7Ia3lEtdh8Yj"
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Mario Kart 8 Deluxe es © 2014-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus licenciantes.
+
+- id: switch-keys-firmware-1901
+  categoria: ["emuladores"]
+  titulo: "Nintendo Switch Keys & Firmware 19.0.1"
+  descripcion: "Descarga segura de las prod.keys, title.keys y firmware 19.0.1 necesarios para emuladores de Nintendo Switch como Ryujinx, Suyu o Yuzu."
+  tipo: "Recursos"
+  idioma: "multi"
+  tamano: "Varía"
+  licencia: "incluida"
+  consola: "Nintendo Switch"
+  desarrolladora: "Nintendo"
+  genero: "Firmware / Keys"
+  portada: "/static/emuladores/switch-keys-firmware.svg"
+  hashtags:
+    - "#NintendoSwitch"
+    - "#Keys"
+    - "#Firmware"
+    - "#Emulacion"
+  descargas:
+    - titulo: "Keys 19.0.1"
+      mirrors:
+        - host: "Descarga"
+          url: "https://megaup.net/shared/kbavzmhrt9n3wngq58rxft4b78y07sk1bdvxcfklnj6w629klx854mvdl02zlrnes3gufdawqc1aabhim_3dxd7knd5b87-_jsnym9n66d9aja__8lj2sosn9vyzeqmy"
+    - titulo: "Firmware 19.0.1"
+      mirrors:
+        - host: "Descarga"
+          url: "https://link-center.net/1409918/Gjy3IlUqbGhc"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es ofrece enlaces con fines informativos para la escena de emulación. Las claves de cifrado y firmware pertenecen a Nintendo y solo deben usarse con copias legales respaldadas por el usuario.
 
 - id: the-devil-in-me
   categoria: ["juegos"]

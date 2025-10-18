@@ -27,6 +27,11 @@
           descripcion: "Fork comunitario de Yuzu con soporte continuo y mejoras frecuentes de compatibilidad."
           sitio: "https://git.suyu.dev/suyu/suyu"
           descarga: "https://exe.io/suyulink"
+        - nombre: "Keys & Firmware 19.0.1"
+          icono: "🗝️"
+          descripcion: "Acceso rápido a las prod.keys y firmware actualizados para emuladores de Nintendo Switch."
+          sitio: "/emuladores/nintendo-switch-keys-1901/"
+          descarga: "/emuladores/nintendo-switch-keys-1901/"
     - nombre: "Nintendo 3DS"
       icono: "🔴"
       emuladores:
