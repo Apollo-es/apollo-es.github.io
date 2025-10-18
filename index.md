@@ -101,21 +101,23 @@ keywords:
 
   <section class="home-featured">
     <header class="home-featured-header">
-      <h2>Más buscados por la comunidad</h2>
-      <p>Las fichas de descarga con más interés de la semana. Accede a cada una para ver enlaces actualizados y avisos.</p>
+      <h2>Juegos destacados</h2>
+      <p>Nuestra selección de imprescindibles para Nintendo Switch y los lanzamientos que la comunidad sigue de cerca.</p>
     </header>
 
     {% assign juegos = site.data.items | where_exp: "item", "item.categoria contains 'juegos'" %}
     {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
-    {% assign populares = visibles | sort: 'busquedas' | reverse %}
-    {% assign total_populares = populares | size %}
+    {% assign destacados_ids = "mario-kart-8-deluxe|animal-crossing-new-horizons|super-mario-galaxy|super-mario-galaxy-2|pokemon-leyendas-za" | split: "|" %}
+    {% assign destacados_count = 0 %}
     <div class="grid home-featured-grid" data-catalog-grid>
-      {% if total_populares > 0 %}
-        {% for juego in populares limit:4 %}
+      {% for destacado_id in destacados_ids %}
+        {% assign juego = visibles | where: 'id', destacado_id | first %}
+        {% if juego %}
+          {% assign destacados_count = destacados_count | plus: 1 %}
           {% include card.html item=juego %}
-        {% endfor %}
-      {% endif %}
+        {% endif %}
+      {% endfor %}
     </div>
-    <p class="catalog-empty" data-catalog-empty {% if total_populares > 0 %}hidden{% endif %}>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
+    <p class="catalog-empty" data-catalog-empty {% if destacados_count > 0 %}hidden{% endif %}>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
   </section>
 </div>
