@@ -237,6 +237,14 @@
       mirrors:
         - host: "Descarga"
           url: "https://exe.io/mk8-switch"
+    - titulo: "Actualización 2.6.1"
+      mirrors:
+        - host: "Descarga"
+          url: "https://exe.io/mk8-update"
+    - titulo: "Booster Course Pass (DLC)"
+      mirrors:
+        - host: "Descarga"
+          url: "https://exe.io/mk8-dlc"
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Mario Kart 8 Deluxe es © 2014-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus licenciantes.
 
