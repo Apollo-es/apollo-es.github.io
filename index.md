@@ -82,8 +82,8 @@ keywords:
     <p>Empieza por las fichas, guías y herramientas que la comunidad consulta ahora mismo.</p>
   </header>
   <div class="featured-grid" data-ai-sync="resources">
-    {% assign destacados_recursos = site.data.items | where_exp: "item", "item.oculto != true" %}
-    {% for recurso in destacados_recursos limit:3 %}
+    {% assign destacados_recursos = site.data.items | where_exp: 'item', 'item.oculto != true' | slice: 0, 3 %}
+    {% for recurso in destacados_recursos %}
       {% assign categoria = recurso.categoria | first | default: '' %}
       {% assign base_path = '/' | append: categoria | append: '/' %}
       {% assign recurso_url = base_path | append: recurso.id | append: '/' %}
@@ -177,15 +177,13 @@ keywords:
 
   {% if noticias.size > 3 %}
   <div class="news-secondary">
-    {% for noticia in noticias %}
-      {% if forloop.index0 >= 3 and forloop.index0 < 9 %}
-        {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
-        <a class="news-secondary-card" href="{{ item_path | relative_url }}">
-          <span class="news-secondary-tag">{{ noticia.tag }}</span>
-          <span class="news-secondary-title">{{ noticia.titulo }}</span>
-          <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
-        </a>
-      {% endif %}
+    {% for noticia in noticias offset:3 limit:6 %}
+    {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
+    <a class="news-secondary-card" href="{{ item_path | relative_url }}">
+      <span class="news-secondary-tag">{{ noticia.tag }}</span>
+      <span class="news-secondary-title">{{ noticia.titulo }}</span>
+      <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
+    </a>
     {% endfor %}
   </div>
   {% endif %}
@@ -199,25 +197,25 @@ keywords:
         <p>Descubre lo que más se descarga ahora mismo para <strong>Switch</strong>, <strong>retro</strong> y <strong>PC</strong>.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign roms_destacadas = site.data.items | where_exp: "item", "item.categoria contains 'juegos' and item.oculto != true" %}
-        {% for rom in roms_destacadas limit:3 %}
-          {% assign rom_url = '/juegos/' | append: rom.id | append: '/' %}
-          <article class="topic-tile" data-ai-entry data-ai-type="juegos" data-ai-title="{{ rom.titulo | escape }}" data-ai-summary="{{ rom.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ rom_url | relative_url }}" data-ai-tags="{{ rom.hashtags | join: ' ' | escape }}">
-            <a class="topic-tile-link" href="{{ rom_url | relative_url }}">
-              <div class="topic-tile-media">
-                {% if rom.portada %}
-                <img src="{{ rom.portada | relative_url }}" alt="Portada de {{ rom.titulo }}">
-                {% else %}
-                <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-device-gamepad-2"></i></div>
-                {% endif %}
-              </div>
-              <div class="topic-tile-body">
-                <h4>{{ rom.titulo }}</h4>
-                <p>{{ rom.descripcion | strip_html | truncate: 120 }}</p>
-                <span class="topic-tile-meta">{{ rom.tipo }} · {{ rom.idioma | upcase }}</span>
-              </div>
-            </a>
-          </article>
+        {% assign roms_destacadas = site.data.items | where_exp: 'item', 'item.categoria contains "juegos" and item.oculto != true' | slice: 0, 3 %}
+        {% for rom in roms_destacadas %}
+        {% assign rom_url = '/juegos/' | append: rom.id | append: '/' %}
+        <article class="topic-tile" data-ai-entry data-ai-type="juegos" data-ai-title="{{ rom.titulo | escape }}" data-ai-summary="{{ rom.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ rom_url | relative_url }}" data-ai-tags="{{ rom.hashtags | join: ' ' | escape }}">
+          <a class="topic-tile-link" href="{{ rom_url | relative_url }}">
+            <div class="topic-tile-media">
+              {% if rom.portada %}
+              <img src="{{ rom.portada | relative_url }}" alt="Portada de {{ rom.titulo }}">
+              {% else %}
+              <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-device-gamepad-2"></i></div>
+              {% endif %}
+            </div>
+            <div class="topic-tile-body">
+              <h4>{{ rom.titulo }}</h4>
+              <p>{{ rom.descripcion | strip_html | truncate: 120 }}</p>
+              <span class="topic-tile-meta">{{ rom.tipo }} · {{ rom.idioma | upcase }}</span>
+            </div>
+          </a>
+        </article>
         {% endfor %}
       </div>
     </div>
@@ -272,28 +270,29 @@ keywords:
         <p>Encuentra firmware, keys y herramientas que auditamos junto a la comunidad técnica.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign recursos_candidatos = site.data.items | where_exp: "item", "item.oculto != true" %}
-        {% assign recursos_candidatos = recursos_candidatos | where_exp: "item", "item.categoria contains 'emuladores' or item.categoria contains 'apps'" %}
-        {% for recurso in recursos_candidatos limit:3 %}
-          {% assign recurso_categoria = recurso.categoria | first | default: 'emuladores' %}
-          {% assign recurso_base = '/' | append: recurso_categoria | append: '/' %}
-          {% assign recurso_url = recurso_base | append: recurso.id | append: '/' %}
-          <article class="topic-tile" data-ai-entry data-ai-type="{{ recurso_categoria }}" data-ai-title="{{ recurso.titulo | escape }}" data-ai-summary="{{ recurso.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ recurso_url | relative_url }}" data-ai-tags="{{ recurso.hashtags | join: ' ' | escape }}">
-            <a class="topic-tile-link" href="{{ recurso_url | relative_url }}">
-              <div class="topic-tile-media">
-                {% if recurso.portada %}
-                <img src="{{ recurso.portada | relative_url }}" alt="Portada de {{ recurso.titulo }}">
-                {% else %}
-                <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-cpu"></i></div>
-                {% endif %}
-              </div>
-              <div class="topic-tile-body">
-                <h4>{{ recurso.titulo }}</h4>
-                <p>{{ recurso.descripcion | strip_html | truncate: 120 }}</p>
-                <span class="topic-tile-meta">{{ recurso.tipo | default: 'Recurso' }}{% if recurso.idioma %} · {{ recurso.idioma | upcase }}{% endif %}</span>
-              </div>
-            </a>
-          </article>
+        {% assign recursos_candidatos = site.data.items | where_exp: 'item', 'item.oculto != true' %}
+        {% assign recursos_candidatos = recursos_candidatos | where_exp: 'item', 'item.categoria contains "emuladores" or item.categoria contains "apps"' %}
+        {% assign recursos_destacados = recursos_candidatos | slice: 0, 3 %}
+        {% for recurso in recursos_destacados %}
+        {% assign recurso_categoria = recurso.categoria | first | default: 'emuladores' %}
+        {% assign recurso_base = '/' | append: recurso_categoria | append: '/' %}
+        {% assign recurso_url = recurso_base | append: recurso.id | append: '/' %}
+        <article class="topic-tile" data-ai-entry data-ai-type="{{ recurso_categoria }}" data-ai-title="{{ recurso.titulo | escape }}" data-ai-summary="{{ recurso.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ recurso_url | relative_url }}" data-ai-tags="{{ recurso.hashtags | join: ' ' | escape }}">
+          <a class="topic-tile-link" href="{{ recurso_url | relative_url }}">
+            <div class="topic-tile-media">
+              {% if recurso.portada %}
+              <img src="{{ recurso.portada | relative_url }}" alt="Portada de {{ recurso.titulo }}">
+              {% else %}
+              <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-cpu"></i></div>
+              {% endif %}
+            </div>
+            <div class="topic-tile-body">
+              <h4>{{ recurso.titulo }}</h4>
+              <p>{{ recurso.descripcion | strip_html | truncate: 120 }}</p>
+              <span class="topic-tile-meta">{{ recurso.tipo | default: 'Recurso' }}{% if recurso.idioma %} · {{ recurso.idioma | upcase }}{% endif %}</span>
+            </div>
+          </a>
+        </article>
         {% endfor %}
       </div>
     </div>
@@ -401,20 +400,21 @@ keywords:
 }
 </script>
 
+{% assign featured_for_schema = site.data.items | where_exp: 'item', 'item.oculto != true' | slice: 0, 3 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "Recursos destacados de Apollo-es",
   "itemListElement": [
-    {% for recurso in ai_resources limit:3 %}
-      {% assign recurso_categoria = recurso.categoria | first | default: '' %}
-      {
-        "@type": "ListItem",
-        "position": {{ forloop.index }},
-        "url": "{{ '/' | append: recurso_categoria | append: '/' | append: recurso.id | append: '/' | absolute_url }}",
-        "name": {{ recurso.titulo | jsonify }}
-      }{% unless forloop.last %},{% endunless %}
+    {% for recurso in featured_for_schema %}
+    {% assign recurso_categoria = recurso.categoria | first | default: '' %}
+    {
+      "@type": "ListItem",
+      "position": {{ forloop.index }},
+      "url": "{{ '/' | append: recurso_categoria | append: '/' | append: recurso.id | append: '/' | absolute_url }}",
+      "name": {{ recurso.titulo | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
     {% endfor %}
   ]
 }
