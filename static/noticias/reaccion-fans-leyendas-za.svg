@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="fans-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#101c42" />
+      <stop offset="50%" stop-color="#2b3b7c" />
+      <stop offset="100%" stop-color="#ff7b4d" />
+    </linearGradient>
+    <radialGradient id="fans-glow" cx="35%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#7ecbff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#101c42" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="fans-glow-2" cx="70%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffd27a" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#101c42" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#fans-bg)" />
+  <rect width="640" height="360" fill="url(#fans-glow)" />
+  <rect width="640" height="360" fill="url(#fans-glow-2)" />
+  <g fill="none" stroke-linecap="round" opacity="0.6">
+    <path d="M120 236 Q 200 170 320 212 T 520 210" stroke="#ffe6c0" stroke-width="4" />
+    <path d="M100 260 H 540" stroke="#8bdcff" stroke-width="2" stroke-dasharray="10 6" />
+    <path d="M160 116 L 200 156" stroke="#ffd7a0" stroke-width="3" />
+    <path d="M440 120 L 480 160" stroke="#ffd7a0" stroke-width="3" />
+    <circle cx="220" cy="118" r="16" stroke="#8fdcff" stroke-width="3" />
+    <circle cx="420" cy="122" r="18" stroke="#8fdcff" stroke-width="3" />
+  </g>
+  <text x="50%" y="44%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="38" fill="#ffffff" letter-spacing="6">COMUNIDAD Z-A</text>
+  <text x="50%" y="59%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="22" fill="#fff6e8" letter-spacing="4">FANART · COSPLAY · SPEEDRUN</text>
+  <text x="50%" y="74%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="16" fill="#ffdfc4" letter-spacing="3">EVENTOS GLOBALES Y WATCH PARTIES</text>
+</svg>

@@ -19,10 +19,6 @@ keywords:
       <li><i class="ti ti-device-gamepad-2"></i> Configuraciones y perfiles optimizados para emuladores next-gen listos para aplicar.</li>
     </ul>
     <div class="search">
-      <div class="search-intro">
-        <strong>Buscador semántico con Apollo AI</strong>
-        <p>Escribe títulos, géneros o dudas técnicas y la IA te responde con fichas verificadas, firmware y foros activos en cuestión de segundos.</p>
-      </div>
       <label class="sr-only" for="q">Busca juegos, guías, foros o noticias</label>
       <input id="q" type="search" placeholder="Busca juegos, vídeos, apps, guías o foros...">
       <div class="search-actions">
@@ -137,19 +133,38 @@ keywords:
         {% endcapture %}
         {% assign share_hashtags = hashtag_tokens | strip | replace: ' ', '' %}
       {% endif %}
-      {% assign imagen_destacada = nil %}
+      {% assign imagen_src = '' %}
+      {% assign imagen_alt = noticia.titulo %}
+      {% if noticia.portada %}
+        {% if noticia.portada.src %}
+          {% assign imagen_src = noticia.portada.src %}
+        {% endif %}
+        {% if noticia.portada.alt %}
+          {% assign imagen_alt = noticia.portada.alt %}
+        {% endif %}
+      {% endif %}
+      {% if imagen_src == '' %}
         {% for bloque in noticia.cuerpo %}
-          {% if bloque.imagen %}
-            {% if bloque.imagen.src %}
-              {% assign imagen_destacada = bloque.imagen %}
-              {% break %}
+          {% if bloque.imagen and bloque.imagen.src %}
+            {% assign imagen_src = bloque.imagen.src %}
+            {% if bloque.imagen.alt %}
+              {% assign imagen_alt = bloque.imagen.alt %}
             {% endif %}
+            {% break %}
           {% endif %}
         {% endfor %}
+      {% endif %}
       <article id="{{ noticia.slug }}" class="news-card" data-ai-entry data-ai-type="noticias" data-ai-title="{{ noticia.titulo | escape }}" data-ai-summary="{{ noticia.resumen | strip_html | strip_newlines | escape }}" data-ai-url="{{ noticia_path | relative_url }}" data-ai-tags="{{ noticia.tag | escape }}">
-        {% if imagen_destacada %}
+        {% if imagen_src != '' %}
+        {% assign imagen_url = imagen_src %}
+        {% assign imagen_prefix = imagen_src | slice: 0,5 %}
+        {% if imagen_src contains '://' or imagen_prefix == 'data:' %}
+          {% assign imagen_url = imagen_src %}
+        {% else %}
+          {% assign imagen_url = imagen_src | relative_url %}
+        {% endif %}
         <div class="news-media">
-          <img src="{{ imagen_destacada.src }}" alt="{{ imagen_destacada.alt | default: noticia.titulo }}">
+          <img src="{{ imagen_url }}" alt="{{ imagen_alt | default: noticia.titulo | escape }}">
         </div>
         {% endif %}
         <div class="news-card-body">

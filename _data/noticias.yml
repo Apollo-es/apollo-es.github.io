@@ -5,6 +5,9 @@
   fecha: 2025-10-16
   resumen: "Revisamos las nuevas filtraciones del Teraleak que repasan los proyectos de Game Freak, desde Leyendas Pokémon: Z-A hasta la planeada Generación 11."
   introduccion: "Nuevos documentos internos del llamado «Teraleak» apuntan a cómo evolucionaron los proyectos de Pokémon tras la filtración masiva de 2023, incluyendo cambios de región, mecánicas descartadas y planes para un MMO multirregión."
+  portada:
+    src: "/static/noticias/teraleak-2024.svg"
+    alt: "Ilustración sintética del Teraleak 2024"
   quote:
     texto: "El motor Pokémon Engine X busca que cada isla procedimental se sienta única"
     autor: "@CentroLeaks"
@@ -17,9 +20,9 @@
   cuerpo:
     - titulo: "Resumen del segundo Teraleak"
       imagen:
-        src: "https://images.cpokemon.com/noticias/teraleak-2024-timeline.jpg"
-        alt: "Resumen visual de los proyectos de Pokémon filtrados hasta 2030"
-        pie: "Cronología elaborada por la comunidad hispana de Centro Pokémon con los hitos más importantes del Teraleak 2024."
+        src: "/static/noticias/teraleak-2024.svg"
+        alt: "Resumen visual del Teraleak con planes hasta 2030"
+        pie: "Arte generado por Apollo-es con los hitos clave del Teraleak 2024."
       parrafos:
         - "La comunidad hispana volvió a movilizarse tras la publicación de un nuevo lote de diapositivas internas que detalla el plan de Game Freak hasta 2030. Sitios como <strong>Centro Pokémon</strong> y <strong>Pokémon Alpha</strong> cruzaron la información con las filtraciones originales de 2023 para validar nombres en clave, presupuestos y decisiones de dirección."
         - "Fuera del ámbito hispano, insiders de <em>PokéBeach</em> y <em>VGC</em> corroboraron que el documento proviene de la misma auditoría legal que originó el primer Teraleak. Sus resúmenes en inglés ponen el foco en cómo el equipo de Tokio busca estabilizar el calendario anual, por lo que integramos y traducimos esos puntos para facilitar la lectura en español."
@@ -64,7 +67,10 @@
   tag: "Leyendas Pokémon: Z-A"
   fecha: 2025-10-16
   resumen: "Repasamos los últimos detalles oficiales y filtrados antes del debut de Leyendas: Z-A, que llega mañana con nuevas megas, eventos temporales y recompensas para veteranos."
-  introduccion: "A horas de que <strong>Pokémon Leyendas: Z-A</strong> aterrice en Nintendo Switch, la comunidad hispana y angloparlante comparte impresiones sobre la demo cerrada, los parches de día uno y las actividades que acompañarán el estreno." 
+  introduccion: "A horas de que <strong>Pokémon Leyendas: Z-A</strong> aterrice en Nintendo Switch, la comunidad hispana y angloparlante comparte impresiones sobre la demo cerrada, los parches de día uno y las actividades que acompañarán el estreno."
+  portada:
+    src: "/static/noticias/previa-leyendas-za.svg"
+    alt: "Arte previo al lanzamiento de Leyendas Pokémon: Z-A"
   quote:
     texto: "Nunca habíamos visto una Luminalia tan viva; la verticalidad cambia por completo la exploración"
     autor: "@CentroLeaks"
@@ -76,9 +82,9 @@
   cuerpo:
     - titulo: "Luminalia Art Déco cobra vida"
       imagen:
-        src: "https://images.cpokemon.com/noticias/leyendas-za-luminalia.jpg"
-        alt: "Luminalia iluminada de noche en Leyendas Pokémon: Z-A"
-        pie: "Captura compartida por usuarios de la prensa española que asistieron al evento previo de Nintendo Ibérica."
+        src: "/static/noticias/previa-leyendas-za.svg"
+        alt: "Luminalia estilizada con luces art déco"
+        pie: "Arte generado por Apollo-es inspirado en la ambientación de Leyendas Pokémon: Z-A."
       parrafos:
         - "Corresponsales de <strong>Revogamers</strong> y <strong>Areajugones</strong> relatan que la versión de review ya mostraba una ciudad dividida en distritos con horarios diferenciados. Del lado angloparlante, <em>GameXplain</em> describe cómo las líneas de monorraíl se sienten más orgánicas gracias a la densidad de NPCs."
         - "Nintendo confirmó a nuestra redacción que la versión minorista recibirá un parche 1.0.1 de 2,8 GB en el lanzamiento. Ese parche incorpora texturas de alta resolución para la zona del Sena Kalosiano y ajustes al popping de peatones, algo que preocupaba a los fans tras las demostraciones filtradas." 
@@ -120,7 +126,10 @@
   tag: "Comunidad"
   fecha: 2025-10-16
   resumen: "Analizamos la acogida masiva en redes, los eventos presenciales y el fanart que calienta motores para el lanzamiento de Leyendas Pokémon: Z-A."
-  introduccion: "Con el estreno a la vuelta de la esquina, las comunidades hispanas y globales dedicadas a Pokémon se han volcado a organizar watch parties, torneos y recopilatorios artísticos para celebrar la llegada de Leyendas: Z-A." 
+  introduccion: "Con el estreno a la vuelta de la esquina, las comunidades hispanas y globales dedicadas a Pokémon se han volcado a organizar watch parties, torneos y recopilatorios artísticos para celebrar la llegada de Leyendas: Z-A."
+  portada:
+    src: "/static/noticias/reaccion-fans-leyendas-za.svg"
+    alt: "Collage estilizado de la comunidad de Leyendas Pokémon: Z-A"
   quote:
     texto: "El hype por Kalos nunca fue tan grande: cada fanart supera al anterior"
     autor: "UniversoNintendo"
@@ -155,9 +164,9 @@
         - "Sin embargo, un sondeo rápido realizado por <strong>PokéUniverse LATAM</strong> indica que el 82% de los encuestados planea adquirir el juego en la primera semana, confiando en la mejora técnica y el soporte postlanzamiento prometido." 
     - titulo: "Galería destacada"
       imagen:
-        src: "https://images.cpokemon.com/noticias/leyendas-za-fanart-collage.jpg"
-        alt: "Collage de fanarts de Leyendas Pokémon: Z-A"
-        pie: "Selección curada por el equipo de Apollo-es con autorización de los artistas mencionados."
+        src: "/static/noticias/reaccion-fans-leyendas-za.svg"
+        alt: "Collage estilizado con fanart y cosplay de Leyendas Pokémon: Z-A"
+        pie: "Arte generado por Apollo-es que reúne a la comunidad y sus obras destacadas."
   fuentes:
     - nombre: "PokéFansMX"
       url: "https://twitter.com/PokeFansMX"
