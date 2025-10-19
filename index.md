@@ -186,8 +186,8 @@ keywords:
       {% for noticia in noticias %}
         {% if forloop.index0 >= 3 %}
           {% if forloop.index0 < 9 %}
-            {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
-            <a class="news-secondary-card" href="{{ item_path | relative_url }}">
+            {% capture noticia_path_secondary %}/noticias/{{ noticia.slug }}/{% endcapture %}
+            <a class="news-secondary-card" href="{{ noticia_path_secondary | strip | relative_url }}">
               <span class="news-secondary-tag">{{ noticia.tag }}</span>
               <span class="news-secondary-title">{{ noticia.titulo }}</span>
               <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
