@@ -177,7 +177,7 @@ keywords:
 
   {% if noticias.size > 3 %}
   <div class="news-secondary">
-    {% for noticia in noticias offset:3 limit:6 %}
+    {% for noticia in noticias limit: 6 offset: 3 %}
     {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
     <a class="news-secondary-card" href="{{ item_path | relative_url }}">
       <span class="news-secondary-tag">{{ noticia.tag }}</span>
