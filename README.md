@@ -55,7 +55,7 @@ Cuando se integre la autenticación, se podrá consumir la configuración desde 
 
 ## IA y experiencia de usuario
 
-Se añadió un widget “Apollo IA” que guía a los visitantes hacia juegos, guías, foros y noticias. El chatbot actual usa respuestas predefinidas pensadas para enlazar con la arquitectura del sitio, pero su interfaz y gancho están listas para conectarse a un backend con IA real o a Firebase Functions.
+El portal integra “Apollo AI”, un asistente semántico que funciona 100% en el navegador. Combina coincidencias por sinónimos, tendencias locales (almacenadas en `localStorage`) y enlaces contextuales al catálogo. Así los visitantes obtienen respuestas inmediatas sobre ROMs verificadas, guías, foros y noticias sin depender de un backend propio.
 
 ## Licencia
 
