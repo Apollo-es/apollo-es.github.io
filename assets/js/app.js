@@ -601,9 +601,42 @@ document.documentElement.classList.add('has-js');
   if(!toggle || !menu) return;
 
   const nav = toggle.closest('.nav');
+  const overlay = document.querySelector('[data-nav-overlay]');
+  const closeBtn = menu.querySelector('[data-nav-close]');
   const mq = window.matchMedia('(max-width: 768px)');
+  let lastFocus = null;
+  let focusables = [];
 
-  function setState(open){
+  function showOverlay(){
+    if(!overlay) return;
+    overlay.hidden = false;
+    requestAnimationFrame(() => overlay.classList.add('is-visible'));
+  }
+
+  function hideOverlay(){
+    if(!overlay || overlay.hidden) return;
+    overlay.classList.remove('is-visible');
+    window.setTimeout(() => {
+      overlay.hidden = true;
+    }, 240);
+  }
+
+  function updateFocusables(){
+    focusables = Array.from(menu.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+      .filter(node => !node.hasAttribute('aria-hidden') && !node.hidden);
+  }
+
+  function focusFirstLink(){
+    const candidate = menu.querySelector('a, button:not([data-nav-close])');
+    if(candidate){
+      candidate.focus();
+    }else if(closeBtn){
+      closeBtn.focus();
+    }
+  }
+
+  function setState(open, options){
+    options = options || {};
     if(open){
       menu.classList.add('open');
       menu.setAttribute('aria-hidden', 'false');
@@ -611,6 +644,10 @@ document.documentElement.classList.add('has-js');
       if(mq.matches){
         if(nav) nav.classList.add('menu-open');
         document.body.classList.add('no-scroll');
+        showOverlay();
+        menu.setAttribute('aria-modal', 'true');
+        updateFocusables();
+        focusFirstLink();
       }
     } else {
       menu.classList.remove('open');
@@ -618,37 +655,83 @@ document.documentElement.classList.add('has-js');
       toggle.setAttribute('aria-expanded', 'false');
       if(nav) nav.classList.remove('menu-open');
       document.body.classList.remove('no-scroll');
+      hideOverlay();
+      menu.removeAttribute('aria-modal');
+      if(mq.matches && options.focusToggle !== false){
+        (options.returnFocus && lastFocus ? lastFocus : toggle).focus();
+      }
     }
   }
 
   function applyResponsive(){
     if(mq.matches){
-      setState(false);
+      setState(false, {focusToggle: false});
+      hideOverlay();
+      menu.removeAttribute('aria-modal');
     } else {
       menu.classList.add('open');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'false');
       if(nav) nav.classList.remove('menu-open');
       document.body.classList.remove('no-scroll');
+      hideOverlay();
+      menu.removeAttribute('aria-modal');
     }
   }
 
   toggle.addEventListener('click', () => {
-    if(mq.matches){
-      const isOpen = menu.classList.contains('open');
-      setState(!isOpen);
+    if(!mq.matches) return;
+    const isOpen = menu.classList.contains('open');
+    if(isOpen){
+      setState(false);
+    } else {
+      lastFocus = document.activeElement;
+      setState(true);
     }
   });
 
+  if(closeBtn){
+    closeBtn.addEventListener('click', () => {
+      if(mq.matches){
+        setState(false);
+      }
+    });
+  }
+
+  if(overlay){
+    overlay.addEventListener('click', () => {
+      if(mq.matches){
+        setState(false);
+      }
+    });
+  }
+
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
     if(mq.matches){
-      setState(false);
+      setState(false, {focusToggle: false});
     }
   }));
 
   document.addEventListener('keydown', evt => {
-    if(evt.key === 'Escape' && mq.matches && menu.classList.contains('open')){
+    if(!mq.matches || !menu.classList.contains('open')) return;
+    if(evt.key === 'Escape'){
       setState(false);
+      return;
+    }
+    if(evt.key === 'Tab'){
+      updateFocusables();
+      if(!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if(evt.shiftKey){
+        if(document.activeElement === first){
+          evt.preventDefault();
+          last.focus();
+        }
+      } else if(document.activeElement === last){
+        evt.preventDefault();
+        first.focus();
+      }
     }
   });
 
