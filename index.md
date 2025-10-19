@@ -50,7 +50,7 @@ keywords:
         </form>
         <div class="chat-suggestions" data-ai-suggestions>
           <button type="button" data-ai-suggestion="roms switch">Roms Switch</button>
-          <button type="button" data-ai-suggestion="guías zelda">Guías Zelda</button>
+          <button type="button" data-ai-suggestion="guías pokemon">Guías Pokémon</button>
           <button type="button" data-ai-suggestion="foro comunidad">Foros</button>
           <button type="button" data-ai-suggestion="noticias filtraciones">Noticias</button>
         </div>
@@ -149,25 +149,25 @@ keywords:
       <ul>
         <li><a href="/juegos/pokemon-leyendas-za/">Pokémon Leyendas ZA</a> con parches y DLC.</li>
         <li><a href="/juegos/mario-kart-8-deluxe/">Mario Kart 8 Deluxe</a> listo para multiplayer.</li>
-        <li><a href="/juegos/sonic-frontiers/">Sonic Frontiers</a> con actualizaciones rápidas.</li>
+        <li><a href="/juegos/sonic-racing-crossworlds/">Sonic Racing: CrossWorlds</a> con temporadas y eventos.</li>
       </ul>
     </div>
     <div class="topic-card">
       <h3>Guías y foros en tendencia</h3>
-      <p>Nuestros foros reciben nuevas aportaciones cada día. Únete a los hilos más calientes.</p>
+      <p>Descubre los hilos y guías que más aportes están recibiendo esta semana.</p>
       <ul>
-        <li><a href="/guias/">Guías maestras de Zelda y Metroid</a> con mapas interactivos.</li>
-        <li><a href="/foros/">Foros oficiales Apollo</a> para soporte y quedadas online.</li>
-        <li><a href="/noticias/">Noticias curadas</a> sobre filtraciones, rom-hacking y más.</li>
+        <li><a href="/guias/pokemon-leyendas-za/">Pokémon Leyendas: Z-A</a> con avances verificados y walkthrough anticipado.</li>
+        <li><a href="/guias/pokemon-platino/">Pokémon Platino</a> con rutas clásicas y tabla de capturas.</li>
+        <li><a href="/foros/">Foros oficiales Apollo</a> para coordinar intercambios y soporte comunitario.</li>
       </ul>
     </div>
     <div class="topic-card">
-      <h3>Configuración pro de emuladores</h3>
-      <p>Optimizamos Yuzu, Ryujinx y RetroArch con perfiles exportables y descargas limpias.</p>
+      <h3>Recursos para emulación</h3>
+      <p>Mantenemos firmware, keys y herramientas útiles en un solo lugar mientras la comunidad comparte configuraciones.</p>
       <ul>
-        <li><a href="/emuladores/">Emuladores certificados</a> para Switch y 3DS.</li>
-        <li><a href="/apps/">Apps de soporte</a> para gestionar ROMs y bibliotecas.</li>
-        <li><a href="/videos/">Vídeos tutoriales</a> paso a paso con IA para subtítulos.</li>
+        <li><a href="/emuladores/nintendo-switch-keys-1901/">Keys y firmware 19.0.1</a> listos para Yuzu y Ryujinx.</li>
+        <li><a href="/emuladores/">Sección de emuladores</a> con descargas verificadas y avisos legales.</li>
+        <li><a href="/foros/">Soporte técnico de la comunidad</a> con perfiles y soluciones compartidas.</li>
       </ul>
     </div>
   </section>
@@ -212,7 +212,7 @@ keywords:
       "name": "¿Cómo acceder a guías y tutoriales paso a paso?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Visita la sección de guías donde recopilamos walkthroughs, builds y vídeos con subtítulos IA listos para compartir."
+        "text": "Visita la sección de guías donde recopilamos walkthroughs en desarrollo, cronologías retro y aportes verificados de la comunidad."
       }
     },
     {

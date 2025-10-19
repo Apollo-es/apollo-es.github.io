@@ -414,7 +414,11 @@ a:hover{opacity:.9}
 .guide-intro-copy{flex:1 1 360px;display:flex;flex-direction:column;gap:16px;padding:28px;border-radius:26px;background:var(--surface-panel);border:1px solid var(--surface-panel-border);box-shadow:var(--shadow-panel)}
 .guide-intro-copy p{margin:0;color:var(--body-soft);font-size:16px;line-height:1.7}
 .guide-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.guide-layout{display:grid;grid-template-columns:minmax(220px,280px) minmax(0,1fr);gap:32px;align-items:flex-start;margin:40px 0}
+.guide-content{display:flex;flex-direction:column;gap:48px}
 .guide-nav{flex:0 1 320px;display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:26px;background:var(--surface-card);border:1px solid var(--surface-card-border);box-shadow:var(--shadow-card);position:sticky;top:110px;height:max-content}
+.guide-nav-title{margin:0;font:600 16px/1.4 Orbitron,sans-serif;color:#eef3ff;display:flex;align-items:center;gap:10px}
+.guide-nav-title .ti{font-size:18px;color:#a5b4ff}
 .guide-nav-item{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:16px;border:1px solid rgba(124,92,255,.32);background:rgba(124,92,255,.12);color:#dfe4ff;font:600 14px/1.4 Inter,sans-serif;text-align:left;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
 .guide-nav-item .ti{font-size:18px;color:#a5b4ff}
 .guide-nav-item:hover{transform:translateY(-1px);box-shadow:0 16px 32px -24px rgba(124,92,255,.7)}
@@ -617,6 +621,9 @@ body:not(.is-staff) .report-panel{display:none}
 @media (max-width: 1024px){
   .forum-board{gap:28px}
   .forum-section{padding:22px}
+  .guide-layout{grid-template-columns:1fr}
+  .guide-layout .guide-nav{order:-1}
+  .guide-layout .guide-content{order:0}
   .guide-intro{flex-direction:column}
   .guide-nav{position:static;top:auto;width:100%}
   .guide-nav-item{width:100%}

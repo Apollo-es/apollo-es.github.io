@@ -25,13 +25,30 @@ hero:
       <a class="btn ghost" href="/guias/"><i class="ti ti-list"></i> Ver todas las guías</a>
     </div>
   </div>
-  <nav class="guide-nav" data-guide-index>
+</div>
+
+<div class="guide-layout">
+  <aside class="guide-nav" data-guide-index>
+    <h2 class="guide-nav-title"><i class="ti ti-list-details"></i> Índice de la guía</h2>
     <button type="button" class="guide-nav-item is-active" data-guide-target="#avance-verificado"><i class="ti ti-flag-check"></i> Avances verificados</button>
     <button type="button" class="guide-nav-item" data-guide-target="#rumores"><i class="ti ti-radar"></i> Rumores vigilados</button>
     <button type="button" class="guide-nav-item" data-guide-target="#recursos"><i class="ti ti-brain"></i> Recursos IA + comunidad</button>
-    <button type="button" class="guide-nav-item" data-guide-target="#walkthrough"><i class="ti ti-map"></i> Walkthrough</button>
-  </nav>
-</div>
+    <button type="button" class="guide-nav-item" data-guide-target="#walkthrough"><i class="ti ti-map"></i> Walkthrough anticipado</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#introduccion"><i class="ti ti-compass"></i> Introducción</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#pokemon-iniciales-y-mega-evoluciones"><i class="ti ti-flame"></i> Starters y Megas</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#pokemon-alfa-guia-completa-que-son-consejos-y-ubicaciones"><i class="ti ti-alert-circle"></i> Pokémon Alfa</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#mega-evolucion-como-funciona-y-lista-en-expansion"><i class="ti ti-hexagon"></i> Mega Evolución</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#pokemon-raros-ubicaciones-y-consejos-de-captura"><i class="ti ti-target-arrow"></i> Pokémon raros</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#formas-regionales-disponibles-y-obtencion"><i class="ti ti-world"></i> Formas regionales</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#colaboracion"><i class="ti ti-edit"></i> Colaboración</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#creditos-y-agradecimientos"><i class="ti ti-heart"></i> Créditos</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#mecanicas-confirmadas-y-rumoreadas"><i class="ti ti-rocket"></i> Mecánicas</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#equipos-recomendados-teoria"><i class="ti ti-users"></i> Equipos</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#preguntas-frecuentes"><i class="ti ti-help"></i> Preguntas frecuentes</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#mantente-informado"><i class="ti ti-bell"></i> Mantente informado</button>
+  </aside>
+
+  <div class="guide-content">
 
 ## Avances verificados {#avance-verificado}
 
@@ -100,19 +117,6 @@ hero:
 ## Walkthrough anticipado {#walkthrough}
 
 El esquema de misiones que encontrarás a continuación es un borrador colaborativo basado en la estructura típica de Leyendas y en los adelantos mostrados. Marcamos los tramos más probables y los dejaremos listos para contrastarlos con la versión final del juego.
-
-<details class="toc-interactive" open>
-<summary><i class="ti ti-sitemap"></i> Navegar misiones principales</summary>
-<ul>
-  <li><a href="#misiones-01-10-introduccion-primeros-rangos-desbloqueo-de-megaevolucion">Misiones 01–10: Introducción, primeros rangos, desbloqueo de Megaevolución</a></li>
-  <li><a href="#misiones-11-20-primeras-megas-rebeldes-team-mz-y-organizaciones">Misiones 11–20: Primeras Megas rebeldes, Team MZ y organizaciones</a></li>
-  <li><a href="#misiones-21-30-ascenso-de-rango-y-expansion-de-rogue-megas">Misiones 21–30: Ascenso de rango y expansión de Rogue Megas</a></li>
-  <li><a href="#misiones-31-40-final-del-rango-a-grisham-y-legendarios">Misiones 31–40: Final del rango A, Grisham y legendarios</a></li>
-  <li><a href="#misiones-41-42-final-del-juego-y-postgame">Misiones 41–42: Final del juego y postgame</a></li>
-  <li><a href="#guias-de-combates-de-ascenso-promotion-matches">Guías de Combates de Ascenso</a></li>
-  <li><a href="#notas-finales">Notas finales</a></li>
-</ul>
-</details>
 
 ### Misiones 01–10: Introducción, primeros rangos, desbloqueo de Megaevolución
 
@@ -376,28 +380,9 @@ El esquema de misiones que encontrarás a continuación es un borrador colaborat
 - Xerneas y Yveltal pueden recapturarse si escapan.
 - Tras el final, puedes seguir participando en Z‑A Royale Infinito.
 
-## Guía en desarrollo de Pokémon Legends: Z-A
+## Guía en desarrollo de Pokémon Legends: Z-A {#guia-colaborativa}
 
 Esta es una guía original y colaborativa para **Pokémon Legends: Z-A**, creada con nuestras propias palabras e inspirada en información pública. El objetivo es tener una guía más completa, organizada y actualizable, que pueda integrarse directamente en el repositorio de nuestra web.
-
-<details class="toc-interactive" open>
-<summary>Índice interactivo de la guía colaborativa</summary>
-<ul>
-  <li><a href="#introduccion">Introducción</a></li>
-  <li><a href="#informacion-general-del-juego">Información general del juego</a></li>
-  <li><a href="#ambientacion">Ambientación</a></li>
-  <li><a href="#estructura-de-la-guia-en-expansion">Estructura de la guía (en expansión)</a></li>
-  <li><a href="#pokemon-iniciales-y-mega-evoluciones">Pokémon Iniciales y Mega Evoluciones</a></li>
-  <li><a href="#pokemon-alfa-guia-completa-que-son-consejos-y-ubicaciones">Pokémon Alfa</a></li>
-  <li><a href="#actualizaciones-planeadas">Actualizaciones planeadas</a></li>
-  <li><a href="#evoluciones-por-intercambio-trade-evolutions-y-metodos-de-evolucion">Evoluciones por intercambio y métodos</a></li>
-  <li><a href="#mega-evolucion-como-funciona-y-lista-en-expansion">Mega Evolución</a></li>
-  <li><a href="#pokemon-raros-ubicaciones-y-consejos-de-captura">Pokémon raros</a></li>
-  <li><a href="#formas-regionales-disponibles-y-obtencion">Formas regionales</a></li>
-  <li><a href="#colaboracion">Colaboración</a></li>
-  <li><a href="#creditos-y-agradecimientos">Créditos y agradecimientos</a></li>
-</ul>
-</details>
 
 ### Introducción
 
@@ -629,84 +614,6 @@ Según la progresión de la historia y las ventajas de tipo:
 
 > 📌 *Nota*: Los niveles, movimientos y franjas horarias pueden variar según clima, estado de la ciudad y progreso de misiones. Seguiremos afinando esta sección conforme recopilemos más datos.
 
-### Actualizaciones planeadas
-
-| Fecha estimada | Sección | Descripción |
-| -------------- | ---------------- | --------------------------------------- |
-| Octubre 2025 | Base de la guía | Estructura general y primeras secciones |
-| Noviembre 2025 | Pokémon y zonas | Pokedex inicial y mapas interactivos |
-| Diciembre 2025 | Mega Evoluciones | Listado detallado y builds |
-| Enero 2026 | Walkthrough | Guía paso a paso de la historia |
-| Febrero 2026 | Eventos DLC | Mega Dimension y nuevas Megas |
-
-### Evoluciones por intercambio (Trade Evolutions) y métodos de evolución
-
-A continuación reunimos todas las evoluciones por intercambio conocidas y un repaso claro de cómo intercambiar y qué otros métodos de evolución existen en Legends: Z‑A. Texto 100% original, basado en información pública.
-
-#### 🔗 Evoluciones por intercambio directo (sin objeto)
-
-| Pre‑evolución | Evoluciona a | Nota |
-| ----------------------------- | ------------------------ | ------------------------------------------------------------ |
-| Kadabra | Alakazam | Intercambiar en cualquier momento tras evolucionar a Kadabra |
-| Machoke | Machamp | Intercambio clásico |
-| Haunter | Gengar | Intercambio clásico |
-| Pumpkaboo (cualquier tamaño)* | Gourgeist (mismo tamaño) | Evoluciona al intercambiar |
-| Phantump | Trevenant | Intercambio clásico |
-
-> *Los tamaños de Pumpkaboo (Small/Average/Large/Super) se mantienen al evolucionar.
-
-#### 🎁 Evoluciones por intercambio con objeto equipado
-
-| Pre‑evolución | Evoluciona a | Objeto que debe llevar |
-| ------------- | ------------ | ---------------------- |
-| Swirlix | Slurpuff | **Whipped Dream** |
-| Spritzee | Aromatisse | **Sachet** |
-| Scyther | Scizor | **Metal Coat** |
-| Slowpoke | Slowking | **King's Rock** |
-| Onix | Steelix | **Metal Coat** |
-
-> El objeto se consume al completar la evolución por intercambio.
-
-#### 🕹️ Cómo intercambiar en Legends: Z‑A
-
-1. Avanza la historia hasta **Misión Principal 3: “Una nueva vida en Luminose City”**.
-2. Abre el menú **Link Play → Link Trade**.
-3. Elige **Código de Enlace** para amigos o emparejamiento online para buscar jugadores.
-4. Al finalizar el intercambio, los Pokémon con requisito de trade evolucionan automáticamente si cumplen las condiciones (y llevan el objeto cuando sea necesario).
-
-> Tip: si juegas en solitario, publica tu solicitud en tablones de intercambio de la comunidad o en tu propio foro.
-
-#### 🧬 Métodos de evolución (resumen práctico)
-
-- **Subir de nivel:** muchas líneas evolucionan al alcanzar un nivel fijo. En Legends, debes confirmar la evolución manualmente desde el menú cuando aparezca la flecha “↑” en el icono del Pokémon.
-- **Piedras evolutivas/objetos:** aplica directamente (p. ej., Piedra Hoja para Leafeon, Piedra Trueno para Raichu/Heliolisk, Piedra Agua para Starmie/Vaporeon…).
-- **Amistad elevada:** evoluciona al subir de nivel con amistad alta (Ej.: Pichu→Pikachu, Eevee→Espeon/Umbreon según hora).
-- **Hora del día / clima:** algunas líneas requieren día/noche o condiciones como lluvia (p. ej., Sliggoo→Goodra bajo lluvia).
-- **Condición especial:** requisitos únicos (p. ej., Inkay→Malamar sosteniendo la consola invertida al subir de nivel; Pancham→Pangoro con un tipo Siniestro en el equipo al nivel 32).
-- **Intercambio directo o con objeto:** ver tablas de arriba.
-
-#### 📋 Ejemplos de líneas de evolución (selección)
-
-> Lista breve a modo de referencia rápida. Iremos ampliando conforme validemos más datos.
-
-- **Starters Johto/Unova**:
-  - Chikorita → Bayleef (16) → Meganium (32)
-  - Totodile → Croconaw (18) → Feraligatr (30)
-  - Tepig → Pignite (17) → Emboar (36)
-- **Aves y bichos tempranos**:
-  - Pidgey (18) → Pidgeotto (36) → Pidgeot
-  - Scatterbug (9) → Spewpa (12) → Vivillon
-  - Weedle (7) → Kakuna (10) → Beedrill
-- **Piedras/amistad**:
-  - Staryu → **Starmie** (Piedra Agua)
-  - Budew → **Roselia** (amistad de día) → **Roserade** (Piedra Día/Shiny)
-  - Eevee → Vaporeon/Jolteon/Flareon (piedras) / Espeon (amistad de día) / Umbreon (amistad de noche) / Leafeon (Piedra Hoja) / Glaceon (Piedra Hielo) / Sylveon (mov. Hada + afecto alto)
-- **Intercambio y objetos**:
-  - Abra (16) → Kadabra → **Alakazam** (intercambio)
-  - Machop (28) → Machoke → **Machamp** (intercambio)
-  - Onix → **Steelix** (intercambio con **Metal Coat**)
-  - Slowpoke → **Slowking** (intercambio con **King’s Rock**)
-
 ### Mega Evolución (cómo funciona y lista en expansión)
 
 - Necesitas una **Keystone** cargada y que tu Pokémon lleve su **Mega Piedra**.
@@ -872,23 +779,6 @@ Los insiders hablan de **raids urbanas** con hasta cuatro jugadores, donde uno a
 | Soporte | Klefki | Manipula megaenergía y crea escudos. | Teorizado por Pokéxperto según el Teraleak. |
 | Ataque | Talonflame | Cobertura aérea y velocidad en persecuciones. | Coincide con los desafíos contrarreloj filtrados. |
 
-## Recursos útiles
-
-### Mapas y referencias
-
-- [Plano interactivo de Luminalia (Centro Pokémon)](https://www.cpokemon.com/pokedex/luminalia-interactiva)
-- [Galería de renders oficiales](https://www.pokemon.com/es/noticias-oficiales/)
-- [Resumen de filtraciones traducidas](https://universo-nintendo.com.mx/)
-- [Compendio de rumores y confirmaciones (Game8, traducido)](https://game8.co/games/Pokemon-Legends-Z-A)
-
-### Herramientas creadas por la comunidad
-
-| Herramienta | Autor | Descripción |
-| --- | --- | --- |
-| Calculadora de megaenergía | @LugiaData (España) | Estima el número de módulos necesarios por rama. |
-| Generador de rutas urbanas | Equipo Apollo-es | Basado en capas GIS de la Kalos original combinadas con datos del Teraleak. |
-| Tracker de raids | @PokeRaidNet (EN → ES) | Traducimos los avisos de raids semanales al castellano. |
-
 ## Preguntas frecuentes
 
 **¿Se podrá trasladar Pokémon de HOME?**  
@@ -903,3 +793,6 @@ El modo Wind/Wave parece un proyecto separado (probablemente F2P). Algunas misio
 ## Mantente informado
 
 Añadiremos secciones para coleccionables, misiones secundarias, estrategias competitivas y tablas de objetos en cuanto se publique material verificable. Si quieres contribuir, escríbenos en el foro de guías o comparte documentación desde la pestaña **Enviar recurso**.
+
+  </div>
+</div>
