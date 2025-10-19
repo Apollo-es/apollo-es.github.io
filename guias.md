@@ -2,18 +2,18 @@
 layout: default
 title: Guías
 permalink: /guias/
-description: "Plantillas y recopilaciones para crear guías de videojuegos y emuladores en Apollo-es."
+description: "Colección de guías y cronologías elaboradas por la comunidad Apollo-es."
 keywords:
   - "guias pokemon"
   - "walkthrough apollo"
-  - "tutoriales emuladores"
-  - "plantilla guias"
+  - "historia videojuegos"
+  - "pokemon leyendas za"
 ---
 
 {% assign grupos = site.data.guias %}
 
 <h1>Guías</h1>
-<p class="lead">Aquí reunimos las plantillas y walkthroughs que iremos publicando. Empieza duplicando la plantilla base y completa las secciones con tus propios aportes. Las portadas se rellenan automáticamente si añades la imagen en <code>static/juegos</code> o <code>static/guias</code>.</p>
+<p class="lead">Explora nuestras guías activas: walkthroughs de Pokémon, cronologías retro y reportes especiales creados por la comunidad. Actualizamos cada ficha en cuanto recibimos nuevos aportes.</p>
 
 <div class="guides-groups">
   {% for grupo in grupos %}
