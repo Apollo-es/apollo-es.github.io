@@ -1455,3 +1455,58 @@ function showReportToast(message){
   });
 })();
 
+// --- Índice interactivo en guías ---
+(function(){
+  const nav = document.querySelector('[data-guide-index]');
+  if(!nav) return;
+
+  const sections = Array.from(nav.querySelectorAll('[data-guide-target]'))
+    .map(button => {
+      const selector = button.getAttribute('data-guide-target');
+      if(!selector) return null;
+      const target = document.querySelector(selector);
+      if(!target) return null;
+      const id = target.id || selector.replace(/^#/, '');
+      return { button, target, selector, id };
+    })
+    .filter(Boolean);
+
+  if(!sections.length) return;
+
+  function setActive(id){
+    sections.forEach(section => {
+      const match = section.id === id || section.selector === `#${id}`;
+      section.button.classList.toggle('is-active', match);
+    });
+  }
+
+  sections.forEach(section => {
+    section.button.addEventListener('click', (event) => {
+      event.preventDefault();
+      section.target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActive(section.id);
+      if(typeof history !== 'undefined' && typeof history.replaceState === 'function'){
+        history.replaceState(null, '', `#${section.id}`);
+      }
+    });
+  });
+
+  const initial = (typeof location !== 'undefined' && location.hash) ? location.hash.replace(/^#/, '') : sections[0].id;
+  setActive(initial);
+
+  if(typeof IntersectionObserver === 'function'){
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          setActive(entry.target.id);
+        }
+      });
+    }, {
+      rootMargin: '-45% 0px -45% 0px',
+      threshold: 0.2
+    });
+
+    sections.forEach(section => observer.observe(section.target));
+  }
+})();
+

@@ -14,9 +14,9 @@ keywords:
     <h1>Bienvenido a <strong>Apollo-es</strong></h1>
     <p>Somos el centro <strong>#1 en español</strong> para ROMs verificados, guías expertas, foros de soporte y noticias gaming con la chispa de la IA. Descarga, aprende y conecta sin ruido.</p>
     <ul class="hero-highlights">
-      <li><i class="ti ti-star"></i> ROMs y parches listos para <strong>Nintendo Switch, 3DS y retro</strong>.</li>
-      <li><i class="ti ti-message-chatbot"></i> Próxima integración con <strong>Firebase</strong> y nuestro asistente Apollo IA.</li>
-      <li><i class="ti ti-users"></i> Comunidad activa con foros, guías y noticias diarias.</li>
+      <li><i class="ti ti-sparkles"></i> Buscador semántico con <strong>Apollo AI</strong> para ROMs, guías y mods curados.</li>
+      <li><i class="ti ti-graph"></i> Recomendaciones dinámicas según tendencias de la comunidad y datos de descarga.</li>
+      <li><i class="ti ti-device-gamepad-2"></i> Configuraciones pro optimizadas y listas para emuladores next-gen.</li>
     </ul>
     <div class="search">
       <input id="q" type="search" placeholder="Buscar juegos, vídeos, apps, guías o foros...">
@@ -24,24 +24,24 @@ keywords:
     </div>
   </div>
 
-  <section class="home-ai" id="apollo-ia">
+  <section class="home-ai" id="apollo-ai">
     <div class="home-ai-copy">
-      <h2>Conoce a Apollo IA</h2>
-      <p>Estamos construyendo un asistente inteligente que se integra con Firebase para que tus búsquedas de ROMs, guías, parches o debates sean instantáneas. Adelántate y pruébalo en versión previa.</p>
+      <h2>Conoce a Apollo AI</h2>
+      <p>Apollo AI mezcla embeddings locales, heurísticas semánticas y los datos curados de Apollo-es para responder con lenguaje natural. Funciona 100% en el navegador, sin enviar tus consultas a servidores externos.</p>
       <ul class="ai-perks">
-        <li><i class="ti ti-target"></i> Respuestas guiadas hacia descargas verificadas, guías paso a paso y debates activos.</li>
-        <li><i class="ti ti-robot"></i> Diseñado para integrarse con cuentas y progresos guardados cuando activemos Firebase Auth.</li>
-        <li><i class="ti ti-shield-lock"></i> Pensado con privacidad first: controlaremos sesiones y reportes en Firestore.</li>
+        <li><i class="ti ti-target"></i> Matching semántico afinado para detectar géneros, sagas y estilos de juego en segundos.</li>
+        <li><i class="ti ti-sparkles"></i> Aprende de tus consultas para crear atajos personalizados guardados localmente.</li>
+        <li><i class="ti ti-shield-lock"></i> Moderación y filtros anti-spam ejecutados en tu dispositivo para mantener tus datos privados.</li>
       </ul>
     </div>
     <div class="home-ai-widget" data-ai-widget>
       <header class="widget-header">
-        <span class="widget-eyebrow">Apollo IA (beta)</span>
+        <span class="widget-eyebrow">Apollo AI (beta)</span>
         <h3>¿En qué podemos ayudarte?</h3>
       </header>
       <div class="widget-body">
         <div class="chat-window" data-ai-messages>
-          <div class="chat-message bot">Hola, soy Apollo IA. Pregunta por <strong>roms</strong>, <strong>guías</strong>, <strong>foros</strong> o <strong>noticias</strong> y te llevo allí.</div>
+          <div class="chat-message bot">Hola, soy Apollo AI. Pregunta por <strong>roms</strong>, <strong>guías</strong>, <strong>foros</strong> o <strong>noticias</strong> y te llevo allí.</div>
         </div>
         <form class="chat-form" data-ai-form>
           <label class="sr-only" for="apollo-ai-input">Escribe tu consulta</label>
@@ -53,6 +53,10 @@ keywords:
           <button type="button" data-ai-suggestion="guías zelda">Guías Zelda</button>
           <button type="button" data-ai-suggestion="foro comunidad">Foros</button>
           <button type="button" data-ai-suggestion="noticias filtraciones">Noticias</button>
+        </div>
+        <div class="chat-trending" data-ai-trending hidden>
+          <p class="chat-trending-title"><i class="ti ti-trending-up"></i> Consultas populares generadas por Apollo AI</p>
+          <div class="chat-trending-list" data-ai-trending-list></div>
         </div>
       </div>
     </div>
@@ -138,28 +142,6 @@ keywords:
 </section>
 {% endif %}
 
-  <section class="home-featured">
-    <header class="home-featured-header">
-      <h2>Juegos destacados</h2>
-      <p>Nuestra selección de imprescindibles para Nintendo Switch y los lanzamientos que la comunidad sigue de cerca.</p>
-    </header>
-
-    {% assign juegos = site.data.items | where_exp: "item", "item.categoria contains 'juegos'" %}
-    {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
-    {% assign destacados_ids = "pokemon-leyendas-za|mario-kart-8-deluxe|animal-crossing-new-horizons|super-mario-galaxy|super-mario-galaxy-2|sonic-frontiers" | split: "|" %}
-    {% assign destacados_count = 0 %}
-    <div class="grid home-featured-grid" data-catalog-grid>
-      {% for destacado_id in destacados_ids %}
-        {% assign juego = visibles | where: 'id', destacado_id | first %}
-        {% if juego %}
-          {% assign destacados_count = destacados_count | plus: 1 %}
-          {% include card.html item=juego %}
-        {% endif %}
-      {% endfor %}
-    </div>
-    <p class="catalog-empty" data-catalog-empty {% if destacados_count > 0 %}hidden{% endif %}>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
-  </section>
-
   <section class="home-topics">
     <div class="topic-card">
       <h3>ROMs mejor posicionadas</h3>
@@ -238,7 +220,7 @@ keywords:
       "name": "¿Hay foros y comunidad para resolver dudas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, contamos con foros moderados y un futuro chatbot con Firebase que te conectará rápidamente con hilos activos y recursos oficiales."
+        "text": "Sí, contamos con foros moderados y con Apollo AI, que sugiere hilos activos, guías y descargas verificadas según tu consulta."
       }
     }
   ]

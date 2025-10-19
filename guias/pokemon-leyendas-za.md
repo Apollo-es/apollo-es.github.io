@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Guía avanzada de Pokémon Leyendas: Z-A"
+title: "Guía en desarrollo de Pokémon Leyendas: Z-A"
 permalink: /guias/pokemon-leyendas-za/
 description: "Recopilación viva de rumores confirmados, recursos de la comunidad hispana y estrategias tempranas para Pokémon Leyendas: Z-A, con notas traducidas del fandom internacional."
 keywords:
@@ -12,73 +12,97 @@ hero:
   title: "Pokémon Leyendas: Z-A"
   subtitle: "Explora la Kalos premoderna con rutas urbanas, megaenergía y eventos comunitarios"
 ---
+# Guía en desarrollo de Pokémon Leyendas: Z-A
 
-# Guía avanzada de Pokémon Leyendas: Z-A
+> Guía viva creada con aportes de la comunidad hispana, curada para separar datos confirmados, rumores vigilados y estrategias en progreso.
 
-La siguiente guía es un documento vivo alimentado por la comunidad hispana de Apollo-es, con aportes verificados de foros como **Centro Pokémon**, **Pokéxperto** y **Universo Nintendo**. Complementamos la información con traducciones propias de artículos en inglés de **PokéJungle**, **Serebii** y reportes del *Teraleak 2024*. Hasta que Game Freak publique notas oficiales, tratamos cada dato con un enfoque doble: lo confirmado en medios oficiales y lo filtrado por insiders confiables. 
+<div class="guide-intro">
+  <div class="guide-intro-copy">
+    <p>El objetivo de esta guía es centralizar todo lo que sabemos sobre <strong>Pokémon Leyendas: Z-A</strong> antes del lanzamiento. Recopilamos notas oficiales, traducciones de medios de confianza y debates técnicos del fandom.</p>
+    <p>Cuando Game Freak publique nueva información, actualizaremos los apartados y resaltaremos los cambios en el índice interactivo. Mientras tanto, puedes explorar el plan de walkthrough anticipado o saltar a los recursos recomendados.</p>
+    <div class="guide-actions">
+      <a class="btn primary" href="#walkthrough"><i class="ti ti-map"></i> Ir al walkthrough anticipado</a>
+      <a class="btn ghost" href="/guias/"><i class="ti ti-list"></i> Ver todas las guías</a>
+    </div>
+  </div>
+  <nav class="guide-nav" data-guide-index>
+    <button type="button" class="guide-nav-item is-active" data-guide-target="#avance-verificado"><i class="ti ti-flag-check"></i> Avances verificados</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#rumores"><i class="ti ti-radar"></i> Rumores vigilados</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#recursos"><i class="ti ti-brain"></i> Recursos IA + comunidad</button>
+    <button type="button" class="guide-nav-item" data-guide-target="#walkthrough"><i class="ti ti-map"></i> Walkthrough</button>
+  </nav>
+</div>
 
-> **Importante:** Actualizaremos este contenido tras cada tráiler, adelanto en eventos como Pokémon Presents y las filtraciones moderadas por la comunidad. Marca la guía para recibir cambios frecuentes.
+## Avances verificados {#avance-verificado}
 
-![Vista nocturna de Luminalia en Pokémon Leyendas: Z-A](https://images.cpokemon.com/noticias/leyendas-za-luminalia-nocturna.jpg)
+<div class="guide-grid">
+  <article class="guide-card guide-card--inline">
+    <h3><i class="ti ti-building"></i> Lo oficial al día</h3>
+    <ul>
+      <li>Regreso a <strong>Ciudad Luminalia</strong> como hub principal con reformas urbanas supervisadas por el Bureau de Reconstrucción.</li>
+      <li>Ambientación previa a <em>Pokémon X/Y</em>, con énfasis en revitalizar distritos y conservar patrimonio histórico.</li>
+      <li>Megaevolución confirmada como núcleo jugable, con nuevas formas energéticas vinculadas a módulos urbanos.</li>
+      <li>Lanzamiento previsto para <strong>2025</strong> en Nintendo Switch, con mejoras previstas para el hardware sucesor.</li>
+    </ul>
+  </article>
+  <article class="guide-card guide-card--inline">
+    <h3><i class="ti ti-users-group"></i> Lectura de la comunidad</h3>
+    <ul>
+      <li>Colaboración directa con foros como Centro Pokémon, Pokéxperto y Universo Nintendo para validar filtraciones.</li>
+      <li>Comparativas de trailers y comunicados oficiales para detectar cambios entre builds.</li>
+      <li>Seguimiento de entrevistas y redes oficiales para actualizar la cronología y los sistemas de progreso.</li>
+    </ul>
+  </article>
+</div>
 
-## Resumen rápido
+## Rumores vigilados {#rumores}
 
-| Dato | Estado | Fuente |
-| --- | --- | --- |
-| Región principal | Kalos, centrada en Ciudad Luminalia | Tráiler oficial (Pokémon Presents 2024) |
-| Período temporal | Reconstrucción urbanística previa a XY | Documentos Teraleak traducidos por Centro Pokémon |
-| Mecánica estrella | Megaenergía renovada con módulos urbanos | Informe Teraleak 2024 + comunicado TPCi |
-| Compañeros iniciales | Chespin, Fennekin, Froakie (rumor) | Insiders de PokéJungle (pendiente de confirmación) |
-| Plataformas | Nintendo Switch / Switch sucesora | Declaración de The Pokémon Company |
+<div class="guide-grid">
+  <article class="guide-card guide-card--inline">
+    <h3><i class="ti ti-alert-triangle"></i> Qué tratamos con cautela</h3>
+    <ul>
+      <li>Listas de starters alternativos y megaevoluciones inéditas que aún no han recibido confirmación oficial.</li>
+      <li>Planes de cooperativo extendido y raids urbanas que provienen de traducciones de Teraleak 2024.</li>
+      <li>Posibles ediciones coleccionista con extras físicos: mantenemos la nota pero esperamos anuncio de TPCi.</li>
+    </ul>
+  </article>
+  <article class="guide-card guide-card--inline">
+    <h3><i class="ti ti-clipboard-text"></i> Cómo etiquetamos los rumores</h3>
+    <ul>
+      <li><strong>Verificado</strong>: aparece en medios oficiales o notas de prensa.</li>
+      <li><strong>Alta probabilidad</strong>: coincide con insiders con historial positivo.</li>
+      <li><strong>En observación</strong>: requiere más fuentes; lo mantenemos separado del walkthrough principal.</li>
+    </ul>
+  </article>
+</div>
 
-## Fecha de lanzamiento, ediciones y bonificaciones
+## Recursos IA + comunidad {#recursos}
 
-- **Ventana prevista:** primer trimestre de **2025**, con reservas disponibles desde finales de 2024 según los listados regionales filtrados y recogidos por Game8.
-- **Plataformas confirmadas:** la web oficial mantiene Nintendo Switch como plataforma base; las traducciones de Game8 señalan compatibilidad mejorada con el hardware sucesor gracias al modo "Desarrollo Urbano" que aprovecha mejor CPU y SSD.
-- **Ediciones previstas:** Game8 detalla una Edición Estándar (cartucho/digital) y una Edición Coleccionista con steelbook, libro de arte y figura de Mega Lucario con motivos de Luminalia.
-- **Bonificaciones de reserva globales:** Pikachu urbano con movimiento especial *Graffiti Voltio*, set de ropa temática para el protagonista y acceso temprano a la montura **Skiddo de reparto**.
+<div class="guide-grid guide-grid--compact">
+  <article class="guide-card guide-card--inline">
+    <h3><i class="ti ti-sparkles"></i> Qué hace Apollo AI por ti</h3>
+    <ul>
+      <li>Resúmenes instantáneos de noticias y filtraciones en lenguaje natural.</li>
+      <li>Atajos personalizados según tus consultas recientes, guardados localmente.</li>
+      <li>Derivación directa a foros y guías relacionadas sin salir de la página.</li>
+    </ul>
+  </article>
+  <article class="guide-card guide-card--inline">
+    <h3><i class="ti ti-compass"></i> Enlaces clave</h3>
+    <ul>
+      <li><a href="/juegos/pokemon-leyendas-za/">Ficha de descargas y parches</a> (actualizada con cada build filtrada).</li>
+      <li><a href="/noticias/">Sala de noticias</a> con coberturas post-evento y resúmenes de Apollo AI.</li>
+      <li><a href="/foros/">Foro dedicado</a> para compartir estrategias y traducciones en curso.</li>
+    </ul>
+  </article>
+</div>
 
-| Edición | Contenido físico | Contenido digital | Notas |
-| --- | --- | --- | --- |
-| Estándar | Cartucho / código digital | Pases para eventos temporales y 30 Caramelos Raros | Incluye el DLC gratuito "Cuadernos del Arquitecto" al lanzarse el primer parche. |
-| Coleccionista | Steelbook, figura Mega Lucario, mapa de Luminalia | Conjunto cosmético "Ingeniero Neon", música digital y acceso anticipado de 72 h | Distribución limitada en Pokémon Center y tiendas seleccionadas. |
+## Walkthrough anticipado {#walkthrough}
 
-## Personajes, facciones y Pokémon confirmados
-
-### Reparto principal según Game8
-
-| Personaje | Rol | Resumen adaptado |
-| --- | --- | --- |
-| **Protagonista** (personalizable) | Arquitecto asistente del Bureau de Reconstrucción | Debe equilibrar la restauración histórica y la expansión tecnológica de Luminalia. |
-| **Profesor Platan** (joven) | Mentor de megaenergía urbana | Coordina la investigación de megaformas y supervisa los módulos energéticos. |
-| **Héroe/ Heroína Rival** | Ingeniero del Equipo Neon | Retador recurrente que aplica gadgets urbanos en combate. |
-| **AZ** | Figura legendaria | Aparece como mediador entre Guardianes de Kalos y el Bureau, aportando lore sobre el arma definitiva. |
-| **Siebold** | Mentor de los Guardianes | Representa la facción tradicionalista opuesta a la reconstrucción acelerada. |
-
-### Pokémon y formas destacadas
-
-| Categoría | Detalle | Comentario |
-| --- | --- | --- |
-| Iniciales | Chespin, Fennekin y Froakie (pendiente de confirmación oficial) | Game8 cita la guía de prensa que menciona la "tríada original de Kalos". |
-| Nuevas formas urbanas | Helioptile (Forma Metro), Klefki (Forma Arsenal), Pangoro (Forma Barrial) | Diseños centrados en herramientas de obra y grafitis energéticos. |
-| Megaevoluciones inéditas | Mega Greninja Urbano, Mega Aegislash Citadela | Las fichas traducidas indican habilidades renovadas ligadas al entorno urbano. |
-| Monturas | Skiddo de reparto, Drifblim urbano, Talonflame aéreo | Listadas en Game8 como transporte entre distritos verticales. |
-
-## Calendario de cobertura
-
-| Fase | Fecha estimada | Contenido que añadiremos |
-| --- | --- | --- |
-| Presentación del gameplay | Agosto 2024 | Análisis cuadro a cuadro del tráiler con rutas, edificios y megaformas vistas. |
-| Demo cerrada para prensa | Noviembre 2024 | Listado de misiones de historia temprana y nuevas monturas urbanas. |
-| Lanzamiento global | Primer trimestre 2025 | Walkthrough completo, guías de coleccionables y configuraciones recomendadas. |
-| Eventos postlanzamiento | Abril-junio 2025 | Raid guides de megaevoluciones dinámicas y rotaciones MMO del modo cooperativo. |
-
-## Historia Principal — Guía Completa (Walkthrough)
-
-Esta es la guía de historia principal de **Pokémon Legends: Z-A**, organizada por misiones numeradas para un progreso fácil de seguir. Aquí encontrarás la descripción de cada misión, batallas importantes, Pokémon recomendados, desbloqueos clave y recompensas. La sección es extensa, así que recomendamos usar el índice para saltar directamente al tramo que necesites.
+El esquema de misiones que encontrarás a continuación es un borrador colaborativo basado en la estructura típica de Leyendas y en los adelantos mostrados. Marcamos los tramos más probables y los dejaremos listos para contrastarlos con la versión final del juego.
 
 <details class="toc-interactive" open>
-<summary>Índice de misiones principales</summary>
+<summary><i class="ti ti-sitemap"></i> Navegar misiones principales</summary>
 <ul>
   <li><a href="#misiones-01-10-introduccion-primeros-rangos-desbloqueo-de-megaevolucion">Misiones 01–10: Introducción, primeros rangos, desbloqueo de Megaevolución</a></li>
   <li><a href="#misiones-11-20-primeras-megas-rebeldes-team-mz-y-organizaciones">Misiones 11–20: Primeras Megas rebeldes, Team MZ y organizaciones</a></li>
