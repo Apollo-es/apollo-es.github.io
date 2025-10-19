@@ -321,7 +321,7 @@ keywords:
   </section>
 </div>
 
-{% assign ai_resources = site.data.items | where_exp: "item", "item.oculto != true" %}
+{% assign ai_resources = site.data.items | where_exp: 'item', 'item.oculto != true' %}
 {% assign ai_news = site.data.noticias %}
 {% assign ai_forums = site.data.foros %}
 {% assign ai_guides_raw = site.data.guias %}
