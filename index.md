@@ -82,7 +82,7 @@ keywords:
     <p>Empieza por las fichas, guías y herramientas que la comunidad consulta ahora mismo.</p>
   </header>
   <div class="featured-grid" data-ai-sync="resources">
-    {% assign destacados_recursos = site.data.items | where_exp: 'item', 'item.oculto != true' %}
+    {% assign destacados_recursos = site.data.items | where_exp: "item", "item.oculto != true" %}
     {% for recurso in destacados_recursos limit:3 %}
       {% assign categoria = recurso.categoria | first | default: '' %}
       {% assign base_path = '/' | append: categoria | append: '/' %}
@@ -199,7 +199,7 @@ keywords:
         <p>Descubre lo que más se descarga ahora mismo para <strong>Switch</strong>, <strong>retro</strong> y <strong>PC</strong>.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign roms_destacadas = site.data.items | where_exp: 'item', 'item.categoria contains "juegos" and item.oculto != true' %}
+        {% assign roms_destacadas = site.data.items | where_exp: "item", "item.categoria contains 'juegos' and item.oculto != true" %}
         {% for rom in roms_destacadas limit:3 %}
           {% assign rom_url = '/juegos/' | append: rom.id | append: '/' %}
           <article class="topic-tile" data-ai-entry data-ai-type="juegos" data-ai-title="{{ rom.titulo | escape }}" data-ai-summary="{{ rom.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ rom_url | relative_url }}" data-ai-tags="{{ rom.hashtags | join: ' ' | escape }}">
@@ -272,8 +272,8 @@ keywords:
         <p>Encuentra firmware, keys y herramientas que auditamos junto a la comunidad técnica.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign recursos_candidatos = site.data.items | where_exp: 'item', 'item.oculto != true' %}
-        {% assign recursos_candidatos = recursos_candidatos | where_exp: 'item', 'item.categoria contains "emuladores" or item.categoria contains "apps"' %}
+        {% assign recursos_candidatos = site.data.items | where_exp: "item", "item.oculto != true" %}
+        {% assign recursos_candidatos = recursos_candidatos | where_exp: "item", "item.categoria contains 'emuladores' or item.categoria contains 'apps'" %}
         {% for recurso in recursos_candidatos limit:3 %}
           {% assign recurso_categoria = recurso.categoria | first | default: 'emuladores' %}
           {% assign recurso_base = '/' | append: recurso_categoria | append: '/' %}
