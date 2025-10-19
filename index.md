@@ -82,7 +82,7 @@ keywords:
     <p>Empieza por las fichas, guías y herramientas que la comunidad consulta ahora mismo.</p>
   </header>
   <div class="featured-grid" data-ai-sync="resources">
-    {% assign destacados_recursos = site.data.items | where_exp: 'item', 'item.oculto != true' | slice: 0, 3 %}
+    {% assign destacados_recursos = site.data.items | where_exp: "item", "item.oculto != true" | slice: 0, 3 %}
     {% for recurso in destacados_recursos %}
       {% assign categoria = recurso.categoria | first | default: '' %}
       {% assign base_path = '/' | append: categoria | append: '/' %}
@@ -197,7 +197,7 @@ keywords:
         <p>Descubre lo que más se descarga ahora mismo para <strong>Switch</strong>, <strong>retro</strong> y <strong>PC</strong>.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign roms_destacadas = site.data.items | where_exp: 'item', 'item.categoria contains "juegos" and item.oculto != true' | slice: 0, 3 %}
+        {% assign roms_destacadas = site.data.items | where_exp: "item", "item.categoria contains 'juegos' and item.oculto != true" | slice: 0, 3 %}
         {% for rom in roms_destacadas %}
         {% assign rom_url = '/juegos/' | append: rom.id | append: '/' %}
         <article class="topic-tile" data-ai-entry data-ai-type="juegos" data-ai-title="{{ rom.titulo | escape }}" data-ai-summary="{{ rom.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ rom_url | relative_url }}" data-ai-tags="{{ rom.hashtags | join: ' ' | escape }}">
@@ -270,8 +270,8 @@ keywords:
         <p>Encuentra firmware, keys y herramientas que auditamos junto a la comunidad técnica.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign recursos_candidatos = site.data.items | where_exp: 'item', 'item.oculto != true' %}
-        {% assign recursos_candidatos = recursos_candidatos | where_exp: 'item', 'item.categoria contains "emuladores" or item.categoria contains "apps"' %}
+        {% assign recursos_candidatos = site.data.items | where_exp: "item", "item.oculto != true" %}
+        {% assign recursos_candidatos = recursos_candidatos | where_exp: "item", "item.categoria contains 'emuladores' or item.categoria contains 'apps'" %}
         {% assign recursos_destacados = recursos_candidatos | slice: 0, 3 %}
         {% for recurso in recursos_destacados %}
         {% assign recurso_categoria = recurso.categoria | first | default: 'emuladores' %}
@@ -320,7 +320,7 @@ keywords:
   </section>
 </div>
 
-{% assign ai_resources = site.data.items | where_exp: 'item', 'item.oculto != true' %}
+{% assign ai_resources = site.data.items | where_exp: "item", "item.oculto != true" %}
 {% assign ai_news = site.data.noticias %}
 {% assign ai_forums = site.data.foros %}
 {% assign ai_guides_raw = site.data.guias %}
@@ -400,7 +400,7 @@ keywords:
 }
 </script>
 
-{% assign featured_for_schema = site.data.items | where_exp: 'item', 'item.oculto != true' | slice: 0, 3 %}
+{% assign featured_for_schema = site.data.items | where_exp: "item", "item.oculto != true" | slice: 0, 3 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
