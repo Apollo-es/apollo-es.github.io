@@ -601,7 +601,6 @@ document.documentElement.classList.add('has-js');
   if(!toggle || !menu) return;
 
   const nav = toggle.closest('.nav');
-  const overlay = document.querySelector('.nav-overlay');
   const mq = window.matchMedia('(max-width: 768px)');
 
   function setState(open){
@@ -611,10 +610,6 @@ document.documentElement.classList.add('has-js');
       toggle.setAttribute('aria-expanded', 'true');
       if(mq.matches){
         if(nav) nav.classList.add('menu-open');
-        if(overlay){
-          overlay.classList.add('active');
-          overlay.setAttribute('aria-hidden', 'false');
-        }
         document.body.classList.add('no-scroll');
       }
     } else {
@@ -622,10 +617,6 @@ document.documentElement.classList.add('has-js');
       menu.setAttribute('aria-hidden', 'true');
       toggle.setAttribute('aria-expanded', 'false');
       if(nav) nav.classList.remove('menu-open');
-      if(overlay){
-        overlay.classList.remove('active');
-        overlay.setAttribute('aria-hidden', 'true');
-      }
       document.body.classList.remove('no-scroll');
     }
   }
@@ -638,10 +629,6 @@ document.documentElement.classList.add('has-js');
       menu.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'false');
       if(nav) nav.classList.remove('menu-open');
-      if(overlay){
-        overlay.classList.remove('active');
-        overlay.setAttribute('aria-hidden', 'true');
-      }
       document.body.classList.remove('no-scroll');
     }
   }
@@ -652,14 +639,6 @@ document.documentElement.classList.add('has-js');
       setState(!isOpen);
     }
   });
-
-  if(overlay){
-    overlay.addEventListener('click', () => {
-      if(mq.matches){
-        setState(false);
-      }
-    });
-  }
 
   menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
     if(mq.matches){
@@ -676,6 +655,26 @@ document.documentElement.classList.add('has-js');
   mq.addEventListener('change', applyResponsive);
 
   applyResponsive();
+})();
+
+// --- Scroll to top helper ---
+(function(){
+  const button = document.querySelector('[data-scroll-top]');
+  if(!button) return;
+
+  const root = document.documentElement;
+
+  function toggleVisibility(){
+    const shouldShow = (root.scrollTop || document.body.scrollTop || 0) > 240;
+    button.classList.toggle('is-visible', shouldShow);
+  }
+
+  button.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  document.addEventListener('scroll', toggleVisibility, {passive: true});
+  toggleVisibility();
 })();
 
 // --- Foros comunitarios (almacenados en el navegador) ---

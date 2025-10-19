@@ -1,16 +1,22 @@
 title: "Apollo-es"
-description: "Descargas curadas de juegos, vídeos y apps (con permiso)."
+description: "Apollo-es: hub líder en español de ROMs verificados, guías expertas, foros activos y herramientas IA para gamers."
 url: "https://apollo-es.github.io"
 baseurl: ""
 lang: es
 email: "apollo.es.contact@gmail.com"
 author: "Equipo Apollo-es"
 keywords:
+  - "apollo"
   - "descargas seguras"
   - "roms nintendo switch"
-  - "emuladores"
-  - "videos retro"
-  - "apps gaming"
+  - "roms retro"
+  - "roms y emuladores"
+  - "guias gaming"
+  - "foros nintendo switch"
+  - "comunidad gamer"
+  - "aplicaciones gaming"
+  - "inteligencia artificial gaming"
+  - "chatbot gaming"
 logo: "/static/branding/site-preview.svg"
 favicon: "/static/branding/favicon.svg"
 social_image: "/static/branding/site-preview.svg"
@@ -60,8 +66,10 @@ defaults:
       keywords:
         - "apollo-es"
         - "descargas juegos"
-        - "mega mediafire"
+        - "roms mega mediafire"
         - "nintendo switch rom"
+        - "guias y foros gamer"
+        - "chatbot gaming"
 
 # Integraciones opcionales
 disqus_shortname: ""

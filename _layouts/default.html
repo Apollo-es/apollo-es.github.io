@@ -8,10 +8,14 @@
   {% if meta_description %}
     <meta name="description" content="{{ meta_description | strip_html | strip_newlines | replace: '  ', ' ' | escape }}">
   {% endif %}
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <meta name="googlebot" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
   {% assign keywords = page.keywords | default: site.keywords %}
   {% if keywords %}
     <meta name="keywords" content="{{ keywords | join: ', ' | escape }}">
   {% endif %}
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="author" content="{{ page.author | default: site.author | escape }}">
   <meta name="theme-color" content="#0b1020">
   {% if page.noindex or site.noindex %}
@@ -153,7 +157,6 @@
       </nav>
     </div>
   </header>
-  <div class="nav-overlay" aria-hidden="true"></div>
 
   <main class="container">
     {{ content }}
@@ -167,6 +170,11 @@
   <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Cambiar entre tema claro y oscuro">
     <i class="ti ti-moon-stars" aria-hidden="true"></i>
     <span class="sr-only">Alternar tema</span>
+  </button>
+
+  <button class="scroll-top" type="button" data-scroll-top aria-label="Volver arriba">
+    <i class="ti ti-arrow-narrow-up" aria-hidden="true"></i>
+    <span class="sr-only">Volver al inicio de la página</span>
   </button>
 
   <div id="report-panel" class="report-panel" hidden>
@@ -185,5 +193,6 @@
   </div>
 
   <script src="/assets/js/app.js"></script>
+  <script src="/assets/js/chatbot.js"></script>
 </body>
 </html>
