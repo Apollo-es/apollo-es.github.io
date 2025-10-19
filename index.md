@@ -82,33 +82,37 @@ keywords:
     <p>Empieza por las fichas, guías y herramientas que la comunidad consulta ahora mismo.</p>
   </header>
   <div class="featured-grid" data-ai-sync="resources">
-    {% assign destacados_recursos = site.data.items | where_exp: "item", "item.oculto != true" | slice: 0, 3 %}
-    {% for recurso in destacados_recursos %}
-      {% assign categoria = recurso.categoria | first | default: '' %}
-      {% assign base_path = '/' | append: categoria | append: '/' %}
-      {% assign recurso_url = base_path | append: recurso.id | append: '/' %}
-      <article class="featured-card" data-ai-entry data-ai-type="{{ categoria }}" data-ai-title="{{ recurso.titulo | escape }}" data-ai-summary="{{ recurso.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ recurso_url | relative_url }}" data-ai-tags="{{ recurso.hashtags | join: ' ' | escape }}">
-        <div class="featured-media">
-          {% if recurso.portada %}
-          <img src="{{ recurso.portada | relative_url }}" alt="Portada de {{ recurso.titulo }}">
-          {% else %}
-          <div class="featured-placeholder" aria-hidden="true"><i class="ti ti-device-gamepad-2"></i></div>
-          {% endif %}
-        </div>
-        <div class="featured-body">
-          <p class="featured-tag">{{ categoria | capitalize }}</p>
-          <h3>{{ recurso.titulo }}</h3>
-          <p>{{ recurso.descripcion }}</p>
-          <div class="featured-meta">
-            {% if recurso.tipo %}<span><i class="ti ti-box"></i> {{ recurso.tipo }}</span>{% endif %}
-            {% if recurso.idioma %}<span><i class="ti ti-language"></i> {{ recurso.idioma | upcase }}</span>{% endif %}
+    {% assign destacados_recursos_count = 0 %}
+    {% for recurso in site.data.items %}
+      {% if recurso.oculto != true %}
+        {% assign categoria = recurso.categoria | first | default: '' %}
+        {% assign base_path = '/' | append: categoria | append: '/' %}
+        {% assign recurso_url = base_path | append: recurso.id | append: '/' %}
+        <article class="featured-card" data-ai-entry data-ai-type="{{ categoria }}" data-ai-title="{{ recurso.titulo | escape }}" data-ai-summary="{{ recurso.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ recurso_url | relative_url }}" data-ai-tags="{{ recurso.hashtags | join: ' ' | escape }}">
+          <div class="featured-media">
+            {% if recurso.portada %}
+            <img src="{{ recurso.portada | relative_url }}" alt="Portada de {{ recurso.titulo }}">
+            {% else %}
+            <div class="featured-placeholder" aria-hidden="true"><i class="ti ti-device-gamepad-2"></i></div>
+            {% endif %}
           </div>
-          <a class="btn primary" href="{{ recurso_url | relative_url }}"><i class="ti ti-arrow-right"></i> Ver ficha completa</a>
-        </div>
-      </article>
+          <div class="featured-body">
+            <p class="featured-tag">{{ categoria | capitalize }}</p>
+            <h3>{{ recurso.titulo }}</h3>
+            <p>{{ recurso.descripcion }}</p>
+            <div class="featured-meta">
+              {% if recurso.tipo %}<span><i class="ti ti-box"></i> {{ recurso.tipo }}</span>{% endif %}
+              {% if recurso.idioma %}<span><i class="ti ti-language"></i> {{ recurso.idioma | upcase }}</span>{% endif %}
+            </div>
+            <a class="btn primary" href="{{ recurso_url | relative_url }}"><i class="ti ti-arrow-right"></i> Ver ficha completa</a>
+          </div>
+        </article>
+        {% assign destacados_recursos_count = destacados_recursos_count | plus: 1 %}
+        {% if destacados_recursos_count == 3 %}{% break %}{% endif %}
+      {% endif %}
     {% endfor %}
   </div>
-</section>
+  </section>
 
 <section class="news-section" aria-labelledby="noticias-heading">
   <header class="news-header">
@@ -134,12 +138,14 @@ keywords:
         {% assign share_hashtags = hashtag_tokens | strip | replace: ' ', '' %}
       {% endif %}
       {% assign imagen_destacada = nil %}
-      {% for bloque in noticia.cuerpo %}
-        {% if bloque.imagen and bloque.imagen.src %}
-          {% assign imagen_destacada = bloque.imagen %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
+        {% for bloque in noticia.cuerpo %}
+          {% if bloque.imagen %}
+            {% if bloque.imagen.src %}
+              {% assign imagen_destacada = bloque.imagen %}
+              {% break %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
       <article id="{{ noticia.slug }}" class="news-card" data-ai-entry data-ai-type="noticias" data-ai-title="{{ noticia.titulo | escape }}" data-ai-summary="{{ noticia.resumen | strip_html | strip_newlines | escape }}" data-ai-url="{{ noticia_path | relative_url }}" data-ai-tags="{{ noticia.tag | escape }}">
         {% if imagen_destacada %}
         <div class="news-media">
@@ -176,16 +182,20 @@ keywords:
   </div>
 
   {% if noticias.size > 3 %}
-  <div class="news-secondary">
-    {% for noticia in noticias offset:3 limit:6 %}
-    {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
-    <a class="news-secondary-card" href="{{ item_path | relative_url }}">
-      <span class="news-secondary-tag">{{ noticia.tag }}</span>
-      <span class="news-secondary-title">{{ noticia.titulo }}</span>
-      <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
-    </a>
-    {% endfor %}
-  </div>
+    <div class="news-secondary">
+      {% for noticia in noticias %}
+        {% if forloop.index0 >= 3 %}
+          {% if forloop.index0 < 9 %}
+            {% capture noticia_path_secondary %}/noticias/{{ noticia.slug }}/{% endcapture %}
+            <a class="news-secondary-card" href="{{ noticia_path_secondary | strip | relative_url }}">
+              <span class="news-secondary-tag">{{ noticia.tag }}</span>
+              <span class="news-secondary-title">{{ noticia.titulo }}</span>
+              <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
+            </a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
   {% endif %}
 </section>
 {% endif %}
@@ -197,27 +207,37 @@ keywords:
         <p>Descubre lo que más se descarga ahora mismo para <strong>Switch</strong>, <strong>retro</strong> y <strong>PC</strong>.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-          {% assign roms_destacadas = site.data.items | where_exp: "item", "item.categoria contains 'juegos' and item.oculto != true" | slice: 0, 3 %}
-        {% for rom in roms_destacadas %}
-        {% assign rom_url = '/juegos/' | append: rom.id | append: '/' %}
-        <article class="topic-tile" data-ai-entry data-ai-type="juegos" data-ai-title="{{ rom.titulo | escape }}" data-ai-summary="{{ rom.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ rom_url | relative_url }}" data-ai-tags="{{ rom.hashtags | join: ' ' | escape }}">
-          <a class="topic-tile-link" href="{{ rom_url | relative_url }}">
-            <div class="topic-tile-media">
-              {% if rom.portada %}
-              <img src="{{ rom.portada | relative_url }}" alt="Portada de {{ rom.titulo }}">
-              {% else %}
-              <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-device-gamepad-2"></i></div>
+          {% assign roms_destacadas_count = 0 %}
+          {% for rom in site.data.items %}
+            {% if rom.oculto != true %}
+              {% assign rom_categorias = '' %}
+              {% if rom.categoria %}
+                {% assign rom_categorias = rom.categoria | join: ',' %}
               {% endif %}
-            </div>
-            <div class="topic-tile-body">
-              <h4>{{ rom.titulo }}</h4>
-              <p>{{ rom.descripcion | strip_html | truncate: 120 }}</p>
-              <span class="topic-tile-meta">{{ rom.tipo }} · {{ rom.idioma | upcase }}</span>
-            </div>
-          </a>
-        </article>
-        {% endfor %}
-      </div>
+              {% if rom_categorias contains 'juegos' %}
+                {% assign rom_url = '/juegos/' | append: rom.id | append: '/' %}
+                <article class="topic-tile" data-ai-entry data-ai-type="juegos" data-ai-title="{{ rom.titulo | escape }}" data-ai-summary="{{ rom.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ rom_url | relative_url }}" data-ai-tags="{{ rom.hashtags | join: ' ' | escape }}">
+                  <a class="topic-tile-link" href="{{ rom_url | relative_url }}">
+                <div class="topic-tile-media">
+                  {% if rom.portada %}
+                  <img src="{{ rom.portada | relative_url }}" alt="Portada de {{ rom.titulo }}">
+                  {% else %}
+                  <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-device-gamepad-2"></i></div>
+                  {% endif %}
+                </div>
+                <div class="topic-tile-body">
+                  <h4>{{ rom.titulo }}</h4>
+                  <p>{{ rom.descripcion | strip_html | truncate: 120 }}</p>
+                  <span class="topic-tile-meta">{{ rom.tipo }} · {{ rom.idioma | upcase }}</span>
+                </div>
+              </a>
+                </article>
+                {% assign roms_destacadas_count = roms_destacadas_count | plus: 1 %}
+                {% if roms_destacadas_count == 3 %}{% break %}{% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
     </div>
     <div class="topic-card" data-ai-entry data-ai-type="guias" data-ai-title="Guías y foros en tendencia" data-ai-summary="Hilos y walkthroughs con aportes activos" data-ai-url="/guias/" data-ai-tags="guias foros comunidad walkthrough">
       <div class="topic-heading">
@@ -270,32 +290,49 @@ keywords:
         <p>Encuentra firmware, keys y herramientas que auditamos junto a la comunidad técnica.</p>
       </div>
       <div class="topic-grid topic-grid-cards">
-        {% assign recursos_candidatos = site.data.items | where_exp: "item", "item.oculto != true" %}
-        {% assign recursos_candidatos = recursos_candidatos | where_exp: "item", "item.categoria contains 'emuladores' or item.categoria contains 'apps'" %}
-        {% assign recursos_destacados = recursos_candidatos | slice: 0, 3 %}
-        {% for recurso in recursos_destacados %}
-        {% assign recurso_categoria = recurso.categoria | first | default: 'emuladores' %}
-        {% assign recurso_base = '/' | append: recurso_categoria | append: '/' %}
-        {% assign recurso_url = recurso_base | append: recurso.id | append: '/' %}
-        <article class="topic-tile" data-ai-entry data-ai-type="{{ recurso_categoria }}" data-ai-title="{{ recurso.titulo | escape }}" data-ai-summary="{{ recurso.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ recurso_url | relative_url }}" data-ai-tags="{{ recurso.hashtags | join: ' ' | escape }}">
-          <a class="topic-tile-link" href="{{ recurso_url | relative_url }}">
-            <div class="topic-tile-media">
-              {% if recurso.portada %}
-              <img src="{{ recurso.portada | relative_url }}" alt="Portada de {{ recurso.titulo }}">
-              {% else %}
-              <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-cpu"></i></div>
+          {% assign recursos_candidatos_count = 0 %}
+          {% for recurso in site.data.items %}
+            {% if recurso.oculto != true %}
+              {% assign recurso_es_valido = false %}
+              {% if recurso.categoria %}
+                {% for categoria_item in recurso.categoria %}
+                  {% if categoria_item == 'emuladores' %}
+                    {% assign recurso_es_valido = true %}
+                  {% elsif categoria_item == 'apps' %}
+                    {% assign recurso_es_valido = true %}
+                  {% endif %}
+                {% endfor %}
               {% endif %}
-            </div>
-            <div class="topic-tile-body">
-              <h4>{{ recurso.titulo }}</h4>
-              <p>{{ recurso.descripcion | strip_html | truncate: 120 }}</p>
-              <span class="topic-tile-meta">{{ recurso.tipo | default: 'Recurso' }}{% if recurso.idioma %} · {{ recurso.idioma | upcase }}{% endif %}</span>
-            </div>
-          </a>
-        </article>
-        {% endfor %}
+              {% if recurso_es_valido %}
+                {% assign recurso_categoria = 'emuladores' %}
+                {% if recurso.categoria %}
+                  {% assign recurso_categoria = recurso.categoria | first | default: 'emuladores' %}
+                {% endif %}
+                {% assign recurso_base = '/' | append: recurso_categoria | append: '/' %}
+                {% assign recurso_url = recurso_base | append: recurso.id | append: '/' %}
+                <article class="topic-tile" data-ai-entry data-ai-type="{{ recurso_categoria }}" data-ai-title="{{ recurso.titulo | escape }}" data-ai-summary="{{ recurso.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ recurso_url | relative_url }}" data-ai-tags="{{ recurso.hashtags | join: ' ' | escape }}">
+                  <a class="topic-tile-link" href="{{ recurso_url | relative_url }}">
+                    <div class="topic-tile-media">
+                      {% if recurso.portada %}
+                      <img src="{{ recurso.portada | relative_url }}" alt="Portada de {{ recurso.titulo }}">
+                      {% else %}
+                      <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-cpu"></i></div>
+                      {% endif %}
+                    </div>
+                    <div class="topic-tile-body">
+                      <h4>{{ recurso.titulo }}</h4>
+                      <p>{{ recurso.descripcion | strip_html | truncate: 120 }}</p>
+                      <span class="topic-tile-meta">{{ recurso.tipo | default: 'Recurso' }}{% if recurso.idioma %} · {{ recurso.idioma | upcase }}{% endif %}</span>
+                    </div>
+                  </a>
+                </article>
+                {% assign recursos_candidatos_count = recursos_candidatos_count | plus: 1 %}
+                {% if recursos_candidatos_count == 3 %}{% break %}{% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
-    </div>
   </section>
 
   <section class="home-seo">
@@ -318,49 +355,81 @@ keywords:
       </div>
     </div>
   </section>
-</div>
+  </div>
 
-{% assign ai_resources = site.data.items | where_exp: "item", "item.oculto != true" %}
-{% assign ai_news = site.data.noticias %}
-{% assign ai_forums = site.data.foros %}
-{% assign ai_guides_raw = site.data.guias %}
-{% assign ai_guides = '' %}
-{% capture ai_guides_json %}
-[
-  {% assign guia_items = '' %}
-  {% for categoria in ai_guides_raw %}
-    {% for guia in categoria.guias %}
-      {
-        "id": {{ guia.id | jsonify }},
-        "title": {{ guia.titulo | jsonify }},
-        "summary": {{ guia.resumen | jsonify }},
-        "url": {{ guia.url | relative_url | jsonify }},
-        "category": {{ categoria.categoria | jsonify }}
-      }{% unless forloop.last and forloop.parentloop.last %},{% endunless %}
+  {% assign ai_news = site.data.noticias %}
+  {% assign ai_forums = site.data.foros %}
+  {% assign ai_guides_raw = site.data.guias %}
+  {% assign ai_guides = '' %}
+  {% capture ai_guides_json %}
+    [
+      {% assign guia_needs_comma = false %}
+      {% for categoria in ai_guides_raw %}
+        {% if categoria.guias %}
+          {% for guia in categoria.guias %}
+            {% if guia_needs_comma %},{% endif %}
+            {
+              "id": {{ guia.id | jsonify }},
+              "title": {{ guia.titulo | jsonify }},
+              "summary": {{ guia.resumen | jsonify }},
+              "url": {{ guia.url | relative_url | jsonify }},
+              "category": {{ categoria.categoria | jsonify }}
+            }
+            {% assign guia_needs_comma = true %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    ]
+  {% endcapture %}
+
+  {% capture ai_resources_json %}
+  [
+      {% assign recurso_json_count = 0 %}
+      {% for recurso in site.data.items %}
+        {% if recurso.oculto != true %}
+          {% if recurso_json_count > 0 %},{% endif %}
+          {% assign categoria = '' %}
+          {% if recurso.categoria %}
+            {% assign categoria = recurso.categoria | first | default: '' %}
+          {% endif %}
+          {% assign base_path = '/' | append: categoria | append: '/' %}
+        {% assign url = base_path | append: recurso.id | append: '/' %}
+        {
+          "id": {{ recurso.id | jsonify }},
+          "title": {{ recurso.titulo | jsonify }},
+          "summary": {{ recurso.descripcion | jsonify }},
+          "url": {{ url | relative_url | jsonify }},
+          "category": {{ categoria | jsonify }},
+          "type": {{ recurso.tipo | jsonify }},
+          "tags": {{ recurso.hashtags | jsonify }},
+          "views": {{ recurso.vistas | default: recurso.popularidad | default: 0 }}
+        }
+        {% assign recurso_json_count = recurso_json_count | plus: 1 %}
+      {% endif %}
     {% endfor %}
-  {% endfor %}
-]
-{% endcapture %}
+  ]
+  {% endcapture %}
 
-{% capture ai_resources_json %}
-[
-  {% for recurso in ai_resources %}
-    {% assign categoria = recurso.categoria | first | default: '' %}
-    {% assign base_path = '/' | append: categoria | append: '/' %}
-    {% assign url = base_path | append: recurso.id | append: '/' %}
-    {
-      "id": {{ recurso.id | jsonify }},
-      "title": {{ recurso.titulo | jsonify }},
-      "summary": {{ recurso.descripcion | jsonify }},
-      "url": {{ url | relative_url | jsonify }},
-      "category": {{ categoria | jsonify }},
-      "type": {{ recurso.tipo | jsonify }},
-      "tags": {{ recurso.hashtags | jsonify }},
-      "views": {{ recurso.vistas | default: recurso.popularidad | default: 0 }}
-    }{% unless forloop.last %},{% endunless %}
-  {% endfor %}
-]
-{% endcapture %}
+  {% capture ai_schema_items %}
+      {% assign schema_count = 0 %}
+      {% for recurso in site.data.items %}
+        {% if recurso.oculto != true %}
+          {% if schema_count > 0 %},{% endif %}
+          {% assign recurso_categoria = '' %}
+          {% if recurso.categoria %}
+            {% assign recurso_categoria = recurso.categoria | first | default: '' %}
+          {% endif %}
+          {
+            "@type": "ListItem",
+          "position": {{ schema_count | plus: 1 }},
+          "url": "{{ '/' | append: recurso_categoria | append: '/' | append: recurso.id | append: '/' | absolute_url }}",
+          "name": {{ recurso.titulo | jsonify }}
+        }
+        {% assign schema_count = schema_count | plus: 1 %}
+        {% if schema_count == 3 %}{% break %}{% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endcapture %}
 
 {% capture ai_news_json %}
 [
@@ -400,22 +469,13 @@ keywords:
 }
 </script>
 
-{% assign featured_for_schema = site.data.items | where_exp: "item", "item.oculto != true" | slice: 0, 3 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "Recursos destacados de Apollo-es",
   "itemListElement": [
-    {% for recurso in featured_for_schema %}
-    {% assign recurso_categoria = recurso.categoria | first | default: '' %}
-    {
-      "@type": "ListItem",
-      "position": {{ forloop.index }},
-      "url": "{{ '/' | append: recurso_categoria | append: '/' | append: recurso.id | append: '/' | absolute_url }}",
-      "name": {{ recurso.titulo | jsonify }}
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
+    {{ ai_schema_items | strip_newlines | strip }}
   ]
 }
 </script>
