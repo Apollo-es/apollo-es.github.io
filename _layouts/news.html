@@ -17,6 +17,29 @@ layout: default
       <p class="news-summary">{{ news.resumen }}</p>
     </header>
 
+    {% assign portada_src = '' %}
+    {% assign portada_alt = news.titulo %}
+    {% if news.portada %}
+      {% if news.portada.src %}
+        {% assign portada_src = news.portada.src %}
+      {% endif %}
+      {% if news.portada.alt %}
+        {% assign portada_alt = news.portada.alt %}
+      {% endif %}
+    {% endif %}
+    {% if portada_src != '' %}
+      {% assign portada_url = portada_src %}
+      {% assign portada_prefix = portada_src | slice: 0,5 %}
+      {% if portada_src contains '://' or portada_prefix == 'data:' %}
+        {% assign portada_url = portada_src %}
+      {% else %}
+        {% assign portada_url = portada_src | relative_url %}
+      {% endif %}
+      <figure class="news-entry-hero">
+        <img src="{{ portada_url }}" alt="{{ portada_alt | escape }}">
+      </figure>
+    {% endif %}
+
     <div class="news-entry-content">
       <section class="news-entry-lead">
         {{ news.introduccion | markdownify }}
