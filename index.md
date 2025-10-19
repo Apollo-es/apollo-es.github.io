@@ -12,12 +12,51 @@ keywords:
 <div class="home-catalog" data-catalog-root>
   <div class="hero">
     <h1>Bienvenido a <strong>Apollo-es</strong></h1>
-    <p>Descargas curadas de <strong>Juegos</strong> y <strong>Vídeos</strong> — alojadas en Mega, Mediafire, Drive y más. Todo con permiso.</p>
+    <p>Somos el centro <strong>#1 en español</strong> para ROMs verificados, guías expertas, foros de soporte y noticias gaming con la chispa de la IA. Descarga, aprende y conecta sin ruido.</p>
+    <ul class="hero-highlights">
+      <li><i class="ti ti-star"></i> ROMs y parches listos para <strong>Nintendo Switch, 3DS y retro</strong>.</li>
+      <li><i class="ti ti-message-chatbot"></i> Próxima integración con <strong>Firebase</strong> y nuestro asistente Apollo IA.</li>
+      <li><i class="ti ti-users"></i> Comunidad activa con foros, guías y noticias diarias.</li>
+    </ul>
     <div class="search">
-      <input id="q" type="search" placeholder="Buscar juegos, vídeos, apps...">
+      <input id="q" type="search" placeholder="Buscar juegos, vídeos, apps, guías o foros...">
       <a class="btn primary" href="/enviar"><i class="ti ti-upload"></i> Enviar recurso</a>
     </div>
   </div>
+
+  <section class="home-ai" id="apollo-ia">
+    <div class="home-ai-copy">
+      <h2>Conoce a Apollo IA</h2>
+      <p>Estamos construyendo un asistente inteligente que se integra con Firebase para que tus búsquedas de ROMs, guías, parches o debates sean instantáneas. Adelántate y pruébalo en versión previa.</p>
+      <ul class="ai-perks">
+        <li><i class="ti ti-target"></i> Respuestas guiadas hacia descargas verificadas, guías paso a paso y debates activos.</li>
+        <li><i class="ti ti-robot"></i> Diseñado para integrarse con cuentas y progresos guardados cuando activemos Firebase Auth.</li>
+        <li><i class="ti ti-shield-lock"></i> Pensado con privacidad first: controlaremos sesiones y reportes en Firestore.</li>
+      </ul>
+    </div>
+    <div class="home-ai-widget" data-ai-widget>
+      <header class="widget-header">
+        <span class="widget-eyebrow">Apollo IA (beta)</span>
+        <h3>¿En qué podemos ayudarte?</h3>
+      </header>
+      <div class="widget-body">
+        <div class="chat-window" data-ai-messages>
+          <div class="chat-message bot">Hola, soy Apollo IA. Pregunta por <strong>roms</strong>, <strong>guías</strong>, <strong>foros</strong> o <strong>noticias</strong> y te llevo allí.</div>
+        </div>
+        <form class="chat-form" data-ai-form>
+          <label class="sr-only" for="apollo-ai-input">Escribe tu consulta</label>
+          <input id="apollo-ai-input" name="q" type="text" placeholder="Ej. mejores roms de Mario, foros de Pokémon..." autocomplete="off" required>
+          <button class="btn primary" type="submit"><i class="ti ti-send"></i></button>
+        </form>
+        <div class="chat-suggestions" data-ai-suggestions>
+          <button type="button" data-ai-suggestion="roms switch">Roms Switch</button>
+          <button type="button" data-ai-suggestion="guías zelda">Guías Zelda</button>
+          <button type="button" data-ai-suggestion="foro comunidad">Foros</button>
+          <button type="button" data-ai-suggestion="noticias filtraciones">Noticias</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
 {% assign noticias = site.data.noticias | sort: 'vistas' | reverse %}
 {% assign destacada = noticias | first %}
@@ -107,7 +146,7 @@ keywords:
 
     {% assign juegos = site.data.items | where_exp: "item", "item.categoria contains 'juegos'" %}
     {% assign visibles = juegos | where_exp: "item", "item.oculto != true" %}
-    {% assign destacados_ids = "mario-kart-8-deluxe|animal-crossing-new-horizons|super-mario-galaxy|super-mario-galaxy-2|pokemon-leyendas-za" | split: "|" %}
+    {% assign destacados_ids = "pokemon-leyendas-za|mario-kart-8-deluxe|animal-crossing-new-horizons|super-mario-galaxy|super-mario-galaxy-2|sonic-frontiers" | split: "|" %}
     {% assign destacados_count = 0 %}
     <div class="grid home-featured-grid" data-catalog-grid>
       {% for destacado_id in destacados_ids %}
@@ -120,4 +159,88 @@ keywords:
     </div>
     <p class="catalog-empty" data-catalog-empty {% if destacados_count > 0 %}hidden{% endif %}>No encontramos coincidencias con tu búsqueda en la portada. Prueba con otros términos o visita el catálogo completo.</p>
   </section>
+
+  <section class="home-topics">
+    <div class="topic-card">
+      <h3>ROMs mejor posicionadas</h3>
+      <p>Descubre los títulos con más clics y búsquedas. Curamos enlaces para <strong>Switch</strong>, <strong>retro</strong> y <strong>PC</strong>.</p>
+      <ul>
+        <li><a href="/juegos/pokemon-leyendas-za/">Pokémon Leyendas ZA</a> con parches y DLC.</li>
+        <li><a href="/juegos/mario-kart-8-deluxe/">Mario Kart 8 Deluxe</a> listo para multiplayer.</li>
+        <li><a href="/juegos/sonic-frontiers/">Sonic Frontiers</a> con actualizaciones rápidas.</li>
+      </ul>
+    </div>
+    <div class="topic-card">
+      <h3>Guías y foros en tendencia</h3>
+      <p>Nuestros foros reciben nuevas aportaciones cada día. Únete a los hilos más calientes.</p>
+      <ul>
+        <li><a href="/guias/">Guías maestras de Zelda y Metroid</a> con mapas interactivos.</li>
+        <li><a href="/foros/">Foros oficiales Apollo</a> para soporte y quedadas online.</li>
+        <li><a href="/noticias/">Noticias curadas</a> sobre filtraciones, rom-hacking y más.</li>
+      </ul>
+    </div>
+    <div class="topic-card">
+      <h3>Configuración pro de emuladores</h3>
+      <p>Optimizamos Yuzu, Ryujinx y RetroArch con perfiles exportables y descargas limpias.</p>
+      <ul>
+        <li><a href="/emuladores/">Emuladores certificados</a> para Switch y 3DS.</li>
+        <li><a href="/apps/">Apps de soporte</a> para gestionar ROMs y bibliotecas.</li>
+        <li><a href="/videos/">Vídeos tutoriales</a> paso a paso con IA para subtítulos.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="home-seo">
+    <header>
+      <h2>¿Buscas ROMs, guías, foros o noticias?</h2>
+      <p>Indexamos cada recurso con datos estructurados y palabras clave de cola larga para que Google, Bing y tu buscador favorito nos posicionen arriba.</p>
+    </header>
+    <div class="seo-columns">
+      <div>
+        <h3>ROMs populares</h3>
+        <p>Listas por región, idioma, formato y compatibilidad con emuladores. Añadimos parches, savegames y actualizaciones.</p>
+      </div>
+      <div>
+        <h3>Guías premium</h3>
+        <p>Walkthroughs, builds y estrategias SEO-friendly para atraer nuevas comunidades que buscan soluciones rápidas.</p>
+      </div>
+      <div>
+        <h3>Foros activos</h3>
+        <p>Moderación híbrida humana + IA para mantener conversaciones seguras y resolver incidencias en minutos.</p>
+      </div>
+    </div>
+  </section>
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Dónde descargar ROMs verificadas de Nintendo Switch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En Apollo-es curamos ROMs con enlaces verificados, metadatos completos y soporte comunitario para Nintendo Switch, 3DS y consolas retro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo acceder a guías y tutoriales paso a paso?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Visita la sección de guías donde recopilamos walkthroughs, builds y vídeos con subtítulos IA listos para compartir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay foros y comunidad para resolver dudas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, contamos con foros moderados y un futuro chatbot con Firebase que te conectará rápidamente con hilos activos y recursos oficiales."
+      }
+    }
+  ]
+}
+</script>

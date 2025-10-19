@@ -450,6 +450,37 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Super Mario Galaxy 2 es © 2010-2025 Nintendo. Todos los derechos pertenecen a Nintendo y sus filiales.
 
+- id: sonic-frontiers
+  categoria: ["juegos"]
+  titulo: "Sonic Frontiers"
+  descripcion: "Explora las Islas Starfall en esta aventura de mundo abierto con Sonic, combates ágiles y puzzles repartidos por biomas inmensos."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "9.8 GB"
+  licencia: "incluida"
+  consola: "Nintendo Switch"
+  desarrolladora: "Sonic Team"
+  genero: "Aventura / Mundo abierto"
+  portada: "/static/branding/site-preview.svg"
+  interacciones: 11890
+  busquedas: 9620
+  fecha_publicacion: 2024-05-12
+  hashtags:
+    - "#SonicFrontiers"
+    - "#SonicTeam"
+    - "#NintendoSwitch"
+  descargas:
+    - titulo: "Juego base (NSP/XCI)"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/sonic-frontiers-switch"
+    - titulo: "Actualización 1.4.1"
+      mirrors:
+        - host: "Descarga directa"
+          url: "https://exe.io/sonic-frontiers-update"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Sonic Frontiers es © 2022-2025 SEGA. Todos los derechos pertenecen a SEGA y sus licenciantes.
+
 - id: pokemon-amarillo-gb
   categoria: ["juegos"]
   titulo: "Pokémon Amarillo"
