@@ -175,18 +175,19 @@ keywords:
     {% endfor %}
   </div>
 
-  {% if noticias.size > 3 %}
-  <div class="news-secondary">
-    {% for noticia in noticias offset:3 limit:6 %}
-    {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
-    <a class="news-secondary-card" href="{{ item_path | relative_url }}">
-      <span class="news-secondary-tag">{{ noticia.tag }}</span>
-      <span class="news-secondary-title">{{ noticia.titulo }}</span>
-      <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
-    </a>
-    {% endfor %}
-  </div>
-  {% endif %}
+    {% if noticias.size > 3 %}
+      <div class="news-secondary">
+        {% assign noticias_secundarias = noticias | slice: 3, 6 %}
+        {% for noticia in noticias_secundarias %}
+          {% assign item_path = '/noticias/' | append: noticia.slug | append: '/' %}
+          <a class="news-secondary-card" href="{{ item_path | relative_url }}">
+            <span class="news-secondary-tag">{{ noticia.tag }}</span>
+            <span class="news-secondary-title">{{ noticia.titulo }}</span>
+            <span class="news-secondary-meta">{{ noticia.fecha | date: "%d/%m/%Y" }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
 </section>
 {% endif %}
 
