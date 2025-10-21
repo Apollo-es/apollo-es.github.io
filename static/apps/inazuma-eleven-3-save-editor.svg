@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Inazuma Eleven 3 Save Editor</title>
+  <desc id="desc">Arte con rayos y colores eléctricos que representan el editor de partidas de Inazuma Eleven 3.</desc>
+  <defs>
+    <linearGradient id="ie3-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1126" />
+      <stop offset="45%" stop-color="#133a80" />
+      <stop offset="100%" stop-color="#f5a623" />
+    </linearGradient>
+    <radialGradient id="ie3-glow" cx="68%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#ffe9b0" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0a1126" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="ie3-bolt" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe394" />
+      <stop offset="100%" stop-color="#ffb347" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#ie3-bg)" />
+  <circle cx="460" cy="130" r="220" fill="url(#ie3-glow)" />
+  <g transform="translate(120 40) rotate(-6 160 160)">
+    <path d="M160 0l-38 84h52l-44 120 126-152h-66l44-52z" fill="url(#ie3-bolt)" stroke="#fff4d6" stroke-width="6" stroke-linejoin="round" opacity="0.9" />
+  </g>
+  <text x="45%" y="50%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="44" fill="#ffffff" letter-spacing="6">
+    INAZUMA ELEVEN 3
+  </text>
+  <text x="45%" y="68%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="26" fill="#ffe8c5" letter-spacing="5" style="text-transform:uppercase;">
+    Save Editor
+  </text>
+</svg>

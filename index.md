@@ -18,12 +18,18 @@ keywords:
       <li><i class="ti ti-graph"></i> Seguimos estadísticas de descargas, reseñas y foros para destacar lo más útil cada día.</li>
       <li><i class="ti ti-device-gamepad-2"></i> Configuraciones y perfiles optimizados para emuladores next-gen listos para aplicar.</li>
     </ul>
-    <div class="search">
-      <label class="sr-only" for="q">Busca juegos, guías, foros o noticias</label>
-      <input id="q" type="search" placeholder="Busca juegos, vídeos, apps, guías o foros...">
-      <div class="search-actions">
-        <a class="btn primary" href="/enviar" aria-label="¿Quieres enviarnos un recurso? Abre la guía de envío"><i class="ti ti-upload"></i> ¿Quieres enviarnos un recurso?</a>
-        <p class="search-help">¿Tienes material verificado? Revisa la <a href="/enviar/">guía de envíos</a> para conocer requisitos de licencia, mirrors permitidos y el correo de contacto.</p>
+    <div class="search-wrapper" data-search-root>
+      <button class="search-toggle" type="button" data-search-toggle aria-expanded="false">
+        <i class="ti ti-search" aria-hidden="true"></i>
+        <span class="sr-only">Abrir buscador de Apollo-es</span>
+      </button>
+      <div class="search search-panel" data-search-panel hidden>
+        <label class="sr-only" for="q">Busca juegos, guías, foros o noticias</label>
+        <input id="q" type="search" placeholder="Busca juegos, vídeos, apps, guías o foros...">
+        <div class="search-actions">
+          <a class="btn primary" href="/enviar" aria-label="¿Quieres enviarnos un recurso? Abre la guía de envío"><i class="ti ti-upload"></i> ¿Quieres enviarnos un recurso?</a>
+          <p class="search-help">¿Tienes material verificado? Revisa la <a href="/enviar/">guía de envíos</a> para conocer requisitos de licencia, mirrors permitidos y el correo de contacto.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -288,7 +294,7 @@ keywords:
         <article class="topic-tile" data-ai-entry data-ai-type="foros" data-ai-title="Foros oficiales Apollo" data-ai-summary="Salas activas para soporte técnico, rom-hacking y organización comunitaria." data-ai-url="/foros/" data-ai-tags="comunidad soporte foros">
           <a class="topic-tile-link" href="/foros/">
             <div class="topic-tile-media">
-              <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-messages"></i></div>
+              <img src="{{ '/static/foros/foros-oficiales-apollo.svg' | relative_url }}" alt="Portada de los foros oficiales Apollo">
             </div>
             <div class="topic-tile-body">
               <h4>Foros oficiales Apollo</h4>

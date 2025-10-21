@@ -65,10 +65,12 @@ layout: default
         {% endif %}
         <div class="mirrors">
           {% for m in descarga.mirrors %}
-            {% if m.url %}
+            {% assign mirror_url = m.url | default: '' | strip %}
+            {% assign has_url = mirror_url != '' %}
             <div class="mirror-entry">
+              {% if has_url %}
               <a class="btn dl"
-                 href="{{ m.url | strip }}"
+                 href="{{ mirror_url }}"
                  target="_blank"
                  rel="nofollow noopener">
                 <i class="ti ti-download"></i> Descargar en {{ m.host }}
@@ -79,13 +81,17 @@ layout: default
                       data-title="{{ game.titulo }}"
                       data-group="{{ descarga.titulo | default: 'Descarga' }}"
                       data-host="{{ m.host }}"
-                      data-url="{{ m.url | strip }}"
+                      data-url="{{ mirror_url }}"
                       title="Reportar enlace caído">
                 <i class="ti ti-alert-triangle" aria-hidden="true"></i>
                 <span class="sr-only">Reportar enlace caído</span>
               </button>
+              {% else %}
+              <button class="btn dl disabled" type="button" disabled>
+                <i class="ti ti-clock"></i> {{ m.estado | default: 'Enlace disponible próximamente' }}{% if m.host %} · {{ m.host }}{% endif %}
+              </button>
+              {% endif %}
             </div>
-            {% endif %}
           {% endfor %}
         </div>
       </section>

@@ -740,6 +740,81 @@ document.documentElement.classList.add('has-js');
   applyResponsive();
 })();
 
+// --- Search toggle (hero) ---
+(function(){
+  const roots = document.querySelectorAll('[data-search-root]');
+  if(!roots.length) return;
+
+  roots.forEach(root => {
+    const toggle = root.querySelector('[data-search-toggle]');
+    const panel = root.querySelector('[data-search-panel]');
+    if(!toggle || !panel) return;
+
+    const searchInput = panel.querySelector('input[type="search"], input[type="text"]');
+    let open = false;
+
+    function handleOutsideClick(evt){
+      if(!open) return;
+      if(!root.contains(evt.target)){
+        close({ focusToggle: false });
+      }
+    }
+
+    function handleKeydown(evt){
+      if(!open) return;
+      if(evt.key === 'Escape'){
+        evt.preventDefault();
+        close({ focusToggle: true });
+      }
+    }
+
+    function openPanel(){
+      if(open) return;
+      open = true;
+      root.classList.add('is-active');
+      toggle.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('touchstart', handleOutsideClick, { passive: true });
+      document.addEventListener('keydown', handleKeydown);
+      if(searchInput){
+        window.requestAnimationFrame(() => {
+          searchInput.focus();
+          searchInput.select?.();
+        });
+      }
+    }
+
+    function close(options = {}){
+      if(!open) return;
+      open = false;
+      root.classList.remove('is-active');
+      toggle.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('touchstart', handleOutsideClick);
+      document.removeEventListener('keydown', handleKeydown);
+      if(options.focusToggle){
+        toggle.focus();
+      }
+    }
+
+    toggle.addEventListener('click', () => {
+      if(open){
+        close();
+      } else {
+        openPanel();
+      }
+    });
+
+    panel.addEventListener('keydown', evt => {
+      if(evt.key === 'Tab' && !open){
+        openPanel();
+      }
+    });
+  });
+})();
+
 // --- Scroll to top helper ---
 (function(){
   const button = document.querySelector('[data-scroll-top]');

@@ -1,24 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Nintendo Switch Keys &amp; Firmware 19.0.1</title>
+  <desc id="desc">Portada con gradiente neón, icono de llave y texto para las keys y firmware de Nintendo Switch.</desc>
   <defs>
     <linearGradient id="switch-keys-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#061a30" />
-      <stop offset="50%" stop-color="#0f4c81" />
+      <stop offset="0%" stop-color="#050c1e" />
+      <stop offset="45%" stop-color="#2c2c86" />
       <stop offset="100%" stop-color="#2ee6d6" />
     </linearGradient>
-    <radialGradient id="switch-keys-glow" cx="32%" cy="35%" r="70%">
-      <stop offset="0%" stop-color="#9ff7ff" stop-opacity="0.85" />
-      <stop offset="100%" stop-color="#061a30" stop-opacity="0" />
+    <radialGradient id="switch-keys-glow" cx="68%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#bbf7ff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#050c1e" stop-opacity="0" />
     </radialGradient>
+    <linearGradient id="switch-keys-symbol" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#c9fff5" />
+    </linearGradient>
+    <filter id="switch-keys-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#050c1e" flood-opacity="0.6" />
+    </filter>
   </defs>
   <rect width="640" height="360" fill="url(#switch-keys-bg)" />
-  <circle cx="220" cy="140" r="210" fill="url(#switch-keys-glow)" />
-  <text x="50%" y="45%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="48" fill="#e8fbff" letter-spacing="8">
-    SWITCH
+  <circle cx="420" cy="140" r="220" fill="url(#switch-keys-glow)" />
+  <g transform="translate(360 86)" filter="url(#switch-keys-shadow)">
+    <path d="M80 0c44 0 80 36 80 80s-36 80-80 80-80-36-80-80 36-80 80-80zm0 36a44 44 0 100 88 44 44 0 000-88z" fill="rgba(255,255,255,0.18)" stroke="url(#switch-keys-symbol)" stroke-width="6" />
+    <path d="M80 56a24 24 0 11-24 24 24 24 0 0124-24zm-14 70l48 48 18-18 20 20 18-18-20-20 18-18-28-28" fill="none" stroke="url(#switch-keys-symbol)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <text x="34%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="44" fill="#f2fbff" letter-spacing="8">
+    SWITCH KEYS
   </text>
-  <text x="50%" y="63%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="58" fill="#ffffff" letter-spacing="9">
-    KEYS &
-  </text>
-  <text x="50%" y="80%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="34" fill="#d6fffa" letter-spacing="6">
-    FIRMWARE 19.0.1
+  <text x="34%" y="64%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="26" fill="#d8f8ff" letter-spacing="6" style="text-transform:uppercase;">
+    Firmware 19.0.1
   </text>
 </svg>

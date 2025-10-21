@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Foros oficiales Apollo</title>
+  <desc id="desc">Ilustración con burbujas de chat y colores neón para los foros oficiales de Apollo.</desc>
+  <defs>
+    <linearGradient id="forums-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1228" />
+      <stop offset="50%" stop-color="#3c2c82" />
+      <stop offset="100%" stop-color="#2ee6d6" />
+    </linearGradient>
+    <radialGradient id="forums-glow" cx="34%" cy="36%" r="68%">
+      <stop offset="0%" stop-color="#d4c4ff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0a1228" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="forums-bubble" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#d9fffa" />
+    </linearGradient>
+    <filter id="forums-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#050c1e" flood-opacity="0.6" />
+    </filter>
+  </defs>
+  <rect width="640" height="360" fill="url(#forums-bg)" />
+  <circle cx="220" cy="150" r="210" fill="url(#forums-glow)" />
+  <g transform="translate(120 80)" filter="url(#forums-shadow)">
+    <rect x="0" y="0" width="220" height="140" rx="26" fill="url(#forums-bubble)" opacity="0.9" />
+    <circle cx="60" cy="62" r="10" fill="#2e3092" />
+    <circle cx="110" cy="62" r="10" fill="#2e3092" />
+    <circle cx="160" cy="62" r="10" fill="#2e3092" />
+    <path d="M110 140l24 32 50-32z" fill="#d9fffa" />
+  </g>
+  <g transform="translate(340 132)">
+    <rect x="0" y="0" width="160" height="100" rx="22" fill="rgba(10,18,40,0.55)" stroke="#8defff" stroke-width="2" />
+    <circle cx="54" cy="46" r="9" fill="#8defff" opacity="0.8" />
+    <circle cx="80" cy="46" r="9" fill="#8defff" opacity="0.8" />
+    <circle cx="106" cy="46" r="9" fill="#8defff" opacity="0.8" />
+  </g>
+  <text x="52%" y="82%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="38" fill="#f4f7ff" letter-spacing="6">
+    FOROS APOLLO
+  </text>
+  <text x="52%" y="92%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="18" fill="#cde8ff" letter-spacing="6" style="text-transform:uppercase;">
+    Comunidad oficial
+  </text>
+</svg>

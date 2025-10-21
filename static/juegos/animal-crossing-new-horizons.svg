@@ -1,30 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Animal Crossing: New Horizons</title>
+  <desc id="desc">Arte con colores pastel, hojas y texto del juego Animal Crossing: New Horizons.</desc>
   <defs>
     <linearGradient id="acnh-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1b6f50" />
-      <stop offset="55%" stop-color="#2f9a74" />
-      <stop offset="100%" stop-color="#b2e0a8" />
+      <stop offset="0%" stop-color="#0b2f2f" />
+      <stop offset="50%" stop-color="#1c7a6c" />
+      <stop offset="100%" stop-color="#a8f5c4" />
     </linearGradient>
-    <radialGradient id="acnh-sun" cx="15%" cy="20%" r="65%">
-      <stop offset="0%" stop-color="#fff7d6" stop-opacity="0.85" />
-      <stop offset="100%" stop-color="#1b6f50" stop-opacity="0" />
+    <radialGradient id="acnh-glow" cx="36%" cy="38%" r="68%">
+      <stop offset="0%" stop-color="#d8ffe9" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0b2f2f" stop-opacity="0" />
     </radialGradient>
-    <linearGradient id="acnh-wave" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#7fc8ff" stop-opacity="0.75" />
-      <stop offset="100%" stop-color="#1a6ea4" stop-opacity="0.9" />
+    <linearGradient id="acnh-leaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4fffb" />
+      <stop offset="100%" stop-color="#c2ffd9" />
     </linearGradient>
+    <filter id="acnh-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#0b1e1e" flood-opacity="0.4" />
+    </filter>
   </defs>
   <rect width="640" height="360" fill="url(#acnh-bg)" />
-  <circle cx="120" cy="90" r="180" fill="url(#acnh-sun)" />
-  <path d="M0 250 C120 220 220 280 340 250 C460 220 520 300 640 260 L640 360 L0 360 Z" fill="url(#acnh-wave)" opacity="0.55" />
-  <path d="M0 270 C140 240 240 310 360 280 C470 250 520 320 640 290 L640 360 L0 360 Z" fill="#0f4f6b" opacity="0.25" />
-  <text x="50%" y="48%" text-anchor="middle" font-family="'Fredoka One','Segoe UI',sans-serif" font-size="54" fill="#fffcef" letter-spacing="4">
+  <circle cx="240" cy="150" r="220" fill="url(#acnh-glow)" />
+  <g transform="translate(140 60)" filter="url(#acnh-shadow)">
+    <path d="M120 0c66 8 112 48 112 108 0 54-44 112-112 132-68-20-112-78-112-132C8 48 54 8 120 0z" fill="url(#acnh-leaf)" />
+    <path d="M120 44c-36 4-60 30-60 60 0 28 20 58 60 72 40-14 60-44 60-72 0-30-24-56-60-60zm-6 48c12-2 24 6 26 18 2 12-6 24-18 26-12 2-24-6-26-18-2-12 6-24 18-26z" fill="#0b503e" opacity="0.45" />
+    <path d="M124 88l18 36-22 32 6-36-32-14z" fill="#0b503e" opacity="0.5" />
+  </g>
+  <text x="60%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="44" fill="#f9fff4" letter-spacing="6">
     ANIMAL CROSSING
   </text>
-  <text x="50%" y="67%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="56" fill="#ffffff" letter-spacing="8">
-    NEW HORIZONS
-  </text>
-  <text x="50%" y="82%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#f9ffee" letter-spacing="4">
-    ISLA · DISEÑO · AMIGOS
+  <text x="60%" y="66%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="28" fill="#e4ffef" letter-spacing="8" style="text-transform:uppercase;">
+    New Horizons
   </text>
 </svg>

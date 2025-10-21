@@ -75,27 +75,33 @@
 
             <div class="mirrors">
               {% for m in descarga.mirrors %}
-                {% if m.url %}
-                  <div class="mirror-entry">
-                    <a class="btn dl"
-                       href="{{ m.url | strip }}"
-                       target="_blank"
-                       rel="nofollow noopener">
-                      <i class="ti ti-download"></i> Descargar en {{ m.host }}
-                    </a>
-                    <button class="report-flag"
-                            type="button"
-                            data-item="{{ item.id }}"
-                            data-title="{{ item.titulo }}"
-                            data-group="{{ descarga.titulo | default: 'Descarga' }}"
-                            data-host="{{ m.host }}"
-                            data-url="{{ m.url | strip }}"
-                            title="Reportar enlace caído">
-                      <i class="ti ti-alert-triangle" aria-hidden="true"></i>
-                      <span class="sr-only">Reportar enlace caído</span>
-                    </button>
-                  </div>
-                {% endif %}
+                {% assign mirror_url = m.url | default: '' | strip %}
+                {% assign has_url = mirror_url != '' %}
+                <div class="mirror-entry">
+                  {% if has_url %}
+                  <a class="btn dl"
+                     href="{{ mirror_url }}"
+                     target="_blank"
+                     rel="nofollow noopener">
+                    <i class="ti ti-download"></i> Descargar en {{ m.host }}
+                  </a>
+                  <button class="report-flag"
+                          type="button"
+                          data-item="{{ item.id }}"
+                          data-title="{{ item.titulo }}"
+                          data-group="{{ descarga.titulo | default: 'Descarga' }}"
+                          data-host="{{ m.host }}"
+                          data-url="{{ mirror_url }}"
+                          title="Reportar enlace caído">
+                    <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+                    <span class="sr-only">Reportar enlace caído</span>
+                  </button>
+                  {% else %}
+                  <button class="btn dl disabled" type="button" disabled>
+                    <i class="ti ti-clock"></i> {{ m.estado | default: 'Enlace disponible próximamente' }}{% if m.host %} · {{ m.host }}{% endif %}
+                  </button>
+                  {% endif %}
+                </div>
               {% endfor %}
             </div>
           </section>

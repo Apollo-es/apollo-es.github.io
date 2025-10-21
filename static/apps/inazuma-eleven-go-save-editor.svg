@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Inazuma Eleven GO Save Editor</title>
+  <desc id="desc">Ilustración con energía azul y verde para el editor de saves de Inazuma Eleven GO.</desc>
+  <defs>
+    <linearGradient id="iego-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#041020" />
+      <stop offset="45%" stop-color="#0e3d5f" />
+      <stop offset="100%" stop-color="#2ee6d6" />
+    </linearGradient>
+    <radialGradient id="iego-glow" cx="34%" cy="36%" r="68%">
+      <stop offset="0%" stop-color="#8fffd1" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#041020" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="iego-bolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e7fff8" />
+      <stop offset="100%" stop-color="#5df0ff" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#iego-bg)" />
+  <circle cx="200" cy="150" r="210" fill="url(#iego-glow)" />
+  <g transform="translate(120 60) rotate(8 120 120)">
+    <path d="M120 0l-52 86h60l-54 122 160-150h-74l48-58z" fill="url(#iego-bolt)" stroke="#dcfff3" stroke-width="5" stroke-linejoin="round" opacity="0.92" />
+  </g>
+  <text x="62%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="42" fill="#edffff" letter-spacing="6">
+    INAZUMA ELEVEN GO
+  </text>
+  <text x="62%" y="66%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="24" fill="#c8fff2" letter-spacing="5" style="text-transform:uppercase;">
+    Save Editor
+  </text>
+</svg>
