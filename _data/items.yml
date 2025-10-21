@@ -41,6 +41,77 @@
     - host: "Mediafire"
       url: "https://www.mediafire.com/file/..."
 
+- id: pkhex
+  categoria: ["apps"]
+  titulo: "PKHeX"
+  descripcion: "Editor de partidas para las sagas principales de Pokémon. Ajusta inventario, eventos y equipos con soporte para generaciones de Nintendo DS, 3DS y Nintendo Switch."
+  tipo: "Editor de saves"
+  idioma: "multi"
+  tamano: "18 MB"
+  licencia: "GPLv3"
+  portada: "/static/apps/pkhex.svg"
+  hashtags:
+    - "#PKHeX"
+    - "#PokemonSaveEditor"
+    - "#SaveEditors"
+  descargas:
+    - titulo: "Descarga principal"
+      mirrors:
+        - host: "PKHeX (ouo.io)"
+          url: "https://ouo.io/S9o4l5"
+  disclaimer: |
+    <strong>Aviso legal:</strong> PKHeX es un editor de partidas de terceros. Pokémon es © 1995-2025 Nintendo / Creatures / Game Freak. Usa la herramienta solo con respaldos propios.
+
+- id: inazuma-eleven-3-save-editor
+  categoria: ["apps"]
+  titulo: "Inazuma Eleven 3 Save Editor"
+  descripcion: "Gestiona jugadores, objetos y progreso de Inazuma Eleven 3 (Nintendo DS) desde una interfaz simplificada con plantillas listas para torneos."
+  tipo: "Editor de saves"
+  idioma: "en"
+  tamano: "Pendiente"
+  licencia: "Comunidad"
+  portada: "/static/apps/inazuma-eleven-3-save-editor.svg"
+  hashtags:
+    - "#InazumaEleven"
+    - "#SaveEditor"
+    - "#NintendoDS"
+  descargas:
+    - titulo: "Descargas oficiales"
+      mirrors:
+        - host: "Victory Road"
+          url: "https://ouo.io/5ay9u6"
+        - host: "Inazuma Eleven GO"
+          url: "https://ouo.io/lslpTcb"
+        - host: "Saga GO / OG"
+          url: "https://ouo.io/KWd6LgS"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Inazuma Eleven es © 2008-2025 Level-5 Inc. Comparte y modifica saves únicamente si dispones de una copia legítima del juego.
+
+- id: inazuma-eleven-go-save-editor
+  categoria: ["apps"]
+  titulo: "Inazuma Eleven GO Save Editor"
+  descripcion: "Actualiza plantillas, espíritus y objetos especiales de las entregas GO, Chrono Stones y Galaxy con perfiles preconfigurados para partidas competitivas."
+  tipo: "Editor de saves"
+  idioma: "en"
+  tamano: "Pendiente"
+  licencia: "Comunidad"
+  portada: "/static/apps/inazuma-eleven-go-save-editor.svg"
+  hashtags:
+    - "#InazumaElevenGO"
+    - "#ChronoStones"
+    - "#SaveEditors"
+  descargas:
+    - titulo: "Descargas oficiales"
+      mirrors:
+        - host: "Victory Road"
+          url: "https://ouo.io/5ay9u6"
+        - host: "Inazuma Eleven GO"
+          url: "https://ouo.io/lslpTcb"
+        - host: "Saga GO / OG"
+          url: "https://ouo.io/KWd6LgS"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Inazuma Eleven GO, Chrono Stones y Galaxy son © 2012-2025 Level-5 Inc. Usa editores de partidas con respaldos propios y respeta los términos de servicio.
+
 - id: pokemon-leyendas-za
   categoria: ["juegos"]
   titulo: "Pokémon Leyendas Z-A"
