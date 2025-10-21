@@ -30,8 +30,6 @@ plugins:
 
 # Navegación
 nav:
-  - name: "Inicio"
-    url: "/"
   - name: "Noticias"
     url: "/noticias/"
   - name: "Juegos"

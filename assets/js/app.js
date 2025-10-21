@@ -17,26 +17,67 @@ document.documentElement.classList.add('has-js');
   }
   if(!c) return;
   const ctx = c.getContext('2d');
-  let W,H,stars=[];
-  function resize(){
-    W = c.width = innerWidth;
-    H = c.height = innerHeight;
-    stars = Array.from(
-      {length: Math.min(220, Math.floor(W*H/12000))},
-      ()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*0.8+0.2,s:Math.random()*1.5+0.2})
-    );
+  let cssW = 0, cssH = 0, DPR = 1, stars = [];
+  function makeStar(){
+    return {
+      x: Math.random()*cssW,
+      y: Math.random()*cssH,
+      depth: Math.random()*0.7 + 0.3,
+      speed: Math.random()*0.8 + 0.25,
+      size: Math.random()*1.2 + 0.4,
+      twinkle: Math.random()*Math.PI*2
+    };
   }
-  addEventListener('resize', resize); resize();
-  (function loop(){
-    ctx.clearRect(0,0,W,H);
+  function resize(){
+    DPR = Math.max(window.devicePixelRatio || 1, 1);
+    cssW = innerWidth;
+    cssH = innerHeight;
+    c.width = Math.ceil(cssW * DPR);
+    c.height = Math.ceil(cssH * DPR);
+    c.style.width = cssW + 'px';
+    c.style.height = cssH + 'px';
+    const target = Math.min(320, Math.floor((cssW*cssH)/9000));
+    stars = Array.from({length: target}, makeStar);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  addEventListener('resize', resize, {passive:true});
+  resize();
+  const glow = ctx.createRadialGradient(0,0,0, 0,0,1);
+  glow.addColorStop(0, 'rgba(160,220,255,0.9)');
+  glow.addColorStop(0.55, 'rgba(120,190,255,0.45)');
+  glow.addColorStop(1, 'rgba(20,60,120,0)');
+  const trail = ctx.createLinearGradient(0,0,0,18);
+  trail.addColorStop(0, 'rgba(80,180,255,0.45)');
+  trail.addColorStop(1, 'rgba(80,180,255,0)');
+  (function loop(time){
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.clearRect(0,0,cssW,cssH);
     for(const p of stars){
-      p.y += p.s*0.35; p.x += Math.sin(p.y*0.01)*0.15;
-      if(p.y>H) { p.y=0; p.x=Math.random()*W; }
-      ctx.globalAlpha = p.z; ctx.fillStyle = '#8fd3ff';
-      ctx.fillRect(p.x,p.y,p.s,p.s);
+      p.y += p.speed * p.depth * 0.6;
+      p.x += Math.sin((p.y + time*0.05) * 0.008) * 0.35;
+      if(p.y > cssH + 12){
+        Object.assign(p, makeStar(), {y: -12});
+      }
+      const baseX = p.x;
+      const baseY = p.y;
+      ctx.save();
+      ctx.translate(baseX, baseY);
+      const alpha = 0.45 + Math.sin(p.twinkle + time*0.003)*0.35;
+      ctx.globalAlpha = Math.min(1, Math.max(0.2, alpha));
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(0,0,p.size*1.8,0,Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha *= 0.8;
+      ctx.fillStyle = '#9be8ff';
+      ctx.fillRect(-p.size*0.6,-p.size*0.6,p.size*1.2,p.size*1.2);
+      ctx.globalAlpha *= 0.9;
+      ctx.fillStyle = trail;
+      ctx.fillRect(-p.size*0.3,0,p.size*0.6,18*p.depth);
+      ctx.restore();
     }
     requestAnimationFrame(loop);
-  })();
+  })(performance.now());
 })();
 
 // --- Catálogo de juegos: búsqueda + filtros ---
