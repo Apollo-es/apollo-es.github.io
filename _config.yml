@@ -74,3 +74,5 @@ defaults:
 # Integraciones opcionales
 disqus_shortname: ""
 google_client_id: ""
+recaptcha:
+  site_key: "6LfYD_IrAAAAAEfSF-pF4GMEeC_1XuANgnhiiz4f"
