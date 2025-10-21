@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ page.lang | default: site.lang | default: 'es' }}" data-theme="dark">
+<html lang="{{ page.lang | default: site.lang | default: 'es' }}" data-theme="dark" data-recaptcha-site-key="{{ site.recaptcha.site_key | default: '' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -29,6 +29,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+  {% if site.recaptcha.site_key %}
+  <script src="https://www.google.com/recaptcha/enterprise.js?render={{ site.recaptcha.site_key }}"></script>
+  {% endif %}
   {% if site.organization %}
     <script type="application/ld+json">
     {
@@ -220,6 +223,7 @@
 
   <script src="/assets/js/app.js"></script>
   <script src="/assets/js/chatbot.js"></script>
+  <script src="/assets/js/recaptcha.js"></script>
   <div class="modal-backdrop" data-login-modal hidden>
     <div class="modal">
       <button class="modal-close" type="button" data-close-login aria-label="Cerrar">×</button>
@@ -229,7 +233,7 @@
 
       <div class="or">o</div>
 
-      <form id="email-login-form">
+      <form id="email-login-form" data-recaptcha="modal-auth" data-recaptcha-action="login">
         <label>Email</label>
         <input type="email" id="email" required autocomplete="username">
         <label>Contraseña</label>
@@ -248,8 +252,14 @@
           <input type="checkbox" id="security-consent">
           Confirmo que soy una persona y acepto los términos de seguridad.
         </label>
+        <input type="hidden" name="g-recaptcha-response" data-recaptcha-token>
         <div class="actions">
-          <button type="submit">Entrar</button>
+          <button type="submit"
+                  class="g-recaptcha"
+                  data-sitekey="{{ site.recaptcha.site_key | default: '' }}"
+                  data-action="login"
+                  data-callback="onRecaptchaSubmit"
+                  data-recaptcha-form="email-login-form">Entrar</button>
           <button type="button" data-toggle-mode>Crear cuenta</button>
         </div>
         <button type="button" class="link" data-reset>¿Olvidaste tu contraseña?</button>
@@ -293,6 +303,7 @@
     const securityAnswer = document.getElementById("security-answer");
     const refreshChallengeBtn = form.querySelector("[data-refresh-challenge]");
     const securityConsent = document.getElementById("security-consent");
+    const recaptchaField = form.querySelector("[data-recaptcha-token]");
 
     const loginGuard = new AttemptGuard("login", {
       baseCooldownMs: 15000,
@@ -313,6 +324,47 @@
     });
 
     const challenge = new SecurityChallenge();
+
+    const getRecaptchaManager = () => window.ApolloRecaptcha || null;
+
+    const clearRecaptchaToken = () => {
+      if (recaptchaField) recaptchaField.value = "";
+      const manager = getRecaptchaManager();
+      if (manager && typeof manager === "object") {
+        if (Object.prototype.hasOwnProperty.call(manager, "lastToken")) {
+          manager.lastToken = null;
+        }
+        if (Object.prototype.hasOwnProperty.call(manager, "lastForm") && manager.lastForm === form) {
+          manager.lastForm = null;
+        }
+        if (Object.prototype.hasOwnProperty.call(manager, "lastButton") && manager.lastButton === submitBtn) {
+          manager.lastButton = null;
+        }
+      }
+    };
+
+    const ensureRecaptchaToken = async (action) => {
+      const existing = recaptchaField ? recaptchaField.value.trim() : "";
+      if (existing) return existing;
+      const manager = getRecaptchaManager();
+      if (!manager) {
+        errorBox.textContent = "No se pudo inicializar la protección reCAPTCHA.";
+        return "";
+      }
+      try {
+        const token = await manager.execute(action);
+        if (typeof window.onRecaptchaSubmit === "function") {
+          window.onRecaptchaSubmit(token, { action, form, manual: true });
+        } else if (recaptchaField) {
+          recaptchaField.value = token;
+        }
+        return token;
+      } catch (error) {
+        console.error("Error al obtener el token reCAPTCHA", error);
+        errorBox.textContent = "No se pudo verificar reCAPTCHA. Inténtalo de nuevo.";
+        return "";
+      }
+    };
 
     const state = {
       mode: "login",
@@ -361,6 +413,12 @@
 
     const setMode = (mode) => {
       state.mode = mode;
+      if (form) {
+        form.setAttribute("data-recaptcha-action", mode);
+      }
+      if (submitBtn) {
+        submitBtn.setAttribute("data-action", mode);
+      }
       toggleRegisterFields(mode === "register");
       submitBtn.textContent = texts[mode].submit;
       toggleModeBtn.textContent = texts[mode].toggle;
@@ -377,6 +435,7 @@
         if (securityAnswer) securityAnswer.value = "";
         if (securityConsent) securityConsent.checked = false;
       }
+      clearRecaptchaToken();
     };
 
     const strengthMessages = [
@@ -488,6 +547,8 @@
       }
       disableForm(true);
       try {
+        const token = await ensureRecaptchaToken("login_google");
+        if (!token) return;
         await loginWithGoogle();
         loginGuard.recordSuccess();
         setMode("login");
@@ -500,6 +561,7 @@
           setWarning(`Protección activada durante ${formatDuration(delay)}.`);
         }
       } finally {
+        clearRecaptchaToken();
         disableForm(false);
       }
     });
@@ -530,6 +592,8 @@
         }
         disableForm(true);
         try {
+          const token = await ensureRecaptchaToken("login");
+          if (!token) return;
           await loginEmailPass(email.value.trim(), pass.value);
           loginGuard.recordSuccess();
           setMode("login");
@@ -542,6 +606,7 @@
           setWarning(`Debes esperar ${formatDuration(delay)} antes del próximo intento.`);
         }
         finally {
+          clearRecaptchaToken();
           disableForm(false);
         }
         return;
@@ -567,6 +632,11 @@
         return;
       }
 
+      const token = await ensureRecaptchaToken("register");
+      if (!token) {
+        return;
+      }
+
       disableForm(true);
       try {
         await registerEmailPass(email.value.trim(), pass.value);
@@ -582,6 +652,7 @@
         await refreshChallenge();
       }
       finally {
+        clearRecaptchaToken();
         disableForm(false);
       }
     });
@@ -589,9 +660,19 @@
     resetBtn.addEventListener("click", async () => {
       if (!email.value) { errorBox.textContent = "Escribe tu email."; return; }
       disableForm(true);
-      try { await resetPassword(email.value.trim()); errorBox.textContent = "Revisa tu correo para continuar."; }
-      catch (err) { errorBox.textContent = mapFirebaseError(err); }
-      finally { disableForm(false); }
+      try {
+        const token = await ensureRecaptchaToken("password_reset");
+        if (!token) return;
+        await resetPassword(email.value.trim());
+        errorBox.textContent = "Revisa tu correo para continuar.";
+      }
+      catch (err) {
+        errorBox.textContent = mapFirebaseError(err);
+      }
+      finally {
+        clearRecaptchaToken();
+        disableForm(false);
+      }
     });
 
     logoutBtn?.addEventListener("click", () => logout().catch(console.error));
