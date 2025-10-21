@@ -48,6 +48,18 @@ layout: default
           <i class="ti ti-arrow-left"></i> Volver al catálogo
         </a>
       </div>
+
+      <div class="game-engagement">
+        <button class="btn ghost" data-like data-type="game" data-id="{{ game.id }}" data-title="{{ game.titulo }}">❤ Me gusta</button>
+        <button class="btn ghost" data-save data-type="game" data-id="{{ game.id }}" data-title="{{ game.titulo }}">Guardar</button>
+        <div class="rating" data-rate data-type="game" data-id="{{ game.id }}">
+          <button type="button" data-star="1">★</button>
+          <button type="button" data-star="2">★</button>
+          <button type="button" data-star="3">★</button>
+          <button type="button" data-star="4">★</button>
+          <button type="button" data-star="5">★</button>
+        </div>
+      </div>
     </div>
   </header>
 

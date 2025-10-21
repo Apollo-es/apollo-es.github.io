@@ -718,7 +718,10 @@ body:not(.is-staff) .report-panel{display:none}
   .nav-home{width:100%;text-align:center;padding:12px 16px;border-radius:14px;font-weight:700;letter-spacing:.4px}
   .nav-toggle{display:inline-flex;align-self:flex-end}
   .auth-head{width:100%;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:12px}
-  .auth-head button,.auth-head a{flex:1 1 160px;justify-content:center}
+  .auth-head [data-user-menu],.auth-head [data-open-login]{flex:1 1 160px}
+  .auth-head [data-user-menu]{display:flex;justify-content:center}
+  .auth-head [data-user-menu] .user-trigger{width:100%;justify-content:center}
+  .auth-head [data-open-login]{justify-content:center}
   .nav-menu{position:fixed;top:0;right:0;bottom:0;left:auto;width:min(420px,calc(100% - 32px));margin:16px;display:flex;flex-direction:column;align-items:stretch;padding:0;z-index:60;
     opacity:0;visibility:hidden;pointer-events:none;transform:translateX(24px);
     transition:opacity .24s ease,transform .24s ease,visibility 0s linear .24s}
@@ -783,10 +786,14 @@ body:not(.is-staff) .report-panel{display:none}
 }
 
 .auth-head{display:flex;align-items:center;gap:12px;margin-left:auto}
-.auth-head span{font-weight:600}
-.auth-head button,.auth-head a{background:#101425;color:#e4e9ff;border:1px solid rgba(255,255,255,.12);padding:6px 12px;border-radius:999px;font-size:14px;cursor:pointer;text-decoration:none;transition:background .2s ease}
-.auth-head button:hover,.auth-head a:hover{background:#1a2038}
-.auth-head a{display:inline-flex;align-items:center}
+.auth-head [data-open-login]{display:inline-flex;align-items:center;padding:10px 14px;border-radius:999px;border:1px solid var(--surface-panel-border);background:rgba(12,18,32,.7);color:var(--body-text);font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s ease,border-color .2s ease,color .2s ease}
+.auth-head [data-open-login]:hover{background:rgba(18,26,44,.85);border-color:rgba(124,146,206,.6);color:#fff}
+.user-dropdown{position:relative;display:flex;align-items:center}
+.user-trigger{display:flex;align-items:center;gap:.4rem;padding:8px 12px;border-radius:999px;border:1px solid var(--surface-panel-border);background:rgba(12,18,32,.7);color:var(--body-text);font-weight:600;cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease}
+.user-trigger:hover{background:rgba(18,26,44,.85);border-color:rgba(124,146,206,.6);color:#fff}
+.user-menu{position:absolute;right:0;top:calc(100% + 6px);background:#111;border:1px solid #333;border-radius:10px;padding:.5rem;min-width:180px;box-shadow:0 14px 34px -20px rgba(0,0,0,.75);z-index:20}
+.user-menu a,.user-menu button{display:block;width:100%;text-align:left;padding:.4rem .6rem;background:none;border:0;color:#fff;font:500 14px/1.3 Inter,sans-serif;cursor:pointer;text-decoration:none}
+.user-menu a:hover,.user-menu button:hover{background:#1c1c1c}
 
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:grid;place-items:center;z-index:9999}
 .modal-backdrop[hidden]{display:none}
@@ -836,3 +843,15 @@ body:not(.is-staff) .report-panel{display:none}
   .hero-highlights li{font-size:14px}
   .home-seo{padding:24px}
 }
+.game-engagement{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
+.game-engagement .btn{flex:0 0 auto;padding:10px 16px;font-weight:600}
+.game-engagement .btn.ghost{background:rgba(15,21,35,.6);border:1px solid rgba(72,88,132,.6);color:#e4ebff;transition:background .2s ease,border-color .2s ease,color .2s ease}
+.game-engagement .btn.ghost:hover{background:rgba(28,36,58,.85);border-color:rgba(124,146,206,.8)}
+.game-engagement .btn.active,.game-engagement .btn.ghost.active{background:rgba(124,92,255,.2);border-color:rgba(124,92,255,.8);color:#fff}
+
+.rating{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(15,21,35,.7);border:1px solid rgba(72,88,132,.5)}
+.rating button{background:none;border:0;color:#7483af;font-size:18px;cursor:pointer;padding:0 2px;transition:color .2s ease,transform .2s ease}
+.rating button:hover{color:#f8d06f;transform:translateY(-1px)}
+.rating button.active{color:#f6c343}
+
+[data-like].active,[data-save].active{color:#fff}

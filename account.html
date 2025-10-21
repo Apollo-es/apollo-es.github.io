@@ -1,0 +1,72 @@
+---
+layout: default
+title: Mi cuenta
+---
+
+<section class="container">
+  <h1>Mi cuenta</h1>
+
+  <div id="guard">Debes iniciar sesión para gestionar tu cuenta.</div>
+
+  <form id="profile" hidden>
+    <label>Nombre para mostrar</label>
+    <input type="text" id="displayName" placeholder="Tu nombre">
+    <button type="submit">Guardar nombre</button>
+    <p id="pmsg"></p>
+  </form>
+
+  <form id="uname" hidden>
+    <label>Nombre de usuario (único)</label>
+    <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
+    <button type="submit">Guardar usuario</button>
+    <p class="help">Solo minúsculas, números, “_” y “.”</p>
+    <p id="umsg"></p>
+  </form>
+
+  <div id="security" hidden>
+    <h2>Seguridad</h2>
+    <p>¿Olvidaste tu contraseña? Podemos enviarte un enlace para restablecerla.</p>
+    <button id="reset">Enviar email de restablecimiento</button>
+    <p id="smsg"></p>
+    <hr>
+    <button id="delete" class="danger">Eliminar mi cuenta</button>
+  </div>
+</section>
+
+<script type="module">
+  import { onAuth, setDisplayName, setUsername, resetPassword, deleteAccount } from "/assets/js/firebase-app.js";
+
+  const guard=document.getElementById("guard");
+  const pf=document.getElementById("profile"), dn=document.getElementById("displayName"), pmsg=document.getElementById("pmsg");
+  const uf=document.getElementById("uname"), un=document.getElementById("username"), umsg=document.getElementById("umsg");
+  const sec=document.getElementById("security"), resetBtn=document.getElementById("reset"), del=document.getElementById("delete"), smsg=document.getElementById("smsg");
+
+  let currentUserEmail=null;
+
+  onAuth((user)=>{
+    const logged=!!user;
+    guard.hidden=logged; pf.hidden=!logged; uf.hidden=!logged; sec.hidden=!logged;
+    if(!logged) return;
+    dn.value = user.displayName || "";
+    currentUserEmail = user.email || null;
+  });
+
+  pf.addEventListener("submit", async (e)=>{ e.preventDefault(); pmsg.textContent="Guardando..."; try{
+    await setDisplayName(dn.value); pmsg.textContent="Nombre actualizado.";
+  }catch(err){ pmsg.textContent=err.message; } });
+
+  uf.addEventListener("submit", async (e)=>{ e.preventDefault(); umsg.textContent="Guardando..."; try{
+    const saved=await setUsername(un.value); umsg.textContent=`Usuario guardado: ${saved}`;
+  }catch(err){ umsg.textContent=err.message; } });
+
+  resetBtn.addEventListener("click", async ()=>{ if(!currentUserEmail){ smsg.textContent="Tu cuenta no tiene email."; return; }
+    try{ await resetPassword(currentUserEmail); smsg.textContent="Correo enviado. Revisa tu bandeja."; }
+    catch(err){ smsg.textContent=err.message; }
+  });
+
+  del.addEventListener("click", async ()=>{
+    if(!confirm("¿Seguro que quieres eliminar tu cuenta?")) return;
+    try{ await deleteAccount(); location.href="/"; }
+    catch(err){ alert("No se pudo eliminar. Quizá tengas que volver a iniciar sesión y reintentar."); console.error(err); }
+  });
+</script>
