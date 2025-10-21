@@ -113,6 +113,25 @@ export async function toggleLike({contentType, contentId, title}) {
   return { liked: true };
 }
 
+export async function toggleSave({contentType, contentId, title}) {
+  if (!auth.currentUser) throw new Error("Inicia sesión");
+  const id = key(auth.currentUser.uid, contentType, contentId);
+  const ref = doc(db, collections.saves || "saves", id);
+  const existing = await getDoc(ref);
+  if (existing.exists()) {
+    await deleteDoc(ref);
+    return { saved: false };
+  }
+  await setDoc(ref, {
+    uid: auth.currentUser.uid,
+    contentType,
+    contentId,
+    title: title || null,
+    ts: serverTimestamp()
+  });
+  return { saved: true };
+}
+
 export async function setRating({contentType, contentId, rating, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
@@ -209,7 +228,7 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
 
 export async function sendReport({message, context}) {
   const u = auth.currentUser;
-  await addDoc(collection(db, "reports"), {
+  await addDoc(collection(db, collections.reports || "reports"), {
     message,
     context: context || null,
     uid: u ? u.uid : null,

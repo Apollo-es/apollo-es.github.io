@@ -14,5 +14,7 @@ export const collections = {
   downloads: "downloads",
   forumActivity: "forumActivity",
   likes: "likes",
-  ratings: "ratings"
+  saves: "saves",
+  ratings: "ratings",
+  reports: "reports"
 };

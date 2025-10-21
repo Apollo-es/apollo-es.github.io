@@ -1,0 +1,21 @@
+<div class="content-actions" data-content
+     data-type="{{ include.content_type | default: page.collection | default: 'game' }}"
+     data-id="{{ include.content_id | default: page.slug | default: page.url | replace:'/', '-' | replace:'.html','' }}"
+     data-title="{{ include.content_title | default: page.title | escape }}">
+
+  <button class="btn ghost btn-like" type="button" data-like>
+    ❤ <span>Me gusta</span>
+  </button>
+
+  <button class="btn ghost btn-save" type="button" data-save>
+    Guardar
+  </button>
+
+  <div class="rating" data-rate>
+    <button type="button" data-star="1">★</button>
+    <button type="button" data-star="2">★</button>
+    <button type="button" data-star="3">★</button>
+    <button type="button" data-star="4">★</button>
+    <button type="button" data-star="5">★</button>
+  </div>
+</div>
