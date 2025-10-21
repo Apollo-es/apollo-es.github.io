@@ -799,6 +799,14 @@ body:not(.is-staff) .report-panel{display:none}
 #email-login-form .actions{display:flex;gap:.5rem}
 #email-login-form button{padding:.55rem .8rem;border-radius:10px;border:1px solid #333;background:#1b1b1b;color:#fff;cursor:pointer}
 #email-login-form .link{background:transparent;border:0;color:#7aa2ff;padding:0;margin-top:.5rem}
+#email-login-form .password-strength{margin:-.25rem 0 .75rem;font-size:.85rem;color:var(--warn)}
+#email-login-form .security-challenge{margin:.75rem 0}
+#email-login-form .security-challenge-controls{display:flex;gap:.5rem;align-items:center}
+#email-login-form .security-challenge-controls input{flex:1}
+#email-login-form .security-challenge-controls button{padding:.5rem .6rem;border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
+#email-login-form .security-consent{display:flex;gap:.5rem;align-items:flex-start;font-size:.85rem;margin:.5rem 0 0}
+#email-login-form .security-consent input{margin-top:.2rem}
+#email-login-form .warning{color:var(--warn);min-height:1.2em;font-size:.8rem;margin-top:.4rem}
 .error{color:#f66;min-height:1.2em}
 
 .logged-in [data-login-google]{display:none}

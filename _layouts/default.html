@@ -218,12 +218,6 @@
     </div>
   </div>
 
-  <div class="auth-controls">
-    <span data-user-box>No has iniciado sesión</span>
-    <button type="button" data-login-google>Entrar con Google</button>
-    <button type="button" data-logout>Salir</button>
-  </div>
-
   <script src="/assets/js/app.js"></script>
   <script src="/assets/js/chatbot.js"></script>
   <div class="modal-backdrop" data-login-modal hidden>
@@ -237,15 +231,30 @@
 
       <form id="email-login-form">
         <label>Email</label>
-        <input type="email" id="email" required>
+        <input type="email" id="email" required autocomplete="username">
         <label>Contraseña</label>
-        <input type="password" id="password" required minlength="6">
+        <input type="password" id="password" required minlength="6" autocomplete="current-password">
+        <label data-register-only hidden>Confirmar contraseña</label>
+        <input type="password" id="password-confirm" data-register-only hidden autocomplete="new-password">
+        <p class="password-strength" data-password-strength hidden></p>
+        <div class="security-challenge" data-register-only hidden>
+          <p class="security-question" data-security-question></p>
+          <div class="security-challenge-controls">
+            <input type="text" id="security-answer" inputmode="numeric" autocomplete="one-time-code">
+            <button type="button" data-refresh-challenge aria-label="Nuevo reto"><i class="ti ti-refresh"></i></button>
+          </div>
+        </div>
+        <label class="security-consent" data-register-only hidden>
+          <input type="checkbox" id="security-consent">
+          Confirmo que soy una persona y acepto los términos de seguridad.
+        </label>
         <div class="actions">
-          <button type="submit" data-mode="login">Entrar</button>
-          <button type="button" data-mode="register">Crear cuenta</button>
+          <button type="submit">Entrar</button>
+          <button type="button" data-toggle-mode>Crear cuenta</button>
         </div>
         <button type="button" class="link" data-reset>¿Olvidaste tu contraseña?</button>
         <p id="login-error" class="error" role="alert"></p>
+        <p class="warning" data-attempt-warning></p>
       </form>
     </div>
   </div>
@@ -255,6 +264,11 @@
       onAuth, loginWithGoogle, logout,
       loginEmailPass, registerEmailPass, resetPassword
     } from "/assets/js/firebase-app.js";
+    import {
+      AttemptGuard,
+      SecurityChallenge,
+      formatDuration
+    } from "/assets/js/auth-security.js";
 
     const openBtn   = document.querySelector("[data-open-login]");
     const modal     = document.querySelector("[data-login-modal]");
@@ -267,36 +281,317 @@
     const form = document.getElementById("email-login-form");
     const email = document.getElementById("email");
     const pass  = document.getElementById("password");
+    const passConfirm = document.getElementById("password-confirm");
     const errorBox = document.getElementById("login-error");
+    const warningBox = document.querySelector("[data-attempt-warning]");
     const resetBtn = document.querySelector("[data-reset]");
-    const registerBtn = form.querySelector("[data-mode='register']");
+    const toggleModeBtn = form.querySelector("[data-toggle-mode]");
+    const registerOnly = Array.from(form.querySelectorAll("[data-register-only]"));
+    const submitBtn = form.querySelector("button[type='submit']");
+    const strengthBox = form.querySelector("[data-password-strength]");
+    const securityQuestion = form.querySelector("[data-security-question]");
+    const securityAnswer = document.getElementById("security-answer");
+    const refreshChallengeBtn = form.querySelector("[data-refresh-challenge]");
+    const securityConsent = document.getElementById("security-consent");
 
-    const open  = () => { modal.hidden = false; document.body.style.overflow='hidden'; errorBox.textContent=""; };
-    const close = () => { modal.hidden = true;  document.body.style.overflow=''; };
+    const loginGuard = new AttemptGuard("login", {
+      baseCooldownMs: 15000,
+      backoffFactor: 2,
+      lockoutThreshold: 6,
+      lockoutMs: 15 * 60 * 1000,
+      resetMs: 5 * 60 * 1000,
+      maxCooldownMs: 60 * 60 * 1000
+    });
 
-    openBtn?.addEventListener("click", open);
-    closeBtn?.addEventListener("click", close);
-    modal?.addEventListener("click", (e)=>{ if(e.target===modal) close(); });
+    const registerGuard = new AttemptGuard("register", {
+      baseCooldownMs: 60000,
+      backoffFactor: 2.4,
+      lockoutThreshold: 3,
+      lockoutMs: 45 * 60 * 1000,
+      resetMs: 30 * 60 * 1000,
+      maxCooldownMs: 6 * 60 * 60 * 1000
+    });
+
+    const challenge = new SecurityChallenge();
+
+    const state = {
+      mode: "login",
+      processing: false
+    };
+
+    const texts = {
+      login: { submit: "Entrar", toggle: "Crear cuenta" },
+      register: { submit: "Crear cuenta", toggle: "Ya tengo cuenta" }
+    };
+
+    const setWarning = (message = "") => {
+      if (warningBox) warningBox.textContent = message;
+    };
+
+    const formatBlockedMessage = (guard) => {
+      const status = guard.canAttempt();
+      if (status.allowed) return "";
+      const wait = formatDuration(status.waitMs);
+      return `Demasiados intentos. Vuelve a intentarlo en ${wait}.`;
+    };
+
+    const disableForm = (disabled) => {
+      state.processing = disabled;
+      const elements = [submitBtn, toggleModeBtn, loginG, resetBtn, securityAnswer, securityConsent, pass, passConfirm, email];
+      elements.filter(Boolean).forEach((el) => {
+        el.disabled = disabled;
+      });
+    };
+
+    const toggleRegisterFields = (show) => {
+      registerOnly.forEach((element) => {
+        element.hidden = !show;
+        const input = element.tagName === "INPUT" ? element : element.querySelector("input");
+        if (input) input.required = show;
+      });
+      if (strengthBox) strengthBox.hidden = !show;
+    };
+
+    const refreshChallenge = async () => {
+      if (!securityQuestion) return;
+      const question = await challenge.generate();
+      securityQuestion.textContent = question;
+      if (securityAnswer) securityAnswer.value = "";
+    };
+
+    const setMode = (mode) => {
+      state.mode = mode;
+      toggleRegisterFields(mode === "register");
+      submitBtn.textContent = texts[mode].submit;
+      toggleModeBtn.textContent = texts[mode].toggle;
+      if (pass) {
+        pass.setAttribute("autocomplete", mode === "register" ? "new-password" : "current-password");
+      }
+      if (mode === "register") {
+        refreshChallenge().catch(console.error);
+        updatePasswordStrength();
+      } else {
+        setWarning("");
+        if (strengthBox) strengthBox.textContent = "";
+        if (passConfirm) passConfirm.value = "";
+        if (securityAnswer) securityAnswer.value = "";
+        if (securityConsent) securityConsent.checked = false;
+      }
+    };
+
+    const strengthMessages = [
+      "Contraseña muy débil",
+      "Contraseña débil",
+      "Contraseña aceptable",
+      "Contraseña segura"
+    ];
+
+    const calculateStrength = (value) => {
+      let score = 0;
+      if (value.length >= 12) score++;
+      if (/[A-Z]/.test(value)) score++;
+      if (/[a-z]/.test(value) && /\d/.test(value)) score++;
+      if (/[^A-Za-z0-9]/.test(value)) score++;
+      return score;
+    };
+
+    const updatePasswordStrength = () => {
+      if (!strengthBox) return;
+      const value = pass.value;
+      if (!value) {
+        strengthBox.textContent = "";
+        return;
+      }
+      const score = calculateStrength(value);
+      strengthBox.textContent = strengthMessages[Math.min(score, strengthMessages.length - 1)];
+    };
+
+    const mapFirebaseError = (err) => {
+      const errorCode = err?.code || "";
+      const translations = {
+        "auth/invalid-email": "El email no es válido.",
+        "auth/user-not-found": "No existe ninguna cuenta con ese email.",
+        "auth/wrong-password": "La contraseña no coincide.",
+        "auth/too-many-requests": "Acceso temporalmente bloqueado. Inténtalo más tarde.",
+        "auth/email-already-in-use": "Ya existe una cuenta con ese email.",
+        "auth/weak-password": "La contraseña es demasiado débil.",
+        "auth/network-request-failed": "Error de red. Comprueba tu conexión.",
+        "auth/popup-closed-by-user": "Se canceló el inicio de sesión."
+      };
+      return translations[errorCode] || err?.message || "Ocurrió un error inesperado.";
+    };
+
+    const shouldCountGuardFailure = (err) => {
+      const code = err?.code || "";
+      return !["auth/popup-closed-by-user", "auth/cancelled-popup-request"].includes(code);
+    };
+
+    const requireStrongPassword = () => {
+      const value = pass.value;
+      const confirm = passConfirm?.value || "";
+      const errors = [];
+      if (value.length < 12) errors.push("al menos 12 caracteres");
+      if (!/[A-Z]/.test(value)) errors.push("una mayúscula");
+      if (!/[a-z]/.test(value) || !/\d/.test(value)) errors.push("letras minúsculas y números");
+      if (!/[^A-Za-z0-9]/.test(value)) errors.push("un símbolo");
+      if (confirm && value !== confirm) errors.push("que las contraseñas coincidan");
+      if (errors.length) {
+        errorBox.textContent = `La contraseña debe incluir ${errors.join(", ")}.`;
+        return false;
+      }
+      return true;
+    };
+
+    const ensureChallengeSolved = async () => {
+      if (!securityAnswer) return true;
+      const valid = await challenge.verify(securityAnswer.value);
+      if (!valid) {
+        errorBox.textContent = "Reto de seguridad incorrecto.";
+        await refreshChallenge();
+        return false;
+      }
+      return true;
+    };
+
+    const ensureConsent = () => {
+      if (!securityConsent) return true;
+      if (!securityConsent.checked) {
+        errorBox.textContent = "Debes aceptar las medidas de seguridad.";
+        return false;
+      }
+      return true;
+    };
+
+    openBtn?.addEventListener("click", () => {
+      modal.hidden = false;
+      document.body.style.overflow='hidden';
+      errorBox.textContent="";
+      setWarning("");
+      if (state.mode === "register") {
+        refreshChallenge().catch(console.error);
+      }
+    });
+    closeBtn?.addEventListener("click", () => {
+      modal.hidden = true;
+      document.body.style.overflow='';
+      setMode("login");
+    });
+    modal?.addEventListener("click", (e)=>{ if(e.target===modal) { modal.hidden = true; document.body.style.overflow=''; setMode("login"); } });
 
     loginG?.addEventListener("click", async () => {
-      try { await loginWithGoogle(); close(); } catch(e){ errorBox.textContent = e.message; }
+      setWarning("");
+      errorBox.textContent = "";
+      const status = loginGuard.canAttempt();
+      if (!status.allowed) {
+        errorBox.textContent = formatBlockedMessage(loginGuard);
+        return;
+      }
+      disableForm(true);
+      try {
+        await loginWithGoogle();
+        loginGuard.recordSuccess();
+        setMode("login");
+        modal.hidden = true;
+        document.body.style.overflow='';
+      } catch(e){
+        errorBox.textContent = mapFirebaseError(e);
+        if (shouldCountGuardFailure(e)) {
+          const delay = loginGuard.recordFailure();
+          setWarning(`Protección activada durante ${formatDuration(delay)}.`);
+        }
+      } finally {
+        disableForm(false);
+      }
+    });
+
+    toggleModeBtn?.addEventListener("click", () => {
+      const nextMode = state.mode === "login" ? "register" : "login";
+      setMode(nextMode);
+    });
+
+    pass.addEventListener("input", updatePasswordStrength);
+    passConfirm?.addEventListener("input", updatePasswordStrength);
+
+    refreshChallengeBtn?.addEventListener("click", () => {
+      refreshChallenge().catch(console.error);
     });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      try { await loginEmailPass(email.value, pass.value); close(); }
-      catch (err) { errorBox.textContent = err.message; }
-    });
+      if (state.processing) return;
+      errorBox.textContent = "";
+      setWarning("");
 
-    registerBtn.addEventListener("click", async () => {
-      try { await registerEmailPass(email.value, pass.value); close(); }
-      catch (err) { errorBox.textContent = err.message; }
+      if (state.mode === "login") {
+        const status = loginGuard.canAttempt();
+        if (!status.allowed) {
+          errorBox.textContent = formatBlockedMessage(loginGuard);
+          return;
+        }
+        disableForm(true);
+        try {
+          await loginEmailPass(email.value.trim(), pass.value);
+          loginGuard.recordSuccess();
+          setMode("login");
+          modal.hidden = true;
+          document.body.style.overflow='';
+        }
+        catch (err) {
+          const delay = loginGuard.recordFailure();
+          errorBox.textContent = mapFirebaseError(err);
+          setWarning(`Debes esperar ${formatDuration(delay)} antes del próximo intento.`);
+        }
+        finally {
+          disableForm(false);
+        }
+        return;
+      }
+
+      const status = registerGuard.canAttempt();
+      if (!status.allowed) {
+        errorBox.textContent = formatBlockedMessage(registerGuard);
+        return;
+      }
+
+      if (!requireStrongPassword()) {
+        return;
+      }
+
+      if (!await ensureChallengeSolved()) {
+        const delay = registerGuard.recordFailure();
+        setWarning(`Intento bloqueado durante ${formatDuration(delay)}.`);
+        return;
+      }
+
+      if (!ensureConsent()) {
+        return;
+      }
+
+      disableForm(true);
+      try {
+        await registerEmailPass(email.value.trim(), pass.value);
+        registerGuard.recordSuccess();
+        setMode("login");
+        modal.hidden = true;
+        document.body.style.overflow='';
+      }
+      catch (err) {
+        const delay = registerGuard.recordFailure();
+        errorBox.textContent = mapFirebaseError(err);
+        setWarning(`Debes esperar ${formatDuration(delay)} antes de volver a intentarlo.`);
+        await refreshChallenge();
+      }
+      finally {
+        disableForm(false);
+      }
     });
 
     resetBtn.addEventListener("click", async () => {
       if (!email.value) { errorBox.textContent = "Escribe tu email."; return; }
-      try { await resetPassword(email.value); errorBox.textContent = "Revisa tu correo."; }
-      catch (err) { errorBox.textContent = err.message; }
+      disableForm(true);
+      try { await resetPassword(email.value.trim()); errorBox.textContent = "Revisa tu correo para continuar."; }
+      catch (err) { errorBox.textContent = mapFirebaseError(err); }
+      finally { disableForm(false); }
     });
 
     logoutBtn?.addEventListener("click", () => logout().catch(console.error));
@@ -309,6 +604,8 @@
       if (accountL)  accountL.hidden = !logged;
       document.body.classList.toggle("logged-in", logged);
     });
+
+    setMode("login");
   </script>
 
   <script type="module">
