@@ -3,33 +3,76 @@ layout: default
 title: Mi cuenta
 ---
 
-<section class="container">
-  <h1>Mi cuenta</h1>
+<section class="account-page">
+  <header class="account-header">
+    <span class="account-kicker">Centro de usuario</span>
+    <h1>Mi cuenta</h1>
+    <p>Gestiona tu identidad pública, controla tu nombre de usuario y mantén tu cuenta segura desde un solo lugar.</p>
+  </header>
 
-  <div id="guard">Debes iniciar sesión para gestionar tu cuenta.</div>
+  <div id="guard" class="account-alert">
+    <span class="account-alert-icon" aria-hidden="true"><i class="ti ti-lock"></i></span>
+    <div>
+      <h2>Acceso restringido</h2>
+      <p>Debes iniciar sesión para gestionar tu cuenta.</p>
+    </div>
+  </div>
 
-  <form id="profile" hidden>
-    <label>Nombre para mostrar</label>
-    <input type="text" id="displayName" placeholder="Tu nombre">
-    <button type="submit">Guardar nombre</button>
-    <p id="pmsg"></p>
-  </form>
+  <div class="account-grid">
+    <form id="profile" class="account-card" hidden>
+      <div class="account-card-header">
+        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-user"></i></span>
+        <div>
+          <h2>Perfil público</h2>
+          <p>Elige cómo quieres que aparezca tu nombre cuando interactúas en Apollo-es.</p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="displayName">Nombre para mostrar</label>
+        <input type="text" id="displayName" placeholder="Tu nombre">
+      </div>
+      <button type="submit" class="account-btn primary">Guardar cambios</button>
+      <p id="pmsg" class="form-feedback" role="status"></p>
+    </form>
 
-  <form id="uname" hidden>
-    <label>Nombre de usuario (único)</label>
-    <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
-    <button type="submit">Guardar usuario</button>
-    <p class="help">Solo minúsculas, números, “_” y “.”</p>
-    <p id="umsg"></p>
-  </form>
+    <form id="uname" class="account-card" hidden>
+      <div class="account-card-header">
+        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-at"></i></span>
+        <div>
+          <h2>Nombre de usuario</h2>
+          <p>Reserva tu alias único para que otras personas puedan encontrarte fácilmente.</p>
+        </div>
+      </div>
+      <div class="field">
+        <label for="username">Nombre de usuario (único)</label>
+        <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
+        <p class="help">Solo minúsculas, números, “_” y “.”</p>
+      </div>
+      <button type="submit" class="account-btn primary">Guardar usuario</button>
+      <p id="umsg" class="form-feedback" role="status"></p>
+    </form>
 
-  <div id="security" hidden>
-    <h2>Seguridad</h2>
-    <p>¿Olvidaste tu contraseña? Podemos enviarte un enlace para restablecerla.</p>
-    <button id="reset">Enviar email de restablecimiento</button>
-    <p id="smsg"></p>
-    <hr>
-    <button id="delete" class="danger">Eliminar mi cuenta</button>
+    <div id="security" class="account-card account-security" hidden>
+      <div class="account-card-header">
+        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-shield-lock"></i></span>
+        <div>
+          <h2>Seguridad</h2>
+          <p>Protege tu acceso y controla la permanencia de tu cuenta.</p>
+        </div>
+      </div>
+      <div class="field">
+        <label>Restablece tu contraseña</label>
+        <p>¿Olvidaste tu contraseña? Podemos enviarte un correo con un enlace seguro para restablecerla.</p>
+        <button id="reset" type="button" class="account-btn secondary">Enviar email de restablecimiento</button>
+        <p id="smsg" class="form-feedback" role="status"></p>
+      </div>
+      <hr>
+      <div class="field">
+        <label>¿Ya no quieres continuar?</label>
+        <p>Elimina por completo tus datos y actividad asociada a tu cuenta.</p>
+        <button id="delete" type="button" class="account-btn danger">Eliminar mi cuenta</button>
+      </div>
+    </div>
   </div>
 </section>
 
