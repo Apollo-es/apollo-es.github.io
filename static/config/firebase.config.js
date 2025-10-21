@@ -12,5 +12,7 @@ export const collections = {
   users: "users",
   usernames: "usernames",
   downloads: "downloads",
-  forumActivity: "forumActivity"
+  forumActivity: "forumActivity",
+  likes: "likes",
+  ratings: "ratings"
 };

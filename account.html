@@ -10,12 +10,25 @@ title: Mi cuenta
     <p>Gestiona tu identidad pública, controla tu nombre de usuario y mantén tu cuenta segura desde un solo lugar.</p>
   </header>
 
-  <div id="guard" class="account-alert">
+  <div id="guard" class="account-alert" hidden>
     <span class="account-alert-icon" aria-hidden="true"><i class="ti ti-lock"></i></span>
     <div>
       <h2>Acceso restringido</h2>
       <p>Debes iniciar sesión para gestionar tu cuenta.</p>
     </div>
+  </div>
+
+  <div id="session" class="account-card" hidden>
+    <div class="account-card-header">
+      <span class="account-card-icon" aria-hidden="true"><i class="ti ti-logout"></i></span>
+      <div>
+        <h2>Sesión activa</h2>
+        <p>Cierra tu sesión en este dispositivo en cualquier momento.</p>
+      </div>
+    </div>
+    <button id="signout" type="button" class="account-btn secondary">
+      <i class="ti ti-logout"></i> Cerrar sesión
+    </button>
   </div>
 
   <div class="account-grid">
@@ -87,25 +100,178 @@ title: Mi cuenta
         <p class="account-warning"><i class="ti ti-alert-triangle"></i> Esta acción es irreversible. Se eliminarán descargas, reseñas y cualquier contenido asociado.</p>
       </div>
     </div>
+
+    <div id="favorites" class="account-card" hidden>
+      <div class="account-card-header">
+        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-star"></i></span>
+        <div>
+          <h2>Mis favoritos</h2>
+          <p>Revisa los juegos y contenidos que te han gustado o valorado.</p>
+        </div>
+      </div>
+      <p class="favorite-status" data-favorites-status hidden>Cargando favoritos...</p>
+      <p class="favorite-empty" data-favorites-empty hidden>Aún no tienes favoritos. Da like o asigna una valoración para guardarlos aquí.</p>
+      <ul class="favorites-list" data-favorites-list></ul>
+    </div>
   </div>
 </section>
 
 <script type="module">
-  import { onAuth, setDisplayName, setUsername, resetPassword, deleteAccount } from "/assets/js/firebase-app.js";
+  import { onAuth, setDisplayName, setUsername, resetPassword, deleteAccount, logout, listFavorites } from "/assets/js/firebase-app.js";
 
   const guard=document.getElementById("guard");
   const pf=document.getElementById("profile"), dn=document.getElementById("displayName"), pmsg=document.getElementById("pmsg");
   const uf=document.getElementById("uname"), un=document.getElementById("username"), umsg=document.getElementById("umsg");
   const sec=document.getElementById("security"), resetBtn=document.getElementById("reset"), del=document.getElementById("delete"), smsg=document.getElementById("smsg");
+  const sessionCard=document.getElementById("session"), signOutBtn=document.getElementById("signout");
+  const favoritesCard=document.getElementById("favorites");
+  const favoritesList=favoritesCard?.querySelector("[data-favorites-list]");
+  const favoritesEmpty=favoritesCard?.querySelector("[data-favorites-empty]");
+  const favoritesStatus=favoritesCard?.querySelector("[data-favorites-status]");
 
   let currentUserEmail=null;
+
+  const contentPaths={
+    game:(id)=>`/juegos/${id}/`,
+    app:(id)=>`/apps/${id}/`,
+    guide:(id)=>`/guias/${id}/`
+  };
+
+  const contentLabels={
+    game:"Juego",
+    app:"App",
+    guide:"Guía"
+  };
+
+  function resolveContentUrl(type,id){
+    if(!type||!id) return "#";
+    const normalType=String(type).toLowerCase();
+    if(Object.prototype.hasOwnProperty.call(contentPaths,normalType)){
+      return contentPaths[normalType](id);
+    }
+    return `/${normalType}s/${id}/`;
+  }
+
+  function clearFavorites(){
+    if(favoritesList) favoritesList.innerHTML="";
+    if(favoritesStatus) favoritesStatus.hidden=true;
+    if(favoritesEmpty) favoritesEmpty.hidden=false;
+  }
+
+  async function loadFavorites(){
+    if(!favoritesCard) return;
+    if(favoritesStatus){
+      favoritesStatus.textContent="Cargando favoritos...";
+      favoritesStatus.hidden=false;
+    }
+    if(favoritesEmpty) favoritesEmpty.hidden=true;
+    if(favoritesList) favoritesList.innerHTML="";
+    try{
+      const items=await listFavorites({limit:100});
+      if(!items.length){
+        if(favoritesStatus) favoritesStatus.hidden=true;
+        if(favoritesEmpty) favoritesEmpty.hidden=false;
+        return;
+      }
+      const fragment=document.createDocumentFragment();
+      items.forEach((item)=>{
+        const li=document.createElement("li");
+        li.className="favorite-item";
+
+        const link=document.createElement("a");
+        link.className="favorite-link";
+        link.href=resolveContentUrl(item.contentType,item.contentId);
+        link.rel="noopener noreferrer";
+
+        const header=document.createElement("div");
+        header.className="favorite-item-header";
+        const title=document.createElement("h3");
+        title.className="favorite-item-title";
+        title.textContent=item.title || item.contentId;
+        header.appendChild(title);
+        link.appendChild(header);
+
+        const meta=document.createElement("p");
+        meta.className="favorite-item-meta";
+        const normalizedType=item.contentType ? String(item.contentType).toLowerCase() : "";
+        const typeLabel=contentLabels[normalizedType] || (normalizedType ? normalizedType.charAt(0).toUpperCase()+normalizedType.slice(1) : "Contenido");
+
+        const typeSpan=document.createElement("span");
+        typeSpan.append("Tipo: ");
+        const typeStrong=document.createElement("strong");
+        typeStrong.textContent=typeLabel;
+        typeSpan.appendChild(typeStrong);
+
+        const detailNodes=[typeSpan];
+        if(item.liked){
+          const likeSpan=document.createElement("span");
+          likeSpan.textContent="Te gusta";
+          detailNodes.push(likeSpan);
+        }
+        if(item.rating){
+          const ratingSpan=document.createElement("span");
+          ratingSpan.append("Valoración: ");
+          const ratingStrong=document.createElement("strong");
+          ratingStrong.textContent=`${item.rating}★`;
+          ratingSpan.appendChild(ratingStrong);
+          detailNodes.push(ratingSpan);
+        }
+
+        detailNodes.forEach((node,index)=>{
+          if(index>0) meta.append(" · ");
+          meta.appendChild(node);
+        });
+
+        link.appendChild(meta);
+        li.appendChild(link);
+        fragment.appendChild(li);
+      });
+      if(favoritesList){
+        favoritesList.appendChild(fragment);
+      }
+      if(favoritesStatus) favoritesStatus.hidden=true;
+      if(favoritesEmpty) favoritesEmpty.hidden=true;
+    }catch(err){
+      if(favoritesStatus){
+        favoritesStatus.textContent="No se pudieron cargar tus favoritos. Inténtalo más tarde.";
+        favoritesStatus.hidden=false;
+      }
+      console.error(err);
+    }
+  }
 
   onAuth((user)=>{
     const logged=!!user;
     guard.hidden=logged; pf.hidden=!logged; uf.hidden=!logged; sec.hidden=!logged;
-    if(!logged) return;
+    if(sessionCard) sessionCard.hidden=!logged;
+    if(favoritesCard){
+      favoritesCard.hidden=!logged;
+      if(!logged){
+        clearFavorites();
+      }
+    }
+    if(!logged){
+      currentUserEmail=null;
+      return;
+    }
     dn.value = user.displayName || "";
     currentUserEmail = user.email || null;
+    if(favoritesCard) loadFavorites();
+  });
+
+  document.addEventListener("apollo:favorites-updated", ()=>{
+    if(favoritesCard && !favoritesCard.hidden){
+      loadFavorites();
+    }
+  });
+
+  signOutBtn?.addEventListener("click", async ()=>{
+    try{
+      await logout();
+    }catch(err){
+      alert("No se pudo cerrar la sesión. Inténtalo de nuevo.");
+      console.error(err);
+    }
   });
 
   pf.addEventListener("submit", async (e)=>{ e.preventDefault(); pmsg.textContent="Guardando..."; try{

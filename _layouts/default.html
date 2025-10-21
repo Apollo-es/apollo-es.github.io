@@ -137,11 +137,6 @@
     </div>
 
     <div class="nav-right">
-      {% assign home_item = site.nav | first %}
-      {% if home_item %}
-        <a class="nav-link nav-home{% if page.url == home_item.url %} active{% endif %}"
-           href="{{ home_item.url }}">{{ home_item.name }}</a>
-      {% endif %}
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
         <i class="ti ti-menu-2" aria-hidden="true"></i>
@@ -203,7 +198,8 @@
           </div>
           <p class="nav-menu-title">Explora</p>
           <div class="nav-menu-links">
-            {% for item in site.nav offset:1 %}
+            {% assign nav_items = site.nav | where_exp: 'item', 'item.url != "/"' %}
+            {% for item in nav_items %}
               <a class="nav-link{% if page.url == item.url %} active{% endif %}"
                  href="{{ item.url }}">{{ item.name }}</a>
             {% endfor %}
@@ -808,7 +804,7 @@
   </script>
 
   <script type="module">
-    import { requireAuth, toggleLike, toggleSave, setRating } from "/assets/js/firebase-app.js";
+    import { requireAuth, toggleLike, setRating } from "/assets/js/firebase-app.js";
 
     const ensureAuth = () => {
       const opener = typeof window.openLoginModal === "function"
@@ -829,22 +825,7 @@
         try {
           const r = await toggleLike(payload);
           likeBtn.classList.toggle("active", !!r.liked);
-        } catch(err){
-          console.error(err);
-        }
-      }
-
-      const saveBtn = e.target.closest("[data-save]");
-      if (saveBtn){
-        if(!ensureAuth()) return;
-        const payload = {
-          contentType: saveBtn.dataset.type,
-          contentId: saveBtn.dataset.id,
-          title: saveBtn.dataset.title
-        };
-        try {
-          const r = await toggleSave(payload);
-          saveBtn.classList.toggle("active", !!r.saved);
+          document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
         } catch(err){
           console.error(err);
         }
@@ -858,7 +839,8 @@
         const payload = {
           contentType: wrap.dataset.type,
           contentId: wrap.dataset.id,
-          rating
+          rating,
+          title: wrap.dataset.title
         };
         try {
           await setRating(payload);
@@ -866,6 +848,7 @@
             const value = parseInt(b.dataset.star, 10);
             b.classList.toggle("active", value <= rating);
           });
+          document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
         } catch(err){
           console.error(err);
         }
