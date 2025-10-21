@@ -213,5 +213,22 @@
 
   <script src="/assets/js/app.js"></script>
   <script src="/assets/js/chatbot.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNEmEvqjWyDLUp98QfL2aEwmKLrPtqn8E",
+      authDomain: "apollomg-es.firebaseapp.com",
+      projectId: "apollomg-es",
+      storageBucket: "apollomg-es.firebasestorage.app",
+      messagingSenderId: "437912557037",
+      appId: "1:437912557037:web:e11b957df0472a672b03e4",
+      measurementId: "G-5B4T498FCC"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+  </script>
 </body>
 </html>
