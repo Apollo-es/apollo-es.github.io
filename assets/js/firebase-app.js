@@ -7,7 +7,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, serverTimestamp, getDoc, writeBatch,
-  addDoc, collection, deleteDoc
+  addDoc, collection, deleteDoc, getDocs, query, where, orderBy, limit
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { firebaseConfig, collections } from "/static/config/firebase.config.js";
 
@@ -37,9 +37,11 @@ async function upsertUserProfile(user) {
 }
 
 export function onAuth(cb){
-  return onAuthStateChanged(auth, async (user) => {
-    if (user) await upsertUserProfile(user);
+  return onAuthStateChanged(auth, (user) => {
     cb(user);
+    if (user) {
+      upsertUserProfile(user).catch(console.error);
+    }
   });
 }
 
@@ -94,7 +96,7 @@ function key(uid, type, id){
 export async function toggleLike({contentType, contentId, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
-  const ref = doc(db, "likes", id);
+  const ref = doc(db, collections.likes || "likes", id);
   const existing = await getDoc(ref);
   if (existing.exists()) {
     await deleteDoc(ref);
@@ -111,37 +113,98 @@ export async function toggleLike({contentType, contentId, title}) {
   return { liked: true };
 }
 
-export async function toggleSave({contentType, contentId, title}) {
-  if (!auth.currentUser) throw new Error("Inicia sesión");
-  const id = key(auth.currentUser.uid, contentType, contentId);
-  const ref = doc(db, "saves", id);
-  const existing = await getDoc(ref);
-  if (existing.exists()) {
-    await deleteDoc(ref);
-    return { saved: false };
-  }
-  await setDoc(ref, {
-    uid: auth.currentUser.uid,
-    contentType,
-    contentId,
-    title: title || null,
-    ts: serverTimestamp()
-  });
-  return { saved: true };
-}
-
-export async function setRating({contentType, contentId, rating}) {
+export async function setRating({contentType, contentId, rating, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
   const value = Math.max(1, Math.min(5, rating | 0));
-  await setDoc(doc(db, "ratings", id), {
+  await setDoc(doc(db, collections.ratings || "ratings", id), {
     uid: auth.currentUser.uid,
     contentType,
     contentId,
     rating: value,
+    title: title || null,
     ts: serverTimestamp()
   }, { merge: true });
   return { rating: value };
+}
+
+function toMillis(ts){
+  if (!ts) return 0;
+  if (typeof ts.toMillis === "function") return ts.toMillis();
+  if (typeof ts === "number") return ts;
+  return 0;
+}
+
+function buildFavoriteKey(contentType, contentId){
+  return `${contentType || "unknown"}::${contentId || ""}`;
+}
+
+export async function listFavorites({ limit: maxItems = 50 } = {}) {
+  if (!auth.currentUser) throw new Error("Inicia sesión");
+  const userId = auth.currentUser.uid;
+  const cap = Math.max(1, Math.min(200, Number(maxItems) || 50));
+
+  const likesQuery = query(
+    collection(db, collections.likes || "likes"),
+    where("uid", "==", userId),
+    orderBy("ts", "desc"),
+    limit(cap)
+  );
+
+  const ratingsQuery = query(
+    collection(db, collections.ratings || "ratings"),
+    where("uid", "==", userId),
+    orderBy("ts", "desc"),
+    limit(cap)
+  );
+
+  const [likesSnap, ratingsSnap] = await Promise.all([
+    getDocs(likesQuery).catch((err) => { console.error(err); return { forEach: () => {} }; }),
+    getDocs(ratingsQuery).catch((err) => { console.error(err); return { forEach: () => {} }; })
+  ]);
+
+  const entries = new Map();
+
+  const ensureEntry = (data) => {
+    const keyValue = buildFavoriteKey(data.contentType, data.contentId);
+    if (!entries.has(keyValue)) {
+      entries.set(keyValue, {
+        contentType: data.contentType || "",
+        contentId: data.contentId || "",
+        title: data.title || data.contentId || "",
+        liked: false,
+        rating: null,
+        lastInteraction: 0
+      });
+    }
+    return entries.get(keyValue);
+  };
+
+  likesSnap.forEach((docSnap) => {
+    const data = docSnap.data && docSnap.data();
+    if (!data) return;
+    const entry = ensureEntry(data);
+    entry.liked = true;
+    entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
+  });
+
+  ratingsSnap.forEach((docSnap) => {
+    const data = docSnap.data && docSnap.data();
+    if (!data) return;
+    const entry = ensureEntry(data);
+    if (typeof data.rating === "number") {
+      entry.rating = data.rating;
+    }
+    if (data.title && !entry.title) {
+      entry.title = data.title;
+    }
+    entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
+  });
+
+  return Array.from(entries.values())
+    .filter((item) => item.contentId)
+    .sort((a, b) => b.lastInteraction - a.lastInteraction)
+    .slice(0, cap);
 }
 
 export async function sendReport({message, context}) {
