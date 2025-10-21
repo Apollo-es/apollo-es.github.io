@@ -782,8 +782,11 @@ body:not(.is-staff) .report-panel{display:none}
   .hero .search-wrapper{align-items:stretch}
   .hero .search{flex-direction:column}
   .hero .search-actions{width:100%}
-  .scroll-top{left:18px;bottom:20px}
+.scroll-top{left:18px;bottom:20px}
 }
+
+.logged-in [data-login-google]{display:none}
+:not(.logged-in) [data-logout]{display:none}
 
 @media (max-width: 640px){
   .search-wrapper{flex-direction:column;align-items:flex-start}
