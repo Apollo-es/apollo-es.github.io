@@ -10,6 +10,7 @@ export const firebaseConfig = {
 
 export const collections = {
   users: "users",
-  downloads: "downloads",       // eventos de descarga (uno por click)
-  forumActivity: "forumActivity" // posts / replies
+  usernames: "usernames",
+  downloads: "downloads",
+  forumActivity: "forumActivity"
 };

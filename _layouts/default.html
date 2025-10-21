@@ -175,6 +175,13 @@
         </div>
       </nav>
     </div>
+
+    <div class="auth-head">
+      <span data-user-box>Invitado</span>
+      <button type="button" data-open-login>Iniciar sesión</button>
+      <button type="button" data-logout hidden>Salir</button>
+      <a href="/account.html" data-account hidden>Mi cuenta</a>
+    </div>
   </header>
 
   <main class="container">
@@ -219,41 +226,101 @@
 
   <script src="/assets/js/app.js"></script>
   <script src="/assets/js/chatbot.js"></script>
+  <div class="modal-backdrop" data-login-modal hidden>
+    <div class="modal">
+      <button class="modal-close" type="button" data-close-login aria-label="Cerrar">×</button>
+      <h2>Inicia sesión</h2>
 
-  <!-- Firebase App (Auth + Firestore + tracking) -->
+      <button class="btn-google" type="button" data-login-google>Continuar con Google</button>
+
+      <div class="or">o</div>
+
+      <form id="email-login-form">
+        <label>Email</label>
+        <input type="email" id="email" required>
+        <label>Contraseña</label>
+        <input type="password" id="password" required minlength="6">
+        <div class="actions">
+          <button type="submit" data-mode="login">Entrar</button>
+          <button type="button" data-mode="register">Crear cuenta</button>
+        </div>
+        <button type="button" class="link" data-reset>¿Olvidaste tu contraseña?</button>
+        <p id="login-error" class="error" role="alert"></p>
+      </form>
+    </div>
+  </div>
+
   <script type="module">
     import {
       onAuth, loginWithGoogle, logout,
-      trackDownload, trackForumActivity,
-      getUserDownloadCount, getGlobalDownloadCountForFile
+      loginEmailPass, registerEmailPass, resetPassword
     } from "/assets/js/firebase-app.js";
 
-    // UI mínima
-    const loginBtn  = document.querySelector('[data-login-google]');
-    const logoutBtn = document.querySelector('[data-logout]');
-    const userBox   = document.querySelector('[data-user-box]');
+    const openBtn   = document.querySelector("[data-open-login]");
+    const modal     = document.querySelector("[data-login-modal]");
+    const closeBtn  = document.querySelector("[data-close-login]");
+    const loginG    = document.querySelector("[data-login-google]");
+    const logoutBtn = document.querySelector("[data-logout]");
+    const userBox   = document.querySelector("[data-user-box]");
+    const accountL  = document.querySelector("[data-account]");
 
-    if (loginBtn)  loginBtn.addEventListener('click', () => loginWithGoogle().catch(console.error));
-    if (logoutBtn) logoutBtn.addEventListener('click', () => logout().catch(console.error));
+    const form = document.getElementById("email-login-form");
+    const email = document.getElementById("email");
+    const pass  = document.getElementById("password");
+    const errorBox = document.getElementById("login-error");
+    const resetBtn = document.querySelector("[data-reset]");
+    const registerBtn = form.querySelector("[data-mode='register']");
 
-    onAuth(async (user) => {
-      if (userBox) {
-        userBox.textContent = user ? `Hola, ${user.displayName || user.email}` : 'No has iniciado sesión';
-        document.body.classList.toggle('logged-in', !!user);
-      }
+    const open  = () => { modal.hidden = false; document.body.style.overflow='hidden'; errorBox.textContent=""; };
+    const close = () => { modal.hidden = true;  document.body.style.overflow=''; };
+
+    openBtn?.addEventListener("click", open);
+    closeBtn?.addEventListener("click", close);
+    modal?.addEventListener("click", (e)=>{ if(e.target===modal) close(); });
+
+    loginG?.addEventListener("click", async () => {
+      try { await loginWithGoogle(); close(); } catch(e){ errorBox.textContent = e.message; }
     });
 
-    // Auto-tracking de descargas: cualquier link con data-track-download
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[data-track-download]');
-      if (!a) return;
-      const fileId   = a.getAttribute('data-file-id')   || a.href;
-      const fileName = a.getAttribute('data-file-name') || a.textContent.trim();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try { await loginEmailPass(email.value, pass.value); close(); }
+      catch (err) { errorBox.textContent = err.message; }
+    });
+
+    registerBtn.addEventListener("click", async () => {
+      try { await registerEmailPass(email.value, pass.value); close(); }
+      catch (err) { errorBox.textContent = err.message; }
+    });
+
+    resetBtn.addEventListener("click", async () => {
+      if (!email.value) { errorBox.textContent = "Escribe tu email."; return; }
+      try { await resetPassword(email.value); errorBox.textContent = "Revisa tu correo."; }
+      catch (err) { errorBox.textContent = err.message; }
+    });
+
+    logoutBtn?.addEventListener("click", () => logout().catch(console.error));
+
+    onAuth((user) => {
+      const logged = !!user;
+      if (userBox)  userBox.textContent = logged ? (user.displayName || user.email) : "Invitado";
+      if (openBtn)  openBtn.hidden = logged;
+      if (logoutBtn) logoutBtn.hidden = !logged;
+      if (accountL)  accountL.hidden = !logged;
+      document.body.classList.toggle("logged-in", logged);
+    });
+  </script>
+
+  <script type="module">
+    import { trackDownload } from "/assets/js/firebase-app.js";
+
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest("a[data-track-download]");
+      if (!link) return;
+      const fileId = link.getAttribute("data-file-id") || link.href;
+      const fileName = link.getAttribute("data-file-name") || link.textContent.trim();
       trackDownload({ fileId, fileName }).catch(console.error);
     });
-
-    // Ejemplo de uso manual en el foro:
-    // trackForumActivity({ threadId: 'X', action: 'post' });
   </script>
 </body>
 </html>

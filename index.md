@@ -12,12 +12,6 @@ keywords:
 <div class="home-catalog" data-catalog-root>
   <div class="hero">
     <h1>Bienvenido a <strong>Apollo-es</strong></h1>
-    <p>Somos el hub <strong>#1 en español</strong> para descargas verificadas, guías expertas, foros de soporte y noticias gaming con la chispa de la IA. Encuentra fichas listas para jugar sin perseguir enlaces rotos.</p>
-    <ul class="hero-highlights">
-      <li><i class="ti ti-sparkles"></i> Formula preguntas como «mejores roms de Zelda» y <strong>Apollo AI</strong> te abre fichas y guías relacionadas al instante.</li>
-      <li><i class="ti ti-graph"></i> Seguimos estadísticas de descargas, reseñas y foros para destacar lo más útil cada día.</li>
-      <li><i class="ti ti-device-gamepad-2"></i> Configuraciones y perfiles optimizados para emuladores next-gen listos para aplicar.</li>
-    </ul>
     <div class="search-wrapper" data-search-root>
       <button class="search-toggle" type="button" data-search-toggle aria-expanded="false">
         <i class="ti ti-search" aria-hidden="true"></i>
@@ -26,10 +20,6 @@ keywords:
       <div class="search search-panel" data-search-panel hidden>
         <label class="sr-only" for="q">Busca juegos, guías, foros o noticias</label>
         <input id="q" type="search" placeholder="Busca juegos, vídeos, apps, guías o foros...">
-        <div class="search-actions">
-          <a class="btn primary" href="/enviar" aria-label="¿Quieres enviarnos un recurso? Abre la guía de envío"><i class="ti ti-upload"></i> ¿Quieres enviarnos un recurso?</a>
-          <p class="search-help">¿Tienes material verificado? Revisa la <a href="/enviar/">guía de envíos</a> para conocer requisitos de licencia, mirrors permitidos y el correo de contacto.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -222,6 +212,48 @@ keywords:
 {% endif %}
 
   <section class="home-topics">
+    <div class="topic-card" data-ai-entry data-ai-type="apps" data-ai-title="Apps y editores de saves" data-ai-summary="Herramientas verificadas para personalizar partidas" data-ai-url="/apps/" data-ai-tags="apps editores saves herramientas">
+      <div class="topic-heading">
+        <h3>Apps y editores de saves</h3>
+        <p>Descarga utilidades auditadas por la comunidad para personalizar partidas y automatizar tareas.</p>
+      </div>
+      <div class="topic-grid topic-grid-cards">
+        {% assign apps_count = 0 %}
+        {% for app in site.data.items %}
+          {% if app.oculto != true %}
+            {% assign app_categories = '' %}
+            {% if app.categoria %}
+              {% assign app_categories = app.categoria | join: ',' %}
+            {% endif %}
+            {% if app_categories contains 'apps' %}
+              {% assign app_url = '/apps/' | append: app.id | append: '/' %}
+              {% assign app_tags = '' %}
+              {% if app.hashtags %}
+                {% assign app_tags = app.hashtags | join: ' ' %}
+              {% endif %}
+              <article class="topic-tile" data-ai-entry data-ai-type="apps" data-ai-title="{{ app.titulo | escape }}" data-ai-summary="{{ app.descripcion | strip_html | strip_newlines | escape }}" data-ai-url="{{ app_url | relative_url }}" data-ai-tags="{{ app_tags | escape }}">
+                <a class="topic-tile-link" href="{{ app_url | relative_url }}">
+                  <div class="topic-tile-media">
+                    {% if app.portada %}
+                    <img src="{{ app.portada | relative_url }}" alt="Portada de {{ app.titulo }}">
+                    {% else %}
+                    <div class="topic-tile-placeholder" aria-hidden="true"><i class="ti ti-device-floppy"></i></div>
+                    {% endif %}
+                  </div>
+                  <div class="topic-tile-body">
+                    <h4>{{ app.titulo }}</h4>
+                    <p>{{ app.descripcion | strip_html | truncate: 120 }}</p>
+                    <span class="topic-tile-meta">{{ app.tipo | default: 'Aplicación' }}{% if app.idioma %} · {{ app.idioma | upcase }}{% endif %}</span>
+                  </div>
+                </a>
+              </article>
+              {% assign apps_count = apps_count | plus: 1 %}
+              {% if apps_count == 3 %}{% break %}{% endif %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
     <div class="topic-card" data-ai-entry data-ai-type="juegos" data-ai-title="ROMs destacadas" data-ai-summary="Selección de ROMs verificadas para Switch, retro y PC" data-ai-url="/juegos/" data-ai-tags="roms switch retro pc">
       <div class="topic-heading">
         <h3>ROMs mejor posicionadas</h3>
