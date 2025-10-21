@@ -180,7 +180,7 @@
                 </button>
               </div>
             </div>
-            <div class="nav-menu-guest" data-guest-summary hidden>
+            <div class="nav-menu-guest" data-guest-summary>
               <div class="nav-menu-guest-copy">
                 <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-sparkles"></i></span>
                 <div>
@@ -773,10 +773,16 @@
       trigger?.focus();
     });
 
+    const navToggleButton = document.querySelector(".nav-toggle");
+
     logoutButtons.forEach((button) => {
-      button.addEventListener("click", () => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
         if (panel) panel.hidden = true;
         trigger?.setAttribute("aria-expanded", "false");
+        if (navToggleButton?.getAttribute("aria-expanded") === "true") {
+          navToggleButton.click();
+        }
         logout().catch(console.error);
       });
     });
