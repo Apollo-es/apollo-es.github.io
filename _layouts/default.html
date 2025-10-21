@@ -211,24 +211,49 @@
     </div>
   </div>
 
+  <div class="auth-controls">
+    <span data-user-box>No has iniciado sesión</span>
+    <button type="button" data-login-google>Entrar con Google</button>
+    <button type="button" data-logout>Salir</button>
+  </div>
+
   <script src="/assets/js/app.js"></script>
   <script src="/assets/js/chatbot.js"></script>
+
+  <!-- Firebase App (Auth + Firestore + tracking) -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
+    import {
+      onAuth, loginWithGoogle, logout,
+      trackDownload, trackForumActivity,
+      getUserDownloadCount, getGlobalDownloadCountForFile
+    } from "/assets/js/firebase-app.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDNEmEvqjWyDLUp98QfL2aEwmKLrPtqn8E",
-      authDomain: "apollomg-es.firebaseapp.com",
-      projectId: "apollomg-es",
-      storageBucket: "apollomg-es.firebasestorage.app",
-      messagingSenderId: "437912557037",
-      appId: "1:437912557037:web:e11b957df0472a672b03e4",
-      measurementId: "G-5B4T498FCC"
-    };
+    // UI mínima
+    const loginBtn  = document.querySelector('[data-login-google]');
+    const logoutBtn = document.querySelector('[data-logout]');
+    const userBox   = document.querySelector('[data-user-box]');
 
-    const app = initializeApp(firebaseConfig);
-    getAnalytics(app);
+    if (loginBtn)  loginBtn.addEventListener('click', () => loginWithGoogle().catch(console.error));
+    if (logoutBtn) logoutBtn.addEventListener('click', () => logout().catch(console.error));
+
+    onAuth(async (user) => {
+      if (userBox) {
+        userBox.textContent = user ? `Hola, ${user.displayName || user.email}` : 'No has iniciado sesión';
+        document.body.classList.toggle('logged-in', !!user);
+      }
+    });
+
+    // Auto-tracking de descargas: cualquier link con data-track-download
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-track-download]');
+      if (!a) return;
+      const fileId   = a.getAttribute('data-file-id')   || a.href;
+      const fileName = a.getAttribute('data-file-name') || a.textContent.trim();
+      trackDownload({ fileId, fileName }).catch(console.error);
+    });
+
+    // Ejemplo de uso manual en el foro:
+    // trackForumActivity({ threadId: 'X', action: 'post' });
   </script>
 </body>
 </html>

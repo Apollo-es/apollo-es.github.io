@@ -82,7 +82,10 @@
                   <a class="btn dl"
                      href="{{ mirror_url }}"
                      target="_blank"
-                     rel="nofollow noopener">
+                     rel="nofollow noopener"
+                     data-track-download
+                     data-file-id="{{ item.id }}::{{ m.host | default: 'mirror' | slugify: 'latin' }}"
+                     data-file-name="{{ item.titulo | escape }}">
                     <i class="ti ti-download"></i> Descargar en {{ m.host }}
                   </a>
                   <button class="report-flag"
@@ -115,7 +118,10 @@
               <a class="btn dl"
                  href="{{ m.url | strip }}"
                  target="_blank"
-                 rel="nofollow noopener">
+                 rel="nofollow noopener"
+                 data-track-download
+                 data-file-id="{{ item.id }}::{{ m.host | default: 'mirror' | slugify: 'latin' }}"
+                 data-file-name="{{ item.titulo | escape }}">
                 <i class="ti ti-download"></i> Descargar en {{ m.host }}
               </a>
               <button class="report-flag"
@@ -135,7 +141,13 @@
 
         <div class="direct-links">
           {% for m in item.mirrors %}
-            <a class="btn alt hidden" href="{{ m.url | escape }}" target="_blank" rel="noopener">
+            <a class="btn alt hidden"
+               href="{{ m.url | escape }}"
+               target="_blank"
+               rel="noopener"
+               data-track-download
+               data-file-id="{{ item.id }}::{{ m.host | default: 'mirror' | slugify: 'latin' }}"
+               data-file-name="{{ item.titulo | escape }}">
               <i class="ti ti-external-link"></i> Directo: {{ m.host }}
             </a>
           {% endfor %}

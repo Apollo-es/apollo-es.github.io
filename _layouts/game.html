@@ -72,7 +72,10 @@ layout: default
               <a class="btn dl"
                  href="{{ mirror_url }}"
                  target="_blank"
-                 rel="nofollow noopener">
+                 rel="nofollow noopener"
+                 data-track-download
+                 data-file-id="{{ game.id }}::{{ m.host | default: 'mirror' | slugify: 'latin' }}"
+                 data-file-name="{{ game.titulo | escape }}">
                 <i class="ti ti-download"></i> Descargar en {{ m.host }}
               </a>
               <button class="report-flag"
