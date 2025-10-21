@@ -165,6 +165,42 @@
               <span class="sr-only">Cerrar menú</span>
             </button>
           </div>
+          <div class="nav-menu-account" data-auth-block>
+            <div class="nav-menu-user" data-user-summary hidden>
+              <div class="nav-menu-user-meta">
+                <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-user"></i></span>
+                <div>
+                  <span class="nav-menu-user-label">Sesión iniciada</span>
+                  <strong data-username>Usuario</strong>
+                </div>
+              </div>
+              <div class="nav-menu-user-actions">
+                <a class="btn nav-menu-account-btn primary" href="/account.html">
+                  <i class="ti ti-id-badge" aria-hidden="true"></i>
+                  Mi cuenta
+                </a>
+                <button class="btn nav-menu-account-btn ghost" type="button" data-logout>
+                  <i class="ti ti-logout" aria-hidden="true"></i>
+                  Cerrar sesión
+                </button>
+              </div>
+            </div>
+            <div class="nav-menu-guest" data-guest-summary hidden>
+              <div class="nav-menu-guest-copy">
+                <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-sparkles"></i></span>
+                <div>
+                  <span class="nav-menu-user-label">Bienvenido</span>
+                  <strong>Descubre todo el catálogo</strong>
+                </div>
+              </div>
+              <p>Inicia sesión para sincronizar tus favoritos y continuar donde lo dejaste.</p>
+              <button class="btn nav-menu-account-btn primary" type="button" data-open-login>
+                <i class="ti ti-login" aria-hidden="true"></i>
+                Iniciar sesión
+              </button>
+              <span class="nav-menu-guest-note">¿Nuevo aquí? Crea tu cuenta gratis en segundos.</span>
+            </div>
+          </div>
           <p class="nav-menu-title">Explora</p>
           <div class="nav-menu-links">
             {% for item in site.nav offset:1 %}
@@ -295,7 +331,7 @@
       formatDuration
     } from "/assets/js/auth-security.js";
 
-    const openBtn   = document.querySelector("[data-open-login]");
+    const openButtons = Array.from(document.querySelectorAll("[data-open-login]"));
     const modal     = document.querySelector("[data-login-modal]");
     const closeBtn  = document.querySelector("[data-close-login]");
     const loginG    = document.querySelector("[data-login-google]");
@@ -545,7 +581,9 @@
 
     window.openLoginModal = showLoginModal;
 
-    openBtn?.addEventListener("click", showLoginModal);
+    openButtons.forEach((btn) => {
+      btn.addEventListener("click", showLoginModal);
+    });
     closeBtn?.addEventListener("click", () => {
       modal.hidden = true;
       document.body.style.overflow='';
@@ -701,12 +739,14 @@
   <script type="module">
     import { onAuth, logout } from "/assets/js/firebase-app.js";
 
-    const openBtn  = document.querySelector("[data-open-login]");
     const menuWrap = document.querySelector("[data-user-menu]");
     const trigger  = document.querySelector("[data-user-trigger]");
     const panel    = document.querySelector("[data-user-panel]");
-    const uname    = document.querySelector("[data-username]");
-    const outBtn   = document.querySelector("[data-logout]");
+    const usernameNodes = Array.from(document.querySelectorAll("[data-username]"));
+    const logoutButtons = Array.from(document.querySelectorAll("[data-logout]"));
+    const authBlock = document.querySelector("[data-auth-block]");
+    const userSummary = document.querySelector("[data-user-summary]");
+    const guestSummary = document.querySelector("[data-guest-summary]");
 
     trigger?.addEventListener("click", (event) => {
       event.preventDefault();
@@ -731,19 +771,27 @@
       trigger?.focus();
     });
 
-    outBtn?.addEventListener("click", () => {
-      if (panel) panel.hidden = true;
-      trigger?.setAttribute("aria-expanded", "false");
-      logout().catch(console.error);
+    logoutButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        if (panel) panel.hidden = true;
+        trigger?.setAttribute("aria-expanded", "false");
+        logout().catch(console.error);
+      });
     });
 
     onAuth((user)=>{
       const logged = !!user;
-      if (openBtn) openBtn.hidden = logged;
       if (menuWrap) menuWrap.hidden = !logged;
       if (panel) panel.hidden = true;
       trigger?.setAttribute("aria-expanded", "false");
-      if (uname) uname.textContent = (user?.displayName) || (user?.email) || "Usuario";
+      const displayName = (user?.displayName) || (user?.email) || "Usuario";
+      usernameNodes.forEach((node) => {
+        node.textContent = displayName;
+      });
+      if (authBlock) {
+        if (userSummary) userSummary.hidden = !logged;
+        if (guestSummary) guestSummary.hidden = logged;
+      }
     });
   </script>
 

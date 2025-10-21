@@ -27,12 +27,19 @@ title: Mi cuenta
           <p>Elige cómo quieres que aparezca tu nombre cuando interactúas en Apollo-es.</p>
         </div>
       </div>
-      <div class="field">
+      <div class="field field-enhanced">
         <label for="displayName">Nombre para mostrar</label>
-        <input type="text" id="displayName" placeholder="Tu nombre">
+        <div class="input-shell">
+          <span class="input-icon" aria-hidden="true"><i class="ti ti-edit"></i></span>
+          <input type="text" id="displayName" placeholder="Tu nombre">
+        </div>
+        <p class="help">Personaliza cómo te verá la comunidad en reseñas, comentarios y fichas colaborativas.</p>
       </div>
       <button type="submit" class="account-btn primary">Guardar cambios</button>
       <p id="pmsg" class="form-feedback" role="status"></p>
+      <div class="account-card-footer">
+        <p class="account-note"><i class="ti ti-info-circle"></i> Puedes actualizarlo tantas veces como quieras.</p>
+      </div>
     </form>
 
     <form id="uname" class="account-card" hidden>
@@ -43,13 +50,19 @@ title: Mi cuenta
           <p>Reserva tu alias único para que otras personas puedan encontrarte fácilmente.</p>
         </div>
       </div>
-      <div class="field">
+      <div class="field field-enhanced">
         <label for="username">Nombre de usuario (único)</label>
-        <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
-        <p class="help">Solo minúsculas, números, “_” y “.”</p>
+        <div class="input-shell">
+          <span class="input-icon" aria-hidden="true"><i class="ti ti-asterisk"></i></span>
+          <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
+        </div>
+        <p class="help">Entre 3 y 20 caracteres. Solo minúsculas, números, guion bajo y punto.</p>
       </div>
       <button type="submit" class="account-btn primary">Guardar usuario</button>
       <p id="umsg" class="form-feedback" role="status"></p>
+      <div class="account-card-footer">
+        <p class="account-note"><i class="ti ti-lock"></i> Tu alias es único y reservarlo evita que otros lo utilicen.</p>
+      </div>
     </form>
 
     <div id="security" class="account-card account-security" hidden>
@@ -60,17 +73,18 @@ title: Mi cuenta
           <p>Protege tu acceso y controla la permanencia de tu cuenta.</p>
         </div>
       </div>
-      <div class="field">
+      <div class="field field-stack">
         <label>Restablece tu contraseña</label>
-        <p>¿Olvidaste tu contraseña? Podemos enviarte un correo con un enlace seguro para restablecerla.</p>
+        <p>¿Olvidaste tu contraseña? Te enviamos un correo seguro para crear una nueva en segundos.</p>
         <button id="reset" type="button" class="account-btn secondary">Enviar email de restablecimiento</button>
         <p id="smsg" class="form-feedback" role="status"></p>
       </div>
-      <hr>
-      <div class="field">
+      <div class="account-divider" role="presentation"></div>
+      <div class="field field-stack">
         <label>¿Ya no quieres continuar?</label>
         <p>Elimina por completo tus datos y actividad asociada a tu cuenta.</p>
         <button id="delete" type="button" class="account-btn danger">Eliminar mi cuenta</button>
+        <p class="account-warning"><i class="ti ti-alert-triangle"></i> Esta acción es irreversible. Se eliminarán descargas, reseñas y cualquier contenido asociado.</p>
       </div>
     </div>
   </div>
