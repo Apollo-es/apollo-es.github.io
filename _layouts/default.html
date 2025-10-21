@@ -66,6 +66,7 @@
     }
   }
   </script>
+
   {% if site.nav %}
     <script type="application/ld+json">
     {
@@ -180,10 +181,18 @@
     </div>
 
     <div class="auth-head">
-      <span data-user-box>Invitado</span>
+      <div class="user-dropdown" data-user-menu hidden>
+        <button class="user-trigger" type="button" data-user-trigger>
+          <span>Hola, <strong data-username>Usuario</strong></span>
+          <i class="ti ti-chevron-down" aria-hidden="true"></i>
+        </button>
+        <div class="user-menu" hidden data-user-panel>
+          <a href="/account.html">Mi cuenta</a>
+          <button type="button" data-logout>Salir</button>
+        </div>
+      </div>
+
       <button type="button" data-open-login>Iniciar sesión</button>
-      <button type="button" data-logout hidden>Salir</button>
-      <a href="/account.html" data-account hidden>Mi cuenta</a>
     </div>
   </header>
 
@@ -271,7 +280,7 @@
 
   <script type="module">
     import {
-      onAuth, loginWithGoogle, logout,
+      onAuth, loginWithGoogle,
       loginEmailPass, registerEmailPass, resetPassword
     } from "/assets/js/firebase-app.js";
     import {
@@ -284,9 +293,6 @@
     const modal     = document.querySelector("[data-login-modal]");
     const closeBtn  = document.querySelector("[data-close-login]");
     const loginG    = document.querySelector("[data-login-google]");
-    const logoutBtn = document.querySelector("[data-logout]");
-    const userBox   = document.querySelector("[data-user-box]");
-    const accountL  = document.querySelector("[data-account]");
 
     const form = document.getElementById("email-login-form");
     const email = document.getElementById("email");
@@ -521,7 +527,7 @@
       return true;
     };
 
-    openBtn?.addEventListener("click", () => {
+    function showLoginModal(){
       modal.hidden = false;
       document.body.style.overflow='hidden';
       errorBox.textContent="";
@@ -529,7 +535,11 @@
       if (state.mode === "register") {
         refreshChallenge().catch(console.error);
       }
-    });
+    }
+
+    window.openLoginModal = showLoginModal;
+
+    openBtn?.addEventListener("click", showLoginModal);
     closeBtn?.addEventListener("click", () => {
       modal.hidden = true;
       document.body.style.overflow='';
@@ -675,18 +685,47 @@
       }
     });
 
-    logoutBtn?.addEventListener("click", () => logout().catch(console.error));
-
     onAuth((user) => {
-      const logged = !!user;
-      if (userBox)  userBox.textContent = logged ? (user.displayName || user.email) : "Invitado";
-      if (openBtn)  openBtn.hidden = logged;
-      if (logoutBtn) logoutBtn.hidden = !logged;
-      if (accountL)  accountL.hidden = !logged;
-      document.body.classList.toggle("logged-in", logged);
+      document.body.classList.toggle("logged-in", !!user);
     });
 
     setMode("login");
+  </script>
+
+  <script type="module">
+    import { onAuth, logout } from "/assets/js/firebase-app.js";
+
+    const openBtn  = document.querySelector("[data-open-login]");
+    const menuWrap = document.querySelector("[data-user-menu]");
+    const trigger  = document.querySelector("[data-user-trigger]");
+    const panel    = document.querySelector("[data-user-panel]");
+    const uname    = document.querySelector("[data-username]");
+    const outBtn   = document.querySelector("[data-logout]");
+
+    function togglePanel(){
+      if (!panel) return;
+      panel.hidden = !panel.hidden;
+    }
+
+    trigger?.addEventListener("click", (event) => {
+      event.preventDefault();
+      togglePanel();
+    });
+
+    document.addEventListener("click", (e)=>{
+      if(!panel || panel.hidden) return;
+      if(!e.target.closest("[data-user-menu]")) panel.hidden = true;
+    });
+
+    outBtn?.addEventListener("click", () => logout().catch(console.error));
+
+    onAuth((user)=>{
+      const logged = !!user;
+      if (openBtn) openBtn.hidden = logged;
+      if (menuWrap) menuWrap.hidden = !logged;
+      if (panel) panel.hidden = true;
+      if (uname) uname.textContent = (user?.displayName) || (user?.email) || "Usuario";
+    });
   </script>
 
   <script type="module">
@@ -698,6 +737,87 @@
       const fileId = link.getAttribute("data-file-id") || link.href;
       const fileName = link.getAttribute("data-file-name") || link.textContent.trim();
       trackDownload({ fileId, fileName }).catch(console.error);
+    });
+  </script>
+
+  <script type="module">
+    import { requireAuth, toggleLike, toggleSave, setRating } from "/assets/js/firebase-app.js";
+
+    const ensureAuth = () => {
+      const opener = typeof window.openLoginModal === "function"
+        ? window.openLoginModal
+        : () => document.querySelector("[data-open-login]")?.click();
+      return requireAuth(opener);
+    };
+
+    document.addEventListener("click", async (e)=>{
+      const likeBtn = e.target.closest("[data-like]");
+      if (likeBtn){
+        if(!ensureAuth()) return;
+        const payload = {
+          contentType: likeBtn.dataset.type,
+          contentId: likeBtn.dataset.id,
+          title: likeBtn.dataset.title
+        };
+        try {
+          const r = await toggleLike(payload);
+          likeBtn.classList.toggle("active", !!r.liked);
+        } catch(err){
+          console.error(err);
+        }
+      }
+
+      const saveBtn = e.target.closest("[data-save]");
+      if (saveBtn){
+        if(!ensureAuth()) return;
+        const payload = {
+          contentType: saveBtn.dataset.type,
+          contentId: saveBtn.dataset.id,
+          title: saveBtn.dataset.title
+        };
+        try {
+          const r = await toggleSave(payload);
+          saveBtn.classList.toggle("active", !!r.saved);
+        } catch(err){
+          console.error(err);
+        }
+      }
+
+      const star = e.target.closest("[data-star]");
+      if (star && star.parentElement?.dataset.rate !== undefined){
+        if(!ensureAuth()) return;
+        const wrap = star.parentElement;
+        const rating = parseInt(star.dataset.star, 10);
+        const payload = {
+          contentType: wrap.dataset.type,
+          contentId: wrap.dataset.id,
+          rating
+        };
+        try {
+          await setRating(payload);
+          [...wrap.querySelectorAll("[data-star]")].forEach((b)=>{
+            const value = parseInt(b.dataset.star, 10);
+            b.classList.toggle("active", value <= rating);
+          });
+        } catch(err){
+          console.error(err);
+        }
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { sendReport } from "/assets/js/firebase-app.js";
+
+    document.addEventListener("apollo:report-created", (event) => {
+      const detail = event.detail || {};
+      const parts = [];
+      if (detail.title) parts.push(detail.title);
+      if (detail.host) parts.push(`host: ${detail.host}`);
+      if (detail.group) parts.push(`grupo: ${detail.group}`);
+      const message = detail.message || `Reporte de enlace: ${parts.join(" · ") || detail.item || "sin título"}`;
+      const context = detail.url || location.pathname;
+      sendReport({ message, context }).catch(console.error);
     });
   </script>
 </body>

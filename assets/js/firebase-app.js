@@ -3,11 +3,11 @@ import {
   getAuth, onAuthStateChanged, GoogleAuthProvider,
   signInWithPopup, signInWithEmailAndPassword,
   createUserWithEmailAndPassword, signOut, deleteUser,
-  sendPasswordResetEmail
+  sendPasswordResetEmail, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, serverTimestamp, getDoc, writeBatch,
-  addDoc, collection, query, where, getCountFromServer
+  addDoc, collection, deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { firebaseConfig, collections } from "/static/config/firebase.config.js";
 
@@ -41,6 +41,12 @@ export function onAuth(cb){
     if (user) await upsertUserProfile(user);
     cb(user);
   });
+}
+
+export async function setDisplayName(name){
+  if(!auth.currentUser) throw new Error("No hay sesión");
+  await updateProfile(auth.currentUser, { displayName: name });
+  await upsertUserProfile(auth.currentUser);
 }
 
 export async function setUsername(newNameRaw) {
@@ -79,4 +85,78 @@ export async function trackDownload({ fileId, fileName }) {
     fileId, fileName: fileName || null,
     uid: u ? u.uid : null, ts: serverTimestamp(), type: "download"
   });
+}
+
+function key(uid, type, id){
+  return `${uid}_${type}_${id}`;
+}
+
+export async function toggleLike({contentType, contentId, title}) {
+  if (!auth.currentUser) throw new Error("Inicia sesión");
+  const id = key(auth.currentUser.uid, contentType, contentId);
+  const ref = doc(db, "likes", id);
+  const existing = await getDoc(ref);
+  if (existing.exists()) {
+    await deleteDoc(ref);
+    return { liked: false };
+  }
+  await setDoc(ref, {
+    uid: auth.currentUser.uid,
+    contentType,
+    contentId,
+    title: title || null,
+    liked: true,
+    ts: serverTimestamp()
+  });
+  return { liked: true };
+}
+
+export async function toggleSave({contentType, contentId, title}) {
+  if (!auth.currentUser) throw new Error("Inicia sesión");
+  const id = key(auth.currentUser.uid, contentType, contentId);
+  const ref = doc(db, "saves", id);
+  const existing = await getDoc(ref);
+  if (existing.exists()) {
+    await deleteDoc(ref);
+    return { saved: false };
+  }
+  await setDoc(ref, {
+    uid: auth.currentUser.uid,
+    contentType,
+    contentId,
+    title: title || null,
+    ts: serverTimestamp()
+  });
+  return { saved: true };
+}
+
+export async function setRating({contentType, contentId, rating}) {
+  if (!auth.currentUser) throw new Error("Inicia sesión");
+  const id = key(auth.currentUser.uid, contentType, contentId);
+  const value = Math.max(1, Math.min(5, rating | 0));
+  await setDoc(doc(db, "ratings", id), {
+    uid: auth.currentUser.uid,
+    contentType,
+    contentId,
+    rating: value,
+    ts: serverTimestamp()
+  }, { merge: true });
+  return { rating: value };
+}
+
+export async function sendReport({message, context}) {
+  const u = auth.currentUser;
+  await addDoc(collection(db, "reports"), {
+    message,
+    context: context || null,
+    uid: u ? u.uid : null,
+    ts: serverTimestamp(),
+    type: "report"
+  });
+}
+
+export function requireAuth(openLoginModal){
+  if (auth.currentUser) return true;
+  if (typeof openLoginModal === "function") openLoginModal();
+  return false;
 }

@@ -1349,6 +1349,11 @@ function appendReport(detail){
   const reports = readReports();
   reports.push(detail);
   writeReports(reports);
+  try {
+    document.dispatchEvent(new CustomEvent('apollo:report-created', { detail }));
+  } catch(err){
+    console.error('No se pudo notificar el reporte remoto', err);
+  }
   return reports;
 }
 
