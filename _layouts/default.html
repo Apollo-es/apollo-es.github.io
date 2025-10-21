@@ -816,53 +816,74 @@
   </script>
 
   <script type="module">
-    import { requireAuth, toggleLike, setRating } from "/assets/js/firebase-app.js";
+    import { requireAuth, toggleLike, toggleSave, setRating } from "/assets/js/firebase-app.js";
 
-    const ensureAuth = () => {
-      const opener = typeof window.openLoginModal === "function"
-        ? window.openLoginModal
-        : () => document.querySelector("[data-open-login]")?.click();
-      return requireAuth(opener);
-    };
+    if (typeof window.openLoginModal !== "function") {
+      window.openLoginModal = () => {
+        const modal = document.querySelector("[data-login-modal]");
+        if (modal) modal.hidden = false;
+        document.body.style.overflow = "hidden";
+      };
+    }
 
-    document.addEventListener("click", async (e)=>{
-      const likeBtn = e.target.closest("[data-like]");
-      if (likeBtn){
-        if(!ensureAuth()) return;
-        const payload = {
-          contentType: likeBtn.dataset.type,
-          contentId: likeBtn.dataset.id,
-          title: likeBtn.dataset.title
-        };
+    function getPayload(node){
+      const wrap = node?.closest?.("[data-content]");
+      const rawId = wrap?.dataset.id || location.pathname.replace(/\W+/g, "-");
+      return {
+        contentType: wrap?.dataset.type || "game",
+        contentId: rawId,
+        title: wrap?.dataset.title || document.title
+      };
+    }
+
+    function ensureAuth(){
+      return requireAuth(window.openLoginModal);
+    }
+
+    document.addEventListener("click", async (event) => {
+      const likeBtn = event.target.closest("[data-like]");
+      if (likeBtn) {
+        if (!ensureAuth()) return;
+        const payload = getPayload(likeBtn);
         try {
-          const r = await toggleLike(payload);
-          likeBtn.classList.toggle("active", !!r.liked);
+          const result = await toggleLike(payload);
+          likeBtn.classList.toggle("active", !!result.liked);
           document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
-        } catch(err){
-          console.error(err);
+        } catch (error) {
+          console.error("like failed", error);
         }
       }
 
-      const star = e.target.closest("[data-star]");
-      if (star && star.parentElement?.dataset.rate !== undefined){
-        if(!ensureAuth()) return;
-        const wrap = star.parentElement;
-        const rating = parseInt(star.dataset.star, 10);
-        const payload = {
-          contentType: wrap.dataset.type,
-          contentId: wrap.dataset.id,
-          rating,
-          title: wrap.dataset.title
-        };
+      const saveBtn = event.target.closest("[data-save]");
+      if (saveBtn) {
+        if (!ensureAuth()) return;
+        const payload = getPayload(saveBtn);
+        try {
+          const result = await toggleSave(payload);
+          saveBtn.classList.toggle("active", !!result.saved);
+          document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
+        } catch (error) {
+          console.error("save failed", error);
+        }
+      }
+
+      const star = event.target.closest("[data-star]");
+      if (star) {
+        const ratingWrap = star.closest("[data-rate]");
+        if (!ratingWrap) return;
+        if (!ensureAuth()) return;
+        const rating = parseInt(star.dataset.star || "0", 10);
+        const payload = { ...getPayload(star), rating };
         try {
           await setRating(payload);
-          [...wrap.querySelectorAll("[data-star]")].forEach((b)=>{
-            const value = parseInt(b.dataset.star, 10);
-            b.classList.toggle("active", value <= rating);
+          const stars = ratingWrap.querySelectorAll("[data-star]");
+          stars.forEach((button) => {
+            const value = parseInt(button.dataset.star || "0", 10);
+            button.classList.toggle("active", value <= rating);
           });
           document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
-        } catch(err){
-          console.error(err);
+        } catch (error) {
+          console.error("rating failed", error);
         }
       }
     });

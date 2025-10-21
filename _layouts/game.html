@@ -29,6 +29,10 @@ layout: default
     <div class="game-summary">
       <p class="game-label">Ficha del juego</p>
       <h1>{{ game.titulo }}</h1>
+      {% include cta-interactions.html
+         content_type='game'
+         content_id=game.id
+         content_title=game.titulo %}
       <p class="game-description">{{ game.descripcion }}</p>
       <div class="game-chips">
         <span class="chip">{{ game.tipo | upcase }}</span>
@@ -49,16 +53,6 @@ layout: default
         </a>
       </div>
 
-      <div class="game-engagement">
-        <button class="btn ghost" data-like data-type="game" data-id="{{ game.id }}" data-title="{{ game.titulo }}">❤ Me gusta</button>
-        <div class="rating" data-rate data-type="game" data-id="{{ game.id }}" data-title="{{ game.titulo }}">
-          <button type="button" data-star="1">★</button>
-          <button type="button" data-star="2">★</button>
-          <button type="button" data-star="3">★</button>
-          <button type="button" data-star="4">★</button>
-          <button type="button" data-star="5">★</button>
-        </div>
-      </div>
     </div>
   </header>
 
