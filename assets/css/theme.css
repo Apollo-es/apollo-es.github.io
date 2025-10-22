@@ -154,12 +154,11 @@ a:hover{opacity:.9}
 .nav-menu-account{display:flex;flex-direction:column;gap:16px;grid-column:2;grid-row:2 / span 3;align-self:stretch;min-width:260px;flex:0 0 280px}
 .nav-menu-user,.nav-menu-guest{display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:18px;background:rgba(16,22,40,.82);border:1px solid rgba(86,110,176,.45);box-shadow:0 18px 36px -26px rgba(0,0,0,.7)}
 [data-guest-summary]{display:flex;}
-[data-user-summary]{display:none;}
+[data-user-actions]{display:none;}
 .logged-in [data-guest-summary]{display:none;}
-.logged-in [data-user-summary]{display:flex;}
-.nav-menu-user-meta,.nav-menu-guest-copy{display:flex;align-items:center;gap:12px}
+.logged-in [data-user-actions]{display:flex;}
+.nav-menu-guest-copy{display:flex;align-items:center;gap:12px}
 .nav-menu-guest-copy .ti{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:14px;background:rgba(124,146,206,.2);color:var(--accent);font-size:22px}
-.nav-menu-avatar{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,rgba(124,92,255,.36),rgba(0,224,255,.28));color:#f6f8ff;font-size:20px;box-shadow:0 10px 24px -20px rgba(0,0,0,.75)}
 .nav-menu-user-label{font:600 12px/1 Inter,sans-serif;text-transform:uppercase;letter-spacing:1.2px;color:#9ab0df}
 .nav-menu-user strong,.nav-menu-guest strong{font:700 17px/1.3 Inter,sans-serif;color:#fff}
 .nav-menu-user-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
@@ -174,8 +173,6 @@ a:hover{opacity:.9}
 .nav-menu-account-btn[data-logout]:hover{border-color:rgba(255,118,118,.55);box-shadow:0 26px 46px -20px rgba(255,94,94,.45);background:linear-gradient(135deg,rgba(255,118,118,.26),rgba(255,94,94,.18));color:#ffe3e3}
 .nav-menu-guest p{margin:0;color:#9fb3df;font-size:14px}
 .nav-menu-guest-note{font-size:12px;color:#7f91bc;letter-spacing:.3px}
-.nav-menu-user-email{margin:6px 0 0;display:flex;align-items:center;gap:8px;font:500 13px/1.4 Inter,sans-serif;color:rgba(214,228,255,.82)}
-.nav-menu-user-email .ti{font-size:15px;color:var(--accent)}
 .nav-menu-footer{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-left:0;padding-top:18px;border-left:0;border-top:1px solid rgba(82,110,176,.32);grid-column:1;grid-row:4;align-self:stretch;text-align:left;color:var(--body-soft)}
 .nav-menu-footer p{margin:0;font:600 13px/1.4 Inter,sans-serif;text-transform:uppercase;letter-spacing:.6px;color:var(--body-muted)}
 .nav-menu-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:linear-gradient(135deg,rgba(124,92,255,.38),rgba(0,224,255,.3));border:1px solid rgba(124,92,255,.45);color:#f6f8ff;font-weight:700;box-shadow:0 26px 48px -28px rgba(0,0,0,.75);transition:transform .2s ease,box-shadow .2s ease}
@@ -715,7 +712,6 @@ body:not(.is-staff) .report-panel{display:none}
 :root[data-theme="light"] .nav-menu-links .nav-link:hover{background:linear-gradient(135deg,rgba(91,75,255,.22),rgba(47,123,255,.18));border-color:#a9b7f0;color:var(--nav-link-active);box-shadow:var(--shadow-card)}
 :root[data-theme="light"] .nav-menu-user,
 :root[data-theme="light"] .nav-menu-guest{background:linear-gradient(155deg,rgba(243,246,255,.95),rgba(229,236,255,.92));border-color:#d0d8f4;box-shadow:var(--shadow-panel)}
-:root[data-theme="light"] .nav-menu-avatar{background:linear-gradient(145deg,rgba(91,75,255,.2),rgba(47,123,255,.16));color:#1f253d}
 :root[data-theme="light"] .nav-menu-user strong,
 :root[data-theme="light"] .nav-menu-guest strong{color:#1f253d}
 :root[data-theme="light"] .nav-menu-user-label{color:#5b6f9d}
@@ -735,8 +731,6 @@ body:not(.is-staff) .report-panel{display:none}
 :root[data-theme="light"] .nav-menu-guest-note{color:#6e7da7}
 :root[data-theme="light"] .nav-menu-footer{color:var(--body-soft)}
 :root[data-theme="light"] .nav-menu-cta{background:linear-gradient(135deg,rgba(91,75,255,.18),rgba(47,123,255,.16));border-color:#b6c4f6;color:#1f253d;box-shadow:var(--shadow-card)}
-:root[data-theme="light"] .nav-menu-user-email{color:#51628d}
-:root[data-theme="light"] .nav-menu-user-email .ti{color:#2f7bff}
 :root[data-theme="light"] .nav-menu-guest-copy .ti{background:rgba(91,75,255,.18);color:#2f7bff}
 :root[data-theme="light"] .nav-home{background:rgba(240,243,255,.85);color:var(--nav-link);}
 :root[data-theme="light"] .auth-head [data-open-login],

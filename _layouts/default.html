@@ -161,23 +161,8 @@
             {% endfor %}
           </div>
           <div class="nav-menu-account" data-auth-block hidden>
-            <div class="nav-menu-user" data-user-summary hidden>
-              <div class="nav-menu-user-meta">
-                <span class="nav-menu-avatar" aria-hidden="true" data-user-avatar>U</span>
-                <div>
-                  <span class="nav-menu-user-label">Sesión iniciada</span>
-                  <strong data-username>Usuario</strong>
-                  <p class="nav-menu-user-email" data-user-email-wrapper hidden>
-                    <i class="ti ti-mail" aria-hidden="true"></i>
-                    <span data-user-email>usuario@example.com</span>
-                  </p>
-                </div>
-              </div>
+wa            <div class="nav-menu-user" data-user-actions hidden>
               <div class="nav-menu-user-actions">
-                <a class="nav-menu-account-btn primary" href="/account.html">
-                  <i class="ti ti-id-badge" aria-hidden="true"></i>
-                  Mi perfil
-                </a>
                 <button class="nav-menu-account-btn" type="button" data-logout>
                   <i class="ti ti-logout" aria-hidden="true"></i>
                   Cerrar sesión
@@ -769,9 +754,7 @@
     const logoutButtons = Array.from(document.querySelectorAll("[data-logout]"));
     const authBlock = document.querySelector("[data-auth-block]");
     const guestSummary = document.querySelector("[data-guest-summary]");
-    const userSummary = document.querySelector("[data-user-summary]");
-    const userEmailNodes = Array.from(document.querySelectorAll("[data-user-email]"));
-    const userEmailWrappers = Array.from(document.querySelectorAll("[data-user-email-wrapper]"));
+    const userActions = document.querySelector("[data-user-actions]");
     const avatarNodes = Array.from(document.querySelectorAll("[data-user-avatar]"));
 
     const setPanelState = (open) => {
@@ -832,16 +815,12 @@
       avatarNodes.forEach((node) => {
         node.textContent = initial;
       });
-      userEmailNodes.forEach((node) => {
-        node.textContent = email;
-      });
-      userEmailWrappers.forEach((wrapper) => {
-        if (!wrapper) return;
-        wrapper.hidden = !email;
-      });
-      if (authBlock) authBlock.hidden = false;
-      if (guestSummary) guestSummary.hidden = logged;
-      if (userSummary) userSummary.hidden = !logged;
+      const showGuest = !logged && !!guestSummary;
+      const showUserActions = logged && !!userActions;
+
+      if (guestSummary) guestSummary.hidden = !showGuest;
+      if (userActions) userActions.hidden = !showUserActions;
+      if (authBlock) authBlock.hidden = !(showGuest || showUserActions);
     });
   </script>
 
