@@ -161,28 +161,6 @@
             </button>
           </div>
           <div class="nav-menu-account" data-auth-block>
-            <div class="nav-menu-user" data-user-summary hidden>
-              <div class="nav-menu-user-meta">
-                <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-user"></i></span>
-                <div>
-                  <span class="nav-menu-user-label">Sesión iniciada</span>
-                  <strong data-username>Usuario</strong>
-                </div>
-              </div>
-              <div class="nav-menu-user-actions">
-                <a class="btn nav-menu-account-btn primary" href="/account.html">
-                  <i class="ti ti-id-badge" aria-hidden="true"></i>
-                  Mi cuenta
-                </a>
-                <button class="btn nav-menu-account-btn ghost" type="button" data-logout>
-                  <i class="ti ti-logout" aria-hidden="true"></i>
-                  Cerrar sesión
-                </button>
-              </div>
-              <p class="nav-menu-hint" data-like-hint-bubble hidden>
-                ¿Quieres guardarte un juego o una app? Haz clic en «Me gusta» para guardarlo en tu perfil.
-              </p>
-            </div>
             <div class="nav-menu-guest" data-guest-summary>
               <div class="nav-menu-guest-copy">
                 <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-sparkles"></i></span>
@@ -761,7 +739,6 @@
     const usernameNodes = Array.from(document.querySelectorAll("[data-username]"));
     const logoutButtons = Array.from(document.querySelectorAll("[data-logout]"));
     const authBlock = document.querySelector("[data-auth-block]");
-    const userSummary = document.querySelector("[data-user-summary]");
     const guestSummary = document.querySelector("[data-guest-summary]");
 
     trigger?.addEventListener("click", (event) => {
@@ -810,10 +787,8 @@
       usernameNodes.forEach((node) => {
         node.textContent = displayName;
       });
-      if (authBlock) {
-        if (userSummary) userSummary.hidden = !logged;
-        if (guestSummary) guestSummary.hidden = logged;
-      }
+      if (authBlock) authBlock.hidden = logged;
+      if (guestSummary) guestSummary.hidden = logged;
     });
   </script>
 

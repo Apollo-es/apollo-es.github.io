@@ -10,11 +10,25 @@ title: Mi cuenta
     <p>Gestiona tu identidad pública, controla tu nombre de usuario y mantén tu cuenta segura desde un solo lugar.</p>
   </header>
 
-  <div id="guard" class="account-alert" hidden>
-    <span class="account-alert-icon" aria-hidden="true"><i class="ti ti-lock"></i></span>
-    <div>
-      <h2>Acceso restringido</h2>
-      <p>Debes iniciar sesión para gestionar tu cuenta.</p>
+  <div class="account-guest" data-account-guest hidden>
+    <div class="account-card account-card-guest">
+      <div class="account-card-header">
+        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-login"></i></span>
+        <div>
+          <h2>Inicia sesión para continuar</h2>
+          <p>Conéctate para editar tu perfil, consultar guardados y gestionar la seguridad de tu cuenta.</p>
+        </div>
+      </div>
+      <button class="account-btn primary" type="button" data-open-login>
+        <i class="ti ti-login"></i>
+        Iniciar sesión
+      </button>
+      <div class="account-card-footer">
+        <p class="account-note">
+          <i class="ti ti-info-circle"></i>
+          Usa el botón «Iniciar sesión» de la esquina superior derecha o haz clic aquí debajo.
+        </p>
+      </div>
     </div>
   </div>
 
@@ -132,7 +146,7 @@ title: Mi cuenta
 <script type="module">
   import { onAuth, setDisplayName, setUsername, resetPassword, deleteAccount, listFavorites } from "/assets/js/firebase-app.js";
 
-  const guard = document.getElementById("guard");
+  const guestState = document.querySelector("[data-account-guest]");
   const shell = document.querySelector("[data-account-shell]");
   const tabButtons = Array.from(document.querySelectorAll("[data-account-tab]"));
   const panels = Array.from(document.querySelectorAll("[data-tab-panel]"));
@@ -297,7 +311,7 @@ title: Mi cuenta
 
   onAuth((user)=>{
     const logged=!!user;
-    guard.hidden=logged;
+    if(guestState) guestState.hidden = logged;
     if(shell) shell.hidden=!logged;
     if(!logged){
       currentUserEmail=null;
