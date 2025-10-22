@@ -160,6 +160,18 @@
               <span class="sr-only">Cerrar menú</span>
             </button>
           </div>
+          <p class="nav-menu-title">Explora</p>
+          <div class="nav-menu-links">
+            {% assign nav_items = site.nav | where_exp: 'item', 'item.url != "/"' %}
+            {% for item in nav_items %}
+              <a class="nav-link{% if page.url == item.url %} active{% endif %}"
+                 href="{{ item.url }}">{{ item.name }}</a>
+            {% endfor %}
+          </div>
+          <div class="nav-menu-footer">
+            <p>¿Buscas algo concreto?</p>
+            <a class="btn nav-menu-cta" href="#apollo-ai"><i class="ti ti-sparkles"></i> Habla con Apollo AI</a>
+          </div>
           <div class="nav-menu-account" data-auth-block>
             <div class="nav-menu-guest" data-guest-summary>
               <div class="nav-menu-guest-copy">
@@ -198,20 +210,7 @@
                   Cerrar sesión
                 </button>
               </div>
-              <p class="nav-menu-hint">Gestiona tus favoritos y tu identidad desde tu panel personal.</p>
             </div>
-          </div>
-          <p class="nav-menu-title">Explora</p>
-          <div class="nav-menu-links">
-            {% assign nav_items = site.nav | where_exp: 'item', 'item.url != "/"' %}
-            {% for item in nav_items %}
-              <a class="nav-link{% if page.url == item.url %} active{% endif %}"
-                 href="{{ item.url }}">{{ item.name }}</a>
-            {% endfor %}
-          </div>
-          <div class="nav-menu-footer">
-            <p>¿Buscas algo concreto?</p>
-            <a class="btn nav-menu-cta" href="#apollo-ai"><i class="ti ti-sparkles"></i> Habla con Apollo AI</a>
           </div>
         </div>
       </nav>
@@ -241,6 +240,11 @@
           </ul>
         </div>
       </div>
+
+      <button class="logout-inline" type="button" data-logout>
+        <i class="ti ti-logout" aria-hidden="true"></i>
+        <span>Cerrar sesión</span>
+      </button>
 
       <button class="login-trigger" type="button" data-open-login>
         <i class="ti ti-login" aria-hidden="true"></i>
@@ -838,7 +842,7 @@
         if (!wrapper) return;
         wrapper.hidden = !email;
       });
-      if (authBlock) authBlock.hidden = logged;
+      if (authBlock) authBlock.hidden = false;
       if (guestSummary) guestSummary.hidden = logged;
       if (userSummary) userSummary.hidden = !logged;
     });
