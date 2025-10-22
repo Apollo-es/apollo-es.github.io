@@ -148,18 +148,11 @@
       <nav id="site-menu" class="nav-menu" aria-hidden="true" aria-label="Menú principal">
         <div class="nav-menu-card">
           <div class="nav-menu-header">
-            <div class="nav-menu-brand">
-              <span class="nav-menu-logo">A</span>
-              <div class="nav-menu-copy">
-                <span class="nav-menu-name">Apollo-es</span>
-              </div>
-            </div>
             <button class="nav-close" type="button" data-nav-close>
               <i class="ti ti-x" aria-hidden="true"></i>
               <span class="sr-only">Cerrar menú</span>
             </button>
           </div>
-          <p class="nav-menu-title">Explora</p>
           <div class="nav-menu-links">
             {% assign nav_items = site.nav | where_exp: 'item', 'item.url != "/"' %}
             {% for item in nav_items %}
