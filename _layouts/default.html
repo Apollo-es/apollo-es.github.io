@@ -160,29 +160,19 @@
               <span class="sr-only">Cerrar menú</span>
             </button>
           </div>
+          <p class="nav-menu-title">Explora</p>
+          <div class="nav-menu-links">
+            {% assign nav_items = site.nav | where_exp: 'item', 'item.url != "/"' %}
+            {% for item in nav_items %}
+              <a class="nav-link{% if page.url == item.url %} active{% endif %}"
+                 href="{{ item.url }}">{{ item.name }}</a>
+            {% endfor %}
+          </div>
+          <div class="nav-menu-footer">
+            <p>¿Buscas algo concreto?</p>
+            <a class="btn nav-menu-cta" href="#apollo-ai"><i class="ti ti-sparkles"></i> Habla con Apollo AI</a>
+          </div>
           <div class="nav-menu-account" data-auth-block>
-            <div class="nav-menu-user" data-user-summary hidden>
-              <div class="nav-menu-user-meta">
-                <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-user"></i></span>
-                <div>
-                  <span class="nav-menu-user-label">Sesión iniciada</span>
-                  <strong data-username>Usuario</strong>
-                </div>
-              </div>
-              <div class="nav-menu-user-actions">
-                <a class="btn nav-menu-account-btn primary" href="/account.html">
-                  <i class="ti ti-id-badge" aria-hidden="true"></i>
-                  Mi cuenta
-                </a>
-                <button class="btn nav-menu-account-btn ghost" type="button" data-logout>
-                  <i class="ti ti-logout" aria-hidden="true"></i>
-                  Cerrar sesión
-                </button>
-              </div>
-              <p class="nav-menu-hint" data-like-hint-bubble hidden>
-                ¿Quieres guardarte un juego o una app? Haz clic en «Me gusta» para guardarlo en tu perfil.
-              </p>
-            </div>
             <div class="nav-menu-guest" data-guest-summary>
               <div class="nav-menu-guest-copy">
                 <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-sparkles"></i></span>
@@ -198,18 +188,29 @@
               </button>
               <span class="nav-menu-guest-note">¿Nuevo aquí? Crea tu cuenta gratis en segundos.</span>
             </div>
-          </div>
-          <p class="nav-menu-title">Explora</p>
-          <div class="nav-menu-links">
-            {% assign nav_items = site.nav | where_exp: 'item', 'item.url != "/"' %}
-            {% for item in nav_items %}
-              <a class="nav-link{% if page.url == item.url %} active{% endif %}"
-                 href="{{ item.url }}">{{ item.name }}</a>
-            {% endfor %}
-          </div>
-          <div class="nav-menu-footer">
-            <p>¿Buscas algo concreto?</p>
-            <a class="btn nav-menu-cta" href="#apollo-ai"><i class="ti ti-sparkles"></i> Habla con Apollo AI</a>
+            <div class="nav-menu-user" data-user-summary hidden>
+              <div class="nav-menu-user-meta">
+                <span class="nav-menu-avatar" aria-hidden="true" data-user-avatar>U</span>
+                <div>
+                  <span class="nav-menu-user-label">Sesión iniciada</span>
+                  <strong data-username>Usuario</strong>
+                  <p class="nav-menu-user-email" data-user-email-wrapper hidden>
+                    <i class="ti ti-mail" aria-hidden="true"></i>
+                    <span data-user-email></span>
+                  </p>
+                </div>
+              </div>
+              <div class="nav-menu-user-actions">
+                <a class="nav-menu-account-btn primary" href="/account.html">
+                  <i class="ti ti-id-badge" aria-hidden="true"></i>
+                  Mi cuenta
+                </a>
+                <button class="nav-menu-account-btn ghost" type="button" data-logout>
+                  <i class="ti ti-logout" aria-hidden="true"></i>
+                  Cerrar sesión
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -218,10 +219,11 @@
     <div class="auth-head">
       <div class="user-dropdown" data-user-menu hidden>
         <button class="user-trigger" type="button" data-user-trigger aria-haspopup="true" aria-expanded="false">
-          <span>Hola, <strong data-username>Usuario</strong></span>
+          <span class="user-avatar" aria-hidden="true" data-user-avatar>U</span>
+          <span class="user-greeting">Hola, <strong data-username>Usuario</strong></span>
           <i class="ti ti-chevron-down" aria-hidden="true"></i>
         </button>
-        <div class="user-menu" hidden data-user-panel role="menu">
+        <div class="user-menu" hidden data-user-panel role="menu" aria-hidden="true">
           <ul class="user-menu-list" role="none">
             <li role="none">
               <a class="user-menu-item" href="/account.html" role="menuitem">
@@ -239,7 +241,15 @@
         </div>
       </div>
 
-      <button type="button" data-open-login>Iniciar sesión</button>
+      <button class="logout-inline" type="button" data-logout>
+        <i class="ti ti-logout" aria-hidden="true"></i>
+        <span>Cerrar sesión</span>
+      </button>
+
+      <button class="login-trigger" type="button" data-open-login>
+        <i class="ti ti-login" aria-hidden="true"></i>
+        Iniciar sesión
+      </button>
     </div>
   </header>
 
@@ -761,29 +771,36 @@
     const usernameNodes = Array.from(document.querySelectorAll("[data-username]"));
     const logoutButtons = Array.from(document.querySelectorAll("[data-logout]"));
     const authBlock = document.querySelector("[data-auth-block]");
-    const userSummary = document.querySelector("[data-user-summary]");
     const guestSummary = document.querySelector("[data-guest-summary]");
+    const userSummary = document.querySelector("[data-user-summary]");
+    const userEmailNodes = Array.from(document.querySelectorAll("[data-user-email]"));
+    const userEmailWrappers = Array.from(document.querySelectorAll("[data-user-email-wrapper]"));
+    const avatarNodes = Array.from(document.querySelectorAll("[data-user-avatar]"));
+
+    const setPanelState = (open) => {
+      if (!panel) return;
+      panel.hidden = !open;
+      panel.setAttribute("aria-hidden", open ? "false" : "true");
+      trigger?.setAttribute("aria-expanded", open ? "true" : "false");
+    };
 
     trigger?.addEventListener("click", (event) => {
       event.preventDefault();
       if (!panel) return;
-      const expanded = panel.hidden;
-      panel.hidden = !panel.hidden;
-      trigger.setAttribute("aria-expanded", String(expanded));
+      const shouldOpen = panel.hidden;
+      setPanelState(shouldOpen);
     });
 
     document.addEventListener("click", (e)=>{
       if(!panel || panel.hidden) return;
       if(!e.target.closest("[data-user-menu]")){
-        panel.hidden = true;
-        trigger?.setAttribute("aria-expanded", "false");
+        setPanelState(false);
       }
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape" || !panel || panel.hidden) return;
-      panel.hidden = true;
-      trigger?.setAttribute("aria-expanded", "false");
+      setPanelState(false);
       trigger?.focus();
     });
 
@@ -792,8 +809,7 @@
     logoutButtons.forEach((button) => {
       button.addEventListener("click", (event) => {
         event.preventDefault();
-        if (panel) panel.hidden = true;
-        trigger?.setAttribute("aria-expanded", "false");
+        setPanelState(false);
         if (navToggleButton?.getAttribute("aria-expanded") === "true") {
           navToggleButton.click();
         }
@@ -804,16 +820,31 @@
     onAuth((user)=>{
       const logged = !!user;
       if (menuWrap) menuWrap.hidden = !logged;
-      if (panel) panel.hidden = true;
-      trigger?.setAttribute("aria-expanded", "false");
-      const displayName = (user?.displayName) || (user?.email) || "Usuario";
+      setPanelState(false);
+      const email = (user?.email || "").trim();
+      let displayName = (user?.displayName || "").trim();
+      if (!displayName && email) {
+        const namePart = email.split("@")[0] || "";
+        displayName = namePart ? namePart.charAt(0).toUpperCase() + namePart.slice(1) : email;
+      }
+      if (!displayName) displayName = "Usuario";
+      const initial = displayName.trim().charAt(0).toUpperCase() || "U";
       usernameNodes.forEach((node) => {
         node.textContent = displayName;
       });
-      if (authBlock) {
-        if (userSummary) userSummary.hidden = !logged;
-        if (guestSummary) guestSummary.hidden = logged;
-      }
+      avatarNodes.forEach((node) => {
+        node.textContent = initial;
+      });
+      userEmailNodes.forEach((node) => {
+        node.textContent = email;
+      });
+      userEmailWrappers.forEach((wrapper) => {
+        if (!wrapper) return;
+        wrapper.hidden = !email;
+      });
+      if (authBlock) authBlock.hidden = false;
+      if (guestSummary) guestSummary.hidden = logged;
+      if (userSummary) userSummary.hidden = !logged;
     });
   </script>
 
