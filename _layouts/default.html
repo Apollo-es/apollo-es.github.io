@@ -179,6 +179,9 @@
                   Cerrar sesión
                 </button>
               </div>
+              <p class="nav-menu-hint" data-like-hint-bubble hidden>
+                ¿Quieres guardarte un juego o una app? Haz clic en «Me gusta» para guardarlo en tu perfil.
+              </p>
             </div>
             <div class="nav-menu-guest" data-guest-summary>
               <div class="nav-menu-guest-copy">
@@ -243,6 +246,17 @@
   <main class="container">
     {{ content }}
   </main>
+
+  <div class="like-coach" data-like-hint hidden role="dialog" aria-live="polite" aria-label="Consejo para guardar contenidos">
+    <div class="like-coach-card">
+      <span class="like-coach-icon" aria-hidden="true">❤</span>
+      <div class="like-coach-copy">
+        <strong>Guarda con «Me gusta»</strong>
+        <p>¿Quieres guardarte un juego o una app? Haz clic en «Me gusta» para que se quede en tu perfil.</p>
+        <button class="like-coach-action" type="button" data-like-hint-close>Entendido</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <p>© {{ site.time | date: "%Y" }} {{ site.title }} · Hecho con GitHub Pages</p>
@@ -816,7 +830,7 @@
   </script>
 
   <script type="module">
-    import { requireAuth, toggleLike, toggleSave, setRating } from "/assets/js/firebase-app.js";
+    import { onAuth, requireAuth, toggleLike, setRating, listFavorites } from "/assets/js/firebase-app.js";
 
     if (typeof window.openLoginModal !== "function") {
       window.openLoginModal = () => {
@@ -840,6 +854,93 @@
       return requireAuth(window.openLoginModal);
     }
 
+    const likeHint = document.querySelector("[data-like-hint]");
+    const likeHintClose = likeHint?.querySelector("[data-like-hint-close]");
+    const likeHintBubble = document.querySelector("[data-like-hint-bubble]");
+    let likeHintHideTimer = null;
+    let likeHintKey = null;
+
+    const likeHintClass = "is-visible";
+
+    function setLikeHintVisible(visible){
+      if (likeHint) {
+        if (visible) {
+          likeHint.hidden = false;
+          window.requestAnimationFrame(() => likeHint.classList.add(likeHintClass));
+        } else {
+          likeHint.classList.remove(likeHintClass);
+          window.clearTimeout(likeHintHideTimer);
+          likeHintHideTimer = window.setTimeout(() => {
+            likeHint.hidden = true;
+          }, 260);
+        }
+      }
+      if (likeHintBubble) {
+        likeHintBubble.hidden = !visible;
+        likeHintBubble.classList.toggle(likeHintClass, visible);
+      }
+      document.body.classList.toggle("like-hint-visible", !!visible);
+    }
+
+    function rememberHintDismiss(key){
+      if (!key) return;
+      try {
+        localStorage.setItem(key, "1");
+      } catch (error) {
+        console.warn("No se pudo guardar la preferencia de ayuda", error);
+      }
+    }
+
+    function shouldShowHint(key){
+      if (!key) return false;
+      try {
+        return localStorage.getItem(key) !== "1";
+      } catch (error) {
+        console.warn("No se pudo leer la preferencia de ayuda", error);
+        return true;
+      }
+    }
+
+    function hideLikeHint(options = {}){
+      const { persist = false } = options;
+      if (persist) rememberHintDismiss(likeHintKey);
+      setLikeHintVisible(false);
+    }
+
+    likeHintClose?.addEventListener("click", () => {
+      hideLikeHint({ persist: true });
+    });
+
+    async function evaluateLikeHint(user){
+      if (!user) {
+        likeHintKey = null;
+        hideLikeHint();
+        return;
+      }
+      likeHintKey = `like-hint-dismissed::${user.uid}`;
+      if (!shouldShowHint(likeHintKey)) {
+        hideLikeHint();
+        return;
+      }
+      try {
+        const favorites = await listFavorites({ limit: 1 });
+        if (favorites.length > 0) {
+          rememberHintDismiss(likeHintKey);
+          hideLikeHint();
+          return;
+        }
+        setLikeHintVisible(true);
+      } catch (error) {
+        console.warn("No se pudo cargar el estado de favoritos", error);
+      }
+    }
+
+    onAuth((user) => {
+      evaluateLikeHint(user).catch((error) => {
+        console.warn("No se pudo evaluar la ayuda de favoritos", error);
+      });
+    });
+
     document.addEventListener("click", async (event) => {
       const likeBtn = event.target.closest("[data-like]");
       if (likeBtn) {
@@ -848,22 +949,12 @@
         try {
           const result = await toggleLike(payload);
           likeBtn.classList.toggle("active", !!result.liked);
+          if (result.liked) {
+            hideLikeHint({ persist: true });
+          }
           document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
         } catch (error) {
           console.error("like failed", error);
-        }
-      }
-
-      const saveBtn = event.target.closest("[data-save]");
-      if (saveBtn) {
-        if (!ensureAuth()) return;
-        const payload = getPayload(saveBtn);
-        try {
-          const result = await toggleSave(payload);
-          saveBtn.classList.toggle("active", !!result.saved);
-          document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
-        } catch (error) {
-          console.error("save failed", error);
         }
       }
 
