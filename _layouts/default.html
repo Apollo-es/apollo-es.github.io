@@ -160,6 +160,35 @@
                  href="{{ item.url }}">{{ item.name }}</a>
             {% endfor %}
           </div>
+          <div class="nav-menu-account" data-auth-block hidden>
+            <div class="nav-menu-user" data-user-actions hidden>
+              <div class="nav-menu-user-actions">
+                <button class="nav-menu-account-btn" type="button" data-logout>
+                  <i class="ti ti-logout" aria-hidden="true"></i>
+                  Cerrar sesión
+                </button>
+              </div>
+            </div>
+            <div class="nav-menu-guest" data-guest-summary hidden>
+              <div class="nav-menu-guest-copy">
+                <i class="ti ti-user-plus" aria-hidden="true"></i>
+                <div>
+                  <span class="nav-menu-user-label">¿Aún no tienes cuenta?</span>
+                  <strong>Crea tu perfil para guardar favoritos.</strong>
+                </div>
+              </div>
+              <div class="nav-menu-user-actions">
+                <button class="nav-menu-account-btn ghost" type="button" data-open-login>
+                  <i class="ti ti-login" aria-hidden="true"></i>
+                  Iniciar sesión
+                </button>
+                <button class="nav-menu-account-btn primary" type="button" data-open-register>
+                  <i class="ti ti-user-plus" aria-hidden="true"></i>
+                  Registrarse
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
@@ -176,7 +205,7 @@
             <li role="none">
               <a class="user-menu-item" href="/account.html" role="menuitem">
                 <i class="ti ti-id-badge" aria-hidden="true"></i>
-                <span>Mi cuenta</span>
+                <span>Mi perfil</span>
               </a>
             </li>
             <li role="none">
@@ -192,6 +221,11 @@
       <button class="logout-inline" type="button" data-logout>
         <i class="ti ti-logout" aria-hidden="true"></i>
         <span>Cerrar sesión</span>
+      </button>
+
+      <button class="register-trigger" type="button" data-open-register>
+        <i class="ti ti-user-plus" aria-hidden="true"></i>
+        Registrarse
       </button>
 
       <button class="login-trigger" type="button" data-open-login>
@@ -305,7 +339,7 @@
       formatDuration
     } from "/assets/js/auth-security.js";
 
-    const openButtons = Array.from(document.querySelectorAll("[data-open-login]"));
+    const openButtons = Array.from(document.querySelectorAll("[data-open-login], [data-open-register]"));
     const modal     = document.querySelector("[data-login-modal]");
     const closeBtn  = document.querySelector("[data-close-login]");
     const loginG    = document.querySelector("[data-login-google]");
@@ -543,20 +577,20 @@
       return true;
     };
 
-    function showLoginModal(){
+    const openAuthModal = (mode = "login") => {
+      setMode(mode);
       modal.hidden = false;
-      document.body.style.overflow='hidden';
-      errorBox.textContent="";
+      document.body.style.overflow = 'hidden';
+      errorBox.textContent = "";
       setWarning("");
-      if (state.mode === "register") {
-        refreshChallenge().catch(console.error);
-      }
-    }
+    };
 
-    window.openLoginModal = showLoginModal;
+    window.openLoginModal = (mode = "login") => openAuthModal(mode);
+    window.openRegisterModal = () => openAuthModal("register");
 
     openButtons.forEach((btn) => {
-      btn.addEventListener("click", showLoginModal);
+      const targetMode = btn.hasAttribute("data-open-register") ? "register" : "login";
+      btn.addEventListener("click", () => openAuthModal(targetMode));
     });
     closeBtn?.addEventListener("click", () => {
       modal.hidden = true;
@@ -720,9 +754,7 @@
     const logoutButtons = Array.from(document.querySelectorAll("[data-logout]"));
     const authBlock = document.querySelector("[data-auth-block]");
     const guestSummary = document.querySelector("[data-guest-summary]");
-    const userSummary = document.querySelector("[data-user-summary]");
-    const userEmailNodes = Array.from(document.querySelectorAll("[data-user-email]"));
-    const userEmailWrappers = Array.from(document.querySelectorAll("[data-user-email-wrapper]"));
+    const userActions = document.querySelector("[data-user-actions]");
     const avatarNodes = Array.from(document.querySelectorAll("[data-user-avatar]"));
 
     const setPanelState = (open) => {
@@ -783,16 +815,12 @@
       avatarNodes.forEach((node) => {
         node.textContent = initial;
       });
-      userEmailNodes.forEach((node) => {
-        node.textContent = email;
-      });
-      userEmailWrappers.forEach((wrapper) => {
-        if (!wrapper) return;
-        wrapper.hidden = !email;
-      });
-      if (authBlock) authBlock.hidden = false;
-      if (guestSummary) guestSummary.hidden = logged;
-      if (userSummary) userSummary.hidden = !logged;
+      const showGuest = !logged && !!guestSummary;
+      const showUserActions = logged && !!userActions;
+
+      if (guestSummary) guestSummary.hidden = !showGuest;
+      if (userActions) userActions.hidden = !showUserActions;
+      if (authBlock) authBlock.hidden = !(showGuest || showUserActions);
     });
   </script>
 
