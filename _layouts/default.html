@@ -152,7 +152,6 @@
               <span class="nav-menu-logo">A</span>
               <div class="nav-menu-copy">
                 <span class="nav-menu-name">Apollo-es</span>
-                <span class="nav-menu-tagline">Catálogo curado + IA en vivo</span>
               </div>
             </div>
             <button class="nav-close" type="button" data-nav-close>
@@ -167,50 +166,6 @@
               <a class="nav-link{% if page.url == item.url %} active{% endif %}"
                  href="{{ item.url }}">{{ item.name }}</a>
             {% endfor %}
-          </div>
-          <div class="nav-menu-footer">
-            <p>¿Buscas algo concreto?</p>
-            <a class="btn nav-menu-cta" href="#apollo-ai"><i class="ti ti-sparkles"></i> Habla con Apollo AI</a>
-          </div>
-          <div class="nav-menu-account" data-auth-block>
-            <div class="nav-menu-guest" data-guest-summary>
-              <div class="nav-menu-guest-copy">
-                <span class="nav-menu-avatar" aria-hidden="true"><i class="ti ti-sparkles"></i></span>
-                <div>
-                  <span class="nav-menu-user-label">Bienvenido</span>
-                  <strong>Descubre todo el catálogo</strong>
-                </div>
-              </div>
-              <p>Inicia sesión para sincronizar tus favoritos y continuar donde lo dejaste.</p>
-              <button class="btn nav-menu-account-btn primary" type="button" data-open-login>
-                <i class="ti ti-login" aria-hidden="true"></i>
-                Iniciar sesión
-              </button>
-              <span class="nav-menu-guest-note">¿Nuevo aquí? Crea tu cuenta gratis en segundos.</span>
-            </div>
-            <div class="nav-menu-user" data-user-summary hidden>
-              <div class="nav-menu-user-meta">
-                <span class="nav-menu-avatar" aria-hidden="true" data-user-avatar>U</span>
-                <div>
-                  <span class="nav-menu-user-label">Sesión iniciada</span>
-                  <strong data-username>Usuario</strong>
-                  <p class="nav-menu-user-email" data-user-email-wrapper hidden>
-                    <i class="ti ti-mail" aria-hidden="true"></i>
-                    <span data-user-email></span>
-                  </p>
-                </div>
-              </div>
-              <div class="nav-menu-user-actions">
-                <a class="nav-menu-account-btn primary" href="/account.html">
-                  <i class="ti ti-id-badge" aria-hidden="true"></i>
-                  Mi cuenta
-                </a>
-                <button class="nav-menu-account-btn ghost" type="button" data-logout>
-                  <i class="ti ti-logout" aria-hidden="true"></i>
-                  Cerrar sesión
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </nav>
