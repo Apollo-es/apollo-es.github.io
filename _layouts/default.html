@@ -160,6 +160,50 @@
                  href="{{ item.url }}">{{ item.name }}</a>
             {% endfor %}
           </div>
+          <div class="nav-menu-account" data-auth-block hidden>
+            <div class="nav-menu-user" data-user-summary hidden>
+              <div class="nav-menu-user-meta">
+                <span class="nav-menu-avatar" aria-hidden="true" data-user-avatar>U</span>
+                <div>
+                  <span class="nav-menu-user-label">Sesión iniciada</span>
+                  <strong data-username>Usuario</strong>
+                  <p class="nav-menu-user-email" data-user-email-wrapper hidden>
+                    <i class="ti ti-mail" aria-hidden="true"></i>
+                    <span data-user-email>usuario@example.com</span>
+                  </p>
+                </div>
+              </div>
+              <div class="nav-menu-user-actions">
+                <a class="nav-menu-account-btn primary" href="/account.html">
+                  <i class="ti ti-id-badge" aria-hidden="true"></i>
+                  Mi perfil
+                </a>
+                <button class="nav-menu-account-btn" type="button" data-logout>
+                  <i class="ti ti-logout" aria-hidden="true"></i>
+                  Cerrar sesión
+                </button>
+              </div>
+            </div>
+            <div class="nav-menu-guest" data-guest-summary hidden>
+              <div class="nav-menu-guest-copy">
+                <i class="ti ti-user-plus" aria-hidden="true"></i>
+                <div>
+                  <span class="nav-menu-user-label">¿Aún no tienes cuenta?</span>
+                  <strong>Crea tu perfil para guardar favoritos.</strong>
+                </div>
+              </div>
+              <div class="nav-menu-user-actions">
+                <button class="nav-menu-account-btn ghost" type="button" data-open-login>
+                  <i class="ti ti-login" aria-hidden="true"></i>
+                  Iniciar sesión
+                </button>
+                <button class="nav-menu-account-btn primary" type="button" data-open-register>
+                  <i class="ti ti-user-plus" aria-hidden="true"></i>
+                  Registrarse
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
@@ -176,7 +220,7 @@
             <li role="none">
               <a class="user-menu-item" href="/account.html" role="menuitem">
                 <i class="ti ti-id-badge" aria-hidden="true"></i>
-                <span>Mi cuenta</span>
+                <span>Mi perfil</span>
               </a>
             </li>
             <li role="none">
@@ -192,6 +236,11 @@
       <button class="logout-inline" type="button" data-logout>
         <i class="ti ti-logout" aria-hidden="true"></i>
         <span>Cerrar sesión</span>
+      </button>
+
+      <button class="register-trigger" type="button" data-open-register>
+        <i class="ti ti-user-plus" aria-hidden="true"></i>
+        Registrarse
       </button>
 
       <button class="login-trigger" type="button" data-open-login>
@@ -305,7 +354,7 @@
       formatDuration
     } from "/assets/js/auth-security.js";
 
-    const openButtons = Array.from(document.querySelectorAll("[data-open-login]"));
+    const openButtons = Array.from(document.querySelectorAll("[data-open-login], [data-open-register]"));
     const modal     = document.querySelector("[data-login-modal]");
     const closeBtn  = document.querySelector("[data-close-login]");
     const loginG    = document.querySelector("[data-login-google]");
@@ -543,20 +592,20 @@
       return true;
     };
 
-    function showLoginModal(){
+    const openAuthModal = (mode = "login") => {
+      setMode(mode);
       modal.hidden = false;
-      document.body.style.overflow='hidden';
-      errorBox.textContent="";
+      document.body.style.overflow = 'hidden';
+      errorBox.textContent = "";
       setWarning("");
-      if (state.mode === "register") {
-        refreshChallenge().catch(console.error);
-      }
-    }
+    };
 
-    window.openLoginModal = showLoginModal;
+    window.openLoginModal = (mode = "login") => openAuthModal(mode);
+    window.openRegisterModal = () => openAuthModal("register");
 
     openButtons.forEach((btn) => {
-      btn.addEventListener("click", showLoginModal);
+      const targetMode = btn.hasAttribute("data-open-register") ? "register" : "login";
+      btn.addEventListener("click", () => openAuthModal(targetMode));
     });
     closeBtn?.addEventListener("click", () => {
       modal.hidden = true;
