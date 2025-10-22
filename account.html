@@ -18,130 +18,185 @@ title: Mi cuenta
     </div>
   </div>
 
-  <div id="session" class="account-card" hidden>
-    <div class="account-card-header">
-      <span class="account-card-icon" aria-hidden="true"><i class="ti ti-logout"></i></span>
-      <div>
-        <h2>Sesión activa</h2>
-        <p>Cierra tu sesión en este dispositivo en cualquier momento.</p>
-      </div>
-    </div>
-    <button id="signout" type="button" class="account-btn secondary">
-      <i class="ti ti-logout"></i> Cerrar sesión
-    </button>
-  </div>
+  <div class="account-shell" data-account-shell hidden>
+    <nav class="account-tabs" role="tablist">
+      <button class="account-tab active" id="account-tab-profile" type="button" role="tab" aria-selected="true" aria-controls="account-panel-profile" data-account-tab="profile">
+        <i class="ti ti-user" aria-hidden="true"></i>
+        <span>Mi información personal</span>
+      </button>
+      <button class="account-tab" id="account-tab-favorites" type="button" role="tab" aria-selected="false" aria-controls="account-panel-favorites" data-account-tab="favorites">
+        <i class="ti ti-heart" aria-hidden="true"></i>
+        <span>Mis guardados</span>
+      </button>
+      <button class="account-tab" id="account-tab-security" type="button" role="tab" aria-selected="false" aria-controls="account-panel-security" data-account-tab="security">
+        <i class="ti ti-shield-lock" aria-hidden="true"></i>
+        <span>Privacidad y seguridad</span>
+      </button>
+    </nav>
 
-  <div class="account-grid">
-    <form id="profile" class="account-card" hidden>
-      <div class="account-card-header">
-        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-user"></i></span>
-        <div>
-          <h2>Perfil público</h2>
-          <p>Elige cómo quieres que aparezca tu nombre cuando interactúas en Apollo-es.</p>
-        </div>
-      </div>
-      <div class="field field-enhanced">
-        <label for="displayName">Nombre para mostrar</label>
-        <div class="input-shell">
-          <span class="input-icon" aria-hidden="true"><i class="ti ti-edit"></i></span>
-          <input type="text" id="displayName" placeholder="Tu nombre">
-        </div>
-        <p class="help">Personaliza cómo te verá la comunidad en reseñas, comentarios y fichas colaborativas.</p>
-      </div>
-      <button type="submit" class="account-btn primary">Guardar cambios</button>
-      <p id="pmsg" class="form-feedback" role="status"></p>
-      <div class="account-card-footer">
-        <p class="account-note"><i class="ti ti-info-circle"></i> Puedes actualizarlo tantas veces como quieras.</p>
-      </div>
-    </form>
+    <div class="account-panels">
+      <section class="account-panel" id="account-panel-profile" data-tab-panel="profile" role="tabpanel" aria-labelledby="account-tab-profile">
+        <form id="profile" class="account-card">
+          <div class="account-card-header">
+            <span class="account-card-icon" aria-hidden="true"><i class="ti ti-user"></i></span>
+            <div>
+              <h2>Perfil público</h2>
+              <p>Elige cómo quieres que aparezca tu nombre cuando interactúas en Apollo-es.</p>
+            </div>
+          </div>
+          <div class="field field-enhanced">
+            <label for="displayName">Nombre para mostrar</label>
+            <div class="input-shell">
+              <span class="input-icon" aria-hidden="true"><i class="ti ti-edit"></i></span>
+              <input type="text" id="displayName" placeholder="Tu nombre">
+            </div>
+            <p class="help">Personaliza cómo te verá la comunidad en reseñas, comentarios y fichas colaborativas.</p>
+          </div>
+          <button type="submit" class="account-btn primary">Guardar cambios</button>
+          <p id="pmsg" class="form-feedback" role="status"></p>
+          <div class="account-card-footer">
+            <p class="account-note"><i class="ti ti-info-circle"></i> Puedes actualizarlo tantas veces como quieras.</p>
+          </div>
+        </form>
 
-    <form id="uname" class="account-card" hidden>
-      <div class="account-card-header">
-        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-at"></i></span>
-        <div>
-          <h2>Nombre de usuario</h2>
-          <p>Reserva tu alias único para que otras personas puedan encontrarte fácilmente.</p>
-        </div>
-      </div>
-      <div class="field field-enhanced">
-        <label for="username">Nombre de usuario (único)</label>
-        <div class="input-shell">
-          <span class="input-icon" aria-hidden="true"><i class="ti ti-asterisk"></i></span>
-          <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
-        </div>
-        <p class="help">Entre 3 y 20 caracteres. Solo minúsculas, números, guion bajo y punto.</p>
-      </div>
-      <button type="submit" class="account-btn primary">Guardar usuario</button>
-      <p id="umsg" class="form-feedback" role="status"></p>
-      <div class="account-card-footer">
-        <p class="account-note"><i class="ti ti-lock"></i> Tu alias es único y reservarlo evita que otros lo utilicen.</p>
-      </div>
-    </form>
+        <form id="uname" class="account-card">
+          <div class="account-card-header">
+            <span class="account-card-icon" aria-hidden="true"><i class="ti ti-at"></i></span>
+            <div>
+              <h2>Nombre de usuario</h2>
+              <p>Reserva tu alias único para que otras personas puedan encontrarte fácilmente.</p>
+            </div>
+          </div>
+          <div class="field field-enhanced">
+            <label for="username">Nombre de usuario (único)</label>
+            <div class="input-shell">
+              <span class="input-icon" aria-hidden="true"><i class="ti ti-asterisk"></i></span>
+              <input type="text" id="username" placeholder="tu_usuario" minlength="3" maxlength="20" pattern="[a-z0-9_.]{3,20}">
+            </div>
+            <p class="help">Entre 3 y 20 caracteres. Solo minúsculas, números, guion bajo y punto.</p>
+          </div>
+          <button type="submit" class="account-btn primary">Guardar usuario</button>
+          <p id="umsg" class="form-feedback" role="status"></p>
+          <div class="account-card-footer">
+            <p class="account-note"><i class="ti ti-lock"></i> Tu alias es único y reservarlo evita que otros lo utilicen.</p>
+          </div>
+        </form>
+      </section>
 
-    <div id="security" class="account-card account-security" hidden>
-      <div class="account-card-header">
-        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-shield-lock"></i></span>
-        <div>
-          <h2>Seguridad</h2>
-          <p>Protege tu acceso y controla la permanencia de tu cuenta.</p>
+      <section class="account-panel" id="account-panel-favorites" data-tab-panel="favorites" role="tabpanel" aria-labelledby="account-tab-favorites" hidden>
+        <div id="favorites" class="account-card">
+          <div class="account-card-header">
+            <span class="account-card-icon" aria-hidden="true"><i class="ti ti-star"></i></span>
+            <div>
+              <h2>Mis guardados</h2>
+              <p>Todo lo que marcas con «Me gusta» o valoras aparece en este panel.</p>
+            </div>
+          </div>
+          <p class="favorite-status" data-favorites-status hidden>Cargando guardados...</p>
+          <p class="favorite-empty" data-favorites-empty hidden>Aún no has guardado nada. Da «Me gusta» para guardar juegos, apps y guías.</p>
+          <ul class="favorites-list" data-favorites-list></ul>
         </div>
-      </div>
-      <div class="field field-stack">
-        <label>Restablece tu contraseña</label>
-        <p>¿Olvidaste tu contraseña? Te enviamos un correo seguro para crear una nueva en segundos.</p>
-        <button id="reset" type="button" class="account-btn secondary">Enviar email de restablecimiento</button>
-        <p id="smsg" class="form-feedback" role="status"></p>
-      </div>
-      <div class="account-divider" role="presentation"></div>
-      <div class="field field-stack">
-        <label>¿Ya no quieres continuar?</label>
-        <p>Elimina por completo tus datos y actividad asociada a tu cuenta.</p>
-        <button id="delete" type="button" class="account-btn danger">Eliminar mi cuenta</button>
-        <p class="account-warning"><i class="ti ti-alert-triangle"></i> Esta acción es irreversible. Se eliminarán descargas, reseñas y cualquier contenido asociado.</p>
-      </div>
-    </div>
+      </section>
 
-    <div id="favorites" class="account-card" hidden>
-      <div class="account-card-header">
-        <span class="account-card-icon" aria-hidden="true"><i class="ti ti-star"></i></span>
-        <div>
-          <h2>Mis favoritos</h2>
-          <p>Revisa los juegos y contenidos que te han gustado o valorado.</p>
+      <section class="account-panel" id="account-panel-security" data-tab-panel="security" role="tabpanel" aria-labelledby="account-tab-security" hidden>
+        <div id="security" class="account-card account-security">
+          <div class="account-card-header">
+            <span class="account-card-icon" aria-hidden="true"><i class="ti ti-shield-lock"></i></span>
+            <div>
+              <h2>Privacidad y seguridad</h2>
+              <p>Protege tu acceso y controla la permanencia de tu cuenta.</p>
+            </div>
+          </div>
+          <div class="field field-stack">
+            <label>Restablece tu contraseña</label>
+            <p>¿Olvidaste tu contraseña? Te enviamos un correo seguro para crear una nueva en segundos.</p>
+            <button id="reset" type="button" class="account-btn secondary">Enviar email de restablecimiento</button>
+            <p id="smsg" class="form-feedback" role="status"></p>
+          </div>
+          <div class="account-divider" role="presentation"></div>
+          <div class="field field-stack">
+            <label>Eliminar cuenta</label>
+            <p>Elimina por completo tus datos y actividad asociada a tu cuenta.</p>
+            <button id="delete" type="button" class="account-btn danger">Eliminar mi cuenta</button>
+            <p class="account-warning"><i class="ti ti-alert-triangle"></i> Esta acción es irreversible. Se eliminarán descargas, reseñas y cualquier contenido asociado.</p>
+          </div>
+          <div class="account-card-footer">
+            <p class="account-note"><i class="ti ti-logout"></i> Cierra sesión desde el menú superior (Hola, <span data-username>Usuario</span> → «Cerrar sesión»).</p>
+          </div>
         </div>
-      </div>
-      <p class="favorite-status" data-favorites-status hidden>Cargando favoritos...</p>
-      <p class="favorite-empty" data-favorites-empty hidden>Aún no tienes favoritos. Da like o asigna una valoración para guardarlos aquí.</p>
-      <ul class="favorites-list" data-favorites-list></ul>
+      </section>
     </div>
   </div>
 </section>
 
 <script type="module">
-  import { onAuth, setDisplayName, setUsername, resetPassword, deleteAccount, logout, listFavorites } from "/assets/js/firebase-app.js";
+  import { onAuth, setDisplayName, setUsername, resetPassword, deleteAccount, listFavorites } from "/assets/js/firebase-app.js";
 
-  const guard=document.getElementById("guard");
-  const pf=document.getElementById("profile"), dn=document.getElementById("displayName"), pmsg=document.getElementById("pmsg");
-  const uf=document.getElementById("uname"), un=document.getElementById("username"), umsg=document.getElementById("umsg");
-  const sec=document.getElementById("security"), resetBtn=document.getElementById("reset"), del=document.getElementById("delete"), smsg=document.getElementById("smsg");
-  const sessionCard=document.getElementById("session"), signOutBtn=document.getElementById("signout");
-  const favoritesCard=document.getElementById("favorites");
-  const favoritesList=favoritesCard?.querySelector("[data-favorites-list]");
-  const favoritesEmpty=favoritesCard?.querySelector("[data-favorites-empty]");
-  const favoritesStatus=favoritesCard?.querySelector("[data-favorites-status]");
-
-  let currentUserEmail=null;
-
+  const guard = document.getElementById("guard");
+  const shell = document.querySelector("[data-account-shell]");
+  const tabButtons = Array.from(document.querySelectorAll("[data-account-tab]"));
+  const panels = Array.from(document.querySelectorAll("[data-tab-panel]"));
+  const panelMap = new Map(panels.map((panel) => [panel.dataset.tabPanel, panel]));
+  const pf = document.getElementById("profile");
+  const dn = document.getElementById("displayName");
+  const pmsg = document.getElementById("pmsg");
+  const uf = document.getElementById("uname");
+  const un = document.getElementById("username");
+  const umsg = document.getElementById("umsg");
+  const resetBtn = document.getElementById("reset");
+  const del = document.getElementById("delete");
+  const smsg = document.getElementById("smsg");
+  const favoritesCard = document.getElementById("favorites");
+  const favoritesList = favoritesCard?.querySelector("[data-favorites-list]");
+  const favoritesEmpty = favoritesCard?.querySelector("[data-favorites-empty]");
+  const favoritesStatus = favoritesCard?.querySelector("[data-favorites-status]");
   const contentPaths={
-    game:(id)=>`/juegos/${id}/`,
-    app:(id)=>`/apps/${id}/`,
-    guide:(id)=>`/guias/${id}/`
+    game:(slug)=>`/juegos/${slug}/`,
+    app:(slug)=>`/apps/${slug}/`,
+    guide:(slug)=>`/guias/${slug}/`
   };
-
   const contentLabels={
     game:"Juego",
     app:"App",
     guide:"Guía"
   };
+
+  const tabDefault = "profile";
+  let activeTab = tabDefault;
+  let currentUserEmail = null;
+
+  function activateTab(name = tabDefault){
+    if (!panelMap.has(name)) name = tabDefault;
+    activeTab = name;
+    tabButtons.forEach((button) => {
+      const isActive = button.dataset.accountTab === name;
+      button.classList.toggle("active", isActive);
+      button.setAttribute("aria-selected", isActive ? "true" : "false");
+      button.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
+    panels.forEach((panel) => {
+      const isPanel = panel.dataset.tabPanel === name;
+      panel.hidden = !isPanel;
+      panel.setAttribute("aria-hidden", isPanel ? "false" : "true");
+    });
+  }
+
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const target = button.dataset.accountTab;
+      activateTab(target);
+      if (target === "favorites") {
+        loadFavorites();
+      }
+    });
+  });
+
+  activateTab(tabDefault);
+
+  function isFavoritesActive(){
+    const panel = panelMap.get("favorites");
+    return !!panel && !panel.hidden;
+  }
 
   function resolveContentUrl(type,id){
     if(!type||!id) return "#";
@@ -159,9 +214,9 @@ title: Mi cuenta
   }
 
   async function loadFavorites(){
-    if(!favoritesCard) return;
+    if(!favoritesCard || (shell && shell.hidden)) return;
     if(favoritesStatus){
-      favoritesStatus.textContent="Cargando favoritos...";
+      favoritesStatus.textContent="Cargando guardados...";
       favoritesStatus.hidden=false;
     }
     if(favoritesEmpty) favoritesEmpty.hidden=true;
@@ -203,9 +258,9 @@ title: Mi cuenta
         typeSpan.appendChild(typeStrong);
 
         const detailNodes=[typeSpan];
-        if(item.liked){
+        if(item.saved || item.liked){
           const likeSpan=document.createElement("span");
-          likeSpan.textContent="Te gusta";
+          likeSpan.textContent="Guardado con «Me gusta»";
           detailNodes.push(likeSpan);
         }
         if(item.rating){
@@ -233,7 +288,7 @@ title: Mi cuenta
       if(favoritesEmpty) favoritesEmpty.hidden=true;
     }catch(err){
       if(favoritesStatus){
-        favoritesStatus.textContent="No se pudieron cargar tus favoritos. Inténtalo más tarde.";
+        favoritesStatus.textContent="No se pudieron cargar tus guardados. Inténtalo más tarde.";
         favoritesStatus.hidden=false;
       }
       console.error(err);
@@ -242,54 +297,77 @@ title: Mi cuenta
 
   onAuth((user)=>{
     const logged=!!user;
-    guard.hidden=logged; pf.hidden=!logged; uf.hidden=!logged; sec.hidden=!logged;
-    if(sessionCard) sessionCard.hidden=!logged;
-    if(favoritesCard){
-      favoritesCard.hidden=!logged;
-      if(!logged){
-        clearFavorites();
-      }
-    }
+    guard.hidden=logged;
+    if(shell) shell.hidden=!logged;
     if(!logged){
       currentUserEmail=null;
+      clearFavorites();
+      activateTab(tabDefault);
       return;
     }
-    dn.value = user.displayName || "";
+    if(dn) dn.value = user.displayName || "";
     currentUserEmail = user.email || null;
-    if(favoritesCard) loadFavorites();
+    if(isFavoritesActive()){
+      loadFavorites();
+    } else {
+      clearFavorites();
+    }
   });
 
   document.addEventListener("apollo:favorites-updated", ()=>{
-    if(favoritesCard && !favoritesCard.hidden){
+    if(isFavoritesActive()){
       loadFavorites();
     }
   });
 
-  signOutBtn?.addEventListener("click", async ()=>{
+  pf?.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if(!dn) return;
+    if(pmsg) pmsg.textContent="Guardando...";
     try{
-      await logout();
+      await setDisplayName(dn.value);
+      if(pmsg) pmsg.textContent="Nombre actualizado.";
     }catch(err){
-      alert("No se pudo cerrar la sesión. Inténtalo de nuevo.");
-      console.error(err);
+      if(pmsg) pmsg.textContent=err.message;
     }
   });
 
-  pf.addEventListener("submit", async (e)=>{ e.preventDefault(); pmsg.textContent="Guardando..."; try{
-    await setDisplayName(dn.value); pmsg.textContent="Nombre actualizado.";
-  }catch(err){ pmsg.textContent=err.message; } });
-
-  uf.addEventListener("submit", async (e)=>{ e.preventDefault(); umsg.textContent="Guardando..."; try{
-    const saved=await setUsername(un.value); umsg.textContent=`Usuario guardado: ${saved}`;
-  }catch(err){ umsg.textContent=err.message; } });
-
-  resetBtn.addEventListener("click", async ()=>{ if(!currentUserEmail){ smsg.textContent="Tu cuenta no tiene email."; return; }
-    try{ await resetPassword(currentUserEmail); smsg.textContent="Correo enviado. Revisa tu bandeja."; }
-    catch(err){ smsg.textContent=err.message; }
+  uf?.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    if(!un) return;
+    if(umsg) umsg.textContent="Guardando...";
+    try{
+      const saved=await setUsername(un.value);
+      if(umsg) umsg.textContent=`Usuario guardado: ${saved}`;
+    }catch(err){
+      if(umsg) umsg.textContent=err.message;
+    }
   });
 
-  del.addEventListener("click", async ()=>{
+  resetBtn?.addEventListener("click", async ()=>{
+    if(!currentUserEmail){
+      if(smsg) smsg.textContent="Tu cuenta no tiene email.";
+      return;
+    }
+    if(smsg) smsg.textContent="Enviando...";
+    try{
+      await resetPassword(currentUserEmail);
+      if(smsg) smsg.textContent="Correo enviado. Revisa tu bandeja.";
+    }
+    catch(err){
+      if(smsg) smsg.textContent=err.message;
+    }
+  });
+
+  del?.addEventListener("click", async ()=>{
     if(!confirm("¿Seguro que quieres eliminar tu cuenta?")) return;
-    try{ await deleteAccount(); location.href="/"; }
-    catch(err){ alert("No se pudo eliminar. Quizá tengas que volver a iniciar sesión y reintentar."); console.error(err); }
+    try{
+      await deleteAccount();
+      location.href="/";
+    }
+    catch(err){
+      alert("No se pudo eliminar. Quizá tengas que volver a iniciar sesión y reintentar.");
+      console.error(err);
+    }
   });
 </script>

@@ -192,6 +192,7 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
         contentId: data.contentId || "",
         title: data.title || data.contentId || "",
         liked: false,
+        saved: false,
         rating: null,
         lastInteraction: 0
       });
@@ -204,6 +205,7 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
     if (!data) return;
     const entry = ensureEntry(data);
     entry.liked = true;
+    entry.saved = true;
     entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
   });
 
