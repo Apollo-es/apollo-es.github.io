@@ -161,8 +161,12 @@
             {% endfor %}
           </div>
           <div class="nav-menu-account" data-auth-block hidden>
-wa            <div class="nav-menu-user" data-user-actions hidden>
+            <div class="nav-menu-user" data-user-actions hidden>
               <div class="nav-menu-user-actions">
+                <a class="nav-menu-account-btn" href="/account.html">
+                  <i class="ti ti-id-badge" aria-hidden="true"></i>
+                  Mi perfil
+                </a>
                 <button class="nav-menu-account-btn" type="button" data-logout>
                   <i class="ti ti-logout" aria-hidden="true"></i>
                   Cerrar sesión
@@ -837,7 +841,7 @@ wa            <div class="nav-menu-user" data-user-actions hidden>
   </script>
 
   <script type="module">
-    import { onAuth, requireAuth, toggleLike, setRating, listFavorites } from "/assets/js/firebase-app.js";
+    import { onAuth, requireAuth, toggleLike, setRating, listFavorites, getFavoriteState } from "/assets/js/firebase-app.js";
 
     if (typeof window.openLoginModal !== "function") {
       window.openLoginModal = () => {
@@ -848,14 +852,71 @@ wa            <div class="nav-menu-user" data-user-actions hidden>
     }
 
     function getPayload(node){
-      const wrap = node?.closest?.("[data-content]");
-      const rawId = wrap?.dataset.id || location.pathname.replace(/\W+/g, "-");
+      const wrap = node?.closest?.("[data-content]") || null;
+      const source = wrap || node;
+      const rawId = source?.dataset?.id || location.pathname.replace(/\W+/g, "-");
       return {
-        contentType: wrap?.dataset.type || "game",
+        contentType: source?.dataset?.type || "game",
         contentId: rawId,
-        title: wrap?.dataset.title || document.title
+        title: source?.dataset?.title || document.title
       };
     }
+
+    const contentBlocks = Array.from(document.querySelectorAll("[data-content]"));
+
+    function updateLikeButton(button, liked){
+      if (!button) return;
+      const label = button.querySelector("[data-like-label]");
+      const status = button.querySelector("[data-like-status]");
+      button.classList.toggle("active", !!liked);
+      button.setAttribute("aria-pressed", liked ? "true" : "false");
+      if (label) label.textContent = liked ? "¡Guardado!" : "Me gusta";
+      if (status) status.textContent = liked ? "Guardado en tu perfil" : "Guarda este contenido";
+    }
+
+    function updateRatingStars(wrapper, rating){
+      if (!wrapper) return;
+      const value = Number(rating) || 0;
+      wrapper.dataset.userRating = value > 0 ? String(value) : "";
+      wrapper.querySelectorAll("[data-star]").forEach((button) => {
+        const starValue = parseInt(button.dataset.star || "0", 10);
+        const active = starValue <= value && value > 0;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    function applyFavoriteState(root, state = {}){
+      if (!root) return;
+      const likeButton = root.querySelector("[data-like]");
+      const ratingWrap = root.querySelector("[data-rate]");
+      updateLikeButton(likeButton, !!state.liked);
+      updateRatingStars(ratingWrap, state.rating);
+    }
+
+    async function refreshFavoriteState(root){
+      if (!root) return;
+      try {
+        const state = await getFavoriteState(getPayload(root));
+        applyFavoriteState(root, state);
+      } catch (error) {
+        console.warn("No se pudo cargar el estado del contenido", error);
+      }
+    }
+
+    function resetFavoriteStates(){
+      contentBlocks.forEach((node) => {
+        applyFavoriteState(node, { liked: false, rating: null });
+      });
+    }
+
+    function refreshAllFavoriteStates(){
+      contentBlocks.forEach((node) => {
+        refreshFavoriteState(node);
+      });
+    }
+
+    let activeUserId = null;
 
     function ensureAuth(){
       return requireAuth(window.openLoginModal);
@@ -946,6 +1007,19 @@ wa            <div class="nav-menu-user" data-user-actions hidden>
       evaluateLikeHint(user).catch((error) => {
         console.warn("No se pudo evaluar la ayuda de favoritos", error);
       });
+      const nextUserId = user ? user.uid : null;
+      if (!user) {
+        activeUserId = null;
+        resetFavoriteStates();
+        return;
+      }
+      activeUserId = nextUserId;
+      refreshAllFavoriteStates();
+    });
+
+    document.addEventListener("apollo:favorites-updated", () => {
+      if (!activeUserId) return;
+      refreshAllFavoriteStates();
     });
 
     document.addEventListener("click", async (event) => {
@@ -955,7 +1029,7 @@ wa            <div class="nav-menu-user" data-user-actions hidden>
         const payload = getPayload(likeBtn);
         try {
           const result = await toggleLike(payload);
-          likeBtn.classList.toggle("active", !!result.liked);
+          updateLikeButton(likeBtn, !!result.liked);
           if (result.liked) {
             hideLikeHint({ persist: true });
           }
@@ -974,11 +1048,7 @@ wa            <div class="nav-menu-user" data-user-actions hidden>
         const payload = { ...getPayload(star), rating };
         try {
           await setRating(payload);
-          const stars = ratingWrap.querySelectorAll("[data-star]");
-          stars.forEach((button) => {
-            const value = parseInt(button.dataset.star || "0", 10);
-            button.classList.toggle("active", value <= rating);
-          });
+          updateRatingStars(ratingWrap, rating);
           document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
         } catch (error) {
           console.error("rating failed", error);
