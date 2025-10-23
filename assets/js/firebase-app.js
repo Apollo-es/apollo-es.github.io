@@ -108,6 +108,7 @@ export async function toggleLike({contentType, contentId, title}) {
     contentId,
     title: title || null,
     liked: true,
+    saved: true,
     ts: serverTimestamp()
   });
   return { liked: true };
@@ -145,6 +146,35 @@ export async function setRating({contentType, contentId, rating, title}) {
     ts: serverTimestamp()
   }, { merge: true });
   return { rating: value };
+}
+
+export async function getFavoriteState({ contentType, contentId }) {
+  const user = auth.currentUser;
+  if (!user) {
+    return { liked: false, rating: null };
+  }
+  const id = key(user.uid, contentType, contentId);
+  const likeRef = doc(db, collections.likes || "likes", id);
+  const ratingRef = doc(db, collections.ratings || "ratings", id);
+
+  const [likeSnap, ratingSnap] = await Promise.all([
+    getDoc(likeRef).catch(() => null),
+    getDoc(ratingRef).catch(() => null)
+  ]);
+
+  const likeExists = !!(likeSnap && typeof likeSnap.exists === "function" && likeSnap.exists());
+  let ratingValue = null;
+  if (ratingSnap && typeof ratingSnap.exists === "function" && ratingSnap.exists()) {
+    const data = typeof ratingSnap.data === "function" ? ratingSnap.data() : null;
+    if (data && typeof data.rating === "number") {
+      ratingValue = Number(data.rating);
+    }
+  }
+
+  return {
+    liked: likeExists,
+    rating: ratingValue
+  };
 }
 
 function toMillis(ts){
