@@ -241,8 +241,8 @@
     <div class="like-coach-card">
       <span class="like-coach-icon" aria-hidden="true">❤</span>
       <div class="like-coach-copy">
-        <strong>Guarda con el corazón</strong>
-        <p>¿Quieres guardarte un juego o una app? Pulsa el corazón «Me gusta» para que se quede en tu perfil.</p>
+        <strong>Guarda con «Me gusta»</strong>
+        <p>¿Quieres guardarte un juego o una app? Pulsa el corazón de «Me gusta» y se quedará en tu perfil.</p>
         <button class="like-coach-action" type="button" data-like-hint-close>Entendido</button>
       </div>
     </div>
@@ -872,16 +872,11 @@
       if (!button) return;
       const isLiked = !!liked;
       const label = button.querySelector("[data-like-label]");
-      const icon = button.querySelector(".btn-like-icon i");
-      button.classList.toggle("active", isLiked);
-      button.setAttribute("aria-pressed", isLiked ? "true" : "false");
-      button.setAttribute("aria-label", isLiked ? "Quitar de tus guardados" : "Guardar con Me gusta");
-      if (label) label.textContent = isLiked ? "Guardado" : "Me gusta";
-      if (icon) {
-        icon.classList.add("ti");
-        icon.classList.remove("ti-heart", "ti-heart-filled");
-        icon.classList.add(isLiked ? "ti-heart-filled" : "ti-heart");
-      }
+      const nextLiked = !!liked;
+      button.classList.toggle("active", nextLiked);
+      button.setAttribute("aria-pressed", nextLiked ? "true" : "false");
+      button.setAttribute("aria-label", nextLiked ? "Quitar de tus guardados" : "Guardar con Me gusta");
+      if (label) label.textContent = nextLiked ? "Guardado" : "Me gusta";
     }
 
     function updateRatingStars(wrapper, rating){
