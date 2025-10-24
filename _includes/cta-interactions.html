@@ -3,9 +3,9 @@
      data-id="{{ include.content_id | default: page.slug | default: page.url | replace:'/', '-' | replace:'.html','' }}"
      data-title="{{ include.content_title | default: page.title | escape }}">
 
-  <button class="btn ghost btn-like" type="button" data-like aria-pressed="false">
+  <button class="btn ghost btn-like" type="button" data-like aria-pressed="false" aria-label="Guardar con Me gusta">
+    <span class="btn-like-icon" aria-hidden="true"><i class="ti ti-heart"></i></span>
     <span class="btn-like-label" data-like-label>Me gusta</span>
-    <span class="btn-like-sub" data-like-status>Guarda este contenido</span>
   </button>
 
   <div class="rating" data-rate>
@@ -14,5 +14,10 @@
     <button type="button" data-star="3">★</button>
     <button type="button" data-star="4">★</button>
     <button type="button" data-star="5">★</button>
+  </div>
+
+  <div class="rating-summary" data-rate-summary hidden>
+    <span class="rating-summary-value" data-rate-average>0,0</span>
+    <span class="rating-summary-count" data-rate-count></span>
   </div>
 </div>

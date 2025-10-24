@@ -16,5 +16,6 @@ export const collections = {
   likes: "likes",
   saves: "saves",
   ratings: "ratings",
+  ratingStats: "ratingStats",
   reports: "reports"
 };
