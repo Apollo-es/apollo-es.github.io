@@ -906,7 +906,7 @@ body:not(.is-staff) .report-panel{display:none}
 
 .modal-backdrop{position:fixed;inset:0;display:grid;place-items:center;padding:32px 18px;background:rgba(4,8,18,.72);backdrop-filter:blur(18px);z-index:9999}
 .modal-backdrop[hidden]{display:none}
-.modal{position:relative;display:flex;flex-direction:column;gap:20px;width:min(440px,94vw);padding:28px 28px 30px;border-radius:22px;background:linear-gradient(145deg,rgba(18,26,44,.92),rgba(9,14,28,.94));border:1px solid rgba(124,146,206,.38);box-shadow:0 42px 90px -32px rgba(0,0,0,.82);color:#fff;overflow:hidden}
+.modal{position:relative;display:flex;flex-direction:column;gap:20px;width:min(440px,94vw);padding:28px 28px 30px;border-radius:22px;background:linear-gradient(145deg,rgba(18,26,44,.92),rgba(9,14,28,.94));border:1px solid rgba(124,146,206,.38);box-shadow:0 42px 90px -32px rgba(0,0,0,.82);color:#fff;overflow-x:hidden;overflow-y:auto;max-height:min(620px,calc(100vh - 48px));-webkit-overflow-scrolling:touch}
 .modal::after{content:"";position:absolute;right:-40px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle at center,rgba(124,92,255,.32),rgba(0,224,255,.12),transparent 70%);opacity:.4;pointer-events:none}
 .modal h2{margin:0;font-size:1.45rem;font-weight:700;letter-spacing:.01em}
 .modal-close{position:absolute;top:12px;right:14px;font-size:1.6rem;background:transparent;border:0;color:rgba(214,228,255,.76);cursor:pointer;transition:transform .2s ease,color .2s ease}
@@ -937,6 +937,11 @@ body:not(.is-staff) .report-panel{display:none}
 .modal .link:hover{text-decoration:underline}
 .modal .warning{color:var(--warn);min-height:1.2em;font-size:.82rem;margin-top:2px}
 .modal .error{color:#ff7b7b;min-height:1.2em;font-size:.85rem;font-weight:600}
+
+@media (max-width: 600px){
+  .modal-backdrop{padding:20px 14px;align-items:flex-start;justify-items:center}
+  .modal{width:100%;max-height:calc(100vh - 20px);padding:24px 20px 26px;border-radius:20px}
+}
 
 .logged-in [data-login-google]{display:none}
 :not(.logged-in) [data-logout]{display:none}
