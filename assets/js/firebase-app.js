@@ -96,13 +96,21 @@ function key(uid, type, id){
 export async function toggleLike({contentType, contentId, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
-  const ref = doc(db, collections.likes || "likes", id);
-  const existing = await getDoc(ref);
+  const likeRef = doc(db, collections.likes || "likes", id);
+  const saveRef = doc(db, collections.saves || "saves", id);
+  const existing = await getDoc(likeRef);
   if (existing.exists()) {
-    await deleteDoc(ref);
+    const batch = writeBatch(db);
+    batch.delete(likeRef);
+    const saveSnap = await getDoc(saveRef).catch(() => null);
+    if (saveSnap && typeof saveSnap.exists === "function" && saveSnap.exists()) {
+      batch.delete(saveRef);
+    }
+    await batch.commit();
     return { liked: false };
   }
-  await setDoc(ref, {
+  const batch = writeBatch(db);
+  batch.set(likeRef, {
     uid: auth.currentUser.uid,
     contentType,
     contentId,
@@ -111,6 +119,14 @@ export async function toggleLike({contentType, contentId, title}) {
     saved: true,
     ts: serverTimestamp()
   });
+  batch.set(saveRef, {
+    uid: auth.currentUser.uid,
+    contentType,
+    contentId,
+    title: title || null,
+    ts: serverTimestamp()
+  });
+  await batch.commit();
   return { liked: true };
 }
 

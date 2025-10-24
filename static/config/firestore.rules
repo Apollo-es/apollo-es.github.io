@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(data) {
+      return isSignedIn() && data.uid == request.auth.uid;
+    }
+
+    function hasRequiredKeys(expectedKeys) {
+      return request.resource.data.keys().hasOnly(expectedKeys);
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && request.auth.uid == userId;
+      allow delete: if false;
+    }
+
+    match /usernames/{username} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /downloads/{downloadId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    match /reports/{reportId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    match /likes/{likeId} {
+      allow read, delete: if isOwner(resource.data);
+      allow create: if isOwner(request.resource.data)
+        && hasRequiredKeys(['uid', 'contentType', 'contentId', 'title', 'liked', 'saved', 'ts'])
+        && request.resource.data.liked == true
+        && request.resource.data.saved == true;
+      allow update: if false;
+    }
+
+    match /saves/{saveId} {
+      allow read, delete: if isOwner(resource.data);
+      allow create: if isOwner(request.resource.data)
+        && hasRequiredKeys(['uid', 'contentType', 'contentId', 'title', 'ts']);
+      allow update: if false;
+    }
+
+    match /ratings/{ratingId} {
+      allow read, delete: if isOwner(resource.data);
+      allow create, update: if isOwner(request.resource.data)
+        && hasRequiredKeys(['uid', 'contentType', 'contentId', 'rating', 'title', 'ts'])
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

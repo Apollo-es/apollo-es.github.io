@@ -1060,12 +1060,13 @@ body:not(.is-staff) .report-panel{display:none}
   .input-icon{width:34px;height:34px}
 }
 .content-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;align-items:center}
-.content-actions .btn-like{flex:0 0 auto;padding:10px 16px;font-weight:600;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:180px}
-.content-actions .btn-like-label{font-size:1rem;line-height:1.2;display:flex;align-items:center;gap:.55rem;transition:color .2s ease}
-.content-actions .btn-like-label::before{content:"";display:inline-flex;align-items:center;justify-content:center;width:1.35rem;height:1.35rem;border-radius:50%;border:2px solid rgba(231,238,255,.45);color:transparent;font-size:.95rem;font-weight:700;transition:background .25s ease,color .25s ease,border-color .25s ease}
-.content-actions .btn-like.active .btn-like-label::before{content:"✔";background:rgba(124,92,255,.88);border-color:rgba(124,92,255,.95);color:#0d1224;box-shadow:0 8px 16px -10px rgba(124,92,255,.9)}
-.content-actions .btn-like-sub{font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(231,238,255,.7);transition:color .2s ease}
-.content-actions .btn-like.active .btn-like-sub{color:rgba(255,255,255,.85)}
+.content-actions .btn-like{flex:0 0 auto;padding:10px 18px;font-weight:600;position:relative;display:inline-flex;align-items:center;gap:.75rem;min-width:0}
+.content-actions .btn-like-label{font-size:1rem;line-height:1.2;display:flex;align-items:center;gap:.35rem;transition:color .2s ease}
+.content-actions .btn-like-icon{display:inline-flex;align-items:center;justify-content:center;width:1.5rem;height:1.5rem;border-radius:999px;background:rgba(124,92,255,.18);box-shadow:0 6px 14px -10px rgba(124,92,255,.7);transition:background .3s ease,box-shadow .3s ease}
+.content-actions .btn-like-icon svg{width:100%;height:100%;fill:transparent;stroke:rgba(231,238,255,.75);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:fill .3s ease,stroke .3s ease,transform .3s ease}
+.content-actions .btn-like.active .btn-like-icon{background:rgba(255,107,157,.22);box-shadow:0 10px 18px -12px rgba(255,107,157,.8)}
+.content-actions .btn-like.active .btn-like-icon svg{fill:rgba(255,107,157,.92);stroke:rgba(255,107,157,.95);transform:scale(1.05)}
+.content-actions .btn-like.active .btn-like-label{color:#fff}
 .content-actions .btn.ghost{background:rgba(15,21,35,.6);border:1px solid rgba(72,88,132,.6);color:#e4ebff;transition:background .2s ease,border-color .2s ease,color .2s ease}
 .content-actions .btn.ghost:hover{background:rgba(28,36,58,.85);border-color:rgba(124,146,206,.8)}
 .content-actions .btn-like.active,.content-actions .btn.ghost.active{background:rgba(124,92,255,.2);border-color:rgba(124,92,255,.8);color:#fff}

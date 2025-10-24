@@ -241,7 +241,7 @@
       <span class="like-coach-icon" aria-hidden="true">❤</span>
       <div class="like-coach-copy">
         <strong>Guarda con «Me gusta»</strong>
-        <p>¿Quieres guardarte un juego o una app? Haz clic en «Me gusta» para que se quede en tu perfil.</p>
+        <p>¿Quieres guardarte un juego o una app? Pulsa el corazón de «Me gusta» y se quedará en tu perfil.</p>
         <button class="like-coach-action" type="button" data-like-hint-close>Entendido</button>
       </div>
     </div>
@@ -870,11 +870,11 @@
     function updateLikeButton(button, liked){
       if (!button) return;
       const label = button.querySelector("[data-like-label]");
-      const status = button.querySelector("[data-like-status]");
-      button.classList.toggle("active", !!liked);
-      button.setAttribute("aria-pressed", liked ? "true" : "false");
-      if (label) label.textContent = liked ? "¡Guardado!" : "Me gusta";
-      if (status) status.textContent = liked ? "Guardado en tu perfil" : "Guarda este contenido";
+      const nextLiked = !!liked;
+      button.classList.toggle("active", nextLiked);
+      button.setAttribute("aria-pressed", nextLiked ? "true" : "false");
+      button.setAttribute("aria-label", nextLiked ? "Quitar de tus guardados" : "Guardar con Me gusta");
+      if (label) label.textContent = nextLiked ? "Guardado" : "Me gusta";
     }
 
     function updateRatingStars(wrapper, rating){
