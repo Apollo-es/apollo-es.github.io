@@ -220,11 +220,6 @@
         </div>
       </div>
 
-      <button class="logout-inline" type="button" data-logout>
-        <i class="ti ti-logout" aria-hidden="true"></i>
-        <span>Cerrar sesión</span>
-      </button>
-
       <button class="register-trigger" type="button" data-open-register>
         <i class="ti ti-user-plus" aria-hidden="true"></i>
         Registrarse
@@ -299,7 +294,10 @@
         <input type="email" id="email" required autocomplete="username">
         <label>Contraseña</label>
         <input type="password" id="password" required minlength="6" autocomplete="current-password">
-        <label data-register-only hidden>Confirmar contraseña</label>
+        <label for="password-confirm"
+               data-register-only
+               data-register-label="Confirmar contraseña"
+               hidden></label>
         <input type="password" id="password-confirm" data-register-only hidden autocomplete="new-password">
         <p class="password-strength" data-password-strength hidden></p>
         <div class="security-challenge" data-register-only hidden>
@@ -342,6 +340,7 @@
     } from "/assets/js/auth-security.js";
 
     const openButtons = Array.from(document.querySelectorAll("[data-open-login], [data-open-register]"));
+    const headerAuthButtons = Array.from(document.querySelectorAll(".auth-head [data-open-login], .auth-head [data-open-register]"));
     const modal     = document.querySelector("[data-login-modal]");
     const closeBtn  = document.querySelector("[data-close-login]");
     const loginG    = document.querySelector("[data-login-google]");
@@ -355,6 +354,7 @@
     const resetBtn = document.querySelector("[data-reset]");
     const toggleModeBtn = form.querySelector("[data-toggle-mode]");
     const registerOnly = Array.from(form.querySelectorAll("[data-register-only]"));
+    const registerLabels = Array.from(form.querySelectorAll("[data-register-label]"));
     const submitBtn = form.querySelector("button[type='submit']");
     const strengthBox = form.querySelector("[data-password-strength]");
     const securityQuestion = form.querySelector("[data-security-question]");
@@ -458,6 +458,9 @@
         element.hidden = !show;
         const input = element.tagName === "INPUT" ? element : element.querySelector("input");
         if (input) input.required = show;
+      });
+      registerLabels.forEach((label) => {
+        label.textContent = show ? label.dataset.registerLabel ?? "" : "";
       });
       if (strengthBox) strengthBox.hidden = !show;
     };
@@ -740,7 +743,16 @@
     });
 
     onAuth((user) => {
-      document.body.classList.toggle("logged-in", !!user);
+      const logged = !!user;
+      document.body.classList.toggle("logged-in", logged);
+      headerAuthButtons.forEach((btn) => {
+        btn.hidden = logged;
+        if (logged) {
+          btn.setAttribute("aria-hidden", "true");
+        } else {
+          btn.removeAttribute("aria-hidden");
+        }
+      });
     });
 
     setMode("login");
