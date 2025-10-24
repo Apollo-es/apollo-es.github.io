@@ -207,6 +207,7 @@
           <ul class="user-menu-list" role="none">
             <li role="none">
               <a class="user-menu-item" href="/account.html" role="menuitem">
+                <i class="ti ti-user" aria-hidden="true"></i>
                 <span>Mi perfil</span>
               </a>
             </li>
@@ -240,8 +241,8 @@
     <div class="like-coach-card">
       <span class="like-coach-icon" aria-hidden="true">❤</span>
       <div class="like-coach-copy">
-        <strong>Guarda con «Me gusta»</strong>
-        <p>¿Quieres guardarte un juego o una app? Haz clic en «Me gusta» para que se quede en tu perfil.</p>
+        <strong>Guarda con el corazón</strong>
+        <p>¿Quieres guardarte un juego o una app? Pulsa el corazón «Me gusta» para que se quede en tu perfil.</p>
         <button class="like-coach-action" type="button" data-like-hint-close>Entendido</button>
       </div>
     </div>
@@ -844,7 +845,7 @@
   </script>
 
   <script type="module">
-    import { onAuth, requireAuth, toggleLike, setRating, listFavorites, getFavoriteState } from "/assets/js/firebase-app.js";
+    import { onAuth, requireAuth, toggleLike, setRating, listFavorites, getFavoriteState, getRatingSummary } from "/assets/js/firebase-app.js";
 
     if (typeof window.openLoginModal !== "function") {
       window.openLoginModal = () => {
@@ -869,12 +870,18 @@
 
     function updateLikeButton(button, liked){
       if (!button) return;
+      const isLiked = !!liked;
       const label = button.querySelector("[data-like-label]");
-      const status = button.querySelector("[data-like-status]");
-      button.classList.toggle("active", !!liked);
-      button.setAttribute("aria-pressed", liked ? "true" : "false");
-      if (label) label.textContent = liked ? "¡Guardado!" : "Me gusta";
-      if (status) status.textContent = liked ? "Guardado en tu perfil" : "Guarda este contenido";
+      const icon = button.querySelector(".btn-like-icon i");
+      button.classList.toggle("active", isLiked);
+      button.setAttribute("aria-pressed", isLiked ? "true" : "false");
+      button.setAttribute("aria-label", isLiked ? "Quitar de tus guardados" : "Guardar con Me gusta");
+      if (label) label.textContent = isLiked ? "Guardado" : "Me gusta";
+      if (icon) {
+        icon.classList.add("ti");
+        icon.classList.remove("ti-heart", "ti-heart-filled");
+        icon.classList.add(isLiked ? "ti-heart-filled" : "ti-heart");
+      }
     }
 
     function updateRatingStars(wrapper, rating){
@@ -887,6 +894,35 @@
         button.classList.toggle("active", active);
         button.setAttribute("aria-pressed", active ? "true" : "false");
       });
+    }
+
+    function updateRatingSummary(root, summary = {}){
+      if (!root) return;
+      const summaryBlock = root.querySelector("[data-rate-summary]");
+      if (!summaryBlock) return;
+      const averageNode = summaryBlock.querySelector("[data-rate-average]");
+      const countNode = summaryBlock.querySelector("[data-rate-count]");
+      const count = Number(summary.ratingCount) || 0;
+      if (count <= 0) {
+        summaryBlock.hidden = true;
+        if (averageNode) averageNode.textContent = "0,0";
+        if (countNode) countNode.textContent = "Sin valoraciones";
+        return;
+      }
+      const average = Number(summary.averageRating) || 0;
+      if (averageNode) averageNode.textContent = average.toFixed(1).replace(".", ",");
+      if (countNode) countNode.textContent = count === 1 ? "1 valoración" : `${count} valoraciones`;
+      summaryBlock.hidden = false;
+    }
+
+    async function refreshRatingSummary(root){
+      if (!root) return;
+      try {
+        const summary = await getRatingSummary(getPayload(root));
+        updateRatingSummary(root, summary);
+      } catch (error) {
+        console.warn("No se pudo cargar la valoración media", error);
+      }
     }
 
     function applyFavoriteState(root, state = {}){
@@ -918,6 +954,8 @@
         refreshFavoriteState(node);
       });
     }
+
+    contentBlocks.forEach((node) => refreshRatingSummary(node));
 
     let activeUserId = null;
 
@@ -1020,7 +1058,14 @@
       refreshAllFavoriteStates();
     });
 
-    document.addEventListener("apollo:favorites-updated", () => {
+    document.addEventListener("apollo:favorites-updated", (event) => {
+      const detail = event?.detail || {};
+      const providedRoot = detail.root && typeof detail.root.closest === "function" ? detail.root.closest("[data-content]") : null;
+      if (providedRoot && contentBlocks.includes(providedRoot)) {
+        refreshRatingSummary(providedRoot);
+      } else {
+        contentBlocks.forEach((node) => refreshRatingSummary(node));
+      }
       if (!activeUserId) return;
       refreshAllFavoriteStates();
     });
@@ -1036,7 +1081,14 @@
           if (result.liked) {
             hideLikeHint({ persist: true });
           }
-          document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
+          const root = likeBtn.closest("[data-content]");
+          document.dispatchEvent(new CustomEvent("apollo:favorites-updated", {
+            detail: {
+              contentType: payload.contentType,
+              contentId: payload.contentId,
+              root
+            }
+          }));
         } catch (error) {
           console.error("like failed", error);
         }
@@ -1052,7 +1104,14 @@
         try {
           await setRating(payload);
           updateRatingStars(ratingWrap, rating);
-          document.dispatchEvent(new CustomEvent("apollo:favorites-updated"));
+          const root = ratingWrap.closest("[data-content]");
+          document.dispatchEvent(new CustomEvent("apollo:favorites-updated", {
+            detail: {
+              contentType: payload.contentType,
+              contentId: payload.contentId,
+              root
+            }
+          }));
         } catch (error) {
           console.error("rating failed", error);
         }

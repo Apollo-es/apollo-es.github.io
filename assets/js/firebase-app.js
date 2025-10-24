@@ -7,7 +7,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, serverTimestamp, getDoc, writeBatch,
-  addDoc, collection, deleteDoc, getDocs, query, where, orderBy, limit
+  addDoc, collection, deleteDoc, getDocs, query, where, orderBy, limit,
+  runTransaction
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { firebaseConfig, collections } from "/static/config/firebase.config.js";
 
@@ -133,18 +134,64 @@ export async function toggleSave({contentType, contentId, title}) {
   return { saved: true };
 }
 
+function buildRatingStatsId(contentType, contentId){
+  const safeType = (contentType || "content").replace(/[^a-z0-9_-]+/gi, "-").toLowerCase();
+  const safeId = (contentId || "unknown").replace(/[^a-z0-9_-]+/gi, "-").toLowerCase();
+  return `${safeType}::${safeId}`;
+}
+
 export async function setRating({contentType, contentId, rating, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
   const value = Math.max(1, Math.min(5, rating | 0));
-  await setDoc(doc(db, collections.ratings || "ratings", id), {
-    uid: auth.currentUser.uid,
-    contentType,
-    contentId,
-    rating: value,
-    title: title || null,
-    ts: serverTimestamp()
-  }, { merge: true });
+  const ratingRef = doc(db, collections.ratings || "ratings", id);
+  const statsRef = doc(db, collections.ratingStats || "ratingStats", buildRatingStatsId(contentType, contentId));
+
+  await runTransaction(db, async (transaction) => {
+    const ratingSnap = await transaction.get(ratingRef);
+    const previousRating = ratingSnap.exists() ? Number(ratingSnap.data()?.rating) || null : null;
+
+    transaction.set(ratingRef, {
+      uid: auth.currentUser.uid,
+      contentType,
+      contentId,
+      rating: value,
+      title: title || null,
+      ts: serverTimestamp()
+    }, { merge: true });
+
+    const statsSnap = await transaction.get(statsRef);
+    const statsData = statsSnap.exists() ? statsSnap.data() || {} : {};
+    let ratingCount = Number(statsData.ratingCount) || 0;
+    let totalRating = Number(statsData.totalRating) || 0;
+
+    if (typeof previousRating === "number") {
+      totalRating -= previousRating;
+    } else {
+      ratingCount += 1;
+    }
+
+    totalRating += value;
+    if (ratingCount < 0) ratingCount = 0;
+    if (totalRating < 0) totalRating = 0;
+    const averageRating = ratingCount > 0 ? totalRating / ratingCount : 0;
+
+    const payload = {
+      contentType,
+      contentId,
+      ratingCount,
+      totalRating,
+      averageRating,
+      updatedAt: serverTimestamp()
+    };
+
+    if (!statsSnap.exists()) {
+      payload.createdAt = serverTimestamp();
+    }
+
+    transaction.set(statsRef, payload, { merge: true });
+  });
+
   return { rating: value };
 }
 
@@ -174,6 +221,20 @@ export async function getFavoriteState({ contentType, contentId }) {
   return {
     liked: likeExists,
     rating: ratingValue
+  };
+}
+
+export async function getRatingSummary({ contentType, contentId }) {
+  const ref = doc(db, collections.ratingStats || "ratingStats", buildRatingStatsId(contentType, contentId));
+  const snap = await getDoc(ref).catch(() => null);
+  if (!snap || typeof snap.exists !== "function" || !snap.exists()) {
+    return { ratingCount: 0, averageRating: 0, totalRating: 0 };
+  }
+  const data = typeof snap.data === "function" ? snap.data() || {} : {};
+  return {
+    ratingCount: Number(data.ratingCount) || 0,
+    averageRating: Number(data.averageRating) || 0,
+    totalRating: Number(data.totalRating) || 0
   };
 }
 
