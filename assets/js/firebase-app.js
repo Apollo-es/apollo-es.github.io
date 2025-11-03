@@ -109,8 +109,13 @@ export async function toggleLike({contentType, contentId, title}) {
   const id = key(auth.currentUser.uid, contentType, contentId);
   const likeRef = doc(db, collections.likes || "likes", id);
   const saveRef = doc(db, collections.saves || "saves", id);
-  const existing = await getDoc(likeRef);
-  if (existing.exists()) {
+  let existing = null;
+  try {
+    existing = await getDoc(likeRef);
+  } catch (error) {
+    console.warn("No se pudo verificar el estado del like", error);
+  }
+  if (existing && typeof existing.exists === "function" && existing.exists()) {
     const batch = writeBatch(db);
     batch.delete(likeRef);
     const saveSnap = await getDoc(saveRef).catch(() => null);
@@ -145,8 +150,13 @@ export async function toggleSave({contentType, contentId, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
   const ref = doc(db, collections.saves || "saves", id);
-  const existing = await getDoc(ref);
-  if (existing.exists()) {
+  let existing = null;
+  try {
+    existing = await getDoc(ref);
+  } catch (error) {
+    console.warn("No se pudo verificar el estado del guardado", error);
+  }
+  if (existing && typeof existing.exists === "function" && existing.exists()) {
     await deleteDoc(ref);
     return { saved: false };
   }
