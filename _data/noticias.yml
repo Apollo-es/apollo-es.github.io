@@ -179,3 +179,79 @@
   vistas: 9820
   share_text: "🎨 La comunidad se desata con fanart, eventos y speedruns antes del lanzamiento de Leyendas: Z-A:"
   share_hashtags: "#LeyendasZA #Pokemon #Comunidad"
+- id: inazuma-eleven-victory-road-keshin
+  slug: inazuma-eleven-victory-road-keshin
+  titulo: "Inazuma Eleven Victory Road detalla sus cambios finales y nuevo término Keshin"
+  tag: "Inazuma Eleven"
+  fecha: 2025-10-16
+  resumen: "Recopilamos las novedades oficiales de Victory Road: del cambio a Keshin y los planes de reservas hasta los modos poslanzamiento y la web Inagle."
+  introduccion: "LEVEL-5 y Akihiro Hino compartieron una batería de actualizaciones para <strong>Inazuma Eleven: Victory Road</strong>, respondiendo a dudas sobre terminología, acceso anticipado, contenido del modo Crónica y características técnicas en cada plataforma."
+  portada:
+    src: "https://assets.rpgsite.net/images/images/000/107/358/original/Inazuma_Eleven_Victory_Road_2024_Key_Art.jpg"
+    alt: "Arte principal de Inazuma Eleven: Victory Road con los protagonistas"
+  quote:
+    texto: "Hemos revisado 121 perfiles de personajes gracias a vuestro feedback y seguimos ajustando la experiencia final"
+    autor: "Akihiro Hino"
+    url: "https://www.level5.co.jp/"
+  puntos:
+    - "El término «Espíritu Guerrero» pasa a llamarse definitivamente <strong>Keshin</strong> en todos los idiomas, por orden directa de LEVEL-5."
+    - "Nintendo Switch se lanzará el 13 de noviembre a las 16:00h sin acceso anticipado y las reservas se activarán en los próximos días."
+    - "Victory Road contará con 5.407 jugadores reclutables, sin presencia de Hidetoshi Nakata y sin micropagos de lanzamiento."
+  cuerpo:
+    - titulo: "Terminología y correcciones celebradas por la comunidad"
+      imagen:
+        src: "https://images.nintendolife.com/d2de889f0ce6d/inazuma-eleven-victory-road-large.jpg"
+        alt: "Equipo de Inazuma Eleven Victory Road celebrando en el campo"
+        pie: "Arte promocional publicado por LEVEL-5 para Victory Road."
+      parrafos:
+        - "LEVEL-5 confirmó que el concepto <em>Espíritu Guerrero</em> será renombrado oficialmente a <strong>Keshin</strong>, alineando la terminología global con la japonesa. La compañía subraya que la orden es interna y permanente, por lo que futuras traducciones utilizarán el nuevo término."
+        - "Akihiro Hino también agradeció el feedback que permitió corregir <strong>121 fichas de personajes</strong> en la base de datos oficial de Inazugle, asegurando que los ajustes llegarán al juego final. Además, se disculpó por la confusión con el nombre de Aphro Di Etie, que en la versión occidental definitiva volverá a ser <strong>Byron Love</strong>."
+        - "Para quienes prefieran los nombres originales japoneses, Victory Road incluirá una opción en el juego final que restaurará la nomenclatura clásica sin necesidad de esperar parches posteriores."
+    - titulo: "Reservas, acceso anticipado y aclaraciones de lanzamiento"
+      parrafos:
+        - "LEVEL-5 reiteró que <strong>Nintendo Switch</strong> no tendrá acceso anticipado: quienes adquieran la edición Deluxe obtendrán las mismas bonificaciones cosméticas que el resto de plataformas, pero comenzarán a jugar el 13 de noviembre a las 16:00h."
+        - "Las reservas para Switch todavía no están disponibles; la compañía prevé abrirlas en los próximos días y recomienda no confundir los incentivos de reserva con los extras de la edición Deluxe."
+      lista:
+        - "Bonificaciones por reservar cualquier edición: contenidos cosméticos y objetos útiles aún por detallar, independientes de los extras Deluxe."
+        - "Modo Crónica recibirá las sagas Galaxy, Ares y Orion entre diciembre de 2025 y febrero de 2026."
+        - "El modo de repeticiones visto en tráilers anteriores no estará disponible al lanzamiento; se mejorará para una actualización futura."
+    - titulo: "Especificaciones técnicas por plataforma"
+      parrafos:
+        - "LEVEL-5 compartió la configuración objetivo de resolución y fotogramas por segundo en cada plataforma, destacando que PlayStation 5 Pro y Xbox Series X alcanzarán hasta 120 FPS, mientras que la versión para PC escalará a 4K ultrapanorámico."
+      tabla:
+        encabezados: ["Plataforma", "Resolución", "FPS"]
+        filas:
+          - ["Nintendo Switch (dock)", "1080p", "30"]
+          - ["Nintendo Switch 2 (dock)", "4K", "60"]
+          - ["PlayStation 4", "1080p", "60"]
+          - ["PlayStation 4 Pro", "4K", "60"]
+          - ["PlayStation 5", "4K", "60"]
+          - ["PlayStation 5 Pro", "4K", "120"]
+          - ["Xbox Series S", "1440p", "60"]
+          - ["Xbox Series X", "4K", "120"]
+          - ["PC", "21:9 4K", "120+"]
+    - titulo: "Plantel masivo y modos de control"
+      parrafos:
+        - "Victory Road permitirá reclutar a <strong>5.407 jugadores</strong>, la cifra más alta de la serie, aunque figuras invitadas como Hidetoshi Nakata no regresarán al plantel. LEVEL-5 enfatiza que la ausencia se debe a la licencia limitada al tercer juego clásico."
+        - "El anunciado modo táctil se sustituye por un <strong>modo ratón</strong> disponible en PC y Switch 2 desde el lanzamiento. Podrá usarse para chutar, pasar y ejecutar acciones especiales con clics, y llegará más adelante a PlayStation 5 mediante actualización gratuita."
+        - "Akihiro Hino confirmó que el modo táctil original se canceló para mantener el equilibrio entre plataformas, y que el equipo seguirá evaluando mejoras de accesibilidad."
+    - titulo: "Contenido poslanzamiento y calidad de vida"
+      imagen:
+        src: "https://inazuma-eleven.jp/victory-road/assets/img/share.jpg"
+        alt: "Captura de la web Inagle con estadísticas de jugadores"
+        pie: "La nueva web oficial Inagle permitirá consultar estadísticas y crear equipos."
+      parrafos:
+        - "Se anunció <strong>Inagle</strong>, una nueva web oficial donde los fans podrán buscar jugadores, revisar estadísticas detalladas y montar equipos personalizados gracias a un generador integrado."
+        - "No habrá microtransacciones en el lanzamiento de Victory Road; el equipo creativo quiere evitar un modelo pay-to-win, aunque no descartan estudiar opciones futuras siempre que no rompan el balance competitivo."
+        - "La campaña principal ofrecerá entre <strong>80 y 100 horas</strong> de juego, y los jugadores podrán transferir su plantilla a una posible secuela en el futuro, según adelantó Hino."
+        - "Los campos temáticos de Inazuma Eleven GO regresarán con efectos visuales especiales y opciones tácticas asociadas a cada estadio."
+  fuentes:
+    - nombre: "LEVEL-5"
+      url: "https://www.level5.co.jp/"
+    - nombre: "Inazuma Eleven Victory Road (X)"
+      url: "https://x.com/InazumaSeries"
+    - nombre: "Akihiro Hino"
+      url: "https://x.com/AkihiroHino"
+  vistas: 0
+  share_text: "⚡ Repasamos todas las novedades de Inazuma Eleven Victory Road: Keshin, reservas y planes poslanzamiento."
+  share_hashtags: "#InazumaEleven #VictoryRoad #LEVEL5"

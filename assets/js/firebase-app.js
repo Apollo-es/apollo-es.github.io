@@ -25,16 +25,26 @@ export const logout = () => signOut(auth);
 export const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
 async function upsertUserProfile(user) {
-  await setDoc(doc(db, collections.users, user.uid), {
+  const userRef = doc(db, collections.users, user.uid);
+  const existingSnap = await getDoc(userRef).catch(() => null);
+  const existingData = existingSnap && existingSnap.exists() ? existingSnap.data() || {} : {};
+  const payload = {
     uid: user.uid,
     email: user.email || null,
     displayName: user.displayName || null,
     photoURL: user.photoURL || null,
-    username: (await getDoc(doc(db, collections.users, user.uid))).data()?.username || null,
+    username: existingData.username || null,
     providerIds: user.providerData.map(p => p.providerId),
     updatedAt: serverTimestamp(),
-    createdAt: serverTimestamp(),
-  }, { merge: true });
+  };
+
+  if (existingData.createdAt) {
+    payload.createdAt = existingData.createdAt;
+  } else {
+    payload.createdAt = serverTimestamp();
+  }
+
+  await setDoc(userRef, payload, { merge: true });
 }
 
 export function onAuth(cb){
