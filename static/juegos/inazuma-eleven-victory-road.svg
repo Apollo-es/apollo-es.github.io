@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="iev-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1f4a" />
+      <stop offset="55%" stop-color="#123c84" />
+      <stop offset="100%" stop-color="#f2a900" />
+    </linearGradient>
+    <radialGradient id="iev-glow" cx="35%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#f7f27a" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0c1f4a" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="iev-glow-2" cx="75%" cy="60%" r="55%">
+      <stop offset="0%" stop-color="#59c5ff" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#123c84" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#iev-bg)" />
+  <circle cx="210" cy="150" r="220" fill="url(#iev-glow)" />
+  <circle cx="480" cy="240" r="200" fill="url(#iev-glow-2)" />
+  <path d="M80 250 L160 200 L240 260 L320 210 L400 250 L480 210 L560 250" fill="none" stroke="#fff3c4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" />
+  <path d="M90 270 L170 220 L250 280 L330 230 L410 270 L490 230 L570 270" fill="none" stroke="#8bd9ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" />
+  <text x="50%" y="40%" text-anchor="middle" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="40" fill="#ffffff" letter-spacing="6">
+    INAZUMA ELEVEN
+  </text>
+  <text x="50%" y="58%" text-anchor="middle" font-family="'Montserrat', 'Segoe UI', sans-serif" font-size="64" fill="#ffe066" letter-spacing="8">
+    VICTORY ROAD
+  </text>
+  <text x="50%" y="78%" text-anchor="middle" font-family="'Inter', 'Segoe UI', sans-serif" font-size="20" fill="#e6f7ff" letter-spacing="4">
+    DESATA EL ESPÍRITU DEL RAYO EN EL CAMPO
+  </text>
+</svg>

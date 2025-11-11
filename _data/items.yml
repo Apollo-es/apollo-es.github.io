@@ -213,6 +213,32 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es ofrece información y enlaces a petición de la comunidad. Silent Hill es © 1999-2025 Konami Digital Entertainment. Todos los derechos de la franquicia pertenecen a Konami.
 
+- id: inazuma-eleven-victory-road
+  categoria: ["juegos"]
+  titulo: "Inazuma Eleven: Victory Road"
+  descripcion: "Forma el once definitivo con jugadores históricos y nuevos talentos de Raimon en la entrega que combina historia original, modo Crónica y competitivo multiplataforma con espíritu Inazuma."
+  tipo: "Multi"
+  idioma: "multi"
+  tamano: "Por confirmar"
+  licencia: "pendiente"
+  consola: "Nintendo Switch / PC / PlayStation"
+  desarrolladora: "LEVEL-5"
+  genero: "RPG / Deportes"
+  portada: "/static/juegos/inazuma-eleven-victory-road.svg"
+  hashtags:
+    - "#InazumaEleven"
+    - "#VictoryRoad"
+    - "#LEVEL5"
+    - "#RPGDeportes"
+    - "#FutbolFantasia"
+  descargas:
+    - titulo: "Juego base (Torrent)"
+      mirrors:
+        - host: "Torrent"
+          url: "https://exe.io/inazumavr"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Inazuma Eleven: Victory Road es © 2024-2025 LEVEL-5 Inc. y sus afiliados. Descarga únicamente si posees una copia legítima y respeta las leyes de tu región.
+
 - id: the-elder-scrolls-iv-oblivion-remastered
   categoria: ["juegos"]
   titulo: "The Elder Scrolls IV: Oblivion Remastered"
