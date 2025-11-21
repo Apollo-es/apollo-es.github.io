@@ -413,6 +413,35 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio informativo que enlaza recursos disponibles públicamente. Until Dawn es © 2015-2025 Sony Interactive Entertainment Europe. Todos los derechos pertenecen a sus respectivos titulares.
 
+- id: dispatch
+  categoria: ["juegos"]
+  titulo: "Dispatch"
+  descripcion: "Coordina emergencias desde la central y toma decisiones en segundos: prioriza llamadas, envía unidades y descubre qué hay detrás de cada aviso."
+  tipo: "PC"
+  idioma: "multi"
+  tamano: "6 GB"
+  licencia: "incluida"
+  consola: "PC"
+  desarrolladora: "Independiente"
+  genero: "Simulación / Thriller"
+  portada: "/static/juegos/dispatch.svg"
+  interacciones: 2740
+  busquedas: 5240
+  fecha_publicacion: 2024-11-05
+  hashtags:
+    - "#Dispatch"
+    - "#Simulador"
+    - "#Emergencias"
+  descargas:
+    - titulo: "Juego base"
+      mirrors:
+        - host: "Torrent"
+          url: "https://exe.io/dispator"
+        - host: "Magnet"
+          url: "magnet:?xt=urn:btih:DISPATCHTORRENT&dn=dispatch&tr=udp://tracker.opentrackr.org:1337/announce"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Dispatch es una marca de sus respectivos titulares. Comparte y ejecuta el juego solo si cuentas con una copia legítima y cumple con las leyes de tu país.
+
 - id: yokai-watch-3ds
   categoria: ["juegos"]
   titulo: "Yo-kai Watch"

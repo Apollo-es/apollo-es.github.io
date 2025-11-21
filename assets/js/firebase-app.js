@@ -3,18 +3,23 @@ import {
   getAuth, onAuthStateChanged, GoogleAuthProvider,
   signInWithPopup, signInWithEmailAndPassword,
   createUserWithEmailAndPassword, signOut, deleteUser,
-  sendPasswordResetEmail, updateProfile
+  sendPasswordResetEmail, updateProfile, setPersistence,
+  browserLocalPersistence, inMemoryPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, serverTimestamp, getDoc, writeBatch,
   addDoc, collection, deleteDoc, getDocs, query, where, orderBy, limit,
-  runTransaction
+  runTransaction, increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { firebaseConfig, collections } from "/static/config/firebase.config.js";
 
 const app  = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db   = getFirestore(app);
+
+setPersistence(auth, browserLocalPersistence)
+  .catch(() => setPersistence(auth, inMemoryPersistence))
+  .catch((error) => console.warn("No se pudo fijar persistencia de sesión", error));
 
 const google = new GoogleAuthProvider();
 
@@ -176,12 +181,32 @@ function buildRatingStatsId(contentType, contentId){
   return `${safeType}::${safeId}`;
 }
 
+function buildEngagementKey(contentType, contentId){
+  const safeType = (contentType || "content").replace(/[^a-z0-9_-]+/gi, "-").toLowerCase();
+  const safeId = (contentId || "unknown").replace(/[^a-z0-9_-]+/gi, "-").toLowerCase();
+  return `${safeType}::${safeId}`;
+}
+
+function getUserSnapshot(){
+  const u = auth.currentUser;
+  if (!u) return { uid: null };
+  return {
+    uid: u.uid,
+    email: u.email || null,
+    displayName: u.displayName || null
+  };
+}
+
 export async function setRating({contentType, contentId, rating, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
   const value = Math.max(1, Math.min(5, rating | 0));
   const ratingRef = doc(db, collections.ratings || "ratings", id);
   const statsRef = doc(db, collections.ratingStats || "ratingStats", buildRatingStatsId(contentType, contentId));
+  const userProfile = {
+    displayName: auth.currentUser?.displayName || null,
+    email: auth.currentUser?.email || null
+  };
 
   await runTransaction(db, async (transaction) => {
     const ratingSnap = await transaction.get(ratingRef);
@@ -193,6 +218,7 @@ export async function setRating({contentType, contentId, rating, title}) {
       contentId,
       rating: value,
       title: title || null,
+      ...userProfile,
       ts: serverTimestamp()
     }, { merge: true });
 
@@ -274,6 +300,55 @@ export async function getRatingSummary({ contentType, contentId }) {
   };
 }
 
+export async function recordEngagement({ contentType, contentId, title, action = "click" }) {
+  if (!contentId) return;
+  const ref = doc(db, collections.engagement || "engagement", buildEngagementKey(contentType, contentId));
+  const counters = action === "search" ? { searchCount: increment(1) } : { interactionCount: increment(1) };
+  await setDoc(ref, {
+    contentType: contentType || "content",
+    contentId,
+    title: title || null,
+    updatedAt: serverTimestamp(),
+    ...counters,
+    ...getUserSnapshot(),
+    createdAt: serverTimestamp()
+  }, { merge: true });
+}
+
+export async function recordSearch({ term, filters, matches = [] }) {
+  const payload = {
+    term: (term || "").trim().slice(0, 120),
+    filters: filters || {},
+    results: matches.slice(0, 50),
+    totalResults: matches.length,
+    ...getUserSnapshot(),
+    ts: serverTimestamp(),
+    type: "search"
+  };
+  await addDoc(collection(db, collections.searches || "searches"), payload);
+  if (matches.length) {
+    const top = matches.slice(0, 10);
+    await Promise.all(top.map((id) => recordEngagement({ contentType: filters?.contentType || "game", contentId: id, action: "search" }))).catch(console.error);
+  }
+}
+
+export async function fetchEngagementStats(items = []) {
+  const entries = Array.isArray(items) ? items : [];
+  const results = {};
+  await Promise.all(entries.map(async (item) => {
+    if (!item || !item.contentId) return;
+    const ref = doc(db, collections.engagement || "engagement", buildEngagementKey(item.contentType, item.contentId));
+    const snap = await getDoc(ref).catch(() => null);
+    if (!snap || typeof snap.exists !== "function" || !snap.exists()) return;
+    const data = typeof snap.data === "function" ? snap.data() || {} : {};
+    results[item.contentId] = {
+      interactionCount: Number(data.interactionCount) || 0,
+      searchCount: Number(data.searchCount) || 0
+    };
+  }));
+  return results;
+}
+
 function toMillis(ts){
   if (!ts) return 0;
   if (typeof ts.toMillis === "function") return ts.toMillis();
@@ -304,9 +379,17 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
     limit(cap)
   );
 
-  const [likesSnap, ratingsSnap] = await Promise.all([
+  const savesQuery = query(
+    collection(db, collections.saves || "saves"),
+    where("uid", "==", userId),
+    orderBy("ts", "desc"),
+    limit(cap)
+  );
+
+  const [likesSnap, ratingsSnap, savesSnap] = await Promise.all([
     getDocs(likesQuery).catch((err) => { console.error(err); return { forEach: () => {} }; }),
-    getDocs(ratingsQuery).catch((err) => { console.error(err); return { forEach: () => {} }; })
+    getDocs(ratingsQuery).catch((err) => { console.error(err); return { forEach: () => {} }; }),
+    getDocs(savesQuery).catch((err) => { console.error(err); return { forEach: () => {} }; })
   ]);
 
   const entries = new Map();
@@ -347,6 +430,17 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
       entry.title = data.title;
     }
     entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
+  });
+
+  savesSnap.forEach((docSnap) => {
+    const data = docSnap.data && docSnap.data();
+    if (!data) return;
+    const entry = ensureEntry(data);
+    entry.saved = true;
+    entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
+    if (data.title && !entry.title) {
+      entry.title = data.title;
+    }
   });
 
   return Array.from(entries.values())

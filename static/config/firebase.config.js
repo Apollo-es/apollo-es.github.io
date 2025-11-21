@@ -17,5 +17,7 @@ export const collections = {
   saves: "saves",
   ratings: "ratings",
   ratingStats: "ratingStats",
-  reports: "reports"
+  reports: "reports",
+  searches: "searches",
+  engagement: "engagement"
 };

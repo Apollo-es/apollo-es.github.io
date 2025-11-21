@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs>
+    <linearGradient id="dispatch-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1024" />
+      <stop offset="60%" stop-color="#15294d" />
+      <stop offset="100%" stop-color="#1f3d6a" />
+    </linearGradient>
+    <linearGradient id="dispatch-scan" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#33d2ff" stop-opacity="0.0" />
+      <stop offset="50%" stop-color="#33d2ff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#33d2ff" stop-opacity="0.0" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#dispatch-bg)" />
+  <rect x="70" y="70" width="500" height="220" fill="url(#dispatch-scan)" opacity="0.9" />
+  <text x="50%" y="48%" text-anchor="middle" font-family="'Orbitron','Segoe UI',sans-serif" font-size="52" fill="#e9f5ff" letter-spacing="6">
+    DISPATCH
+  </text>
+  <text x="50%" y="66%" text-anchor="middle" font-family="'Inter','Segoe UI',sans-serif" font-size="20" fill="#c9e4ff" letter-spacing="4">
+    RESPONDE, PRIORIZA Y SALVA VIDAS
+  </text>
+</svg>

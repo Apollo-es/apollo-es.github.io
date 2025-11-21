@@ -179,6 +179,10 @@ document.documentElement.classList.add('has-js');
       };
     });
 
+    var entriesById = new Map(dataset.map(function(entry){
+      return [entry.card.dataset.id || ("item-" + entry.originalIndex), entry];
+    }));
+
     var valueSets = {
       console: new Set(),
       developer: new Set(),
@@ -327,6 +331,23 @@ document.documentElement.classList.add('has-js');
       if(emptyState){
         emptyState.hidden = sortedEntries.length > 0;
       }
+
+      var payload = {
+        term: state.term,
+        filters: {
+          console: state.console,
+          developer: state.developer,
+          genre: state.genre,
+          sort: state.sort,
+          contentType: "game"
+        },
+        matches: sortedEntries.map(function(entry){ return entry.card.dataset.id; })
+      };
+      var signature = JSON.stringify(payload);
+      if(signature !== applyFilters._lastSignature){
+        applyFilters._lastSignature = signature;
+        window.dispatchEvent(new CustomEvent('catalog:search', { detail: payload }));
+      }
     }
 
     if(q){
@@ -378,6 +399,56 @@ document.documentElement.classList.add('has-js');
         }
       });
     }
+
+    function queueRefresh(){
+      if(queueRefresh._queued) return;
+      queueRefresh._queued = true;
+      requestAnimationFrame(function(){
+        queueRefresh._queued = false;
+        applyFilters();
+      });
+    }
+
+    window.addEventListener('catalog:hydrate-stats', function(event){
+      var stats = event.detail && event.detail.stats ? event.detail.stats : {};
+      Object.keys(stats).forEach(function(id){
+        var entry = entriesById.get(id);
+        if(!entry) return;
+        if(typeof stats[id].interactionCount === 'number'){
+          entry.interactionCount = stats[id].interactionCount;
+        }
+        if(typeof stats[id].searchCount === 'number'){
+          entry.searchCount = stats[id].searchCount;
+        }
+      });
+      queueRefresh();
+    });
+
+    window.addEventListener('catalog:update-entry', function(event){
+      var detail = event.detail || {};
+      var entry = entriesById.get(detail.id || detail.contentId);
+      if(!entry) return;
+      if(typeof detail.interactions === 'number'){
+        entry.interactionCount = Math.max(detail.interactions, entry.interactionCount || 0);
+      }
+      if(typeof detail.searches === 'number'){
+        entry.searchCount = Math.max(detail.searches, entry.searchCount || 0);
+      }
+      queueRefresh();
+    });
+
+    list.addEventListener('click', function(event){
+      var card = event.target.closest('.card');
+      if(!card) return;
+      var anchor = event.target.closest('a,button');
+      if(!anchor) return;
+      var detail = {
+        contentId: card.dataset.id,
+        contentType: 'game',
+        title: card.dataset.title || card.querySelector('.card-title')?.textContent || ''
+      };
+      window.dispatchEvent(new CustomEvent('catalog:interaction', { detail: detail }));
+    });
 
     applyFilters();
   });
