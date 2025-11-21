@@ -845,6 +845,73 @@
   </script>
 
   <script type="module">
+    import { recordEngagement, recordSearch, fetchEngagementStats } from "/assets/js/firebase-app.js";
+
+    const catalogCards = Array.from(document.querySelectorAll("[data-catalog-grid] .card"));
+    const catalogIndex = new Map();
+
+    catalogCards.forEach((card) => {
+      const id = card.dataset.id;
+      if (!id) return;
+      const entry = {
+        contentId: id,
+        contentType: "game",
+        title: card.dataset.title || card.querySelector(".card-title")?.textContent || ""
+      };
+      catalogIndex.set(id, entry);
+    });
+
+    if (catalogIndex.size) {
+      const items = Array.from(catalogIndex.values());
+      fetchEngagementStats(items)
+        .then((stats) => {
+          window.dispatchEvent(new CustomEvent("catalog:hydrate-stats", { detail: { stats } }));
+        })
+        .catch(console.error);
+    }
+
+    const cardNodes = new Map();
+    catalogCards.forEach((card) => {
+      const id = card.dataset.id;
+      if (!id) return;
+      if (!cardNodes.has(id)) cardNodes.set(id, []);
+      cardNodes.get(id).push(card);
+    });
+
+    function bumpDataset(id, field, delta = 1) {
+      const nodes = cardNodes.get(id);
+      if (!nodes || !nodes.length) return;
+      let nextValue = 0;
+      nodes.forEach((node) => {
+        const current = Number(node.dataset[field]) || 0;
+        nextValue = Math.max(nextValue, current + delta);
+        node.dataset[field] = String(current + delta);
+      });
+      const detail = { id };
+      if (field === "clicks") detail.interactions = nextValue;
+      if (field === "searches") detail.searches = nextValue;
+      window.dispatchEvent(new CustomEvent("catalog:update-entry", { detail }));
+    }
+
+    let searchTimer = null;
+    window.addEventListener("catalog:search", (event) => {
+      const detail = event.detail || {};
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        recordSearch(detail).catch(console.error);
+        (detail.matches || []).slice(0, 10).forEach((id) => bumpDataset(id, "searches", 1));
+      }, 420);
+    });
+
+    window.addEventListener("catalog:interaction", (event) => {
+      const detail = event.detail || {};
+      if (!detail.contentId) return;
+      recordEngagement(detail).catch(console.error);
+      bumpDataset(detail.contentId, "clicks", 1);
+    });
+  </script>
+
+  <script type="module">
     import { onAuth, requireAuth, toggleLike, setRating, listFavorites, getFavoriteState, getRatingSummary } from "/assets/js/firebase-app.js";
 
     if (typeof window.openLoginModal !== "function") {

@@ -378,6 +378,11 @@ body:not(.logged-in) [data-user-menu]{display:none!important}
 .featured-card .btn{align-self:flex-start}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+@media (max-width:640px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .card{padding:14px;border-radius:16px}
+  .card-actions .btn{flex-basis:100%}
+}
 .lead{max-width:820px;color:#cfd9f1;margin-bottom:26px;font-size:18px}
 .forums-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
 .forum-card{position:relative;display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:22px;background:var(--surface-panel);

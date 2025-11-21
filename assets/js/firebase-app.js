@@ -3,18 +3,23 @@ import {
   getAuth, onAuthStateChanged, GoogleAuthProvider,
   signInWithPopup, signInWithEmailAndPassword,
   createUserWithEmailAndPassword, signOut, deleteUser,
-  sendPasswordResetEmail, updateProfile
+  sendPasswordResetEmail, updateProfile, setPersistence,
+  browserLocalPersistence, inMemoryPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, setDoc, serverTimestamp, getDoc, writeBatch,
   addDoc, collection, deleteDoc, getDocs, query, where, orderBy, limit,
-  runTransaction
+  runTransaction, increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { firebaseConfig, collections } from "/static/config/firebase.config.js";
 
 const app  = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db   = getFirestore(app);
+
+setPersistence(auth, browserLocalPersistence)
+  .catch(() => setPersistence(auth, inMemoryPersistence))
+  .catch((error) => console.warn("No se pudo fijar persistencia de sesión", error));
 
 const google = new GoogleAuthProvider();
 
@@ -176,6 +181,22 @@ function buildRatingStatsId(contentType, contentId){
   return `${safeType}::${safeId}`;
 }
 
+function buildEngagementKey(contentType, contentId){
+  const safeType = (contentType || "content").replace(/[^a-z0-9_-]+/gi, "-").toLowerCase();
+  const safeId = (contentId || "unknown").replace(/[^a-z0-9_-]+/gi, "-").toLowerCase();
+  return `${safeType}::${safeId}`;
+}
+
+function getUserSnapshot(){
+  const u = auth.currentUser;
+  if (!u) return { uid: null };
+  return {
+    uid: u.uid,
+    email: u.email || null,
+    displayName: u.displayName || null
+  };
+}
+
 export async function setRating({contentType, contentId, rating, title}) {
   if (!auth.currentUser) throw new Error("Inicia sesión");
   const id = key(auth.currentUser.uid, contentType, contentId);
@@ -277,6 +298,55 @@ export async function getRatingSummary({ contentType, contentId }) {
     averageRating: Number(data.averageRating) || 0,
     totalRating: Number(data.totalRating) || 0
   };
+}
+
+export async function recordEngagement({ contentType, contentId, title, action = "click" }) {
+  if (!contentId) return;
+  const ref = doc(db, collections.engagement || "engagement", buildEngagementKey(contentType, contentId));
+  const counters = action === "search" ? { searchCount: increment(1) } : { interactionCount: increment(1) };
+  await setDoc(ref, {
+    contentType: contentType || "content",
+    contentId,
+    title: title || null,
+    updatedAt: serverTimestamp(),
+    ...counters,
+    ...getUserSnapshot(),
+    createdAt: serverTimestamp()
+  }, { merge: true });
+}
+
+export async function recordSearch({ term, filters, matches = [] }) {
+  const payload = {
+    term: (term || "").trim().slice(0, 120),
+    filters: filters || {},
+    results: matches.slice(0, 50),
+    totalResults: matches.length,
+    ...getUserSnapshot(),
+    ts: serverTimestamp(),
+    type: "search"
+  };
+  await addDoc(collection(db, collections.searches || "searches"), payload);
+  if (matches.length) {
+    const top = matches.slice(0, 10);
+    await Promise.all(top.map((id) => recordEngagement({ contentType: filters?.contentType || "game", contentId: id, action: "search" }))).catch(console.error);
+  }
+}
+
+export async function fetchEngagementStats(items = []) {
+  const entries = Array.isArray(items) ? items : [];
+  const results = {};
+  await Promise.all(entries.map(async (item) => {
+    if (!item || !item.contentId) return;
+    const ref = doc(db, collections.engagement || "engagement", buildEngagementKey(item.contentType, item.contentId));
+    const snap = await getDoc(ref).catch(() => null);
+    if (!snap || typeof snap.exists !== "function" || !snap.exists()) return;
+    const data = typeof snap.data === "function" ? snap.data() || {} : {};
+    results[item.contentId] = {
+      interactionCount: Number(data.interactionCount) || 0,
+      searchCount: Number(data.searchCount) || 0
+    };
+  }));
+  return results;
 }
 
 function toMillis(ts){

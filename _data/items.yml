@@ -436,7 +436,7 @@
     - titulo: "Juego base"
       mirrors:
         - host: "Torrent"
-          url: "https://ouo.io/dispatch-torrent"
+          url: "https://exe.io/dispator"
         - host: "Magnet"
           url: "magnet:?xt=urn:btih:DISPATCHTORRENT&dn=dispatch&tr=udp://tracker.opentrackr.org:1337/announce"
   disclaimer: |
