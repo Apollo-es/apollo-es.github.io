@@ -182,6 +182,10 @@ export async function setRating({contentType, contentId, rating, title}) {
   const value = Math.max(1, Math.min(5, rating | 0));
   const ratingRef = doc(db, collections.ratings || "ratings", id);
   const statsRef = doc(db, collections.ratingStats || "ratingStats", buildRatingStatsId(contentType, contentId));
+  const userProfile = {
+    displayName: auth.currentUser?.displayName || null,
+    email: auth.currentUser?.email || null
+  };
 
   await runTransaction(db, async (transaction) => {
     const ratingSnap = await transaction.get(ratingRef);
@@ -193,6 +197,7 @@ export async function setRating({contentType, contentId, rating, title}) {
       contentId,
       rating: value,
       title: title || null,
+      ...userProfile,
       ts: serverTimestamp()
     }, { merge: true });
 
@@ -304,9 +309,17 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
     limit(cap)
   );
 
-  const [likesSnap, ratingsSnap] = await Promise.all([
+  const savesQuery = query(
+    collection(db, collections.saves || "saves"),
+    where("uid", "==", userId),
+    orderBy("ts", "desc"),
+    limit(cap)
+  );
+
+  const [likesSnap, ratingsSnap, savesSnap] = await Promise.all([
     getDocs(likesQuery).catch((err) => { console.error(err); return { forEach: () => {} }; }),
-    getDocs(ratingsQuery).catch((err) => { console.error(err); return { forEach: () => {} }; })
+    getDocs(ratingsQuery).catch((err) => { console.error(err); return { forEach: () => {} }; }),
+    getDocs(savesQuery).catch((err) => { console.error(err); return { forEach: () => {} }; })
   ]);
 
   const entries = new Map();
@@ -347,6 +360,17 @@ export async function listFavorites({ limit: maxItems = 50 } = {}) {
       entry.title = data.title;
     }
     entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
+  });
+
+  savesSnap.forEach((docSnap) => {
+    const data = docSnap.data && docSnap.data();
+    if (!data) return;
+    const entry = ensureEntry(data);
+    entry.saved = true;
+    entry.lastInteraction = Math.max(entry.lastInteraction, toMillis(data.ts));
+    if (data.title && !entry.title) {
+      entry.title = data.title;
+    }
   });
 
   return Array.from(entries.values())
