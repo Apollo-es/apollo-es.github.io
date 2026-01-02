@@ -1,0 +1,39 @@
+<svg width="720" height="480" viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Pokémon traducciones y rom hacks</title>
+  <desc id="desc">Tarjeta con pokéballs y una bandera de traducción.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="720" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b1226"/>
+      <stop offset="1" stop-color="#132b55"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="160" y1="120" x2="520" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffd34f"/>
+      <stop offset="1" stop-color="#ff7c5b"/>
+    </linearGradient>
+    <linearGradient id="flag" x1="0" y1="0" x2="0" y2="120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#d2e5ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" rx="32" fill="url(#bg)"/>
+  <rect x="70" y="70" width="580" height="340" rx="28" fill="#0f1c38" stroke="#1f3f74" stroke-width="4"/>
+  <circle cx="240" cy="240" r="120" fill="url(#accent)" opacity="0.25"/>
+  <circle cx="480" cy="180" r="90" fill="#3cc0ff" opacity="0.18"/>
+  <g transform="translate(180 150)">
+    <circle cx="80" cy="80" r="80" fill="#f7f9ff" stroke="#1a2342" stroke-width="8"/>
+    <path d="M0 84h160" stroke="#1a2342" stroke-width="14"/>
+    <circle cx="80" cy="84" r="26" fill="#ffeb8a" stroke="#ff7c5b" stroke-width="8"/>
+    <circle cx="80" cy="84" r="12" fill="#1a2342"/>
+    <circle cx="26" cy="54" r="12" fill="#ff7c5b" opacity=".7"/>
+    <circle cx="134" cy="118" r="10" fill="#1a2342" opacity=".55"/>
+  </g>
+  <g transform="translate(370 128)">
+    <path d="M36 0h152c6.6 0 12 5.4 12 12v148c0 6.6-5.4 12-12 12H36c-6.6 0-12-5.4-12-12V12C24 5.4 29.4 0 36 0z" fill="#0d162e" stroke="#52c3ff" stroke-width="4"/>
+    <rect x="52" y="24" width="96" height="64" rx="8" fill="url(#flag)" stroke="#1a2342" stroke-width="4"/>
+    <path d="M52 24l32 18-32 18V24z" fill="#ff7c5b"/>
+    <rect x="52" y="110" width="120" height="12" rx="6" fill="#182a50"/>
+    <rect x="52" y="134" width="140" height="12" rx="6" fill="#182a50" opacity=".8"/>
+    <rect x="52" y="158" width="110" height="12" rx="6" fill="#182a50" opacity=".6"/>
+  </g>
+  <text x="90" y="420" fill="#e6f1ff" font-family="'Inter', 'Segoe UI', system-ui" font-weight="800" font-size="26">Traducciones en castellano · ROM Hacks verificados</text>
+</svg>

@@ -17,7 +17,7 @@ document.documentElement.classList.add('has-js');
   }
   if(!c) return;
   const ctx = c.getContext('2d');
-  let cssW = 0, cssH = 0, DPR = 1, stars = [];
+  let cssW = 0, cssH = 0, DPR = 1, stars = [], snowflakes = [];
   function makeStar(){
     return {
       x: Math.random()*cssW,
@@ -26,6 +26,17 @@ document.documentElement.classList.add('has-js');
       speed: Math.random()*0.8 + 0.25,
       size: Math.random()*1.2 + 0.4,
       twinkle: Math.random()*Math.PI*2
+    };
+  }
+  function makeSnow(){
+    return {
+      x: Math.random()*cssW,
+      y: Math.random()*cssH,
+      size: Math.random()*1.6 + 0.8,
+      speed: Math.random()*0.6 + 0.35,
+      sway: Math.random()*0.9 + 0.35,
+      drift: (Math.random()*0.8) - 0.4,
+      phase: Math.random()*Math.PI*2
     };
   }
   function resize(){
@@ -38,6 +49,8 @@ document.documentElement.classList.add('has-js');
     c.style.height = cssH + 'px';
     const target = Math.min(320, Math.floor((cssW*cssH)/9000));
     stars = Array.from({length: target}, makeStar);
+    const snowTarget = Math.min(180, Math.floor((cssW*cssH)/12000));
+    snowflakes = Array.from({length: snowTarget}, makeSnow);
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
   addEventListener('resize', resize, {passive:true});
@@ -74,6 +87,27 @@ document.documentElement.classList.add('has-js');
       ctx.globalAlpha *= 0.9;
       ctx.fillStyle = trail;
       ctx.fillRect(-p.size*0.3,0,p.size*0.6,18*p.depth);
+      ctx.restore();
+    }
+    for(const f of snowflakes){
+      f.y += (0.6 + f.speed) * (1 + 0.12*Math.sin(time*0.0012 + f.phase));
+      f.x += f.drift + Math.sin((time*0.0015) + f.phase) * f.sway;
+      if(f.y > cssH + 10){
+        Object.assign(f, makeSnow(), {y: -10});
+      }
+      if(f.x < -12){ f.x = cssW + 12; }
+      if(f.x > cssW + 12){ f.x = -12; }
+      ctx.save();
+      ctx.translate(f.x, f.y);
+      ctx.rotate(Math.sin(time*0.0008 + f.phase) * 0.25);
+      const flakeAlpha = Math.min(0.9, 0.35 + f.size*0.12);
+      ctx.globalAlpha = flakeAlpha;
+      ctx.fillStyle = '#eef6ff';
+      ctx.shadowColor = 'rgba(255,255,255,0.65)';
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.ellipse(0,0,f.size*1.05,f.size*0.78,0,0,Math.PI*2);
+      ctx.fill();
       ctx.restore();
     }
     requestAnimationFrame(loop);
@@ -1784,4 +1818,3 @@ function showReportToast(message){
     sections.forEach(section => observer.observe(section.target));
   }
 })();
-
