@@ -128,11 +128,12 @@ a:hover{opacity:.9}
   linear-gradient(180deg, rgba(126,208,255,.1), rgba(16,22,40,0.45));transition:background .3s ease,opacity .3s ease,filter .3s ease}
 .has-js body{position:relative}
 .has-js body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
-  background:radial-gradient(120% 120% at 50% 42%,
-    color-mix(in srgb, var(--body-bg) 95%, transparent) 0%,
-    color-mix(in srgb, var(--body-bg) 88%, transparent) 52%,
-    color-mix(in srgb, var(--body-bg) 65%, transparent) 64%,
-    transparent 78%);}
+  background:radial-gradient(110% 120% at 50% 42%,
+    color-mix(in srgb, var(--body-bg) 98%, rgba(0,0,0,0.92)) 0%,
+    color-mix(in srgb, var(--body-bg) 96%, rgba(0,0,0,0.88)) 46%,
+    color-mix(in srgb, var(--body-bg) 88%, transparent) 62%,
+    color-mix(in srgb, var(--body-bg) 70%, transparent) 76%,
+    transparent 88%);}
 .container{max-width:1200px;margin:90px auto 60px;padding:0 18px}
 
 .nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:20px;
