@@ -11,6 +11,7 @@ keywords:
 ---
 
 <h1>Juegos</h1>
+<p class="lead">🎄 Aviso navideño: estamos cargando las fichas de Inazuma, Pokémon y Yo-kai con sus traducciones al castellano. Verás los botones “Próximamente” en las descargas mientras publicamos los enlaces definitivos.</p>
 <div data-catalog-root>
 <div class="search"><input id="q" type="search" placeholder="Buscar juegos..."></div>
 

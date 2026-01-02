@@ -158,6 +158,35 @@
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Todo el contenido original Copyright © 2005-2025 Centro Pokémon. Pokémon es © 1995-2025 Nintendo / Creatures / Game Freak.
 
+- id: pokemon-traducciones-fan
+  categoria: ["juegos"]
+  titulo: "Pokémon (traducciones y rom hacks)"
+  descripcion: "Estamos preparando un pack con ediciones clásicas, remakes y rom hacks traducidos al castellano (GBA, DS, 3DS y Switch) listos para parchear o descargar sin perder compatibilidad online."
+  tipo: "Multi"
+  idioma: "es"
+  tamano: "En preparación"
+  licencia: "pendiente"
+  consola: "GBA / DS / 3DS / Switch"
+  desarrolladora: "Game Freak + comunidades"
+  genero: "RPG / Aventura"
+  portada: "/static/juegos/pokemon-traducciones-fan.svg"
+  hashtags:
+    - "#Pokemon"
+    - "#ROMHack"
+    - "#FanTrad"
+    - "#Castellano"
+  descargas:
+    - titulo: "ROM base + parches en castellano"
+      mirrors:
+        - host: "Mega"
+          estado: "Próximamente"
+        - host: "MediaFire"
+          estado: "Próximamente"
+        - host: "Google Drive"
+          estado: "Próximamente"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Pokémon es © 1995-2025 Nintendo / Creatures / Game Freak. Esta ficha adelanta traducciones y mods hechos por la comunidad para usuarios con copia legítima del juego original.
+
 - id: papers-please-pc
   categoria: ["juegos"]
   titulo: "Papers, Please"
@@ -238,6 +267,35 @@
           url: "https://exe.io/inazumavr"
   disclaimer: |
     <strong>Aviso legal:</strong> Inazuma Eleven: Victory Road es © 2024-2025 LEVEL-5 Inc. y sus afiliados. Descarga únicamente si posees una copia legítima y respeta las leyes de tu región.
+
+- id: inazuma-eleven-traducciones
+  categoria: ["juegos"]
+  titulo: "Inazuma Eleven (colección traducida)"
+  descripcion: "Sección de avisos para las entregas de DS/3DS y Victory Road con parches al castellano. Publicaremos enlaces verificados en cuanto la comunidad libere builds estables."
+  tipo: "DS / 3DS / Switch"
+  idioma: "es"
+  tamano: "En preparación"
+  licencia: "pendiente"
+  consola: "Nintendo DS / 3DS / Switch"
+  desarrolladora: "LEVEL-5"
+  genero: "RPG / Deportes"
+  portada: "/static/juegos/inazuma-eleven-traducciones.svg"
+  hashtags:
+    - "#InazumaEleven"
+    - "#FanTrad"
+    - "#LEVEL5"
+    - "#Castellano"
+  descargas:
+    - titulo: "ROM + parches en castellano"
+      mirrors:
+        - host: "Mega"
+          estado: "Próximamente"
+        - host: "MediaFire"
+          estado: "Próximamente"
+        - host: "Google Drive"
+          estado: "Próximamente"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Inazuma Eleven es © 2008-2025 LEVEL-5 Inc. Esta ficha anticipa contenidos traducidos por fans destinados a usuarios con copia legítima de los juegos originales.
 
 - id: the-elder-scrolls-iv-oblivion-remastered
   categoria: ["juegos"]
@@ -469,6 +527,35 @@
           url: "https://exe.io/ykwlink"
   disclaimer: |
     <strong>Aviso legal:</strong> Apollo-es es un sitio de juegos con información, descargas, comunidad de foros y chat. Yo-kai Watch es © 2013-2025 LEVEL-5 Inc. Todos los derechos pertenecen a LEVEL-5 y Nintendo.
+
+- id: yokai-watch-traducciones
+  categoria: ["juegos"]
+  titulo: "Yo-kai Watch (traducciones y ports)"
+  descripcion: "Anunciamos la llegada de las ediciones fan traducidas de Yo-kai Watch 1-3 y Yo-kai Watch 4++ para Switch, con parches en castellano y enlaces verificados tan pronto estén listos."
+  tipo: "Switch / 3DS"
+  idioma: "es"
+  tamano: "En preparación"
+  licencia: "pendiente"
+  consola: "Nintendo 3DS / Nintendo Switch"
+  desarrolladora: "Level-5"
+  genero: "RPG / Aventura"
+  portada: "/static/juegos/yokai-watch-traducciones.svg"
+  hashtags:
+    - "#YoKaiWatch"
+    - "#FanTrad"
+    - "#LEVEL5"
+    - "#Castellano"
+  descargas:
+    - titulo: "ROM + parches en castellano"
+      mirrors:
+        - host: "Mega"
+          estado: "Próximamente"
+        - host: "MediaFire"
+          estado: "Próximamente"
+        - host: "Google Drive"
+          estado: "Próximamente"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Yo-kai Watch y Yo-kai Watch 4++ son © 2013-2025 LEVEL-5 Inc. Los parches de traducción son proyectos comunitarios destinados a usuarios con copia legítima.
 
 - id: super-mario-galaxy
   categoria: ["juegos"]

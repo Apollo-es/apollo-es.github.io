@@ -1,0 +1,44 @@
+<svg width="520" height="320" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Optimiza tu PC</title>
+  <desc id="desc">Ilustración de un PC con gráficos de rendimiento y engranajes.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="520" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b1228"/>
+      <stop offset="1" stop-color="#13345f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="120" y1="60" x2="400" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6ad6ff"/>
+      <stop offset="1" stop-color="#7ff0c8"/>
+    </linearGradient>
+    <linearGradient id="gear" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe8a3"/>
+      <stop offset="1" stop-color="#ffb454"/>
+    </linearGradient>
+  </defs>
+  <rect width="520" height="320" rx="24" fill="url(#bg)"/>
+  <rect x="70" y="50" width="380" height="220" rx="18" fill="#0f1b33" stroke="#2a4b78" stroke-width="3"/>
+  <rect x="95" y="80" width="160" height="120" rx="12" fill="#111d36" stroke="#7ff0c8" stroke-width="2"/>
+  <rect x="120" y="110" width="30" height="70" rx="6" fill="#1f9764"/>
+  <rect x="160" y="95" width="30" height="85" rx="6" fill="#64ffd2"/>
+  <rect x="200" y="125" width="30" height="55" rx="6" fill="#3cc0ff"/>
+  <rect x="280" y="90" width="150" height="18" rx="9" fill="#13233f" stroke="#7ff0c8" stroke-width="2"/>
+  <rect x="280" y="122" width="150" height="18" rx="9" fill="#13233f" stroke="#7ff0c8" stroke-width="2"/>
+  <rect x="280" y="154" width="150" height="18" rx="9" fill="#13233f" stroke="#7ff0c8" stroke-width="2"/>
+  <rect x="280" y="186" width="150" height="18" rx="9" fill="#13233f" stroke="#7ff0c8" stroke-width="2"/>
+  <circle cx="320" cy="195" r="6" fill="#7ff0c8"/>
+  <circle cx="350" cy="137" r="6" fill="#7ff0c8"/>
+  <circle cx="380" cy="171" r="6" fill="#7ff0c8"/>
+  <polyline points="280,186 320,195 350,137 380,171 430,108" fill="none" stroke="#6ad6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="430" cy="108" r="9" fill="#6ad6ff" stroke="#c4f7ff" stroke-width="2"/>
+  <g transform="translate(52 188)">
+    <circle cx="48" cy="48" r="44" fill="#140d25" stroke="#2a4b78" stroke-width="3"/>
+    <path d="M48 4l8.5 11.5 14-3-2 14 12 7-12 8 2 14-14-3L48 92l-8.5-11.5-14 3 2-14-12-8 12-7-2-14 14 3L48 4z" fill="url(#gear)"/>
+    <circle cx="48" cy="48" r="10" fill="#0f1b33" stroke="#ffcf6d" stroke-width="3"/>
+  </g>
+  <rect x="70" y="260" width="380" height="8" rx="4" fill="#0a152b" stroke="#1d3556" stroke-width="2"/>
+  <rect x="236" y="270" width="48" height="18" rx="6" fill="#6ad6ff" opacity="0.9"/>
+  <text x="260" y="283" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui" font-size="12" fill="#0a152b" font-weight="700">ON</text>
+  <circle cx="460" cy="60" r="10" fill="#6ad6ff" opacity="0.6"/>
+  <circle cx="430" cy="40" r="6" fill="#7ff0c8" opacity="0.5"/>
+  <circle cx="80" cy="60" r="8" fill="#7ff0c8" opacity="0.4"/>
+</svg>

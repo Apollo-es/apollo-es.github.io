@@ -31,3 +31,8 @@
       resumen: "De SG-1000 a Dreamcast, arcades míticos y la estrategia moderna de Sega como third-party."
       url: "/guias/historia-sega/"
       portada: "/static/guias/historia-sega.svg"
+    - id: "optimizar-pc-desde-cero"
+      titulo: "Optimiza tu PC desde cero"
+      resumen: "Checklist rápida con comandos, registros y scripts para dejar Windows 10/11 fino sin perder estabilidad."
+      url: "/guias/optimizar-pc-desde-cero/"
+      portada: "/static/guias/optimizar-pc.svg"

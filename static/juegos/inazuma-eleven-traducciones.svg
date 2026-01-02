@@ -1,0 +1,28 @@
+<svg width="720" height="480" viewBox="0 0 720 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Inazuma Eleven traducciones</title>
+  <desc id="desc">Tarjeta con un balón de fútbol estilizado y un rayo.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="720" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b152c"/>
+      <stop offset="1" stop-color="#0f2443"/>
+    </linearGradient>
+    <linearGradient id="rayo" x1="120" y1="40" x2="360" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe07d"/>
+      <stop offset="1" stop-color="#ff8c37"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" rx="32" fill="url(#bg)"/>
+  <rect x="64" y="64" width="592" height="352" rx="28" fill="#0e1c38" stroke="#1f3f74" stroke-width="4"/>
+  <circle cx="260" cy="240" r="132" fill="#0f1f3b" stroke="#6ad6ff" stroke-width="4"/>
+  <g transform="translate(150 130)">
+    <circle cx="110" cy="110" r="94" fill="#0e1a31" stroke="#1d3556" stroke-width="6"/>
+    <path d="M110 16l42 24-10 46-32 26-32-26-10-46 42-24z" fill="#132946" stroke="#6ad6ff" stroke-width="6"/>
+    <path d="M110 60l52 30-20 62h-64l-20-62 52-30z" fill="#132946" stroke="#6ad6ff" stroke-width="6"/>
+    <circle cx="110" cy="110" r="18" fill="#ffb347" stroke="#0b152c" stroke-width="4"/>
+  </g>
+  <path d="M390 108l118-70-54 126 74-10-122 170 36-120-80 6 28-102z" fill="url(#rayo)" stroke="#ffd34f" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="400" y="296" width="240" height="16" rx="8" fill="#1b2f52"/>
+  <rect x="400" y="326" width="210" height="12" rx="6" fill="#1b2f52" opacity=".85"/>
+  <rect x="400" y="350" width="180" height="12" rx="6" fill="#1b2f52" opacity=".6"/>
+  <text x="84" y="420" fill="#e6f1ff" font-family="'Inter','Segoe UI',system-ui" font-weight="800" font-size="26">Parches en castellano · DS · 3DS · Switch</text>
+</svg>
