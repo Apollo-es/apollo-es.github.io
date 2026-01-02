@@ -122,7 +122,7 @@ h1,h2,h3{font-family:Orbitron,Inter,sans-serif;letter-spacing:.5px}
 a{color:var(--accent);text-decoration:none}
 a:hover{opacity:.9}
 /* Background FX canvas fills screen */
-#bgfx{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+#bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;background:
   radial-gradient(1200px 820px at 20% 12%, rgba(16,22,40,.82), color-mix(in srgb, var(--body-bg) 75%, transparent)),
   radial-gradient(380px 320px at 86% 14%, rgba(140,220,255,.1), transparent),
   linear-gradient(180deg, rgba(126,208,255,.1), rgba(16,22,40,0.45));transition:background .3s ease,opacity .3s ease,filter .3s ease}
