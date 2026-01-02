@@ -122,10 +122,17 @@ h1,h2,h3{font-family:Orbitron,Inter,sans-serif;letter-spacing:.5px}
 a{color:var(--accent);text-decoration:none}
 a:hover{opacity:.9}
 /* Background FX canvas fills screen */
-#bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+#bgfx{position:fixed;inset:0;z-index:-2;pointer-events:none;background:
   radial-gradient(1200px 820px at 20% 12%, rgba(16,22,40,.82), color-mix(in srgb, var(--body-bg) 75%, transparent)),
   radial-gradient(380px 320px at 86% 14%, rgba(140,220,255,.1), transparent),
   linear-gradient(180deg, rgba(126,208,255,.1), rgba(16,22,40,0.45));transition:background .3s ease,opacity .3s ease,filter .3s ease}
+.has-js body{position:relative}
+.has-js body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:radial-gradient(120% 120% at 50% 42%,
+    color-mix(in srgb, var(--body-bg) 95%, transparent) 0%,
+    color-mix(in srgb, var(--body-bg) 88%, transparent) 52%,
+    color-mix(in srgb, var(--body-bg) 65%, transparent) 64%,
+    transparent 78%);}
 .container{max-width:1200px;margin:90px auto 60px;padding:0 18px}
 
 .nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;gap:20px;
