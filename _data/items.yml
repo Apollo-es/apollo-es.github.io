@@ -41,6 +41,30 @@
     - host: "Mediafire"
       url: "https://www.mediafire.com/file/..."
 
+- id: tomodachi-life-living-the-dream
+  categoria: ["juegos"]
+  titulo: "Tomodachi Life Living the Dream"
+  descripcion: "Crea tus Miis, dales voz propia y vive situaciones absurdas en una isla llena de eventos diarios, romances inesperados y minijuegos sociales."
+  tipo: "Switch"
+  idioma: "multi"
+  tamano: "6.2 GB"
+  licencia: "pendiente"
+  consola: "Nintendo Switch"
+  desarrolladora: "Nintendo"
+  genero: "Simulación / Social"
+  hashtags:
+    - "#TomodachiLife"
+    - "#LivingTheDream"
+    - "#NintendoSwitch"
+    - "#Simulacion"
+  descargas:
+    - titulo: "Juego base"
+      mirrors:
+        - host: "Descarga principal"
+          url: "https://exe.io/tomochichi"
+  disclaimer: |
+    <strong>Aviso legal:</strong> Tomodachi Life es © Nintendo. Comparte y utiliza este contenido únicamente si cuentas con una copia legítima del juego original.
+
 - id: pkhex
   categoria: ["apps"]
   titulo: "PKHeX"
