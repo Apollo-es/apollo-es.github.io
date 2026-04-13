@@ -45,17 +45,17 @@
   categoria: ["juegos"]
   titulo: "Tomodachi Life Living the Dream"
   descripcion: "Crea tus Miis, dales voz propia y vive situaciones absurdas en una isla llena de eventos diarios, romances inesperados y minijuegos sociales."
-  tipo: "3DS"
+  tipo: "Switch"
   idioma: "multi"
-  tamano: "Por confirmar"
+  tamano: "6.2 GB"
   licencia: "pendiente"
-  consola: "Nintendo 3DS"
+  consola: "Nintendo Switch"
   desarrolladora: "Nintendo"
   genero: "Simulación / Social"
   hashtags:
     - "#TomodachiLife"
     - "#LivingTheDream"
-    - "#Nintendo3DS"
+    - "#NintendoSwitch"
     - "#Simulacion"
   descargas:
     - titulo: "Juego base"
